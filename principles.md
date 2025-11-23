@@ -1,16 +1,233 @@
 # GLOBAL PRINCIPLES FOR META-COGNITIVE R&D PIPELINE
 
-These principles govern *every* Codex CLI session in this repository: the Meta-Orchestrator, LEGO-Orchestrators, and all nested substeps.
+These principles govern *every* Codex CLI session in this repository:  
+the Meta-Orchestrator, LEGO-Orchestrators, and all nested substeps.
 
-(Shortened here; you can expand as needed.)
+They are meant to be stable across projects. For each new app, you mainly change `app_intent.md`.
 
-- [P-KISS] Ruthless KISS: single-responsibility legos, simplest correct design.
-- [P-LEGO] LEGO Architecture: clear interfaces, stable contracts, explicit fundamentals.
-- [P-FLOW] Hierarchical Flow: meta → lego orchestrators → substeps.
-- [P-SESSIONS] Session Hygiene: avoid long sessions, use checkpoints.
-- [P-RESTART] Restartability: orchestrator_state.json, lego_plan.json, lego_state_*.json.
-- [P-GENREVIEW] GEN+REVIEW: draft then critique with REVIEW NOTES.
-- [P-DATA] External Data: enumerate APIs, config, cost.
-- [P-PRIVACY] Privacy: classify sensitivity, avoid logging raw PII/PHI/financial.
-- [P-AGENT] Agents: use only where reasoning helps, not for simple logic.
-- [P-CODE], [P-TEST], [P-DOC-INT], [P-DOC-PUB], [P-SUPPORT], [P-SAFETY], [P-R&D], [P-CONFIG]: as discussed in our design.
+---
+
+## [P-KISS] Ruthless KISS
+
+- Prefer the simplest correct solution.
+- Each LEGO must have exactly one clear responsibility.
+- Avoid unnecessary abstractions, generalizations, or cleverness.
+- Favor explicit, straightforward designs and data structures.
+- If a concept/layer can be removed without breaking correctness, remove it.
+
+---
+
+## [P-LEGO] Single-Responsibility LEGO Architecture
+
+- Decompose the system into small LEGO blocks (modules/components).
+- For each LEGO, define:
+  - `name`
+  - `responsibility` (one job only)
+  - `inputs`
+  - `outputs`
+  - `assumptions`
+  - `fundamentals`:
+    - performance
+    - scalability
+    - quality
+    - security
+    - privacy
+    - cost
+- LEGO interfaces must be stable and well-documented.
+- Implementations may change (local code ↔ external API ↔ agent), but interfaces remain stable.
+
+---
+
+## [P-FLOW] Hierarchical Flow
+
+- Use a hierarchical control flow:
+  - **Meta-Orchestrator** (top-level):
+    - reads `intent.md`, `app_intent.md`, `principles.md`, and `meta_config.json`;
+    - performs interactive requirements & dependency discovery;
+    - discovers legos and builds `lego_plan.json`;
+    - writes `plan.md` and `orchestrator_state.json`;
+    - launches LEGO-Orchestrator sessions as needed.
+  - **LEGO-Orchestrator** (per LEGO):
+    - focuses on a single LEGO at a time;
+    - handles design, tests, docs, implementation, validation;
+    - uses short-lived Codex sessions and `lego_state_<name>.json` for checkpoints.
+  - **Substeps** (design, tests, docs, code, validation) are small, focused tasks.
+
+---
+
+## [P-SESSIONS] Session Hygiene & Checkpoints
+
+- Avoid huge, long-running Codex sessions with massive conversation history.
+- After ~3–5 substantial tasks in a session:
+  - Persist progress to JSON/MD files (state and artifacts).
+  - End the session intentionally.
+  - Expect the next `codex exec` or `codex exec resume` to resume from state.
+- All relevant facts and state must be stored in files, not only in conversation context.
+
+---
+
+## [P-RESTART] Restartability
+
+- Use file-based state to support restartability:
+  - `orchestrator_state.json`
+  - `lego_plan.json`
+  - `lego_state_<name>.json`
+- On each new meta run or resume:
+  - Read these state files.
+  - Determine which steps/legos are READY (dependencies satisfied, status pending).
+  - Execute only those steps.
+- The pipeline should be safe to stop and restart multiple times without corruption.
+
+---
+
+## [P-GENREVIEW] GEN + REVIEW
+
+For every major artifact (requirements, design, tests, docs, implementation):
+
+- **GEN**:
+  - Create an initial draft of the artifact.
+- **REVIEW**:
+  - Run an independent critique pass.
+  - Improve clarity, correctness, and simplicity.
+  - Append a `REVIEW NOTES` section to the bottom of the artifact describing:
+    - what was changed,
+    - what is still a known limitation,
+    - any TODOs.
+
+This pattern enforces basic self-critique and metacognition.
+
+---
+
+## [P-DATA] External Data & Subscriptions
+
+- Explicitly enumerate all external data sources and APIs used by the app.
+- For each external service, document:
+  - name,
+  - type (API/DB/file/etc.),
+  - purpose,
+  - authentication method,
+  - pricing model and quotas (free tier vs paid),
+  - failure modes and fallbacks.
+- Never hard-code secrets in code. Use environment variables or config files for any keys.
+- Avoid unnecessary dependencies. Prefer simple/local solutions when possible.
+
+---
+
+## [P-PRIVACY] Privacy & Sensitive Data
+
+- Always classify data sensitivity:
+  - public, internal, confidential, PII, PHI, financial, etc.
+- Never log raw sensitive data (PII/PHI/financial).
+- Apply least-privilege:
+  - only the components that must access sensitive data should see it.
+- Document:
+  - what data is stored,
+  - where it is stored (DB, file, cloud),
+  - how long it is retained,
+  - how it might be removed or anonymized.
+
+---
+
+## [P-AGENT] LLM/Agent/MCP Usage
+
+- Use LLMs/agents when:
+  - reasoning about unstructured input,
+  - dealing with ambiguous requirements,
+  - orchestrating multi-step workflows,
+  - applying heuristics or fuzzy logic.
+- Avoid LLMs/agents for simple, deterministic logic that can be implemented with normal code.
+- When using agents, hide them behind clear, typed interfaces (e.g., “analysis” or “explanation” functions).
+- Be cost-aware:
+  - prefer simpler models or fewer calls where possible,
+  - use more expensive models only where they add clear value.
+
+---
+
+## [P-CODE] Code Quality
+
+- Write small, idiomatic, readable functions and modules.
+- Keep logical complexity and nesting low.
+- Validate inputs at module boundaries (e.g., user input, API responses).
+- Fail early with clear, actionable error messages.
+- Avoid clever tricks and unnecessary indirection.
+- Avoid premature optimization; optimize only when needed and document why.
+
+---
+
+## [P-TEST] Test Engineering
+
+- Tests must encode observable behavior, not internal implementation details.
+- Cover:
+  - happy paths,
+  - edge cases,
+  - error handling,
+  - regression tests for fixed bugs.
+- Each LEGO should be testable in isolation with mocks/stubs for its dependencies.
+- Prefer fast, deterministic tests that can run often.
+
+---
+
+## [P-DOC-INT] Internal Documentation
+
+- Document *why* decisions are made, not just *what* the code does.
+- Record trade-offs and alternative designs considered.
+- Keep internal docs close to code (e.g., `internal-notes.md`, per-lego notes).
+- Keep docs short and scannable, but meaningful.
+
+---
+
+## [P-DOC-PUB] Public Documentation
+
+- Focus on clarity and usability for end users or integrators.
+- Provide a quickstart section with simple usage examples.
+- Avoid internal jargon.
+- Highlight main features and usage flows.
+
+---
+
+## [P-SUPPORT] Operability & Support
+
+- Provide basic observability when appropriate:
+  - logs (without leaking sensitive data),
+  - simple health checks,
+  - basic metrics if justified.
+- Ensure error messages are understandable and suggest next actions.
+
+---
+
+## [P-SAFETY] Safety Valves
+
+- Track `failure_count` for steps and LEGO substeps.
+- If a step fails repeatedly (e.g., 3 times) or pipeline progress stalls:
+  - Mark the relevant step/lego as stuck.
+  - Write `meta_error.md` explaining:
+    - which step/lego failed,
+    - what was attempted,
+    - what the user should do next.
+  - Stop retrying indefinitely; bail out gracefully.
+
+---
+
+## [P-R&D] Red-Team & Evaluation
+
+- For legos that handle sensitive data or security-critical behavior:
+  - Perform a REDTEAM REVIEW substep:
+    - Look for privacy leaks and misuse paths.
+    - Document findings and proposed mitigations.
+- Each LEGO should define an evaluation harness:
+  - tests, metrics, and qualitative criteria for success.
+- Maintain per-LEGO evaluation notes (e.g., `notes_<lego>.md`).
+
+---
+
+## [P-CONFIG] R&D Modes & Approval Flags
+
+- Honor `meta_config.json`:
+  - `"r_and_d_mode"`:
+    - `"fast"`: minimal GEN+REVIEW cycles, basic eval, limited red-team.
+    - `"thorough"`: extensive GEN+REVIEW, robust eval harness, mandatory red-team for sensitive legos.
+  - `"require_lego_plan_approval"`:
+    - `true`: pause after LEGO plan & high-level design for human approval.
+    - `false`: proceed automatically.
+
+These principles are binding on all Codex sessions orchestrated within this repository.
