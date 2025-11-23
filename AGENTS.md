@@ -114,9 +114,11 @@ You MUST maintain `requirements.md` using a consistent structure so that future 
 
 4. Create or update `requirements.md` using the following template structure:
 
+**IMPORTANT**: Always use the ACTUAL current date (as provided in your system context) for all timestamp fields, NOT a placeholder or training cutoff date.
+
 - **Section 0. Metadata**  
   - Version (e.g., v0.1, v0.2, …)  
-  - Last Updated (YYYY-MM-DD)  
+  - Last Updated (YYYY-MM-DD) ← **Use today's actual date**  
   - Mode (`fast` or `thorough` from `meta_config.json`)  
   - Short notes.
 
@@ -149,7 +151,13 @@ You MUST maintain `requirements.md` using a consistent structure so that future 
 
 - **Section 8. Changelog**  
   - A chronologically ordered list of requirement changes.
-  - Each change entry includes version, date, and what FR-/NFR- items were added/updated.
+  - Each change entry includes:
+    - Version
+    - Date (YYYY-MM-DD using the actual current date)
+    - Status: `in-progress` or `completed`
+    - What FR-/NFR- items were added/updated
+  - Mark entries as `in-progress` when requirements are added but implementation hasn't finished.
+  - Mark entries as `completed` when all associated LEGOs have been implemented and validated.
 
 5. When updating requirements for **new features** in later runs:
    - Do NOT delete existing FR-/NFR- IDs unless explicitly requested by the user.
