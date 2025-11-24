@@ -1,0 +1,54 @@
+{
+  "_comment": "Agent Runtime Configuration - Defines how the meta-orchestrator spawns and manages agent sessions",
+  
+  "runtime": "codex-cli",
+  
+  "runtimes": {
+    "codex-cli": {
+      "name": "OpenAI Codex CLI",
+      "adapter": "runtime_adapters/codex_cli_adapter.sh",
+      "commands": {
+        "spawn": "codex exec -f {brief_file} --state {state_file} \"{prompt}\"",
+        "resume": "codex exec resume --last --state {state_file} \"{prompt}\"",
+        "check_status": "test -f {state_file} && echo 'active' || echo 'pending'"
+      },
+      "session_dir": "sessions/",
+      "max_context_tokens": 128000,
+      "supports_parallel": true
+    },
+    
+    "github-copilot": {
+      "name": "GitHub Copilot Chat",
+      "adapter": "runtime_adapters/copilot_adapter.sh",
+      "commands": {
+        "spawn": "gh copilot exec -f {brief_file}",
+        "resume": "gh copilot continue {session_id}",
+        "check_status": "gh copilot status {session_id}"
+      },
+      "session_dir": "sessions/",
+      "max_context_tokens": 100000,
+      "supports_parallel": false
+    },
+    
+    "claude-mcp": {
+      "name": "Anthropic Claude with MCP",
+      "adapter": "runtime_adapters/claude_mcp_adapter.sh",
+      "commands": {
+        "spawn": "claude mcp exec --brief {brief_file} --output {state_file}",
+        "resume": "claude mcp resume --session {session_id}",
+        "check_status": "claude mcp status {session_id}"
+      },
+      "session_dir": "sessions/",
+      "max_context_tokens": 200000,
+      "supports_parallel": true
+    }
+  },
+  
+  "session_management": {
+    "registry_file": "session_registry.json",
+    "queue_file": "session_queue.json",
+    "max_retries": 3,
+    "timeout_minutes": 30,
+    "cleanup_completed_sessions": false
+  }
+}

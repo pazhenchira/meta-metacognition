@@ -38,6 +38,74 @@ Rules:
 
 ---
 
+## 0. VERSION CHECK & UPGRADE MODE
+
+Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINTENANCE run:
+
+### Check for `.meta-version`
+
+1. **If `.meta-version` does NOT exist**: **NEW APP MODE**
+   - This is a fresh build.
+   - Proceed with normal pipeline (Sections 1-12).
+   - At completion, write `.meta-version` (using `.meta-version.template` as a guide) and `.meta-manifest.json` (using `.meta-manifest.template.json` as a guide).
+
+2. **If `.meta-version` exists**: **UPGRADE OR MAINTENANCE MODE**
+   - Read `.meta-version` to see which meta-orchestrator version built this app.
+   - Read `VERSION` file to see current meta-orchestrator version.
+   - Read `.meta-manifest.json` to identify user-modified files.
+   - Read `app_intent.md` to see if application requirements have changed.
+   - Compare versions:
+     - **Same version, app_intent.md UNCHANGED**: NO-OP MODE
+       - App is current, nothing to do.
+       - Exit with message: "App is up-to-date. To add features, edit app_intent.md."
+     - **Same version, app_intent.md CHANGED**: MAINTENANCE MODE
+       - User wants to add/remove features or fix bugs in existing app.
+       - App's purpose/requirements are changing.
+       - Respect `.meta-manifest.json`: do NOT regenerate files where `user_modified: true`.
+       - Re-run requirements discovery (Section 4) with updated `app_intent.md`.
+       - Update `lego_plan.json` with new/modified/removed LEGOs.
+       - Generate new LEGOs, modify existing ones as needed.
+       - Update `.meta-manifest.json` with new generated files.
+     - **Different version, app_intent.md UNCHANGED**: ENGINE UPGRADE MODE
+       - User wants to adopt new meta-orchestrator features.
+       - App's purpose stays the same, but gains new engine capabilities.
+       - See `UPGRADING.md` for detailed upgrade workflow.
+       - Generate upgrade plan showing:
+         - New meta-orchestrator features available (e.g., config_validation from v1.1.0).
+         - Which files will be added/modified (typically new LEGOs, tests).
+         - Which files are protected (user_modified: true).
+       - Show plan to user, get approval.
+       - Apply upgrade safely (add new LEGOs, don't touch app logic).
+       - Update `.meta-version` and `.meta-manifest.json`.
+     - **Different version, app_intent.md CHANGED**: HYBRID MODE
+       - User wants BOTH new engine features AND app requirement changes.
+       - Do ENGINE UPGRADE first, then MAINTENANCE.
+       - Show combined plan to user for approval.
+       - Apply in two phases:
+         - Phase A: Add new meta-orchestrator features.
+         - Phase B: Apply app requirement changes.
+       - Update `.meta-version` and `.meta-manifest.json`.
+
+### Version Compatibility
+
+Current meta-orchestrator version: **1.1.0** (see `VERSION` file)
+
+**Features in v1.1.0**:
+- LEGO architecture
+- Unit tests
+- Session isolation (Phase 1)
+- Config validation (Phase 1)
+- Integration tests (Phase 1)
+- System tests (Phase 1)
+- Runtime adapters (Phase 1)
+
+If upgrading from v1.0.0 or earlier:
+- Recommend adding `config_validator` LEGO (see `CONFIG_VALIDATION.md`).
+- Session isolation is internal (no app changes needed).
+- Integration/system tests improve reliability (recommend adopting).
+
+---
+
 ## 1. ENVIRONMENT PREFLIGHT
 
 On each meta run:
@@ -239,8 +307,17 @@ If no viable data source or dependency set can satisfy the requirements:
 Using `requirements.md` (and NOT `intent.md`):
 
 - Identify LEGO blocks following KISS and single-responsibility principles.
-- For each LEGO, define:
+- **ALWAYS generate a `config_validator` LEGO first** (see [P-CONFIG] in `principles.md`):
+  - Type: `config_validation`
+  - Responsibility: Validate all required configuration and guide setup
+  - Inputs: `.env`, config files, external service endpoints (from `external_services.md`)
+  - Outputs: Validation report, setup wizard if needed
+  - Priority: Critical (dependency for all other implementation LEGOs)
+  - See `CONFIG_VALIDATION.md` for complete requirements
+  
+- For each remaining LEGO, define:
   - name,
+  - type: `implementation` | `integration_test` | `system_test` | `config_validation`,
   - single responsibility,
   - inputs,
   - outputs,
@@ -370,7 +447,7 @@ If a step or substep hits `failure_count >= 3` or the pipeline stalls (no progre
 
 ## 11. DOCUMENTATION & FINAL REVIEW
 
-When all LE GOs are `done`:
+When all LEGOs are `done`:
 
 - Generate/update:
   - `README.md` – user-focused documentation of the app.
@@ -382,6 +459,11 @@ When all LE GOs are `done`:
     - red-team findings (if any),
     - known limitations,
     - recommended future improvements.
+
+- **If NEW APP MODE** (`.meta-version` did not exist at start):
+  - Write `.meta-version` file (copy from `.meta-version.template`, update dates to November 24, 2025).
+  - Write `.meta-manifest.json` file (copy from `.meta-manifest.template.json`, populate with actual generated files and timestamps using November 24, 2025).
+  - Mark all generated files with `user_modified: false` initially.
 
 ---
 

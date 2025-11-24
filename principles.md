@@ -128,6 +128,116 @@ This pattern enforces basic self-critique and metacognition.
 
 ---
 
+## [P-TESTING] Test Pyramid & Quality Assurance
+
+- Follow the test pyramid strategy:
+  - **Unit Tests** (many, fast): Test individual LEGOs in isolation with mocked dependencies
+  - **Integration Tests** (moderate): Test 2-3 LEGOs working together with real implementations
+  - **System Tests** (few, comprehensive): Test complete user journeys E2E
+  - **Performance Tests** (targeted): Load, stress, and scalability validation
+  
+- Test generation priorities:
+  - Unit tests: ALWAYS generated during LEGO implementation
+  - Integration tests: Generated when `enable_integration_tests: true`
+  - System tests: Generated when `enable_system_tests: true`
+  
+- Test coverage expectations:
+  - Unit tests: >80% code coverage per LEGO
+  - Integration tests: Cover critical data flows between LEGOs
+  - System tests: Cover primary user journeys from `requirements.md`
+  
+- Contract testing:
+  - Define explicit interfaces for LEGOs
+  - Generate contract tests to prevent breaking changes
+  - Validate that implementations honor contracts
+  
+- Test execution order:
+  1. Unit tests during LEGO validation
+  2. Integration tests after subsystem completion
+  3. System tests after all LEGOs done
+  4. Performance tests (if enabled) in final stage
+
+---
+
+## [P-CONFIG] Configuration Validation & Fail-Fast
+
+- **Every application MUST validate configuration before attempting to run**
+  - Check all required environment variables exist and are non-empty
+  - Test connectivity to external services (databases, APIs, message queues)
+  - Validate API keys with lightweight test calls
+  - Check configuration file syntax (JSON, YAML, TOML)
+  
+- **Fail fast with actionable guidance**:
+  - Don't start if configuration is invalid
+  - Provide clear, specific error messages ("Missing DATABASE_URL")
+  - Include remediation steps ("Run: docker-compose up -d postgres")
+  - Link to documentation or service signup pages
+  
+- **Guided setup for first-time users**:
+  - Every application MUST include a `--setup-wizard` command
+  - Wizard should interactively collect all required configuration
+  - Generate `.env` file, start services, validate connectivity
+  - Confirm everything works before completing
+  
+- **Configuration LEGO (always generated)**:
+  - The meta-orchestrator MUST always generate a `config_validator` LEGO
+  - This LEGO validates all configuration from other LEGOs
+  - Has highest priority (runs before other LEGOs can execute)
+  - Is a dependency for all implementation LEGOs
+  
+- **Layered validation (comprehensive, not superficial)**:
+  - **Level 1: Dependencies Installed**
+    - Verify all runtime dependencies are present (language version, libraries, system tools)
+    - Check all development dependencies (test frameworks, linters, build tools)
+    - Validate version compatibility (e.g., Python 3.9+, Node 18+)
+  - **Level 2: Configuration Values Present & Well-Formed**
+    - Environment variables exist and are non-empty
+    - Configuration files are valid (parseable JSON/YAML/TOML)
+    - URLs are well-formed, ports are valid integers, etc.
+  - **Level 3: External Services Reachable & Authenticated**
+    - Database connections succeed (network + credentials)
+    - API keys are valid (test with lightweight API call)
+    - External service URLs are reachable (HTTP 200/401, not 404/500)
+    - OAuth flows work end-to-end (if applicable)
+  - **Level 4: End-to-End Workflows Function**
+    - Test accounts exist for auth testing (create if needed)
+    - Write → Read roundtrip works (database, cache, external API)
+    - Permissions are correct (can perform expected operations)
+    - Integration between services works (e.g., auth + database + API)
+  
+- **Validation must be testable**:
+  - Unit tests: Mock external services, test validation logic
+  - Integration tests: Use test databases/APIs, validate L1-L3
+  - System/E2E tests: Use real external services (staging), validate L4
+  - Config tests MUST cover:
+    - Missing env vars detected and reported clearly
+    - Invalid values rejected with actionable errors
+    - Setup wizard generates working configuration
+    - Health checks reflect actual operational status
+  
+- **Health checks for operations**:
+  - Web apps: Expose `/health` endpoint validating configuration
+  - CLI apps: Support `--validate-config` command
+  - Include status of all external dependencies in health response
+  
+- **E2E testing of configuration flows**:
+  - System tests MUST validate that missing config is detected
+  - System tests MUST validate that invalid config is detected
+  - System tests MUST validate that setup wizard generates working config
+  - System tests MUST validate that health checks reflect actual status
+  
+- **Documentation (auto-generated)**:
+  - Every app generates `CONFIGURATION.md` with:
+    - Required environment variables (table with descriptions)
+    - External service requirements (setup instructions)
+    - Test account creation guide (for auth/authz testing)
+    - Troubleshooting guide (common errors and fixes)
+    - First-time setup workflow
+
+**Rationale**: Configuration errors are the #1 cause of "it doesn't work" issues. Multi-layered validation (dependencies → values → connectivity → workflows) with comprehensive testing eliminates this entire class of problems.
+
+---
+
 ## [P-AGENT] LLM/Agent/MCP Usage
 
 - Use LLMs/agents when:

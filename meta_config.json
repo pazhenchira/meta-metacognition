@@ -1,4 +1,19 @@
 {
   "require_lego_plan_approval": false,
-  "r_and_d_mode": "fast"
+  "r_and_d_mode": "fast",
+  
+  "_comment_phase1": "Phase 1: Session Isolation, Tool Agnosticism, Integration Tests",
+  "agent_runtime": "codex-cli",
+  "session_isolation": "full",
+  "max_parallel_sessions": 3,
+  "enable_integration_tests": true,
+  "enable_system_tests": true,
+  
+  "_comment_phase2": "Phase 2: Agent Tuning & Problem Evolution (future)",
+  "enable_agent_tuning": false,
+  "enable_problem_evolution": false,
+  
+  "_comment_phase3": "Phase 3: Production Monitoring (future)",
+  "enable_production_monitoring": false,
+  "feedback_loop_interval_hours": 24
 }

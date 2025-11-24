@@ -1,0 +1,6 @@
+{
+  "_comment": "Session Queue - LEGOs waiting for dependencies to complete",
+  "pending": [],
+  "blocked": [],
+  "ready": []
+}

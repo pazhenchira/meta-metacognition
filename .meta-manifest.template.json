@@ -1,0 +1,41 @@
+{
+  "generated_by": "meta-orchestrator/1.1.0",
+  "timestamp": "2025-11-24T00:00:00Z",
+  "files": {
+    "requirements.md": {
+      "generated": "2025-11-24T00:00:00Z",
+      "last_modified": "2025-11-24T00:00:00Z",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Application requirements specification"
+    },
+    "lego_plan.json": {
+      "generated": "2025-11-24T00:00:00Z",
+      "last_modified": "2025-11-24T00:00:00Z",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "LEGO architecture plan"
+    },
+    "dependencies.md": {
+      "generated": "2025-11-24T00:00:00Z",
+      "last_modified": "2025-11-24T00:00:00Z",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Dependency documentation"
+    },
+    "external_services.md": {
+      "generated": "2025-11-24T00:00:00Z",
+      "last_modified": "2025-11-24T00:00:00Z",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "External API/service documentation"
+    },
+    ".env.example": {
+      "generated": "2025-11-24T00:00:00Z",
+      "last_modified": "2025-11-24T00:00:00Z",
+      "user_modified": false,
+      "regenerate_on_upgrade": false,
+      "description": "Environment variable template"
+    }
+  }
+}

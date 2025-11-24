@@ -1,0 +1,7 @@
+{
+  "_comment": "Session Registry - Tracks all active and completed LEGO-Orchestrator sessions",
+  "meta_session_id": "meta_{{timestamp}}",
+  "meta_started": "{{ISO8601_timestamp}}",
+  "sessions": [],
+  "queue": []
+}
