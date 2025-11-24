@@ -334,20 +334,36 @@ Split any LEGO that attempts to do more than one job.
 
 ---
 
-## 6. OPTIONAL LEGO PLAN APPROVAL
+## 6. OPTIONAL LEGO PLAN APPROVAL & APP ORCHESTRATION
 
-If `"require_lego_plan_approval": true` in `meta_config.json`:
+After generating `lego_plan.json`:
 
-- After generating `lego_plan.json` and a high-level `design.md`:
-  - Show a concise summary of legos and architecture to the user.
-  - Ask:
-    > “Do you approve this LEGO plan and high-level design? Reply YES to continue, or provide changes.”
+1. **Generate APP_ORCHESTRATION.md** (app-specific orchestration plan):
+   - Use `.app_orchestration.template.md` as the structure.
+   - Fill in all sections with app-specific details:
+     - Application overview (from `app_intent.md` and `requirements.md`)
+     - LEGO architecture breakdown (from `lego_plan.json`)
+     - Session execution plan (dependency graph, parallel groups)
+     - Risk & confidence assessment (from LEGO confidence scores)
+     - Wisdom & patterns applied (from intuition checks)
+     - Testing strategy (unit, integration, system)
+     - Documentation plan
+     - Success criteria
+   - This file becomes the **human-readable orchestration plan** specific to THIS app.
+   - Mark as [IN_PROGRESS] initially.
 
-- If the user requests changes:
-  - Update `lego_plan.json` and `design.md` accordingly.
-  - Confirm the updated structure.
+2. **Optional Human Approval**:
+   - If `"require_lego_plan_approval": true` in `meta_config.json`:
+     - Show a concise summary of LEGOs and architecture to the user.
+     - Reference `APP_ORCHESTRATION.md` for full details.
+     - Ask:
+       > "Do you approve this LEGO plan and orchestration? See APP_ORCHESTRATION.md for details. Reply YES to continue, or provide changes."
+     - If the user requests changes:
+       - Update `lego_plan.json`, `APP_ORCHESTRATION.md` accordingly.
+       - Confirm the updated structure.
+   - If `"require_lego_plan_approval": false`, skip this pause and proceed automatically.
 
-If `"require_lego_plan_approval": false`, skip this pause and proceed automatically.
+3. **Update APP_ORCHESTRATION.md status** to [IN_PROGRESS] and proceed to pipeline execution.
 
 ---
 
@@ -374,15 +390,29 @@ Each LEGO-Orchestrator MUST:
 
 1. Read:
    - its LEGO entry in `lego_plan.json`,
-   - `principles.md`,
+   - `principles.md` (including [P-INTUITION]),
    - `meta_config.json`,
    - `lego_state_<name>.json` (create if missing),
+   - Wisdom files (Phase 1.5):
+     - `wisdom/engineering_wisdom.md`,
+     - `wisdom/strategic_wisdom.md`,
+     - `wisdom/design_wisdom.md`,
+     - `wisdom/risk_wisdom.md`,
+     - `patterns/antipatterns.md`,
+     - `patterns/success_patterns.md`,
+     - `patterns/trade_off_matrix.md`,
    - any existing files under `src/`, `tests/`, or docs relevant to that LEGO.
 
 2. Execute substeps for that LEGO (with GEN+REVIEW where appropriate):
 
    - **DESIGN**:  
-     - Define the LEGO’s interface, behavior, and data flow.  
+     - Consult wisdom files ([P-INTUITION]):
+       - Check `patterns/success_patterns.md` for applicable patterns.
+       - Use `patterns/trade_off_matrix.md` for design decisions.
+       - Apply triggers from `wisdom/engineering_wisdom.md` and `wisdom/design_wisdom.md`.
+       - Check `patterns/antipatterns.md` for potential issues.
+     - Define the LEGO's interface, behavior, and data flow.  
+     - Calculate confidence score (domain knowledge, requirements clarity, risk level, precedent match).
      - Run a REVIEW pass to simplify and align with KISS and `principles.md`.
 
    - **TEST AUTHORING**:  
@@ -391,15 +421,23 @@ Each LEGO-Orchestrator MUST:
 
    - **LEGO DOCUMENTATION**:  
      - Internal notes (why, trade-offs, alternatives).  
+     - Document intuition checks:
+       - Which wisdom principles were applied.
+       - Which antipatterns were avoided.
+       - Which trade-offs were resolved and how.
      - Optional public-facing docs if helpful.  
      - REVIEW for accuracy and usability.
 
    - **CODING (Implementation)**:  
+     - Apply engineering wisdom triggers (complexity, optimization, readability).
      - Implement the LEGO in `src/<lego>.<ext>`.  
      - REVIEW code for clarity, correctness, and simplicity.
+     - Pattern match: check for antipatterns during implementation.
 
    - **VALIDATION**:  
      - Run tests and any relevant commands (e.g., `pytest`, `npm test`, lint).  
+     - If LEGO is `sensitive` or risk level is CRITICAL/HIGH:
+       - Apply `wisdom/risk_wisdom.md` security principles.
      - If `r_and_d_mode` is `"thorough"`:
        - Build/run an evaluation harness for this LEGO.
        - If `sensitive = true`, run a REDTEAM REVIEW focused on privacy/security issues and record findings.
@@ -407,9 +445,33 @@ Each LEGO-Orchestrator MUST:
 3. Session hygiene:
 
    - After about 3–5 substantial Codex tasks within a LEGO-Orchestrator session:
-     - Update `lego_state_<name>.json` with progress and any `failure_count` changes.
+     - Update `lego_state_<name>.json` with:
+       - Progress and any `failure_count` changes.
+       - Confidence score and factors (Phase 1.5).
+       - Intuition check: wisdom applied, antipatterns avoided, trade-offs resolved.
      - Exit the session intentionally.
    - The Meta-Orchestrator will later relaunch the LEGO-Orchestrator in a fresh session as needed.
+
+   State format (with Phase 1.5 intuition tracking):
+   ```json
+   {
+     "lego_name": "example",
+     "status": "design_done",
+     "confidence_score": 0.85,
+     "confidence_factors": {
+       "domain_knowledge": 0.9,
+       "requirements_clarity": 0.8,
+       "risk_level": "medium",
+       "precedent_match": 0.9
+     },
+     "intuition_check": {
+       "wisdom_applied": ["Thompson #5: Do one thing well"],
+       "antipatterns_avoided": ["God Object"],
+       "trade_offs_resolved": {"simplicity_vs_power": "simplicity (KISS)"}
+     },
+     "failure_count": 0
+   }
+   ```
 
 ---
 
@@ -460,10 +522,22 @@ When all LEGOs are `done`:
     - known limitations,
     - recommended future improvements.
 
+- **Finalize APP_ORCHESTRATION.md**:
+  - Update all execution log checkpoints with final status.
+  - Fill in final approval section:
+    - Overall confidence score.
+    - All critical LEGOs validated.
+    - Security review complete (if applicable).
+    - Documentation complete.
+    - Ready for deployment assessment.
+  - Mark status as [COMPLETE].
+  - This file serves as the **permanent record** of app-specific orchestration decisions.
+
 - **If NEW APP MODE** (`.meta-version` did not exist at start):
   - Write `.meta-version` file (copy from `.meta-version.template`, update dates to November 24, 2025).
   - Write `.meta-manifest.json` file (copy from `.meta-manifest.template.json`, populate with actual generated files and timestamps using November 24, 2025).
   - Mark all generated files with `user_modified: false` initially.
+  - Include `APP_ORCHESTRATION.md` in manifest as a generated file.
 
 ---
 

@@ -340,4 +340,166 @@ This pattern enforces basic self-critique and metacognition.
     - `true`: pause after LEGO plan & high-level design for human approval.
     - `false`: proceed automatically.
 
+---
+
+## [P-INTUITION] Intuition & Judgment (Phase 1.5)
+
+The meta-orchestrator must exercise judgment in ambiguous situations by consulting accumulated wisdom and pattern libraries.
+
+### Wisdom Sources
+
+Consult these files during design and review phases:
+- `wisdom/engineering_wisdom.md` - Kernighan, Knuth, Dijkstra, Pike, Kay, Torvalds, etc.
+- `wisdom/strategic_wisdom.md` - Sun Tzu, Boyd, Clausewitz, Taleb, Kahneman
+- `wisdom/design_wisdom.md` - Dieter Rams, Christopher Alexander, Don Norman
+- `wisdom/risk_wisdom.md` - Taleb, Kahneman, Schneier, Saltzer & Schroeder
+- `patterns/antipatterns.md` - Common mistakes to avoid
+- `patterns/success_patterns.md` - Proven solutions to recurring problems
+- `patterns/trade_off_matrix.md` - Decision guidance for common trade-offs
+
+### When to Apply Wisdom
+
+- **REQUIREMENTS Phase**: Strategic wisdom, risk assessment
+- **LEGO Discovery**: Engineering wisdom, antipatterns, success patterns
+- **DESIGN Phase**: All wisdom categories, trade-off matrix
+- **CODING Phase**: Engineering wisdom, design principles
+- **REVIEW Phase**: All wisdom, pattern matching, antipattern detection
+- **VALIDATION Phase**: Risk wisdom, evaluation criteria
+
+### Decision Framework: Conservative vs Bold
+
+**Be CONSERVATIVE (favor simplicity, proven approaches) when:**
+- Data involves PII, financial, health information, or other sensitive data
+- User explicitly requests "production-ready" or "enterprise-grade"
+- Dependencies are critical (database, authentication, payments, security)
+- Failure cost is high (data loss, security breach, compliance violation)
+- Long-term maintenance is expected
+- Large team will work on this code
+- System handles external/untrusted input
+
+**Be BOLD (favor innovation, experimentation) when:**
+- User explicitly requests "experimental", "prototype", or "cutting-edge"
+- Internal tools or prototypes with low blast radius
+- `r_and_d_mode = "fast"` and exploration is the goal
+- Failure is recoverable and low-cost (easy rollback, isolated impact)
+- Short-term project or MVP
+- Small team that can adapt quickly
+- Learning opportunity with acceptable risk
+
+### Risk Assessment Matrix
+
+Apply during LEGO discovery and design:
+
+| Risk Level | Characteristics | Required Actions |
+|------------|----------------|------------------|
+| **CRITICAL** | PII, payments, auth, health data, security-critical | Mandatory red-team review, conservative technology choices, comprehensive tests (unit + integration + system), defense in depth, audit logging, principle of least privilege |
+| **HIGH** | Business logic, data integrity, external APIs, user-facing features | Standard GEN+REVIEW cycles, integration tests, error handling, input validation, monitoring |
+| **MEDIUM** | UI/UX, formatting, non-critical features, internal tools | Basic unit tests, simple review, standard patterns |
+| **LOW** | Logging, internal utilities, dev tools, temporary scaffolding | Minimal review, fast iteration, basic validation |
+
+### Trade-off Resolution Defaults
+
+When facing design choices, use these defaults (consult `patterns/trade_off_matrix.md` for details):
+
+1. **Simplicity vs Power**: Default to **simplicity** (KISS, Dijkstra, Rams)
+2. **Speed vs Quality**: If `r_and_d_mode = "fast"`, favor **speed**; if "thorough", favor **quality**
+3. **Build vs Buy**: Default to **buy** (use libraries/services, avoid NIH syndrome)
+4. **Monolith vs Microservices**: Default to **monolith** (split only when scaling requires it)
+5. **SQL vs NoSQL**: Default to **SQL** (Postgres/MySQL) unless specific need for NoSQL
+6. **Sync vs Async**: **Sync** for fast ops (< 1s), **async** for slow ops (> 5s)
+7. **Conservative vs Bold Tech**: **Conservative** for critical systems (Lindy Effect), **bold** for experiments
+
+### Confidence Scoring
+
+LEGO-orchestrators should track confidence in their design and implementation:
+
+```json
+{
+  "lego_name": "auth",
+  "status": "design",
+  "confidence_score": 0.85,
+  "confidence_factors": {
+    "domain_knowledge": 0.9,
+    "requirements_clarity": 0.8,
+    "risk_level": "critical",
+    "precedent_match": 0.9,
+    "team_familiarity": 0.8
+  },
+  "intuition_check": {
+    "wisdom_applied": [
+      "Schneier: Defense in depth",
+      "Saltzer: Least privilege",
+      "Taleb: Fail-safe defaults"
+    ],
+    "antipatterns_avoided": [
+      "Rolling custom crypto",
+      "Security through obscurity"
+    ],
+    "trade_offs_resolved": {
+      "jwt_vs_sessions": "sessions (simpler for this scale, stateful is acceptable)"
+    }
+  }
+}
+```
+
+**Confidence Score Calculation**:
+- Domain knowledge: 0.0-1.0 (how well-understood is this problem domain?)
+- Requirements clarity: 0.0-1.0 (how clear are the requirements?)
+- Precedent match: 0.0-1.0 (how closely does this match known patterns?)
+- Team familiarity: 0.0-1.0 (how familiar is the team with chosen technologies?)
+
+**Overall confidence** = average of factors
+
+**When confidence < 0.6**:
+- Flag for additional review
+- Consider prototype or spike to reduce uncertainty
+- Consult wisdom files more carefully
+- If still low confidence, escalate to user for guidance
+
+### Heuristic Triggers
+
+During DESIGN and REVIEW, automatically check for these triggers from wisdom files:
+
+**Engineering (from `wisdom/engineering_wisdom.md`)**:
+- Complexity > threshold → Kernighan's Debugging Principle (#1)
+- Mentions "optimize" before validation → Knuth's Premature Optimization (#2)
+- LEGO with > 3 responsibilities → Thompson's Unix Philosophy (#5)
+- Null returns → Hoare's Null Reference (#8)
+
+**Strategic (from `wisdom/strategic_wisdom.md`)**:
+- Vague requirements → Sun Tzu's Know Yourself (#1)
+- External dependencies → Clausewitz's Friction (#3)
+- Critical systems → Taleb's Barbell Strategy (#5)
+
+**Design (from `wisdom/design_wisdom.md`)**:
+- New feature → Rams' "Is it useful?" (#1.2)
+- Interface design → Norman's Affordances (#4.1)
+- Multiple similar operations → Norman's Consistency (#4.7)
+
+**Risk (from `wisdom/risk_wisdom.md`)**:
+- Sensitive data → Schneier's Security Mindset (#8)
+- Auth/authz → Saltzer's Least Privilege (#9.1)
+- External services → Taleb's Antifragile (#6)
+
+### Pattern Matching
+
+During DESIGN and REVIEW:
+1. Check if problem matches a success pattern from `patterns/success_patterns.md`
+2. Check if design exhibits an antipattern from `patterns/antipatterns.md`
+3. If antipattern detected, flag and suggest remedy
+4. If success pattern fits, apply it and document the choice
+
+### Intuition Documentation
+
+For each LEGO, document intuition checks in `lego_state_<name>.json`:
+- Which wisdom principles were applied
+- Which antipatterns were avoided
+- Which trade-offs were resolved and why
+- Confidence score and factors
+- Any concerns or uncertainties
+
+This creates a learning trail for future reference and continuous improvement.
+
+---
+
 These principles are binding on all Codex sessions orchestrated within this repository.
