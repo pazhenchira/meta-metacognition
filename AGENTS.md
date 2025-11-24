@@ -61,21 +61,50 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
      - **Same version, app_intent.md CHANGED**: MAINTENANCE MODE
        - User wants to add/remove features or fix bugs in existing app.
        - App's purpose/requirements are changing.
-       - Respect `.meta-manifest.json`: do NOT regenerate files where `user_modified: true`.
+       - **File-by-File Evaluation** (intelligent maintenance):
+         - Files with `user_modified: true` → PROTECTED (never touch)
+         - Files with `user_modified: false` or no manifest entry → EVALUATE:
+           - Apply wisdom/intuition (Phase 1.5)
+           - Detect antipatterns (God Object, Golden Hammer, etc.)
+           - Check LEGO principles (single responsibility, KISS)
+           - Assess test coverage, error handling, security
+           - **Decision per file**:
+             - KEEP: Well-structured, follows principles, has tests
+             - REFACTOR: Functional but has issues → modify incrementally, preserve working logic
+             - REGENERATE: Severe antipatterns or missing critical features → delete and rebuild
        - Re-run requirements discovery (Section 4) with updated `app_intent.md`.
+       - Generate evaluation report in `APP_ORCHESTRATION.md` showing:
+         - What was found (architecture, antipatterns, quality)
+         - What decision was made per file (KEEP/REFACTOR/REGENERATE)
+         - Why (cite wisdom principles, antipatterns avoided, trade-offs)
+       - Show plan to user with recommendations, get approval.
+       - Execute approved plan: keep, refactor, or regenerate files as decided.
        - Update `lego_plan.json` with new/modified/removed LEGOs.
-       - Generate new LEGOs, modify existing ones as needed.
        - Update `.meta-manifest.json` with new generated files.
      - **Different version, app_intent.md UNCHANGED**: ENGINE UPGRADE MODE
        - User wants to adopt new meta-orchestrator features.
        - App's purpose stays the same, but gains new engine capabilities.
        - See `UPGRADING.md` for detailed upgrade workflow.
-       - Generate upgrade plan showing:
-         - New meta-orchestrator features available (e.g., config_validation from v1.1.0).
-         - Which files will be added/modified (typically new LEGOs, tests).
-         - Which files are protected (user_modified: true).
-       - Show plan to user, get approval.
-       - Apply upgrade safely (add new LEGOs, don't touch app logic).
+       - **Intelligent Upgrade Evaluation**:
+         - Compare old version features vs new version features.
+         - Scan existing codebase with new wisdom/intuition capabilities.
+         - **File-by-File Evaluation**:
+           - Files with `user_modified: true` → PROTECTED (never touch)
+           - Files with `user_modified: false` or no manifest → EVALUATE:
+             - Apply Phase 1.5 wisdom (antipattern detection, LEGO principles)
+             - Check if file benefits from new meta-orchestrator features
+             - **Decision per file**:
+               - KEEP: Already well-structured, no new features needed
+               - ENHANCE: Add new features (e.g., circuit breaker, config validation) without breaking
+               - REGENERATE: Would benefit significantly from rebuild with new patterns
+       - Generate upgrade plan in `APP_ORCHESTRATION.md` showing:
+         - New meta-orchestrator features available (e.g., intuition system in v1.2.0)
+         - Current architecture evaluation (antipatterns, quality, test coverage)
+         - Which files will be kept/enhanced/regenerated and why
+         - Which new LEGOs will be added (e.g., config_validator)
+         - Which files are protected (user_modified: true)
+       - Show plan to user with recommendations, get approval.
+       - Apply upgrade: add new LEGOs, enhance or regenerate files as decided.
        - Update `.meta-version` and `.meta-manifest.json`.
      - **Different version, app_intent.md CHANGED**: HYBRID MODE
        - User wants BOTH new engine features AND app requirement changes.
@@ -88,21 +117,125 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.1.0** (see `VERSION` file)
+Current meta-orchestrator version: **1.4.0** (see `VERSION` file)
 
-**Features in v1.1.0**:
+**Features in v1.4.0** (Phase 1.7):
+- Intelligent Maintenance Mode (evaluation-driven per-file decisions)
+- Intelligent Upgrade Evaluation (KEEP/ENHANCE/REGENERATE)
+- Systematic evaluation framework with confidence scoring
+- Antipattern detection integration (God Object, Golden Hammer, etc.)
+- Wisdom-based decision making (Thompson #5, KISS, single responsibility)
+- Quality metrics assessment (test coverage >80%, error handling, security)
+- Transparent documentation in APP_ORCHESTRATION.md
+
+**Features in v1.3.0** (Phase 1.6):
+- App-specific orchestration documentation (APP_ORCHESTRATION.md)
+- Human-readable execution plans with wisdom integration
+- Risk & confidence assessment reporting
+
+**Features in v1.2.0** (Phase 1.5):
+- Intuition & Wisdom System (~24,000 lines)
+- Engineering wisdom (Thompson, Knuth, Pike, Kernighan)
+- Antipattern detection (patterns/antipatterns.md)
+- Success patterns library (patterns/success_patterns.md)
+- Trade-off decision matrix (patterns/trade_off_matrix.md)
+
+**Features in v1.1.0** (Phase 1):
 - LEGO architecture
 - Unit tests
-- Session isolation (Phase 1)
-- Config validation (Phase 1)
-- Integration tests (Phase 1)
-- System tests (Phase 1)
-- Runtime adapters (Phase 1)
+- Session isolation
+- Config validation
+- Integration tests
+- System tests
+- Runtime adapters
 
 If upgrading from v1.0.0 or earlier:
 - Recommend adding `config_validator` LEGO (see `CONFIG_VALIDATION.md`).
 - Session isolation is internal (no app changes needed).
 - Integration/system tests improve reliability (recommend adopting).
+
+### Evaluation Framework (Phase 1.5 Integration)
+
+When evaluating existing files in MAINTENANCE or ENGINE UPGRADE modes, apply this systematic framework:
+
+#### Evaluation Criteria
+
+For each file with `user_modified: false` (or no manifest entry):
+
+1. **Antipattern Detection** (from `patterns/antipatterns.md`):
+   - God Object: Does this file have too many responsibilities?
+   - Golden Hammer: Is the solution appropriate, or force-fit?
+   - Magic Numbers: Unexplained constants without named variables?
+   - Premature Optimization: Complex code without proven need?
+   - Copy-Paste Programming: Duplicated logic instead of reusable functions?
+
+2. **LEGO Principles** (from `principles.md` and `wisdom/engineering_wisdom.md`):
+   - Thompson #5: Does it "do one thing well"?
+   - Single Responsibility: Could this be split into smaller LEGOs?
+   - KISS: Is it as simple as possible, or unnecessarily complex?
+   - Interface Clarity: Are inputs/outputs well-defined?
+
+3. **Quality Metrics**:
+   - Test Coverage: >80% with edge cases and error paths?
+   - Error Handling: Circuit breaker, retry logic, fail-safe defaults?
+   - Documentation: Clear purpose, trade-offs, alternatives?
+   - Security: Schneier principles, Saltzer & Schroeder's 8 principles applied?
+
+4. **Confidence Scoring** (0.0 - 1.0):
+   - Domain Knowledge: How well does code match domain best practices?
+   - Requirements Clarity: Does it address a clear need from `app_intent.md`?
+   - Risk Level: Critical (data/security) vs Low (UI formatting)?
+   - Precedent Match: Similar to successful patterns in `patterns/success_patterns.md`?
+
+#### Decision Matrix
+
+Based on evaluation, assign each file to one category:
+
+- **KEEP** (Score >0.8, no antipatterns):
+  - Well-structured, follows LEGO principles
+  - Has comprehensive tests (>80% coverage)
+  - Clear error handling and documentation
+  - No security or privacy issues
+  - **Action**: Preserve as-is, do not modify
+
+- **REFACTOR** (Score 0.5-0.8, minor issues):
+  - Functional and mostly correct
+  - Has some antipatterns (Magic Numbers, missing tests)
+  - Could be simplified but logic is sound
+  - **Action**: Modify incrementally:
+    - Add missing tests
+    - Extract magic numbers to constants
+    - Simplify complex logic
+    - Preserve existing working behavior
+
+- **REGENERATE** (Score <0.5, severe antipatterns):
+  - God Object or other critical antipatterns
+  - Missing error handling or security measures
+  - No tests or very low coverage (<50%)
+  - Does not align with updated `app_intent.md` requirements
+  - **Action**: Delete and rebuild from scratch using current wisdom
+
+#### Documentation in APP_ORCHESTRATION.md
+
+For each evaluated file, document:
+
+1. **What Was Found**:
+   - Current architecture and structure
+   - Antipatterns detected (with specific examples)
+   - Quality assessment (test coverage, error handling, security)
+   - Confidence score and factors
+
+2. **Decision Made**:
+   - KEEP / REFACTOR / REGENERATE
+   - Specific rationale (cite wisdom principles and antipatterns)
+
+3. **Why This Decision**:
+   - Which wisdom principles support this decision
+   - Which antipatterns were avoided or need fixing
+   - Which trade-offs were considered (from `patterns/trade_off_matrix.md`)
+   - How this aligns with KISS and LEGO principles
+
+This evaluation framework ensures transparent, wisdom-driven decisions that the user can understand and approve before execution.
 
 ---
 
