@@ -87,7 +87,7 @@ I want an app that analyzes stock options and identifies profitable trades.
 
 ```bash
 # Using GitHub Copilot:
-@workspace Act as the meta-orchestrator in AGENTS.md and build this app
+@workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
 
 # The system will:
 # ✅ Ask you 2-3 clarifying questions
@@ -483,12 +483,12 @@ See [UPGRADING.md](UPGRADING.md) for detailed upgrade workflows.
 ### Files That Define The Engine (Don't Edit Unless You're Improving The Engine Itself)
 
 | File | Purpose |
-|------|---------|
-| `AGENTS.md` | Meta-orchestrator behavior (the "brain") |
-| `principles.md` | Engineering principles (KISS, LEGO, etc.) |
-| `intent.md` | Meta-cognitive philosophy |
-| `wisdom/` | 24,000 lines of engineering wisdom |
-| `patterns/` | Antipatterns, success patterns, trade-off matrices |
+|------|---------||
+| `.meta/AGENTS.md` | Meta-orchestrator behavior (the "brain") |
+| `.meta/principles.md` | Engineering principles (KISS, LEGO, etc.) |
+| `.meta/intent.md` | Meta-cognitive philosophy |
+| `.meta/wisdom/` | 24,000 lines of engineering wisdom |
+| `.meta/patterns/` | Antipatterns, success patterns, trade-off matrices |
 
 ### Files The System Generates (In Your App Directory)
 
@@ -696,9 +696,9 @@ See [UPGRADING.md](UPGRADING.md) for detailed maintenance workflows.
 ### Core Documentation
 
 - **[CHANGELOG.md](CHANGELOG.md)** - Complete version history (v1.0.0 → v1.5.0), upgrade paths, feature timeline
-- **[AGENTS.md](AGENTS.md)** - The meta-orchestrator's "brain" (how it makes decisions)
+- **[.meta/AGENTS.md](.meta/AGENTS.md)** - The meta-orchestrator's "brain" (how it makes decisions)
 - **[INTUITION.md](INTUITION.md)** - Complete wisdom system (50+ principles, antipatterns, success patterns)
-- **[principles.md](principles.md)** - Global design principles (KISS, LEGO, testing, privacy)
+- **[.meta/principles.md](.meta/principles.md)** - Global design principles (KISS, LEGO, testing, privacy)
 
 ### Workflows & Guides
 
@@ -710,9 +710,9 @@ See [UPGRADING.md](UPGRADING.md) for detailed maintenance workflows.
 
 ### Deep Dives
 
-- **[intent.md](intent.md)** - Meta-orchestrator's operational philosophy
-- **[wisdom/](wisdom/)** - Engineering wisdom from legendary figures (Kernighan, Knuth, Taleb, etc.)
-- **[patterns/](patterns/)** - Antipatterns to avoid, success patterns to follow, trade-off matrices
+- **[.meta/intent.md](.meta/intent.md)** - Meta-orchestrator's operational philosophy
+- **[.meta/wisdom/](.meta/wisdom/)** - Engineering wisdom from legendary figures (Kernighan, Knuth, Taleb, etc.)
+- **[.meta/patterns/](.meta/patterns/)** - Antipatterns to avoid, success patterns to follow, trade-off matrices
 - **[runtime_adapters/](runtime_adapters/)** - How to add support for new AI tools (future feature)
 
 ---
@@ -756,10 +756,10 @@ Want to improve the meta-orchestrator itself? Here's how:
 
 **You should edit these files** if you want to make the meta-orchestrator smarter:
 
-- **AGENTS.md** - Core orchestration logic
-- **principles.md** - Design principles
-- **wisdom/** - Add new engineering wisdom or principles
-- **patterns/** - Add new antipatterns or success patterns
+- **.meta/AGENTS.md** - Core orchestration logic
+- **.meta/principles.md** - Design principles
+- **.meta/wisdom/** - Add new engineering wisdom or principles
+- **.meta/patterns/** - Add new antipatterns or success patterns
 
 **Submit a PR with**:
 1. Clear description of what you're improving
@@ -820,12 +820,12 @@ MIT License - See [LICENSE](LICENSE) file
 # === NEW APP ===
 # 1. Fill in templates/app_intent.md with your idea
 # 2. Run:
-@workspace Act as the meta-orchestrator in AGENTS.md and build this app
+@workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
 
 # === ADD FEATURE TO EXISTING APP ===
 # 1. Edit app_intent.md to add the feature
 # 2. Run:
-@workspace Act as meta-orchestrator. Add feature from app_intent.md (MAINTENANCE MODE)
+@workspace Act as meta-orchestrator (.meta/AGENTS.md). Add feature from app_intent.md (MAINTENANCE MODE)
 
 # === UPGRADE META-ORCHESTRATOR ===
 # 1. Copy new .meta/ files from latest version (if you have them in .meta/)
@@ -843,4 +843,4 @@ cat VERSION        # Shows current meta-orchestrator version (1.5.0)
 
 ---
 
-**Remember**: This README is for humans learning the system. The AGENTS.md is the detailed technical contract for the AI. 🙂
+**Remember**: This README is for humans learning the system. The .meta/AGENTS.md is the detailed technical contract for the AI. 🙂

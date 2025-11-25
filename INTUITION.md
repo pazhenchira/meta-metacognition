@@ -14,7 +14,7 @@ Phase 1.5 adds **intuition and judgment capabilities** to the meta-orchestrator 
 
 ## What Was Added
 
-### 1. Wisdom Libraries (`wisdom/`)
+### 1. Wisdom Libraries (`.meta/wisdom/`)
 
 Distilled principles from historical figures with actionable triggers:
 
@@ -36,7 +36,7 @@ Distilled principles from historical figures with actionable triggers:
 
 **Total**: 50+ principles with triggers and actions
 
-### 2. Pattern Libraries (`patterns/`)
+### 2. Pattern Libraries (`.meta/patterns/`)
 
 - **`antipatterns.md`** (15 antipatterns)
   - God Object, Golden Hammer, Premature Optimization, NIH Syndrome, Cargo Cult, Magic Numbers, Stringly Typed, Big Ball of Mud, Leaky Abstractions, Analysis Paralysis, Resume-Driven Development, Shotgun Surgery, Lava Flow, Inner Platform Effect, Test imbalances
@@ -50,9 +50,9 @@ Distilled principles from historical figures with actionable triggers:
   - Simplicity vs Power, Speed vs Quality, Build vs Buy, Monolith vs Microservices, SQL vs NoSQL, Normalize vs Denormalize, Sync vs Async, Push vs Pull, Optimistic vs Pessimistic, Stateless vs Stateful, Centralized vs Distributed, Vertical vs Horizontal Scaling, Dynamic vs Static Typing, Conservative vs Bold Tech, Generalization vs Specialization
   - Each with: decision matrix, defaults, decision rules
 
-### 3. Intuition Framework (`principles.md` [P-INTUITION])
+### 3. Intuition Framework (`.meta/principles.md` [P-INTUITION])
 
-New section added to `principles.md`:
+New section added to `.meta/principles.md`:
 
 - **When to Apply Wisdom**: Maps wisdom to pipeline phases (REQUIREMENTS, DESIGN, CODING, REVIEW, VALIDATION)
 - **Decision Framework**: Conservative vs Bold (when to favor proven approaches vs experimentation)
@@ -63,7 +63,7 @@ New section added to `principles.md`:
 - **Pattern Matching**: Success patterns vs antipatterns
 - **Intuition Documentation**: How to track intuition checks in LEGO state
 
-### 4. Updated AGENTS.md
+### 4. Updated `.meta/AGENTS.md`
 
 Section 8 (LEGO-Orchestrator Sessions) enhanced to:
 - Read wisdom files before starting work
@@ -100,8 +100,8 @@ Section 8 (LEGO-Orchestrator Sessions) enhanced to:
 ## How It Works
 
 ### During REQUIREMENTS Phase
-1. Consult `wisdom/strategic_wisdom.md` (Sun Tzu #1: "Know yourself and the enemy")
-2. Use `wisdom/risk_wisdom.md` for risk assessment
+1. Consult `.meta/wisdom/strategic_wisdom.md` (Sun Tzu #1: "Know yourself and the enemy")
+2. Use `.meta/wisdom/risk_wisdom.md` for risk assessment
 
 ### During LEGO Discovery
 3. Check `patterns/antipatterns.md` to avoid God LEGOs
@@ -115,15 +115,15 @@ Section 8 (LEGO-Orchestrator Sessions) enhanced to:
 9. Check for antipatterns
 
 ### During CODING Phase
-10. Apply `wisdom/engineering_wisdom.md` triggers (complexity, optimization, etc.)
-11. Follow `wisdom/design_wisdom.md` (readable code, meaningful names)
+10. Apply `.meta/wisdom/engineering_wisdom.md` triggers (complexity, optimization, etc.)
+11. Follow `.meta/wisdom/design_wisdom.md` (readable code, meaningful names)
 
 ### During REVIEW Phase
 12. Pattern matching: success patterns vs antipatterns
 13. Trust intuition: "Does this feel right?" (Alexander #3 Design)
 
 ### During VALIDATION Phase
-14. Apply `wisdom/risk_wisdom.md` for sensitive LEGOs
+14. Apply `.meta/wisdom/risk_wisdom.md` for sensitive LEGOs
 15. Red-team if critical
 
 ---
@@ -266,17 +266,17 @@ Format:
 ## Files Changed
 
 **New Files** (7):
-- `wisdom/engineering_wisdom.md`
-- `wisdom/strategic_wisdom.md`
-- `wisdom/design_wisdom.md`
-- `wisdom/risk_wisdom.md`
-- `patterns/antipatterns.md`
-- `patterns/success_patterns.md`
-- `patterns/trade_off_matrix.md`
+- `.meta/wisdom/engineering_wisdom.md`
+- `.meta/wisdom/strategic_wisdom.md`
+- `.meta/wisdom/design_wisdom.md`
+- `.meta/wisdom/risk_wisdom.md`
+- `.meta/patterns/antipatterns.md`
+- `.meta/patterns/success_patterns.md`
+- `.meta/patterns/trade_off_matrix.md`
 
-**Modified Files** (2):
-- `principles.md` (added [P-INTUITION] section)
-- `AGENTS.md` (Section 8 enhanced with wisdom consultation)
+**Modified**:
+- `.meta/principles.md` (added [P-INTUITION] section)
+- `.meta/AGENTS.md` (Section 8 enhanced with wisdom consultation)
 
 **Total**: 9 files, ~8000+ lines of wisdom and patterns
 

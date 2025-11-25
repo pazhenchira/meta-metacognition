@@ -220,7 +220,7 @@ Apps using v1.4.0 can:
 
 ### Added
 
-**Wisdom Library** (~24,000 lines, 4 files in `wisdom/`):
+**Wisdom Library** (~24,000 lines, 4 files in `.meta/wisdom/`):
 
 1. **`engineering_wisdom.md`** (~3000 lines):
    - 15 principles from 14 legendary engineers
@@ -259,7 +259,7 @@ Apps using v1.4.0 can:
      - Saltzer & Schroeder: Least privilege, fail-safe defaults, psychological acceptability
    - Applied during: VALIDATION (sensitive LEGOs)
 
-**Patterns Library** (~9,500 lines, 3 files in `patterns/`):
+**Patterns Library** (~9,500 lines, 3 files in `.meta/patterns/`):
 
 1. **`antipatterns.md`** (~3500 lines):
    - 15 common antipatterns with detection rules
@@ -279,7 +279,7 @@ Apps using v1.4.0 can:
    - Each includes: trade-off description, when to favor each side, decision factors, red flags
    - Applied during: DESIGN
 
-**Intuition Integration** ([P-INTUITION] in principles.md):
+**Intuition Integration** ([P-INTUITION] in .meta/principles.md):
 - LEGO-Orchestrators MUST consult wisdom files during DESIGN, CODING, VALIDATION
 - Confidence scoring (0.0-1.0) based on:
   - Domain knowledge (how well code matches domain best practices)
@@ -393,9 +393,9 @@ LEGOs designed with Phase 1.5 will:
 ### Added
 
 **Core Meta-Orchestrator**:
-- `AGENTS.md` - Main orchestrator instructions
-- `intent.md` - Meta-level orchestration intent (how the pipeline behaves)
-- `principles.md` - Global design principles (KISS, LEGO, privacy, testing, R&D modes)
+- `.meta/AGENTS.md` - Main orchestrator instructions
+- `.meta/intent.md` - Meta-level orchestration intent (how the pipeline behaves)
+- `.meta/principles.md` - Global design principles (KISS, LEGO, privacy, testing, R&D modes)
 - `meta_config.json` - Configuration (require_lego_plan_approval, r_and_d_mode)
 
 **Pipeline Stages**:
@@ -445,7 +445,7 @@ LEGOs designed with Phase 1.5 will:
 **File Roles**:
 - `intent.md` → HOW the pipeline works (meta-orchestration)
 - `app_intent.md` → WHAT to build (application requirements)
-- `principles.md` → Global design constraints (KISS, LEGO, privacy)
+- `.meta/principles.md` → Global design constraints (KISS, LEGO, privacy)
 
 **R&D Modes**:
 - `fast`: Minimal cycles, lighter evaluation, red-team only for obviously sensitive LEGOs
@@ -574,8 +574,8 @@ This is a living document. As the meta-orchestrator evolves, update this CHANGEL
 - **Main Documentation**: `AGENTS.md` (meta-orchestrator engine)
 - **Principles**: `principles.md` (KISS, LEGO, privacy, testing)
 - **Intuition**: `INTUITION.md` (user-facing wisdom system guide)
-- **Wisdom Library**: `wisdom/` (4 files, ~14,000 lines)
-- **Patterns Library**: `patterns/` (3 files, ~9,500 lines)
+- **Wisdom Library**: `.meta/wisdom/` (4 files, ~14,000 lines)
+- **Patterns Library**: `.meta/patterns/` (3 files, ~9,500 lines)
 - **Testing**: `TESTING_STRATEGY.md` (unit, integration, system tests)
 - **Config**: `CONFIG_VALIDATION.md` (config_validator LEGO spec)
 - **Deployment**: `DEPLOYMENT_GUIDE.md` (production deployment)

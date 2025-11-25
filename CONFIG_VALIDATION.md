@@ -947,7 +947,7 @@ When building the `config_validator` LEGO, the LEGO-Orchestrator MUST:
 
 ## Integration with LEGO Discovery
 
-In AGENTS.md Section 5 (LEGO Discovery), the meta-orchestrator MUST:
+In .meta/AGENTS.md Section 5 (LEGO Discovery), the meta-orchestrator MUST:
 
 1. **Always generate a `config_validator` LEGO** (priority: critical)
 2. **Extract configuration requirements from other LEGOs**:

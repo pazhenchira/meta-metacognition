@@ -11,7 +11,7 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
 
 You MUST treat these files as having distinct roles:
 
-- `intent.md` → **Meta-Orchestrator Intent**  
+- `.meta/intent.md` → **Meta-Orchestrator Intent**  
   Describes how the meta-cognitive pipeline itself should behave: hierarchy, LEGO orchestrators,
   GEN+REVIEW, session hygiene, safety valves, etc. This file is about the ENGINE, not any one app.
 
@@ -19,7 +19,7 @@ You MUST treat these files as having distinct roles:
   Describes the specific application the user wants you to build: features, domain, constraints,
   data sensitivity, external APIs, etc. This is the ONLY file that describes the app.
 
-- `principles.md` → **Global Principles**  
+- `.meta/principles.md` → **Global Principles**  
   KISS, LEGO architecture, privacy, testing, documentation, red-team, R&D modes, etc.
 
 - `meta_config.json` → **Configuration**  
@@ -29,12 +29,12 @@ You MUST treat these files as having distinct roles:
 
 Rules:
 
-- Use `intent.md`, `principles.md`, and `meta_config.json` to understand **HOW** to orchestrate.
+- Use `.meta/intent.md`, `.meta/principles.md`, and `meta_config.json` to understand **HOW** to orchestrate.
 - Use `app_intent.md` to understand **WHAT** to build.
 - If `app_intent.md` is missing or empty:
   - Ask the user to fill it.
   - Stop without building anything.
-- If you detect app-specific content in `intent.md`, warn the user and suggest moving it to `app_intent.md`, then stop.
+- If you detect app-specific content in `.meta/intent.md`, warn the user and suggest moving it to `app_intent.md`, then stop.
 
 ---
 
@@ -47,7 +47,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 1. **If `.meta-version` does NOT exist**: **NEW APP MODE**
    - This is a fresh build.
    - Proceed with normal pipeline (Sections 1-12).
-   - At completion, write `.meta-version` (using `templates/.meta-version.template` as a guide) and `.meta-manifest.json` (using `templates/.meta-manifest.template.json` as a guide).
+   - At completion, write `.meta-version` (using `.meta/templates/.meta-version.template` as a guide) and `.meta-manifest.json` (using `.meta/templates/.meta-manifest.template.json` as a guide).
 
 2. **If `.meta-version` exists**: **UPGRADE OR MAINTENANCE MODE**
    - Read `.meta-version` to see which meta-orchestrator version built this app.
@@ -145,9 +145,9 @@ Current meta-orchestrator version: **1.5.0** (see `VERSION` file)
 **Features in v1.2.0** (Phase 1.5):
 - Intuition & Wisdom System (~24,000 lines)
 - Engineering wisdom (Thompson, Knuth, Pike, Kernighan)
-- Antipattern detection (patterns/antipatterns.md)
-- Success patterns library (patterns/success_patterns.md)
-- Trade-off decision matrix (patterns/trade_off_matrix.md)
+- Antipattern detection (.meta/patterns/antipatterns.md)
+- Success patterns library (.meta/patterns/success_patterns.md)
+- Trade-off decision matrix (.meta/patterns/trade_off_matrix.md)
 
 **Features in v1.1.0** (Phase 1):
 - LEGO architecture
@@ -171,14 +171,14 @@ When evaluating existing files in MAINTENANCE or ENGINE UPGRADE modes, apply thi
 
 For each file with `user_modified: false` (or no manifest entry):
 
-1. **Antipattern Detection** (from `patterns/antipatterns.md`):
+1. **Antipattern Detection** (from `.meta/patterns/antipatterns.md`):
    - God Object: Does this file have too many responsibilities?
    - Golden Hammer: Is the solution appropriate, or force-fit?
    - Magic Numbers: Unexplained constants without named variables?
    - Premature Optimization: Complex code without proven need?
    - Copy-Paste Programming: Duplicated logic instead of reusable functions?
 
-2. **LEGO Principles** (from `principles.md` and `wisdom/engineering_wisdom.md`):
+2. **LEGO Principles** (from `.meta/principles.md` and `.meta/wisdom/engineering_wisdom.md`):
    - Thompson #5: Does it "do one thing well"?
    - Single Responsibility: Could this be split into smaller LEGOs?
    - KISS: Is it as simple as possible, or unnecessarily complex?
@@ -194,7 +194,7 @@ For each file with `user_modified: false` (or no manifest entry):
    - Domain Knowledge: How well does code match domain best practices?
    - Requirements Clarity: Does it address a clear need from `app_intent.md`?
    - Risk Level: Critical (data/security) vs Low (UI formatting)?
-   - Precedent Match: Similar to successful patterns in `patterns/success_patterns.md`?
+   - Precedent Match: Similar to successful patterns in `.meta/patterns/success_patterns.md`?
 
 #### Decision Matrix
 
@@ -241,7 +241,7 @@ For each evaluated file, document:
 3. **Why This Decision**:
    - Which wisdom principles support this decision
    - Which antipatterns were avoided or need fixing
-   - Which trade-offs were considered (from `patterns/trade_off_matrix.md`)
+   - Which trade-offs were considered (from `.meta/patterns/trade_off_matrix.md`)
    - How this aligns with KISS and LEGO principles
 
 This evaluation framework ensures transparent, wisdom-driven decisions that the user can understand and approve before execution.
@@ -290,7 +290,7 @@ Use:
 
 Read:
 
-- `principles.md` – global design & R&D principles.
+- `.meta/principles.md` – global design & R&D principles.
 - `intent.md` – meta-level orchestration intent (how the pipeline should behave).
 
 You may synthesize these into a `system_prompt_global.txt` file that you reuse in nested Codex calls.
@@ -565,7 +565,7 @@ Using `requirements.md` and **`essence.md`** (NOT `intent.md`):
      - Responsibility: Validate all required configuration and guide setup
      - See `CONFIG_VALIDATION.md` for complete requirements
 
-- **ALWAYS generate a `config_validator` LEGO first** (see [P-CONFIG] in `principles.md`):
+- **ALWAYS generate a `config_validator` LEGO first** (see [P-CONFIG] in `.meta/principles.md`):
   - Type: `config_validation`
   - Responsibility: Validate all required configuration and guide setup
   - Inputs: `.env`, config files, external service endpoints (from `external_services.md`)
@@ -656,30 +656,30 @@ Each LEGO-Orchestrator MUST:
 
 1. Read:
    - its LEGO entry in `lego_plan.json`,
-   - `principles.md` (including [P-INTUITION]),
+   - `.meta/principles.md` (including [P-INTUITION]),
    - `meta_config.json`,
    - `lego_state_<name>.json` (create if missing),
    - Wisdom files (Phase 1.5):
-     - `wisdom/engineering_wisdom.md`,
-     - `wisdom/strategic_wisdom.md`,
-     - `wisdom/design_wisdom.md`,
-     - `wisdom/risk_wisdom.md`,
-     - `patterns/antipatterns.md`,
-     - `patterns/success_patterns.md`,
-     - `patterns/trade_off_matrix.md`,
+     - `.meta/wisdom/engineering_wisdom.md`,
+     - `.meta/wisdom/strategic_wisdom.md`,
+     - `.meta/wisdom/design_wisdom.md`,
+     - `.meta/wisdom/risk_wisdom.md`,
+     - `.meta/patterns/antipatterns.md`,
+     - `.meta/patterns/success_patterns.md`,
+     - `.meta/patterns/trade_off_matrix.md`,
    - any existing files under `src/`, `tests/`, or docs relevant to that LEGO.
 
 2. Execute substeps for that LEGO (with GEN+REVIEW where appropriate):
 
    - **DESIGN**:  
      - Consult wisdom files ([P-INTUITION]):
-       - Check `patterns/success_patterns.md` for applicable patterns.
-       - Use `patterns/trade_off_matrix.md` for design decisions.
-       - Apply triggers from `wisdom/engineering_wisdom.md` and `wisdom/design_wisdom.md`.
-       - Check `patterns/antipatterns.md` for potential issues.
+       - Check `.meta/patterns/success_patterns.md` for applicable patterns.
+       - Use `.meta/patterns/trade_off_matrix.md` for design decisions.
+       - Apply triggers from `.meta/wisdom/engineering_wisdom.md` and `.meta/wisdom/design_wisdom.md`.
+       - Check `.meta/patterns/antipatterns.md` for potential issues.
      - Define the LEGO's interface, behavior, and data flow.  
      - Calculate confidence score (domain knowledge, requirements clarity, risk level, precedent match).
-     - Run a REVIEW pass to simplify and align with KISS and `principles.md`.
+     - Run a REVIEW pass to simplify and align with KISS and `.meta/principles.md`.
 
    - **TEST AUTHORING**:  
      - Write tests for the LEGO’s behavior, edge cases, and errors.  
@@ -703,7 +703,7 @@ Each LEGO-Orchestrator MUST:
    - **VALIDATION**:  
      - Run tests and any relevant commands (e.g., `pytest`, `npm test`, lint).  
      - If LEGO is `sensitive` or risk level is CRITICAL/HIGH:
-       - Apply `wisdom/risk_wisdom.md` security principles.
+       - Apply `.meta/wisdom/risk_wisdom.md` security principles.
      - If `r_and_d_mode` is `"thorough"`:
        - Build/run an evaluation harness for this LEGO.
        - If `sensitive = true`, run a REDTEAM REVIEW focused on privacy/security issues and record findings.
@@ -768,7 +768,7 @@ If a step or substep hits `failure_count >= 3` or the pipeline stalls (no progre
 - Write `meta_error.md` describing:
   - which step/lego failed,
   - what was attempted,
-  - what the user should adjust (e.g., `app_intent.md`, `principles.md`, dependencies).
+  - what the user should adjust (e.g., `app_intent.md`, `.meta/principles.md`, dependencies).
 - Avoid further retries for that part until the user modifies the setup.
 
 ---
@@ -917,7 +917,7 @@ You must:
 
 - Use `intent.md` to understand **how** the meta pipeline should operate.
 - Use `app_intent.md` to understand **what** application to build.
-- Use `principles.md` and `meta_config.json` to constrain and tune behavior.
+- Use `.meta/principles.md` and `meta_config.json` to constrain and tune behavior.
 - Decompose the app into KISS LEGO blocks.
 - Run per-LEGO orchestrators with GEN+REVIEW substeps.
 - Maintain session hygiene, checkpoints, and restartable state.

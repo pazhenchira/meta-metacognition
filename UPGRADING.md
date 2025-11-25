@@ -174,10 +174,12 @@ your-project/
 │   ├── intent.md
 │   ├── principles.md
 │   ├── meta_config.json
+│   ├── wisdom/
+│   ├── patterns/
+│   ├── templates/
 │   ├── SESSION_ISOLATION.md
 │   ├── TESTING_STRATEGY.md
 │   ├── CONFIG_VALIDATION.md
-│   ├── agent_runtime.json
 │   ├── runtime_adapters/
 │   └── VERSION                     # Engine version identifier
 │
@@ -208,8 +210,9 @@ Move all meta-orchestrator files into `.meta/`:
 ```bash
 mkdir .meta
 mv AGENTS.md intent.md principles.md meta_config.json .meta/
+mv wisdom/ patterns/ templates/ .meta/
 mv SESSION_ISOLATION.md TESTING_STRATEGY.md CONFIG_VALIDATION.md .meta/
-mv agent_runtime.json runtime_adapters/ .meta/
+mv runtime_adapters/ .meta/
 ```
 
 **Benefits**:
@@ -454,7 +457,7 @@ git merge upgrade-meta-orchestrator
 
 ---
 
-## Implementation in AGENTS.md
+## Implementation in .meta/AGENTS.md
 
 Add new section **"0. VERSION CHECK & UPGRADE MODE"**:
 

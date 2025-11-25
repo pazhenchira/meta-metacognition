@@ -1,6 +1,6 @@
 # Session Isolation & Multi-Agent Architecture
 
-**NOTE**: This document supplements `AGENTS.md` Section 8 with detailed implementation guidance for true session isolation.
+**NOTE**: This document supplements `.meta/AGENTS.md` Section 8 with detailed implementation guidance for true session isolation.
 
 ---
 
@@ -56,7 +56,7 @@ You are a LEGO-Orchestrator, acting as a Tech Lead responsible for delivering th
 - **Needs Agent**: <true/false>
 
 ## Context Files (Read these first)
-1. `principles.md` - Global engineering principles
+1. `.meta/principles.md` - Global engineering principles
 2. `meta_config.json` - Configuration (R&D mode, flags)
 3. `lego_plan.json` - Full LEGO plan (you are: <name>)
 4. Dependency artifacts:
@@ -242,10 +242,10 @@ def coordinate_sessions():
 
 ---
 
-## Integration with AGENTS.md
+## Integration with .meta/AGENTS.md
 
-This document **extends** AGENTS.md Section 8. When implementing:
+This document **extends** .meta/AGENTS.md Section 8. When implementing:
 
-1. Follow AGENTS.md for overall pipeline flow
+1. Follow .meta/AGENTS.md for overall pipeline flow
 2. Use this document for session isolation implementation details
 3. Refer to `runtime_adapters/adapter_interface.md` for tool-specific spawning

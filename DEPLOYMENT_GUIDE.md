@@ -140,7 +140,7 @@ Build a CLI tool that analyzes stock market data and generates investment report
 codex exec "Act as the meta-orchestrator described in .meta/AGENTS.md and execute the full pipeline."
 
 # If using root-level files
-codex exec "Act as the meta-orchestrator described in AGENTS.md and execute the full pipeline."
+# No change needed - already has .meta
 ```
 
 **What happens**:
@@ -242,7 +242,8 @@ Copy-Item -Path C:\Dev\meta-metacognition\* -Destination .\.meta\ -Recurse -Excl
 
 ```powershell
 # Update root-level files
-Copy-Item -Path C:\Dev\meta-metacognition\AGENTS.md,principles.md,meta_config.json,VERSION,SESSION_ISOLATION.md,TESTING_STRATEGY.md,CONFIG_VALIDATION.md,agent_runtime.json -Destination .\ -Force
+# Files are now in .meta/ so users copy the whole .meta/ directory
+Copy-Item -Path C:\Dev\meta-metacognition\.meta -Destination .\ -Recurse -Force
 Copy-Item -Path C:\Dev\meta-metacognition\runtime_adapters -Destination .\ -Recurse -Force
 ```
 
