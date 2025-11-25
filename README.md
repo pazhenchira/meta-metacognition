@@ -156,13 +156,26 @@ The meta-orchestrator reads your `app_intent.md` and asks smart questions:
 
 ### Step 2: Finding the "Essence" (What Makes Your App Special)
 
-This is new in v1.5.0 and it's powerful. The meta-orchestrator asks:
+This is new in v1.5.0 and it's powerful. The meta-orchestrator discovers and validates three things:
 
+**Problem & Unique Value**:
 - **Problem**: What pain point are you solving?
 - **Unique Value**: Why would someone use *your* app vs alternatives?
-- **Success**: How do we know if it's working? (e.g., "Sharpe ratio >1.5")
+- **Success Metrics**: How do we know if it's working? (e.g., "Sharpe ratio >1.5")
 
 Creates an `essence.md` file documenting this. **Critical**: If your idea doesn't have a clear value proposition, it'll stop and ask you to refine it.
+
+**Architecture Alignment**:
+- Identifies which LEGOs deliver the core value (e.g., `signal_generator` IS the alpha)
+- Separates supporting LEGOs (e.g., `market_data_fetcher` enables the core)
+- Prioritizes building the essence first
+
+**End-to-End Validation** (Step 6):
+- Before saying "done," validates the app actually delivers on its promise
+- Tests the complete user journey (getting started → core workflow → success)
+- If it doesn't work as promised, fixes it before giving you the app
+
+**Result**: You get apps that solve real problems and actually deliver their unique value, not just "code that runs."
 
 ### Step 3: Architecture (Breaking Into "LEGOs")
 
@@ -245,16 +258,30 @@ When you build a big app in a single AI conversation, the context gets overwhelm
 
 ### What's "Essence Discovery"?
 
-This is philosophical but practical:
+This is the foundation that ensures your app actually delivers value.
 
-**Most apps fail not because of bad code, but because they solve the wrong problem.**
+**The Reality**: Most apps fail not because of bad code, but because they either solve the wrong problem OR fail to deliver their unique value proposition.
 
-"Essence discovery" forces the meta-orchestrator to ask:
+**Essence discovery** is a three-part validation:
+
+**1. Problem Worth Solving**: Forces the meta-orchestrator to ask:
 - WHY does this app need to exist?
-- What makes it better than alternatives?  
-- How do we measure success?
+- What makes it better than alternatives?
+- What's the unique value proposition (UVP)?
 
-If you can't answer these, the app probably shouldn't be built.
+**2. Solution Delivery**: Ensures the architecture actually delivers the UVP:
+- Which components are "core value" LEGOs (deliver the essence)?
+- Which are "supporting" LEGOs (enable the core)?
+- Are we prioritizing the right things?
+
+**3. End-to-End Validation**: Before declaring "done," validates it actually works:
+- Does the app deliver on its promise? (e.g., Sharpe ratio >1.5)
+- Can users actually get value from it? (time-to-first-value)
+- Does it handle failure gracefully?
+
+If the essence isn't clear, or the solution doesn't deliver it, or validation fails, the meta-orchestrator **stops and fixes it** before giving you the app.
+
+**Why this matters**: You get apps that solve real problems and actually work, not just "code that compiles."
 
 ### What's the "Wisdom System"?
 
