@@ -117,7 +117,15 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.4.0** (see `VERSION` file)
+Current meta-orchestrator version: **1.5.0** (see `VERSION` file)
+
+**Features in v1.5.0** (Phase 1.8):
+- Essence & Value Proposition Discovery (problem-solution fit validation)
+- Essence-driven LEGO prioritization (core value first, supporting second)
+- End-to-End Experience Validation (user journey testing)
+- Success metrics tied to domain-specific value (Sharpe ratio, latency, time-to-value)
+- Continuous improvement framework (monitoring essence degradation)
+- Product wisdom for different app types (performance, simplicity, financial, etc.)
 
 **Features in v1.4.0** (Phase 1.7):
 - Intelligent Maintenance Mode (evaluation-driven per-file decisions)
@@ -127,7 +135,7 @@ Current meta-orchestrator version: **1.4.0** (see `VERSION` file)
 - Wisdom-based decision making (Thompson #5, KISS, single responsibility)
 - Quality metrics assessment (test coverage >80%, error handling, security)
 - Transparent documentation in APP_ORCHESTRATION.md
-- **App-specific AGENTS.md generation** (self-documenting apps for AI-assisted development)
+- App-specific AGENTS.md generation (self-documenting apps for AI-assisted development)
 
 **Features in v1.3.0** (Phase 1.6):
 - App-specific orchestration documentation (APP_ORCHESTRATION.md)
@@ -434,13 +442,129 @@ If no viable data source or dependency set can satisfy the requirements:
 - Clearly describe this in `dependencies.md` and `external_services.md`.
 - Stop, explaining why the requirements are impossible without some external integration.
 
+### 4.3 Essence & Value Proposition Discovery
+
+**CRITICAL**: This step ensures the app solves the RIGHT problem, not just solves it correctly.
+
+After finalizing `requirements.md` and `dependencies.md`, explicitly discover and document the app's **essence** and **value proposition**.
+
+You MUST create `essence.md` with the following structure:
+
+#### Problem Statement
+- **What problem does this solve?** (1-2 sentences)
+- **Who has this problem?** (target users/personas)
+- **Why does it matter?** (impact if unsolved)
+- **What pain points exist today?** (with current solutions)
+
+#### Unique Value Proposition (UVP)
+- **What makes this better than alternatives?** (competitive differentiation)
+- **Core value delivered:** (the "soul" of why this app exists)
+- **Key innovation or advantage:** (technical, UX, cost, simplicity, etc.)
+
+#### Competitive Landscape
+- **Existing solutions:** (alternatives users have today)
+- **Their strengths:** (what they do well)
+- **Their weaknesses:** (gaps or friction points)
+- **Our differentiation:** (how we're better/different)
+
+#### Success Metrics (Essence-Driven)
+Define **how we measure if the app is delivering its core value**.
+
+Domain-specific examples:
+
+**Performance/Scale Apps** (databases, infrastructure):
+- Primary: Latency (p50, p95, p99), throughput (ops/sec, GB/sec)
+- Secondary: Cost per operation, resource utilization
+- Benchmark: "10x faster than PostgreSQL at same scale"
+
+**Simplicity/Experience Apps** (developer tools, SaaS):
+- Primary: Time-to-first-value (minutes), cognitive load (steps to complete task)
+- Secondary: User retention (day 7, day 30), NPS score
+- Benchmark: "Developer productive in <5 minutes"
+
+**Data/Analytics Apps** (BI tools, dashboards):
+- Primary: Query latency, data freshness, insight accuracy
+- Secondary: Dashboard load time, data coverage
+- Benchmark: "Sub-second queries on billion-row tables"
+
+**Financial/Trading Apps** (OptionsTrader, portfolio tools):
+- Primary: Signal quality (precision, recall), risk-adjusted returns (Sharpe ratio)
+- Secondary: Win rate, max drawdown, latency to market
+- Benchmark: "Sharpe ratio >1.5, consistently outperform S&P 500"
+
+**Developer Tools** (CLIs, SDKs, frameworks):
+- Primary: Lines of code to achieve task, build/deploy time
+- Secondary: Learning curve (time to competence), extensibility
+- Benchmark: "Deploy in 1 command, extend in <50 LOC"
+
+Select metrics appropriate to this app's domain and essence. Be specific with targets.
+
+#### User Journey (End-to-End)
+Map the **complete user experience** from discovery to ongoing value:
+
+1. **Discovery/Getting Started**:
+   - How do users find and install the app?
+   - Time to first "aha" moment?
+   - Setup friction points?
+
+2. **First Value**:
+   - What is the first meaningful outcome users achieve?
+   - How long does it take? (target: minutes, not hours)
+   - What can go wrong? (error scenarios)
+
+3. **Core Workflow** (Essence Delivery):
+   - What is the main value-generating workflow?
+   - How frequently do users execute it? (daily, hourly, per-transaction)
+   - What are the critical path steps?
+
+4. **Ongoing Usage**:
+   - How does value compound over time?
+   - What keeps users engaged?
+   - How do we measure long-term success?
+
+5. **Edge Cases & Failure Modes**:
+   - What happens when things go wrong?
+   - Graceful degradation strategy?
+   - How do users recover?
+
+#### Review & Validation
+
+Run a REVIEW pass:
+- Does the UVP clearly differentiate from alternatives?
+- Are success metrics measurable and tied to core value?
+- Is the user journey realistic and complete?
+- Are we solving the RIGHT problem (not just solving it right)?
+
+**IMPORTANT**: If the UVP is weak, or success metrics are vague, STOP and refine with the user.
+
+After `essence.md` is complete and REVIEWed, proceed to LEGO discovery (Section 5).
+
 ---
 
-## 5. LEGO DISCOVERY (KISS-DRIVEN)
+## 5. LEGO DISCOVERY (KISS-DRIVEN, ESSENCE-FIRST)
 
-Using `requirements.md` (and NOT `intent.md`):
+Using `requirements.md` and **`essence.md`** (NOT `intent.md`):
 
 - Identify LEGO blocks following KISS and single-responsibility principles.
+- **Prioritize LEGOs based on essence delivery**:
+  
+  1. **Core Value LEGOs** (implement the essence FIRST):
+     - These deliver the unique value proposition directly
+     - Example (OptionsTrader): `signal_generator` (generates alpha)
+     - Example (Database): `query_optimizer` (delivers speed)
+     - Example (DevTool): `one_command_deploy` (delivers simplicity)
+     - **Validation**: These LEGOs must have success metrics from `essence.md`
+  
+  2. **Supporting LEGOs** (enable core value):
+     - Infrastructure needed for core value LEGOs to work
+     - Example: `market_data_fetcher`, `greeks_calculator` (support signal generation)
+     - Example: `storage_engine`, `index_manager` (support query optimization)
+  
+  3. **Config Validation LEGO** (always first to implement):
+     - Type: `config_validation`
+     - Responsibility: Validate all required configuration and guide setup
+     - See `CONFIG_VALIDATION.md` for complete requirements
+
 - **ALWAYS generate a `config_validator` LEGO first** (see [P-CONFIG] in `principles.md`):
   - Type: `config_validation`
   - Responsibility: Validate all required configuration and guide setup
@@ -460,11 +584,19 @@ Using `requirements.md` (and NOT `intent.md`):
   - `sensitive`: whether it handles sensitive data,
   - `needs_agent`: whether it requires LLM/agent reasoning,
   - `dependencies`: other legos this LEGO depends on,
+  - `priority_tier`: `core_value` | `supporting` | `config_validation`,
+  - `essence_metric`: which metric from `essence.md` this LEGO impacts,
   - evaluation harness requirements.
 
 Write all this to `lego_plan.json`.
 
 Split any LEGO that attempts to do more than one job.
+
+**Implementation Order**:
+1. `config_validator` (dependency for everything)
+2. Core value LEGOs (deliver essence)
+3. Supporting LEGOs (enable core value)
+4. Test LEGOs (validate essence delivery)
 
 ---
 
@@ -641,14 +773,86 @@ If a step or substep hits `failure_count >= 3` or the pipeline stalls (no progre
 
 ---
 
-## 11. DOCUMENTATION & FINAL REVIEW
+## 11. END-TO-END EXPERIENCE VALIDATION & DOCUMENTATION
 
-When all LEGOs are `done`:
+Before declaring the app complete, validate that it delivers its essence and provides excellent user experience.
+
+### 11.1 Experience Validation (Essence-Driven)
+
+Using `essence.md` as the guide, validate the complete user journey:
+
+#### Getting Started Assessment
+- **Can users achieve first value quickly?**
+  - Target from `essence.md` User Journey section
+  - Test setup process end-to-end
+  - Identify friction points (confusing errors, missing docs, unclear next steps)
+  - Measure: Time from "git clone" to first meaningful outcome
+- **Config Validation Works?**
+  - `config_validator` LEGO guides users through setup
+  - Clear error messages for missing/invalid config
+  - Links to documentation for obtaining API keys
+
+#### Core Workflow Validation (Essence Delivery)
+- **Does the app deliver its UVP?**
+  - Test the main value-generating workflow from `essence.md`
+  - Measure against success metrics defined in `essence.md`
+  - Example (OptionsTrader): Run signal generator, measure Sharpe ratio
+  - Example (Database): Run query benchmark, measure p99 latency
+  - Example (DevTool): Deploy sample app, measure time and complexity
+- **Are success metrics measurable?**
+  - Instrumentation in place to collect metrics
+  - Dashboard or reporting for tracking over time
+  - Comparison against benchmarks from `essence.md`
+
+#### Failure Mode Validation
+- **What happens when things go wrong?**
+  - Test error scenarios from `essence.md` User Journey
+  - Graceful degradation (partial functionality vs complete failure)
+  - Clear error messages with recovery guidance
+  - Circuit breakers and retry logic working
+- **Can users recover?**
+  - Self-healing mechanisms
+  - Manual recovery procedures documented
+  - State persistence and recovery
+
+#### Continuous Improvement Setup
+- **How will we know if value degrades over time?**
+  - Monitoring and alerting for essence metrics
+  - Regular benchmarking against competitors
+  - User feedback collection mechanism
+  - A/B testing infrastructure (if applicable)
+
+#### Documentation for User Journey
+- **README covers complete journey**:
+  - Problem statement (why this exists)
+  - Quick start (<5 minutes to first value)
+  - Core workflow examples
+  - Success metrics explanation
+  - Troubleshooting common issues
+- **AGENTS.md includes user journey context**:
+  - Future developers understand the end-user experience
+  - Which LEGOs impact which parts of journey
+  - How to add features without breaking experience
+
+**Output**: Create `experience_validation.md` documenting:
+- Test results for each user journey phase
+- Success metrics achieved vs targets from `essence.md`
+- Identified friction points and recommendations
+- Continuous improvement plan
+
+**CRITICAL**: If core value delivery cannot be validated, or success metrics fall short of targets, STOP and reassess before declaring complete.
+
+### 11.2 Final Documentation
+
+When all LEGOs are `done` AND experience validation passes:
 
 - Generate/update:
   - **`AGENTS.md`** (root) – **App-specific agent instructions** for future AI-assisted development:
     - **Application Context**: Purpose, domain, key features (from `app_intent.md` and `requirements.md`)
+    - **Essence & Value Proposition**: Problem statement, UVP, success metrics (from `essence.md`)
+    - **User Journey**: Complete experience map from discovery to ongoing value (from `essence.md`)
     - **LEGO Architecture**: Breakdown with rationale (why this decomposition? cite Thompson #5, KISS)
+    - **Core Value LEGOs**: Which LEGOs deliver the essence, why they're prioritized
     - **Wisdom Applied**: Which principles guided design decisions (from `.meta/wisdom/engineering_wisdom.md`)
     - **Antipatterns Avoided**: What mistakes were prevented (from `.meta/patterns/antipatterns.md`)
     - **Success Patterns Used**: Circuit Breaker, Config Validator, etc. (from `.meta/patterns/success_patterns.md`)
