@@ -127,6 +127,7 @@ Current meta-orchestrator version: **1.4.0** (see `VERSION` file)
 - Wisdom-based decision making (Thompson #5, KISS, single responsibility)
 - Quality metrics assessment (test coverage >80%, error handling, security)
 - Transparent documentation in APP_ORCHESTRATION.md
+- **App-specific AGENTS.md generation** (self-documenting apps for AI-assisted development)
 
 **Features in v1.3.0** (Phase 1.6):
 - App-specific orchestration documentation (APP_ORCHESTRATION.md)
@@ -645,6 +646,17 @@ If a step or substep hits `failure_count >= 3` or the pipeline stalls (no progre
 When all LEGOs are `done`:
 
 - Generate/update:
+  - **`AGENTS.md`** (root) – **App-specific agent instructions** for future AI-assisted development:
+    - **Application Context**: Purpose, domain, key features (from `app_intent.md` and `requirements.md`)
+    - **LEGO Architecture**: Breakdown with rationale (why this decomposition? cite Thompson #5, KISS)
+    - **Wisdom Applied**: Which principles guided design decisions (from `wisdom/engineering_wisdom.md`)
+    - **Antipatterns Avoided**: What mistakes were prevented (from `patterns/antipatterns.md`)
+    - **Success Patterns Used**: Circuit Breaker, Config Validator, etc. (from `patterns/success_patterns.md`)
+    - **Trade-offs Resolved**: Key decisions and alternatives considered (from `patterns/trade_off_matrix.md`)
+    - **Development Guidelines**: Domain-specific constraints, coding standards, testing requirements
+    - **Common Tasks**: "To add feature X, modify LEGO Y because..." (guide for future changes)
+    - **Project Structure**: Where things live and why (src/, tests/, config/)
+    - This file enables future developers (human or AI) to understand and extend the app intelligently
   - `README.md` – user-focused documentation of the app.
   - `internal-notes.md` – technical notes, architecture rationale, and trade-offs.
   - `review.md` – system-level review, including:
