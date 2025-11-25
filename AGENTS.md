@@ -47,7 +47,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 1. **If `.meta-version` does NOT exist**: **NEW APP MODE**
    - This is a fresh build.
    - Proceed with normal pipeline (Sections 1-12).
-   - At completion, write `.meta-version` (using `.meta-version.template` as a guide) and `.meta-manifest.json` (using `.meta-manifest.template.json` as a guide).
+   - At completion, write `.meta-version` (using `templates/.meta-version.template` as a guide) and `.meta-manifest.json` (using `templates/.meta-manifest.template.json` as a guide).
 
 2. **If `.meta-version` exists**: **UPGRADE OR MAINTENANCE MODE**
    - Read `.meta-version` to see which meta-orchestrator version built this app.
@@ -605,7 +605,7 @@ Split any LEGO that attempts to do more than one job.
 After generating `lego_plan.json`:
 
 1. **Generate APP_ORCHESTRATION.md** (app-specific orchestration plan):
-   - Use `.app_orchestration.template.md` as the structure.
+   - Use `templates/.app_orchestration.template.md` as the structure.
    - Fill in all sections with app-specific details:
      - Application overview (from `app_intent.md` and `requirements.md`)
      - LEGO architecture breakdown (from `lego_plan.json`)
@@ -888,8 +888,8 @@ When all LEGOs are `done` AND experience validation passes:
   - This file serves as the **permanent record** of app-specific orchestration decisions.
 
 - **If NEW APP MODE** (`.meta-version` did not exist at start):
-  - Write `.meta-version` file (copy from `.meta-version.template`, update dates to November 24, 2025).
-  - Write `.meta-manifest.json` file (copy from `.meta-manifest.template.json`, populate with actual generated files and timestamps using November 24, 2025).
+  - Write `.meta-version` file (copy from `templates/.meta-version.template`, update dates to November 24, 2025).
+  - Write `.meta-manifest.json` file (copy from `templates/.meta-manifest.template.json`, populate with actual generated files and timestamps using November 24, 2025).
   - Mark all generated files with `user_modified: false` initially.
   - Include `APP_ORCHESTRATION.md` in manifest as a generated file.
 
