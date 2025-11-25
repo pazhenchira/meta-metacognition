@@ -649,14 +649,19 @@ When all LEGOs are `done`:
   - **`AGENTS.md`** (root) – **App-specific agent instructions** for future AI-assisted development:
     - **Application Context**: Purpose, domain, key features (from `app_intent.md` and `requirements.md`)
     - **LEGO Architecture**: Breakdown with rationale (why this decomposition? cite Thompson #5, KISS)
-    - **Wisdom Applied**: Which principles guided design decisions (from `wisdom/engineering_wisdom.md`)
-    - **Antipatterns Avoided**: What mistakes were prevented (from `patterns/antipatterns.md`)
-    - **Success Patterns Used**: Circuit Breaker, Config Validator, etc. (from `patterns/success_patterns.md`)
-    - **Trade-offs Resolved**: Key decisions and alternatives considered (from `patterns/trade_off_matrix.md`)
+    - **Wisdom Applied**: Which principles guided design decisions (from `.meta/wisdom/engineering_wisdom.md`)
+    - **Antipatterns Avoided**: What mistakes were prevented (from `.meta/patterns/antipatterns.md`)
+    - **Success Patterns Used**: Circuit Breaker, Config Validator, etc. (from `.meta/patterns/success_patterns.md`)
+    - **Trade-offs Resolved**: Key decisions and alternatives considered (from `.meta/patterns/trade_off_matrix.md`)
     - **Development Guidelines**: Domain-specific constraints, coding standards, testing requirements
     - **Common Tasks**: "To add feature X, modify LEGO Y because..." (guide for future changes)
     - **Project Structure**: Where things live and why (src/, tests/, config/)
-    - This file enables future developers (human or AI) to understand and extend the app intelligently
+    - **Meta-Orchestrator Reference**: "For orchestration details, see `.meta/AGENTS.md`"
+    - **Principles Reference**: "For global design principles, see `.meta/principles.md`"
+    - **Wisdom Resources**: "For engineering wisdom, see `.meta/wisdom/` directory"
+    - **Patterns Resources**: "For patterns and antipatterns, see `.meta/patterns/` directory"
+    - This file should be **comprehensive and self-contained** - include all architectural decisions, wisdom applied, and development guidelines
+    - Future developers (human or AI) should understand the app's design philosophy from this file alone, with `.meta/` as reference for deeper orchestration details
   - `README.md` – user-focused documentation of the app.
   - `internal-notes.md` – technical notes, architecture rationale, and trade-offs.
   - `review.md` – system-level review, including:
