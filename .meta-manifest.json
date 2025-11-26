@@ -1,0 +1,144 @@
+{
+  "meta_orchestrator_version": "1.6.0",
+  "generated_date": "2025-11-25",
+  "files": {
+    ".meta/AGENTS.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Meta-orchestrator core logic"
+    },
+    ".meta/principles.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Global engineering principles"
+    },
+    ".meta/intent.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Meta-orchestrator design philosophy"
+    },
+    ".meta/wisdom/engineering_wisdom.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Thompson, Knuth, Pike, Kernighan wisdom"
+    },
+    ".meta/wisdom/strategic_wisdom.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Team dynamics, product decisions"
+    },
+    ".meta/wisdom/design_wisdom.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "UX principles, simplicity"
+    },
+    ".meta/wisdom/risk_wisdom.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Security wisdom (Schneier, Saltzer & Schroeder)"
+    },
+    ".meta/patterns/antipatterns.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "God Object, Golden Hammer, etc."
+    },
+    ".meta/patterns/success_patterns.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Circuit Breaker, Config Validator, etc."
+    },
+    ".meta/patterns/trade_off_matrix.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Decision frameworks"
+    },
+    ".meta/templates/AGENTS.template.md": {
+      "user_modified": false,
+      "generated_date": "2025-11-25",
+      "last_modified": "2025-11-25",
+      "description": "App-specific AGENTS.md template"
+    },
+    "agents.md": {
+      "user_modified": false,
+      "generated_date": "2025-11-25",
+      "last_modified": "2025-11-25",
+      "description": "Meta-orchestrator self-maintenance agent"
+    },
+    "README.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "User-facing documentation"
+    },
+    "CHANGELOG.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Version history"
+    },
+    "UPGRADING.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Version upgrade guide"
+    },
+    "DEPLOYMENT_GUIDE.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Deployment instructions"
+    },
+    "TESTING_STRATEGY.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Testing philosophy"
+    },
+    "SESSION_ISOLATION.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Multi-agent architecture details"
+    },
+    "CONFIG_VALIDATION.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Configuration validation details"
+    },
+    "INTUITION.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Wisdom system overview"
+    },
+    "LICENSE": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "MIT license"
+    },
+    "app_intent.md": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Example app intent template"
+    },
+    "meta_config.json": {
+      "user_modified": true,
+      "generated_date": "2024-01-15",
+      "last_modified": "2025-11-25",
+      "description": "Configuration flags"
+    }
+  }
+}
