@@ -6,6 +6,57 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.6.0] - 2025-11-25 (Stateless Runtime Support & Role Persistence)
+
+### Added
+
+**Pre-flight Checklist** (Section 0 in `.meta/AGENTS.md`):
+- Mandatory 5-step checklist executed BEFORE any work on every turn
+- Fixes agent amnesia in stateless runtimes (GitHub Copilot Chat)
+- Checklist steps:
+  1. Check pipeline/app state (orchestrator_state.json, .meta-version, .meta-manifest.json)
+  2. Reaffirm role (META-ORCHESTRATOR or APP-SPECIFIC ORCHESTRATOR)
+  3. Reaffirm authority (make decisions autonomously using wisdom)
+  4. Reaffirm knowledge sources (.meta/principles.md, wisdom/, patterns/)
+  5. Determine next action (resume from state, not restart)
+- Prevents "how should I proceed?" questions mid-pipeline
+- Forces explicit role/state verification on every invocation
+
+**App-Specific AGENTS.md Template** (`.meta/templates/AGENTS.template.md`):
+- Complete template for generated app orchestrators
+- Includes Pre-flight Checklist for app maintenance mode
+- Structured sections: Application Context, Essence, User Journey, LEGO Architecture, Wisdom Applied, etc.
+- Ensures app orchestrators maintain identity during multi-turn feature additions/bug fixes
+- Template used by Section 11.2 when generating app-specific AGENTS.md
+
+**Meta-Orchestrator Self-Maintenance** (`AGENTS.md` in root):
+- Dogfooding: Engine's own maintenance agent using same template structure
+- Documents engine architecture as LEGOs (Version Control, Essence Discovery, LEGO Planning, etc.)
+- Identifies core value LEGOs (Intuition System, Session Isolation, AGENTS.md Generation)
+- Maintenance workflow for improving engine using its own principles
+- Enables autonomous engine improvements following KISS + wisdom
+
+### Changed
+
+**Section 11.2 Enhancement** (`.meta/AGENTS.md`):
+- Now instructs to use `.meta/templates/AGENTS.template.md` as base
+- Ensures consistency across all generated app orchestrators
+- Documents that template includes Pre-flight Checklist for amnesia prevention
+
+### Why This Matters
+
+**Problem**: GitHub Copilot Chat agents are stateless - they forget their role between turns in the same conversation, leading to "how should I proceed?" questions even mid-pipeline.
+
+**Solution**: Explicit Pre-flight Checklist forces role/state verification every turn, compensating for stateless runtime behavior.
+
+**Impact**: 
+- Meta-orchestrator maintains identity during multi-turn app generation
+- App orchestrators maintain identity during multi-turn maintenance
+- Works in both stateful (Codex CLI) and stateless (GitHub Copilot Chat) runtimes
+- Applies KISS principle: simple explicit checklist vs complex state management
+
+---
+
 ## [1.5.0] - 2025-11-25 (Phase 1.8: Product-Market Fit & User Experience Focus)
 
 ### Added

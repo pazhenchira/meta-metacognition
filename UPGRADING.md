@@ -553,3 +553,40 @@ This enables:
 - Selectively adopting new features
 - Preserving your custom code changes
 - Clear audit trail of what changed and when
+
+---
+
+## Version-Specific Upgrade Notes
+
+### Upgrading to v1.6.0 (Stateless Runtime Support)
+
+**New Features**:
+- Pre-flight Checklist in `.meta/AGENTS.md` (prevents agent amnesia)
+- App-specific AGENTS.md template (`.meta/templates/AGENTS.template.md`)
+- Meta-orchestrator self-maintenance (`AGENTS.md` in root)
+
+**Breaking Changes**: None
+
+**Upgrade Steps**:
+
+1. **Update `.meta/` directory**:
+```bash
+cd your-app
+git pull origin main  # If using .meta/ as submodule
+# OR
+cp -r /path/to/meta-metacognition-v1.6.0/.meta ./
+```
+
+2. **Regenerate app-specific AGENTS.md** (optional but recommended):
+```bash
+@workspace Act as meta-orchestrator and regenerate AGENTS.md from template for this app
+```
+
+This gives your app orchestrator the Pre-flight Checklist, fixing amnesia during maintenance.
+
+**Benefits**:
+- App orchestrator maintains role during multi-turn feature additions
+- Works in both Codex CLI and GitHub Copilot Chat
+- No more "how should I proceed?" questions mid-pipeline
+
+**No action required if**: Your app works fine and you don't need multi-turn maintenance sessions.

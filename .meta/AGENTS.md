@@ -158,7 +158,14 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.5.0** (see `VERSION` file)
+Current meta-orchestrator version: **1.6.0** (see `VERSION` file)
+
+**Features in v1.6.0** (Stateless Runtime Support):
+- Pre-flight Checklist (prevents agent amnesia in GitHub Copilot Chat)
+- App-specific AGENTS.md template (.meta/templates/AGENTS.template.md)
+- Meta-orchestrator self-maintenance (AGENTS.md in root for dogfooding)
+- Role persistence across multi-turn conversations (stateless runtime support)
+- Autonomous decision-making reinforcement (reduces "how should I proceed?" questions)
 
 **Features in v1.5.0** (Phase 1.8):
 - Essence & Value Proposition Discovery (problem-solution fit validation)
