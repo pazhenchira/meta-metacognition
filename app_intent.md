@@ -8,123 +8,160 @@ The meta-orchestrator will read this file, ask clarifying questions, and build y
 
 ## What Do You Want To Build?
 
-Describe your app idea in plain English (3-10 sentences):
+**Meta-Orchestrator**: A meta-cognitive orchestration engine that builds complete, production-ready 
+applications from plain English descriptions.
 
-- What problem does it solve?
-- Who will use it?
-- What are the main features?
+**Problem**: Most AI coding tools (ChatGPT, GitHub Copilot, Claude) generate code snippets but fail 
+at complete applications. They lack systematic application of engineering best practices, can't 
+handle complex multi-component systems, and don't validate that apps actually deliver promised value.
 
-**Example** (replace this with your own idea):
+**Solution**: An orchestration engine that:
+- Applies 50+ years of engineering wisdom systematically (Thompson, Knuth, Pike, Kernighan, Schneier)
+- Decomposes complex apps into single-responsibility LEGO components
+- Validates apps deliver their essence through end-to-end experience testing
+- Generates self-documenting apps with AGENTS.md for future AI-assisted maintenance
+- Supports intelligent maintenance (KEEP/REFACTOR/REGENERATE) and version upgrades
+- Prevents context collapse via session isolation (can build 50+ component apps)
 
-> I want to build a stock options signal generator that analyzes real-time options data 
-> and identifies profitable trading opportunities. It should calculate Greeks (delta, gamma, 
-> theta, vega), apply technical indicators, and generate buy/sell signals with risk metrics. 
-> The goal is to achieve a Sharpe ratio >1.5 (risk-adjusted returns). It should work with 
-> free-tier market data APIs and run on my laptop.
+**Unique Architecture**: The "source code" is a set of AI agent prompts (Markdown files) in `.meta/`:
+- `AGENTS.md`: Meta-orchestrator orchestration logic (12 phases: NEW APP, MAINTENANCE, UPGRADE)
+- `wisdom/`: 24,000+ lines of curated engineering principles (Thompson, Knuth, Pike, Kernighan)
+- `patterns/`: Antipattern detection (God Object, Golden Hammer) + success patterns (Circuit Breaker)
+- `templates/`: Templates for generated artifacts (AGENTS.md, APP_ORCHESTRATION.md)
+- `principles.md`: Global principles (KISS, LEGO, Thompson #5, GEN+REVIEW)
+
+**Target Users**: Non-technical founders, solo developers, small teams, prototypers, anyone who wants 
+to build production apps without writing code manually.
 
 ---
 
 ## Constraints & Priorities
 
-What matters most? What are your limits?
+**Architecture**:
+- Document-driven: Source = Markdown prompts (`.meta/` folder), not traditional code
+- Stateless agents: File-based coordination (orchestrator_state.json, lego_state_*.json)
+- Runtime-agnostic: Works with Codex CLI, GitHub Copilot Chat, OpenAI API
+- No execution at runtime: "Code" is agent prompts executed by AI systems
 
 **Performance**:
-- Response time expectations?
-- Data volume?
+- Time-to-first-value: 15-45 minutes (user's app idea → working app)
+- Session isolation: Can build 50+ component apps without context collapse
+- Parallel execution: LEGO-Orchestrators work independently
 
 **Privacy / Security**:
-- Sensitive data handling?
-- Compliance requirements?
+- User data: Stays in user's workspace (no telemetry, no cloud storage)
+- Sensitive data: Apps apply Schneier's security principles + Saltzer & Schroeder
+- Red-team reviews: Validation for apps handling sensitive data
 
 **Cost**:
-- Free APIs only?
-- Cloud budget limits?
+- Zero infrastructure: Runs via AI chat (GitHub Copilot) or CLI (Codex)
+- No cloud services: File-based state management (SQLite/JSON)
+- Free to use: Open-source (MIT license)
 
 **Complexity**:
-- Keep it simple (KISS)?
-- Need advanced features?
-
-**Example**:
-```
-- Must use free-tier APIs (Alpha Vantage, Yahoo Finance)
-- No cloud costs (runs locally)
-- Privacy: No user data leaves local machine
-- KISS: Simple algorithms preferred over complex ML
-- Speed: Signals ready in <5 minutes before market open
-```
+- KISS: Simple document-driven architecture (no complex orchestration engine)
+- LEGO: Single-responsibility decomposition (Thompson #5: "Do one thing well")
+- Wisdom: 24,000+ lines of principles guide decisions (not rigid rules)
 
 ---
 
 ## What's NOT In Scope (For Now)
 
-Help the meta-orchestrator focus by saying what you DON'T need:
+**Not Building**:
+- No traditional code generation (we orchestrate AI agents, not compile code)
+- No runtime execution engine (AI systems execute the prompts, not a VM)
+- No web UI (works through GitHub Copilot Chat, Codex CLI, or OpenAI API)
+- No telemetry or analytics (privacy-first, no usage tracking)
+- No cloud deployment (users deploy generated apps, not the engine itself)
 
-**Example**:
-```
-- No web UI (CLI is fine for v1)
-- No real-time streaming (daily batch is enough)
-- No machine learning (use proven technical indicators)
-- No multi-user support (just me)
-```
+**Limitations** (accepted trade-offs):
+- Requires AI runtime (GitHub Copilot, Codex CLI, or OpenAI API)
+- Stateless agents (no persistent memory between sessions)
+- File-based coordination (no distributed orchestration)
+- Single-user focus (no multi-tenant support)
 
 ---
 
-## Known Integrations or APIs (Optional)
+## Known Integrations or APIs
 
-List any specific services/APIs you know you want to use:
+**AI Runtimes** (the engine supports multiple):
+- GitHub Copilot Chat (primary, best UX for users)
+- Codex CLI (command-line interface, scriptable)
+- OpenAI API (direct API integration, most flexible)
 
-**Example**:
-```
-Data Sources:
-- Alpha Vantage (free tier, 5 calls/min)
-- Yahoo Finance (backup)
+**Runtime Adapters** (abstraction layer in `runtime_adapters/`):
+- `adapter_interface.md`: Contract for runtime implementations
+- `codex_cli_adapter.sh`: Codex CLI integration
+- `copilot_adapter.sh`: GitHub Copilot integration
 
-Authentication:
-- None (local app)
+**State Management**:
+- File-based state: JSON (orchestrator_state.json, lego_state_*.json)
+- Version tracking: .meta-version, .meta-manifest.json
+- No databases: Simple file I/O for coordination
 
-Storage:
-- SQLite (local, no cloud DB)
-```
+**Wisdom Sources** (curated engineering principles):
+- Thompson: Unix philosophy (24,000+ lines across wisdom/)
+- Knuth: Premature optimization, literate programming
+- Pike: Simplicity, Go design principles
+- Kernighan: Debugging, API design
+- Schneier: Security principles
+- Saltzer & Schroeder: Security design principles
 
 ---
 
 ## Success Criteria
 
-How will you know if the app works well?
+**Primary Success Metrics** (for generated apps):
+- KISS compliance: 100% of generated code follows single-responsibility principle
+- Zero antipatterns: No God Objects, Golden Hammers, Magic Numbers in generated code
+- Test coverage: >80% on all generated code (unit + integration + system)
+- Essence delivery: 100% of apps pass end-to-end experience validation
+- Maintainability: 100% of apps include AGENTS.md for future development
 
-**Example**:
-```
-Primary Success Metrics:
-- Sharpe ratio >1.5 (risk-adjusted returns)
-- Win rate >60%
-- Max drawdown <15%
+**Usability** (for users building apps):
+- Time-to-first-value: 15-45 minutes (app idea → working app)
+- Non-technical friendly: Plain English descriptions, no jargon
+- Clarifying questions: 2-3 max before starting build
+- Documentation: README.md + APP_ORCHESTRATION.md + AGENTS.md generated automatically
 
-Usability:
-- Time-to-first-signal <5 minutes
-- Clear, actionable output (no jargon)
-- Works reliably every day
+**Engine Quality** (for meta-orchestrator itself):
+- Version stability: Clear upgrade paths between versions (UPGRADING.md)
+- Dogfooding: Engine follows own structure (.meta-version, essence.md, agents.md)
+- Pre-flight Checklist: Prevents agent amnesia in stateless runtimes (GitHub Copilot)
+- Session isolation: Can build 50+ component apps without context collapse
 
-Benchmark:
-- Outperform S&P 500 by 20%+ annually
-```
+**Benchmark** (vs competitors):
+- Completeness: Full apps (vs ChatGPT/Claude snippets)
+- Quality: >80% test coverage (vs Bolt.new basic tests)
+- Wisdom: Thompson/Knuth principles (vs Cursor/GitHub Copilot none)
+- Maintainability: AGENTS.md for ongoing work (vs all competitors: throwaway code)
 
 ---
 
-## Additional Context (Optional)
+## Additional Context
 
-Anything else the meta-orchestrator should know?
+**Development Philosophy**:
+- Dogfooding: Engine applies own principles to itself (LEGO, KISS, wisdom)
+- Recursive application: agents.md (root) maintains engine using .meta/AGENTS.md
+- Document-driven: All orchestration logic in Markdown (human-readable, AI-executable)
+- Wisdom-first: 50+ years of expert knowledge guides decisions (not rigid rules)
 
-- Your technical background?
-- Existing code to integrate with?
-- Specific design preferences?
+**Unique Characteristics**:
+- Source = Prompts: "Code" is AI agent instructions (Markdown), not traditional code
+- Deployment = Copy: Users copy `.meta/` folder to their workspace
+- Testing = Build Apps: Validate engine by building sample apps and checking quality
+- Upgrades = File Updates: Version bumps mean updating Markdown files, not binaries
 
-**Example**:
-```
-- I'm a retail trader (not institutional)
-- I know basic Python (intermediate level)
-- I prefer functional programming style
-- I have a Raspberry Pi I might deploy to later
-```
+**Technical Lineage**:
+- Inspired by: Unix philosophy (Thompson #5), literate programming (Knuth)
+- Architecture: Hierarchical orchestration (Meta → LEGO-Orchestrators → Substeps)
+- Wisdom sources: Thompson, Knuth, Pike, Kernighan, Schneier, Saltzer & Schroeder
+- Patterns: Antipattern detection + success pattern library + trade-off matrices
+
+**Future Evolution**:
+- v1.6.0: Pre-flight Checklist (prevents agent amnesia in stateless runtimes)
+- v1.7.0+: Telemetry (optional), benchmark suite, user feedback collection
+- Long-term: Multi-language support (beyond Python), visual orchestration UI
 
 ---
 
