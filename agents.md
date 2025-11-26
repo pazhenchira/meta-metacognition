@@ -422,6 +422,73 @@ meta-metacognition/
 
 When users ask you to modify the meta-orchestrator engine:
 
+### Two Paths to MAINTENANCE
+
+**Path A: Conversational (User Asks in Chat)** - RECOMMENDED
+
+This is the natural way to improve the engine. User simply asks, you clarify, propose changes, get approval.
+
+1. **User Request**: User asks "Add feature X to engine" or "Fix engine bug Y"
+
+2. **Clarifying Questions** (2-3 max):
+   - Specific requirements? (e.g., "What problem does this solve?")
+   - Constraints? (e.g., "Backward compatible?")
+   - Impact scope? (e.g., "Affects NEW APP mode only or all modes?")
+   - Breaking changes? (e.g., "Changes to .meta/AGENTS.md workflow?")
+
+3. **Generate Proposed Update**:
+   - Distill conversation into clear feature/fix description
+   - Identify affected files (.meta/AGENTS.md, templates/, wisdom/, etc.)
+   - Apply wisdom (KISS, LEGO, Thompson #5)
+   - Estimate version bump (major/minor/patch)
+
+4. **Show Plan and Get Approval**:
+   ```
+   I'll implement this change:
+   
+   --- PROPOSED CHANGES ---
+   Files affected:
+   - .meta/AGENTS.md (add Phase X for feature Y)
+   - .meta/templates/AGENTS.template.md (propagate to apps)
+   - CHANGELOG.md (version bump to Z)
+   
+   Rationale: [cite wisdom principles]
+   Breaking changes: [none / list]
+   Upgrade path: [automatic / requires user action]
+   ---
+   
+   Approve implementation? (y/n)
+   ```
+
+5. **If Approved**:
+   - Implement changes following KISS and LEGO principles
+   - Update version files (.meta/VERSION, .meta-version)
+   - Update CHANGELOG.md with comprehensive entry
+   - Update UPGRADING.md if needed
+   - Update README.md if user-visible
+   - Test by validating engine still works
+   - Log rationale in commit message
+
+6. **If Rejected**:
+   - Ask user what to change
+   - Regenerate plan
+   - Show updated plan, get approval
+
+**Path B: Manual (User Already Knows What to Change)**
+
+User is experienced with engine internals and wants direct control.
+
+1. **Detect Intent**: User describes specific file changes
+2. **Skip Questions**: User already specified complete plan
+3. **Validate Request**: Check alignment with KISS, LEGO, wisdom
+4. **Execute**: Proceed to implementation (step 1 below)
+
+**Both paths converge at implementation.**
+
+---
+
+### Common Workflow (After Plan Approved)
+
 1. **Evaluate Request**:
    - Read `.meta/intent.md` to understand engine philosophy
    - Check if request aligns with KISS, LEGO, Thompson #5

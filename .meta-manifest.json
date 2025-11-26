@@ -6,7 +6,7 @@
       "user_modified": true,
       "generated_date": "2024-01-15",
       "last_modified": "2025-11-25",
-      "description": "Meta-orchestrator core logic"
+      "description": "Meta-orchestrator core logic (v1.7.0: conversational MAINTENANCE)"
     },
     ".meta/principles.md": {
       "user_modified": true,
@@ -66,13 +66,13 @@
       "user_modified": false,
       "generated_date": "2025-11-25",
       "last_modified": "2025-11-25",
-      "description": "App-specific AGENTS.md template"
+      "description": "App-specific AGENTS.md template (v1.7.0: conversational MAINTENANCE)"
     },
     "agents.md": {
       "user_modified": false,
       "generated_date": "2025-11-25",
       "last_modified": "2025-11-25",
-      "description": "Meta-orchestrator self-maintenance agent"
+      "description": "Meta-orchestrator self-maintenance agent (v1.7.0: conversational MAINTENANCE)"
     },
     "README.md": {
       "user_modified": true,

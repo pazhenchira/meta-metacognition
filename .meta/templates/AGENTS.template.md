@@ -127,10 +127,71 @@ Your job is to maintain, extend, and improve this app using the principles and w
 
 When users ask you to modify the app:
 
+### Two Paths to MAINTENANCE
+
+**Path A: Conversational (User Asks in Chat)** - RECOMMENDED
+
+This is the natural way to add features. User simply asks, you clarify, propose changes, get approval.
+
+1. **User Request**: User asks "Add feature X" or "Fix bug Y" (without editing app_intent.md)
+
+2. **Clarifying Questions** (2-3 max):
+   - Specific requirements? (e.g., "Which data sources?")
+   - Constraints? (e.g., "Performance requirements?")
+   - Integration points? (e.g., "Where should this appear?")
+   - Success criteria? (e.g., "What's acceptable latency?")
+
+3. **Generate Proposed app_intent.md Update**:
+   - Distill conversation into clear feature description
+   - Include constraints, success criteria, integration notes
+   - Apply wisdom (technical precision, KISS, domain metrics)
+   - Format as proper addition to app_intent.md
+
+4. **Show Diff and Get Approval**:
+   ```
+   I'll update app_intent.md with this addition:
+   
+   --- PROPOSED ADDITION ---
+   ## {Feature Name} (NEW)
+   - {Clear description of feature}
+   - {Constraints and requirements}
+   - {Success criteria}
+   - {Integration notes}
+   ---
+   
+   Approve this update? (y/n)
+   ```
+
+5. **If Approved**:
+   - Update app_intent.md with proposed changes
+   - Log conversation in APP_ORCHESTRATION.md
+   - Proceed to evaluation and planning (step 2 below)
+
+6. **If Rejected**:
+   - Ask user what to change
+   - Regenerate proposed update
+   - Show diff again, get approval
+
+**Path B: Manual (User Edited app_intent.md First)**
+
+User prefers to write changes themselves, or has complex requirements.
+
+1. **Detect Change**: User already edited app_intent.md
+2. **Skip Questions**: User already specified complete intent
+3. **Read Updated Intent**: Parse app_intent.md for changes
+4. **Proceed to Evaluation**: Continue to step 2 below
+
+**Both paths converge at evaluation.**
+
+---
+
+### Common Workflow (After app_intent.md Updated)
+
 1. **Evaluate Request**:
-   - Read `app_intent.md` to understand if this aligns with original vision
+   - Read updated `app_intent.md` to understand new requirements
    - Check `.meta-manifest.json` to identify protected files
    - Review `lego_plan.json` to understand impact on architecture
+   - Check essence.md: Does this align with app's core value?
 
 2. **Apply Evaluation Framework** (from `.meta/AGENTS.md` Phase 1.5):
    - Antipattern Detection: Would this create God Object, Golden Hammer, etc.?

@@ -7,6 +7,39 @@
 
 ## Version-Specific Upgrade Notes
 
+### v1.7.0 → Current
+
+**Changes**: Conversational MAINTENANCE mode - orchestrator updates app_intent.md after discussion
+
+- **What changed**: 
+  - MAINTENANCE mode now has two paths: **Path A (conversational)** and **Path B (manual edit)**
+  - Path A: User asks "Add feature X" → orchestrator clarifies → proposes app_intent.md update → gets approval
+  - Path B: User manually edits app_intent.md first (existing workflow still works)
+  - Orchestrator maintains app_intent.md as living documentation
+  - Approval gate prevents mistakes (user reviews diff before writing)
+  
+- **Action required**: 
+  - **None** - Both workflows supported (backward compatible)
+  - **Optional**: Regenerate app-specific AGENTS.md to get conversational workflow:
+    ```bash
+    @workspace Act as meta-orchestrator and regenerate AGENTS.md from template
+    ```
+  
+- **Breaking changes**: None (Path B maintains existing manual workflow)
+
+- **Why upgrade**: 
+  - Natural UX: Add features by chatting (like talking to developer)
+  - No file editing interruption (orchestrator handles app_intent.md)
+  - Better descriptions: AI-written with wisdom/precision
+  - Living documentation: app_intent.md stays current with features
+  - Still safe: Approval gate before writing
+
+- **Benefits**:
+  - Conversational feature additions: "Add Bitcoin trading" → orchestrator asks questions → proposes update
+  - Captures conversation context: Clarifying Q&A distilled into clear intent
+  - Reduced friction: No switching between chat and file editor
+  - Quality improvements: Orchestrator applies wisdom to intent descriptions
+
 ### v1.6.1 → Current
 
 **Changes**: Bugfix release - no new features

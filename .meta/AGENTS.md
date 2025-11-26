@@ -102,6 +102,39 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
      - **Same version, app_intent.md CHANGED**: MAINTENANCE MODE
        - User wants to add/remove features or fix bugs in existing app.
        - App's purpose/requirements are changing.
+       - **Two Paths to MAINTENANCE MODE**:
+         
+         **Path A: Conversational (User Asks in Chat)** - RECOMMENDED
+         1. User asks: "Add feature X" or "Fix bug Y" (without editing app_intent.md first)
+         2. Orchestrator asks 2-3 clarifying questions:
+            - Specific requirements? (e.g., "Which crypto exchanges?")
+            - Constraints? (e.g., "Real-time or daily batch?")
+            - Integration points? (e.g., "Same report or separate?")
+            - Success criteria? (e.g., "What's acceptable latency?")
+         3. User answers questions in chat
+         4. Orchestrator generates proposed app_intent.md update:
+            - Distills conversation into clear feature description
+            - Includes constraints, success criteria, integration notes
+            - Applies wisdom (technical precision, KISS, domain metrics)
+         5. Orchestrator shows diff: "Here's what I'll add to app_intent.md:"
+         6. Orchestrator asks: "Approve this update? (y/n)"
+         7. If approved:
+            - Update app_intent.md with proposed changes
+            - Log conversation in APP_ORCHESTRATION.md
+            - Proceed to requirements discovery (Section 4)
+         8. If rejected:
+            - Ask user what to change
+            - Regenerate proposed update
+            - Show diff again, get approval
+         
+         **Path B: Manual (User Edited app_intent.md First)**
+         1. Detect app_intent.md changed via git diff or file timestamp
+         2. Skip clarifying questions (user already specified complete intent)
+         3. Read updated app_intent.md
+         4. Proceed directly to requirements discovery (Section 4)
+         
+         **Both paths converge at requirements discovery.**
+         
        - **File-by-File Evaluation** (intelligent maintenance):
          - Files with `user_modified: true` → PROTECTED (never touch)
          - Files with `user_modified: false` or no manifest entry → EVALUATE:
@@ -113,11 +146,11 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
              - KEEP: Well-structured, follows principles, has tests
              - REFACTOR: Functional but has issues → modify incrementally, preserve working logic
              - REGENERATE: Severe antipatterns or missing critical features → delete and rebuild
-       - Re-run requirements discovery (Section 4) with updated `app_intent.md`.
        - Generate evaluation report in `APP_ORCHESTRATION.md` showing:
          - What was found (architecture, antipatterns, quality)
          - What decision was made per file (KEEP/REFACTOR/REGENERATE)
          - Why (cite wisdom principles, antipatterns avoided, trade-offs)
+         - If Path A: Include original conversation that led to app_intent.md update
        - Show plan to user with recommendations, get approval.
        - Execute approved plan: keep, refactor, or regenerate files as decided.
        - Update `lego_plan.json` with new/modified/removed LEGOs.
@@ -158,7 +191,15 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.6.0** (see `VERSION` file)
+Current meta-orchestrator version: **1.7.0** (see `VERSION` file)
+
+**Features in v1.7.0** (Conversational Maintenance):
+- Conversational MAINTENANCE mode (orchestrator updates app_intent.md after discussion)
+- Dual-path maintenance: Path A (chat-based) and Path B (manual edit)
+- Approval gate for app_intent.md updates (user reviews before writing)
+- Conversation logging in APP_ORCHESTRATION.md (captures rationale)
+- Natural UX for feature additions (no file editing interruption)
+- Living documentation (app_intent.md stays synchronized with features)
 
 **Features in v1.6.0** (Stateless Runtime Support):
 - Pre-flight Checklist (prevents agent amnesia in GitHub Copilot Chat)

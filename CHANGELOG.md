@@ -6,6 +6,55 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.7.0] - 2025-11-25 (Conversational Maintenance Mode)
+
+### Added
+
+**Conversational MAINTENANCE Mode** (Section 0 in `.meta/AGENTS.md`):
+- Two-path maintenance workflow: **Path A (conversational)** and **Path B (manual edit)**
+- **Path A - Natural UX**: User asks "Add feature X" in chat, orchestrator handles app_intent.md updates
+  - Orchestrator asks 2-3 clarifying questions
+  - Distills conversation into clear feature description
+  - Proposes app_intent.md update with diff preview
+  - Gets user approval before writing (y/n gate)
+  - Logs conversation rationale in APP_ORCHESTRATION.md
+  - Proceeds to requirements discovery
+- **Path B - Power User**: User manually edits app_intent.md first (existing workflow)
+  - Orchestrator detects change via git diff
+  - Skips clarifying questions (user already specified intent)
+  - Proceeds directly to requirements discovery
+- Both paths converge at requirements discovery (Section 4)
+- Approval gate prevents orchestrator from misinterpreting user intent
+- Living documentation: app_intent.md stays synchronized with actual features
+
+**Template Update** (`.meta/templates/AGENTS.template.md`):
+- App-specific orchestrators inherit conversational MAINTENANCE workflow
+- Same dual-path structure (Path A conversational, Path B manual)
+- Approval gates for app_intent.md updates
+- Conversation logging in APP_ORCHESTRATION.md
+
+### Why This Matters
+
+**Problem**: Previous workflow required users to manually edit app_intent.md before asking for features, breaking conversational flow and creating friction.
+
+**Solution**: Orchestrator now maintains app_intent.md as living documentation, updating it after clarifying conversation with approval gate.
+
+**Benefits**:
+- Natural UX: "Add Bitcoin trading" → orchestrator asks questions → proposes update → user approves
+- Captures context: Clarifying Q&A distilled into precise feature descriptions
+- Better descriptions: Orchestrator applies wisdom (technical precision, KISS, domain metrics)
+- Living documentation: app_intent.md reflects current state, not outdated spec
+- Still safe: Approval gate prevents mistakes, user reviews before writing
+- Backward compatible: Manual editing (Path B) still works for power users
+
+**Impact**:
+- Conversational feature additions (like talking to developer)
+- Reduced friction (no file editing interruption)
+- Higher quality intent descriptions (AI-written with wisdom)
+- app_intent.md becomes source of truth maintained by orchestrator
+
+---
+
 ## [1.6.1] - 2025-11-25 (Dogfooding Bugfix)
 
 ### Fixed
