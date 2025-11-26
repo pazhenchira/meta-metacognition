@@ -6,6 +6,37 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.7.2] - 2025-11-26 (Custom Agent Terminal Access Fix)
+
+### Fixed
+
+**Custom Agent Terminal Access**:
+- Removed `tools` field restriction from agent files to enable full capabilities
+- Custom agents now have terminal access, file editing, and all other tools
+- Previously restricted to read-only tools (`'search'`, `'fetch'`, `'githubRepo'`)
+- VS Code doesn't recognize `'terminal'` or `'edit'` as valid tool names
+- Omitting `tools` field gives agents full default capabilities
+
+### Why This Matters
+
+**Problem**: Custom agents couldn't run terminal commands or perform file edits when tools field specified read-only tools.
+
+**Solution**: Remove `tools` field entirely - agents inherit full capabilities from default agent behavior.
+
+**Impact**:
+- Meta-Orchestrator can run git commands, terminal operations, file edits
+- Meta-App-Orchestrator has full implementation capabilities
+- No artificial restrictions on agent capabilities
+
+### Files Modified
+
+- `.github/agents/meta-orchestrator.agent.md`: Removed `tools` field
+- `.github/agents/meta-app-orchestrator.agent.md`: Removed `tools` field
+- `.meta/templates/agent.template.md`: Removed `tools` field from template
+- `.meta/VERSION`, `.meta-version`: Version bump to 1.7.2
+
+---
+
 ## [1.7.1] - 2025-11-26 (VS Code Custom Agents)
 
 ### Added

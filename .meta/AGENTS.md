@@ -197,7 +197,12 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.7.1** (see `VERSION` file)
+Current meta-orchestrator version: **1.7.2** (see `VERSION` file)
+
+**Features in v1.7.2** (Custom Agent Terminal Access Fix):
+- Removed `tools` field restriction from agent files
+- Custom agents have full capabilities (terminal, file editing, all tools)
+- No artificial restrictions on agent functionality
 
 **Features in v1.7.1** (VS Code Custom Agents):
 - `.github/agents/meta-orchestrator.agent.md` for engine (reads `.meta/AGENTS.md`)

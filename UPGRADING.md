@@ -7,6 +7,39 @@
 
 ## Version-Specific Upgrade Notes
 
+### v1.7.2 → Current
+
+**Changes**: Custom agent terminal access fix - removed tools restriction
+
+- **What changed**: 
+  - Removed `tools` field from `.github/agents/*.agent.md` files
+  - Custom agents now have full capabilities (terminal, file editing, all tools)
+  - `.meta/templates/agent.template.md` updated (no tools restriction)
+  
+- **Action required**: 
+  - **Automatic for new apps**: Generated agents have full capabilities
+  - **For existing apps (v1.7.1)**: Run ENGINE UPGRADE or manually remove `tools:` line from agent files
+  
+- **Breaking changes**: None (only adds capabilities)
+
+- **Why upgrade**: 
+  - Custom agents can run terminal commands (git, npm, etc.)
+  - Custom agents can edit files directly
+  - No artificial capability restrictions
+
+- **Benefits**:
+  - Full orchestrator functionality from custom agents
+  - No need to switch back to default Agent mode
+  - Consistent experience across all agent modes
+
+---
+
+### v1.7.1 → v1.7.2
+
+**Changes**: Same as v1.7.2 → Current (terminal access fix)
+
+---
+
 ### v1.7.1 → Current
 
 **Changes**: VS Code custom agent generation - agent appears in Copilot dropdown
