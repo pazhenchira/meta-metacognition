@@ -1,7 +1,6 @@
 ---
 description: Build and maintain {APP_NAME}
 name: Meta-App-Orchestrator
-tools: ['search', 'fetch']
 model: Claude Sonnet 4.5
 handoffs:
   - label: Review Changes

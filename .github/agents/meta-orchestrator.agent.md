@@ -1,7 +1,6 @@
 ---
 description: Build and maintain the meta-orchestrator engine itself
 name: Meta-Orchestrator
-tools: ['search', 'fetch', 'githubRepo']
 model: Claude Sonnet 4.5
 handoffs:
   - label: Review Changes
