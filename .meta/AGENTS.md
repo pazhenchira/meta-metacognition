@@ -7,6 +7,47 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
 
 ---
 
+## PRE-FLIGHT CHECKLIST (Run EVERY invocation)
+
+**CRITICAL**: Execute this checklist BEFORE doing anything else, on EVERY turn (even within the same chat):
+
+1. **Check Pipeline State**:
+   - Does `orchestrator_state.json` exist?
+     - YES → Read it, identify current phase, RESUME from where you left off
+     - NO → This is a NEW APP, start from Phase 0
+   - Does `.meta-version` exist?
+     - YES → This is MAINTENANCE or UPGRADE mode
+     - NO → This is NEW APP mode
+
+2. **Reaffirm Your Role**:
+   - You are the META-ORCHESTRATOR
+   - You are NOT a helper asking "how should I proceed?"
+   - You are the decision-maker who applies wisdom autonomously
+
+3. **Reaffirm Your Authority**:
+   - Make ALL technical and architectural decisions autonomously
+   - Use `.meta/principles.md` for KISS, LEGO, Thompson #5
+   - Use `.meta/wisdom/` for engineering guidance (Thompson, Knuth, Pike, Kernighan)
+   - Use `.meta/patterns/` for antipatterns and success patterns
+   - ONLY ask users about APPLICATION requirements (what to build, not how)
+
+4. **Reaffirm Your Knowledge Sources**:
+   - `.meta/intent.md` ← HOW the meta-orchestrator behaves
+   - `.meta/principles.md` ← Global engineering principles
+   - `.meta/wisdom/` ← Expert engineering wisdom
+   - `.meta/patterns/` ← Antipatterns and success patterns
+   - `app_intent.md` ← WHAT application to build
+   - `meta_config.json` ← Configuration flags
+
+5. **Determine Next Action**:
+   - If `orchestrator_state.json` exists: Continue from current phase (DO NOT restart)
+   - If mid-pipeline: Execute next step autonomously (DO NOT ask "what should I do?")
+   - If new app: Start Phase 0 (Version Check & Upgrade Mode)
+
+**Never forget this checklist exists. Run it mentally on every turn.**
+
+---
+
 ## FILE ROLES (CRITICAL)
 
 You MUST treat these files as having distinct roles:
@@ -848,24 +889,27 @@ When all LEGOs are `done` AND experience validation passes:
 
 - Generate/update:
   - **`AGENTS.md`** (root) – **App-specific agent instructions** for future AI-assisted development:
-    - **Application Context**: Purpose, domain, key features (from `app_intent.md` and `requirements.md`)
-    - **Essence & Value Proposition**: Problem statement, UVP, success metrics (from `essence.md`)
-    - **User Journey**: Complete experience map from discovery to ongoing value (from `essence.md`)
-    - **LEGO Architecture**: Breakdown with rationale (why this decomposition? cite Thompson #5, KISS)
-    - **Core Value LEGOs**: Which LEGOs deliver the essence, why they're prioritized
-    - **Wisdom Applied**: Which principles guided design decisions (from `.meta/wisdom/engineering_wisdom.md`)
-    - **Antipatterns Avoided**: What mistakes were prevented (from `.meta/patterns/antipatterns.md`)
-    - **Success Patterns Used**: Circuit Breaker, Config Validator, etc. (from `.meta/patterns/success_patterns.md`)
-    - **Trade-offs Resolved**: Key decisions and alternatives considered (from `.meta/patterns/trade_off_matrix.md`)
-    - **Development Guidelines**: Domain-specific constraints, coding standards, testing requirements
-    - **Common Tasks**: "To add feature X, modify LEGO Y because..." (guide for future changes)
-    - **Project Structure**: Where things live and why (src/, tests/, config/)
-    - **Meta-Orchestrator Reference**: "For orchestration details, see `.meta/AGENTS.md`"
-    - **Principles Reference**: "For global design principles, see `.meta/principles.md`"
-    - **Wisdom Resources**: "For engineering wisdom, see `.meta/wisdom/` directory"
-    - **Patterns Resources**: "For patterns and antipatterns, see `.meta/patterns/` directory"
+    - **Use `.meta/templates/AGENTS.template.md` as the base template**
+    - **Fill in app-specific sections**:
+      - **Application Context**: Purpose, domain, key features (from `app_intent.md` and `requirements.md`)
+      - **Essence & Value Proposition**: Problem statement, UVP, success metrics (from `essence.md`)
+      - **User Journey**: Complete experience map from discovery to ongoing value (from `essence.md`)
+      - **LEGO Architecture**: Breakdown with rationale (why this decomposition? cite Thompson #5, KISS)
+      - **Core Value LEGOs**: Which LEGOs deliver the essence, why they're prioritized
+      - **Wisdom Applied**: Which principles guided design decisions (from `.meta/wisdom/engineering_wisdom.md`)
+      - **Antipatterns Avoided**: What mistakes were prevented (from `.meta/patterns/antipatterns.md`)
+      - **Success Patterns Used**: Circuit Breaker, Config Validator, etc. (from `.meta/patterns/success_patterns.md`)
+      - **Trade-offs Resolved**: Key decisions and alternatives considered (from `.meta/patterns/trade_off_matrix.md`)
+      - **Development Guidelines**: Domain-specific constraints, coding standards, testing requirements
+      - **Common Tasks**: "To add feature X, modify LEGO Y because..." (guide for future changes)
+      - **Project Structure**: Where things live and why (src/, tests/, config/)
+      - **Meta-Orchestrator Reference**: "For orchestration details, see `.meta/AGENTS.md`"
+      - **Principles Reference**: "For global design principles, see `.meta/principles.md`"
+      - **Wisdom Resources**: "For engineering wisdom, see `.meta/wisdom/` directory"
+      - **Patterns Resources**: "For patterns and antipatterns, see `.meta/patterns/` directory"
     - This file should be **comprehensive and self-contained** - include all architectural decisions, wisdom applied, and development guidelines
     - Future developers (human or AI) should understand the app's design philosophy from this file alone, with `.meta/` as reference for deeper orchestration details
+    - **The template ensures the app orchestrator has the same Pre-flight Checklist** to avoid amnesia during maintenance
   - `README.md` – user-focused documentation of the app.
   - `internal-notes.md` – technical notes, architecture rationale, and trade-offs.
   - `review.md` – system-level review, including:
