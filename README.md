@@ -115,7 +115,15 @@ I want an app that analyzes stock options and identifies profitable trades.
 **3. Run the Meta-Orchestrator**
 
 ```bash
-# Using GitHub Copilot:
+# === OPTION 1: VS Code Copilot Agent Picker (Easiest - v1.7.1+) ===
+# 1. Click the agent picker icon in Copilot Chat (dropdown next to send button)
+# 2. Select "Meta-Orchestrator-Maintenance" from the list
+# 3. Type: "Build the app from app_intent.md"
+# ✅ No activation phrases to remember!
+# ✅ Agent maintains identity across turns
+# ✅ Same experience as built-in agents (Agent, Plan, Ask, Edit)
+
+# === OPTION 2: Activation Phrase (Works in all versions) ===
 @workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
 
 # The system will:
@@ -876,17 +884,19 @@ MIT License - See [LICENSE](LICENSE) file
 # === NEW APP ===
 # 1. Fill in app_intent.md with your idea
 # 2. Run:
-@workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
+# OPTION A (v1.7.1+): Click agent picker → "Meta-Orchestrator-Maintenance" → "Build the app"
+# OPTION B (any version): @workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
 
 # === ADD FEATURE TO EXISTING APP ===
 # 1. Edit app_intent.md to add the feature
 # 2. Run:
-@workspace Act as meta-orchestrator (.meta/AGENTS.md). Add feature from app_intent.md (MAINTENANCE MODE)
+# OPTION A (v1.7.1+): Click agent picker → "{Your-App-Name}" → "Add feature from app_intent.md"
+# OPTION B (any version): @workspace Act as meta-orchestrator (.meta/AGENTS.md). Add feature from app_intent.md (MAINTENANCE MODE)
 
 # === UPGRADE META-ORCHESTRATOR ===
 # 1. Copy new .meta/ files from latest version (if you have them in .meta/)
 # 2. Run:
-@workspace Act as meta-orchestrator. Upgrade this app to v1.5.0 (ENGINE UPGRADE MODE)
+@workspace Act as meta-orchestrator. Upgrade this app to v1.7.1 (ENGINE UPGRADE MODE)
 
 # === PROTECT YOUR CUSTOM CODE ===
 # Edit .meta-manifest.json:
@@ -894,8 +904,10 @@ MIT License - See [LICENSE](LICENSE) file
 
 # === CHECK VERSION ===
 cat .meta-version  # Shows which meta-orchestrator version built your app (if it exists)
-cat VERSION        # Shows current meta-orchestrator version (1.5.0)
+cat VERSION        # Shows current meta-orchestrator version (1.7.1)
 ```
+
+**Pro Tip (v1.7.1+)**: Use the VS Code Copilot agent picker dropdown for quickest activation. No activation phrases to remember!
 
 ---
 

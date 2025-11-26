@@ -1,13 +1,53 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: November 25, 2025  
+**Date**: November 26, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
 
 ## Version-Specific Upgrade Notes
 
-### v1.7.0 → Current
+### v1.7.1 → Current
+
+**Changes**: VS Code custom agent generation - agent appears in Copilot dropdown
+
+- **What changed**: 
+  - NEW APP mode generates `.github/agents/{APP_NAME}.agent.md`
+  - ENGINE UPGRADE mode creates/updates the agent file
+  - Agent appears in VS Code Copilot agent picker dropdown
+  - No activation phrases needed - just select from dropdown
+  
+- **Action required**: 
+  - **Automatic for new apps**: Generated when you build new app with v1.7.1+
+  - **For existing apps**: Run ENGINE UPGRADE to add agent file:
+    ```bash
+    @workspace Act as meta-orchestrator. Upgrade this app to v1.7.1 (ENGINE UPGRADE MODE)
+    ```
+  - **Manual alternative**: Create `.github/agents/{your-app}.agent.md` using `.meta/templates/agent.template.md`
+  
+- **Breaking changes**: None
+
+- **Why upgrade**: 
+  - Discoverable agents: See your app orchestrator in VS Code Copilot dropdown
+  - No memorization: Don't need to remember `@workspace Act as...` activation phrases
+  - Professional UX: Same experience as built-in agents (Agent, Plan, Ask, Edit)
+  - Quick activation: Select agent from picker, start working immediately
+
+- **Benefits**:
+  - Agent visible in dropdown (discoverability)
+  - Click to activate (vs typing activation phrase)
+  - Consistent with VS Code conventions
+  - Agent maintains identity across turns (references `AGENTS.md`)
+
+---
+
+### v1.7.0 → v1.7.1
+
+**Changes**: Same as v1.7.1 → Current (VS Code custom agent support)
+
+---
+
+### v1.6.1 → v1.7.0
 
 **Changes**: Conversational MAINTENANCE mode - orchestrator updates app_intent.md after discussion
 

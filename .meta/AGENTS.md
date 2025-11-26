@@ -180,6 +180,11 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
        - Show plan to user with recommendations, get approval.
        - Apply upgrade: add new LEGOs, enhance or regenerate files as decided.
        - Update `.meta-version` and `.meta-manifest.json`.
+       - **Update/Create `.github/agents/{APP_NAME}.agent.md`**:
+         - If file doesn't exist: Generate from `.meta/templates/agent.template.md`
+         - If file exists and outdated: Update with latest template
+         - Replace `{APP_NAME}` and `{APP_NAME_SAFE}` with actual app name
+         - This ensures custom agent mode works after upgrade
      - **Different version, app_intent.md CHANGED**: HYBRID MODE
        - User wants BOTH new engine features AND app requirement changes.
        - Do ENGINE UPGRADE first, then MAINTENANCE.
@@ -191,7 +196,14 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.7.0** (see `VERSION` file)
+Current meta-orchestrator version: **1.7.1** (see `VERSION` file)
+
+**Features in v1.7.1** (VS Code Custom Agents):
+- `.github/agents/{APP_NAME}.agent.md` generation for VS Code Copilot dropdown
+- Custom agent appears in agent picker (no activation phrases needed)
+- Agent references `AGENTS.md` (root) for complete instructions
+- Template for generated apps (`.meta/templates/agent.template.md`)
+- Discoverable agents without memorizing activation commands
 
 **Features in v1.7.0** (Conversational Maintenance):
 - Conversational MAINTENANCE mode (orchestrator updates app_intent.md after discussion)
@@ -958,6 +970,14 @@ When all LEGOs are `done` AND experience validation passes:
     - This file should be **comprehensive and self-contained** - include all architectural decisions, wisdom applied, and development guidelines
     - Future developers (human or AI) should understand the app's design philosophy from this file alone, with `.meta/` as reference for deeper orchestration details
     - **The template ensures the app orchestrator has the same Pre-flight Checklist** to avoid amnesia during maintenance
+  - **`.github/agents/{APP_NAME}.agent.md`** (for VS Code Copilot agent dropdown):
+    - **Use `.meta/templates/agent.template.md` as the base template**
+    - Replace `{APP_NAME}` with actual app name (from `app_intent.md`)
+    - Replace `{APP_NAME_SAFE}` with name safe for agent identifier (alphanumeric, hyphens, underscores only)
+    - This enables custom agent mode in VS Code Copilot dropdown
+    - Agent references `AGENTS.md` (root) for complete instructions
+    - Provides quick activation: select agent from dropdown in Copilot Chat
+    - Makes app orchestrator discoverable without remembering activation phrases
   - `README.md` – user-focused documentation of the app.
   - `internal-notes.md` – technical notes, architecture rationale, and trade-offs.
   - `review.md` – system-level review, including:

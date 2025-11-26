@@ -6,6 +6,50 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.7.1] - 2025-11-26 (VS Code Custom Agents)
+
+### Added
+
+**VS Code Custom Agent Generation** (Section 11.2 in `.meta/AGENTS.md`):
+- `.github/agents/{APP_NAME}.agent.md` generated for all new apps
+- Appears in VS Code Copilot agent dropdown (no activation phrases needed)
+- Agent references `AGENTS.md` (root) for complete instructions
+- Template at `.meta/templates/agent.template.md`
+
+**Engine Upgrade Support**:
+- ENGINE UPGRADE mode creates/updates `.github/agents/{APP_NAME}.agent.md`
+- Ensures custom agents work after version upgrades
+- Safe name generation (`{APP_NAME_SAFE}` for agent identifiers)
+
+### Why This Matters
+
+**Problem**: Users had to remember activation phrases like `@workspace Act as {app} orchestrator` to use app-specific agents. No visual indicator that custom agent exists.
+
+**Solution**: Custom agent appears in VS Code Copilot dropdown as selectable option. Users can see and click the agent without memorizing commands.
+
+**Benefits**:
+- Discoverable: Agent visible in dropdown, no memorization needed
+- Quick activation: Select agent from picker, start working immediately
+- Professional UX: Same experience as built-in agents (Agent, Plan, Ask, Edit)
+- References full instructions: `.agent.md` points to `AGENTS.md` for complete context
+- Persistent identity: Agent maintains role across conversation turns
+
+**Impact**:
+- Generated apps get professional agent UX out of the box
+- Users discover app orchestrator without reading documentation
+- Reduces friction: click dropdown vs typing activation phrase
+- Consistent with VS Code Copilot conventions
+
+### Files Modified
+
+- `.meta/AGENTS.md`: Added `.github/agents/{APP_NAME}.agent.md` generation to Section 11.2
+- `.meta/AGENTS.md`: Added ENGINE UPGRADE support for agent file creation
+- `.meta/templates/agent.template.md` (new): Template for app-specific agents
+- `.github/agents/meta-orchestrator.agent.md` (new): Meta-orchestrator's own custom agent
+- `.meta/VERSION`, `.meta-version`: Version bump to 1.7.1, added `vscode_custom_agents` feature
+
+---
+
 ## [1.7.0] - 2025-11-25 (Conversational Maintenance Mode)
 
 ### Added
