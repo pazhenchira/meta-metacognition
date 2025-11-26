@@ -180,11 +180,6 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
        - Show plan to user with recommendations, get approval.
        - Apply upgrade: add new LEGOs, enhance or regenerate files as decided.
        - Update `.meta-version` and `.meta-manifest.json`.
-       - **Update/Create `.github/copilot-instructions.md`**:
-         - If file doesn't exist: Generate from `.meta/templates/copilot-instructions.template.md`
-         - If file exists and outdated: Update with latest template
-         - Replace `{APP_NAME}` with actual app name
-         - This ensures custom agent mode works after upgrade
      - **Different version, app_intent.md CHANGED**: HYBRID MODE
        - User wants BOTH new engine features AND app requirement changes.
        - Do ENGINE UPGRADE first, then MAINTENANCE.
@@ -196,14 +191,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.7.1** (see `VERSION` file)
-
-**Features in v1.7.1** (Copilot Custom Agent Mode):
-- `.github/copilot-instructions.md` configuration for persistent agent identity
-- Agent maintains role across turns (no "waiting for confirmation")
-- Automatic reading of AGENTS.md, principles, wisdom on every turn
-- Autonomous decision-making without constant user approval
-- Template for generated apps (`.meta/templates/copilot-instructions.template.md`)
+Current meta-orchestrator version: **1.7.0** (see `VERSION` file)
 
 **Features in v1.7.0** (Conversational Maintenance):
 - Conversational MAINTENANCE mode (orchestrator updates app_intent.md after discussion)
@@ -970,12 +958,6 @@ When all LEGOs are `done` AND experience validation passes:
     - This file should be **comprehensive and self-contained** - include all architectural decisions, wisdom applied, and development guidelines
     - Future developers (human or AI) should understand the app's design philosophy from this file alone, with `.meta/` as reference for deeper orchestration details
     - **The template ensures the app orchestrator has the same Pre-flight Checklist** to avoid amnesia during maintenance
-  - **`.github/copilot-instructions.md`** (if using GitHub Copilot):
-    - **Use `.meta/templates/copilot-instructions.template.md` as the base template**
-    - Replace `{APP_NAME}` with actual app name (from `app_intent.md`)
-    - This enables custom agent mode in Copilot (persistent identity across turns)
-    - Agent reads `AGENTS.md` automatically and maintains role without "waiting for confirmation"
-    - Makes autonomous decisions (only asks WHAT to build, not HOW)
   - `README.md` – user-focused documentation of the app.
   - `internal-notes.md` – technical notes, architecture rationale, and trade-offs.
   - `review.md` – system-level review, including:

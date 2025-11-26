@@ -1,43 +1,13 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: November 26, 2025  
+**Date**: November 25, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
 
 ## Version-Specific Upgrade Notes
 
-### v1.7.1 → Current
-
-**Changes**: GitHub Copilot custom agent mode configuration
-
-- **What changed**: 
-  - Added `.github/copilot-instructions.md` to tell Copilot about meta-orchestrator maintenance agent
-  - Agent maintains identity across turns (no more "waiting for confirmation" after each response)
-  - Agent reads `AGENTS.md`, principles, wisdom automatically on every turn
-  - Makes autonomous decisions without constant user approval
-  
-- **Action required**: 
-  - **None** - Feature is opt-in via activation phrases
-  - **To use custom agent mode**: Say `@workspace Act as meta-orchestrator maintenance agent and [request]`
-  - **Optional**: Add `.github/copilot-instructions.md` to your own apps for persistent agent behavior
-  
-- **Breaking changes**: None (standard chat still works)
-
-- **Why upgrade**: 
-  - Eliminates friction: Agent stops asking "should I continue?" after every step
-  - Better UX: Focus on WHAT to build, agent handles HOW autonomously
-  - Faster iterations: No more manual confirmations for technical decisions
-
----
-
-### v1.7.0 → v1.7.1
-
-**Changes**: Same as v1.7.1 → Current (custom agent mode)
-
----
-
-### v1.6.1 → v1.7.0
+### v1.7.0 → Current
 
 **Changes**: Conversational MAINTENANCE mode - orchestrator updates app_intent.md after discussion
 
