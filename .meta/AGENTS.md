@@ -197,7 +197,13 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.7.2** (see `VERSION` file)
+Current meta-orchestrator version: **1.7.3** (see `VERSION` file)
+
+**Features in v1.7.3** (Inline Pre-Flight Checklist):
+- Pre-flight checklist embedded directly in agent files
+- Executed immediately on activation (not buried in AGENTS.md)
+- Checkpoint #6: Version & documentation verification before commits
+- Prevents incomplete releases, enforces wisdom application
 
 **Features in v1.7.2** (Custom Agent Terminal Access Fix):
 - Removed `tools` field restriction from agent files

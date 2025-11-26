@@ -7,6 +7,42 @@
 
 ## Version-Specific Upgrade Notes
 
+### v1.7.3 → Current
+
+**Changes**: Inline pre-flight checklist with version/docs checkpoint
+
+- **What changed**: 
+  - Pre-flight checklist embedded directly in `.github/agents/*.agent.md` files
+  - Checklist executed immediately on activation (not buried in AGENTS.md)
+  - Checkpoint #6 added: Version & documentation verification before commits
+  - Prevents incomplete releases
+  
+- **Action required**: 
+  - **Automatic for new apps**: Generated agents have inline checklist
+  - **For existing apps**: Run ENGINE UPGRADE to update agent files
+  
+- **Breaking changes**: None (only adds quality enforcement)
+
+- **Why upgrade**: 
+  - Agents maintain identity across turns consistently
+  - Wisdom applied systematically (KISS, LEGO, Thompson #5)
+  - No more incomplete commits (version/docs verified)
+  - Quality enforcement through checklists
+
+- **Benefits**:
+  - Consistent agent behavior
+  - Systematic wisdom application
+  - Complete releases (version + docs always updated)
+  - Self-enforcing quality standards
+
+---
+
+### v1.7.2 → v1.7.3
+
+**Changes**: Same as v1.7.3 → Current (inline pre-flight checklist)
+
+---
+
 ### v1.7.2 → Current
 
 **Changes**: Custom agent terminal access fix - removed tools restriction

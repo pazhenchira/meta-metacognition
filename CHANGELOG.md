@@ -6,6 +6,53 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.7.3] - 2025-11-26 (Inline Pre-Flight Checklist)
+
+### Added
+
+**Inline Pre-Flight Checklist** (in both Meta-Orchestrator and Meta-App-Orchestrator agents):
+- Pre-flight checklist now embedded directly in `.agent.md` files
+- Executed immediately on agent activation (not buried in `AGENTS.md`)
+- **Checkpoint #6 added**: Version & Documentation verification before commits
+- Prevents incomplete releases (missing version bumps, docs)
+- Ensures wisdom application on every turn
+
+**Meta-Orchestrator Checklist** (`.github/agents/meta-orchestrator.agent.md`):
+1. Check repository state (engine vs app)
+2. Reaffirm role (maintenance orchestrator for engine)
+3. Reaffirm authority (autonomous decisions, apply wisdom)
+4. Reaffirm knowledge sources (AGENTS.md, .meta/, wisdom/)
+5. Determine next action (evaluate with wisdom framework)
+6. **Version & documentation checkpoint** (CRITICAL)
+
+**Meta-App-Orchestrator Checklist** (`.github/agents/meta-app-orchestrator.agent.md`):
+1. Check repository context (application, not engine)
+2. Reaffirm role (app orchestrator)
+3. Reaffirm authority (autonomous decisions, apply wisdom)
+4. Check app context (app_intent.md, essence.md, AGENTS.md)
+5. Determine next action (features/bugs with wisdom)
+
+### Why This Matters
+
+**Problem**: Agents lost identity across turns, forgot to apply wisdom, rushed commits without version bumps/docs.
+
+**Solution**: Inline pre-flight checklist executed on EVERY turn. Checkpoint #6 prevents incomplete releases.
+
+**Impact**:
+- Agents maintain identity consistently
+- Wisdom applied systematically (KISS, LEGO, Thompson #5)
+- No more incomplete commits (version/docs verified before git)
+- Quality enforcement through checklists
+
+### Files Modified
+
+- `.github/agents/meta-orchestrator.agent.md`: Added inline checklist with checkpoint #6
+- `.github/agents/meta-app-orchestrator.agent.md`: Added inline checklist
+- `.meta/templates/agent.template.md`: Template updated with checklist
+- `.meta/VERSION`, `.meta-version`: Version bump to 1.7.3
+
+---
+
 ## [1.7.2] - 2025-11-26 (Custom Agent Terminal Access Fix)
 
 ### Fixed
