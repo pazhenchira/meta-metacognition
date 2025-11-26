@@ -145,8 +145,8 @@ But they struggle with:
 
 **Actions**:
 1. Clone meta-metacognition repo
-2. Read app_intent.md example (OptionsTrader)
-3. Edit app_intent.md with their idea
+2. Read app_intent.md (meta-orchestrator's own intent as reference)
+3. Replace app_intent.md with their own app idea
 4. Run: `@workspace Act as meta-orchestrator in .meta/AGENTS.md and build this app`
 
 **Experience**:

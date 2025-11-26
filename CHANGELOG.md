@@ -6,6 +6,30 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.6.1] - 2025-11-25 (Dogfooding Bugfix)
+
+### Fixed
+
+**app_intent.md Alignment**:
+- Corrected `app_intent.md` to describe meta-orchestrator (not OptionsTrader example)
+- Was: Placeholder template with stock trading example
+- Now: Actual meta-orchestrator intent (build apps from plain English using 50+ years wisdom)
+- Documented unique architecture: Source = `.meta/` AI prompts (Markdown), not traditional code
+- Aligned success criteria with `essence.md`: KISS compliance, zero antipatterns, >80% coverage
+- Recognized paradigm shift: "Deployment" = copy `.meta/` folder, "Tests" = build sample apps
+- Why this matters: Dogfooding principle requires engine to describe itself correctly
+- Impact: Future AI agents understand this is a prompt-based orchestration engine, not typical code
+
+**`.meta-manifest.json` Description**:
+- Updated `app_intent.md` description from "Example app intent template" to "Meta-orchestrator's actual intent"
+- Prevents confusion about whether file is example or actual
+
+### Context
+
+This fixes a violation of the dogfooding principle introduced during initial repository setup. The meta-orchestrator's own `app_intent.md` should follow the same structure it enforces for generated apps: describe the actual app being built, not provide a placeholder example.
+
+---
+
 ## [1.6.0] - 2025-11-25 (Stateless Runtime Support & Role Persistence)
 
 ### Added

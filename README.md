@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 1.6.0** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 1.6.1** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 

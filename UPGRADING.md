@@ -1,11 +1,22 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: November 24, 2025  
+**Date**: November 25, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
 
-## Problem Statement
+## Version-Specific Upgrade Notes
+
+### v1.6.1 → Current
+
+**Changes**: Bugfix release - no new features
+
+- **What changed**: `app_intent.md` now correctly describes meta-orchestrator (not OptionsTrader example)
+- **Action required**: None (documentation-only fix, no code changes)
+- **Breaking changes**: None
+- **Why upgrade**: Ensures future AI agents understand the engine's unique architecture (source = `.meta/` prompts)
+
+### v1.6.0 → Current
 
 When you build an app with meta-orchestrator v1.0 and later upgrade to v2.0, how do you:
 1. Apply new meta-orchestrator features to existing apps?
