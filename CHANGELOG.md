@@ -6,6 +6,53 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.7.1] - 2025-11-26 (Copilot Custom Agent Mode)
+
+### Added
+
+**Copilot Custom Agent Mode Configuration** (`.github/copilot-instructions.md`):
+- Tells GitHub Copilot to recognize `AGENTS.md` as custom agent mode
+- Activation phrases: `@workspace Act as meta-orchestrator maintenance agent`, `@workspace /agents`
+- Agent maintains identity across turns (no more "waiting for confirmation" after each response)
+- Reads `AGENTS.md`, `.meta/principles.md`, `.meta/wisdom/` automatically on every turn
+- Makes autonomous decisions (only asks WHAT to build, not HOW)
+
+**Documentation Update** (README.md):
+- Added "Using the Custom Agent Mode" section
+- Explains activation phrases and key benefits
+- Updated Quick Commands Cheat Sheet with custom agent examples
+- Clarified v1.7.0 conversational maintenance workflow
+
+### Why This Matters
+
+**Problem**: In standard Copilot chat, agent loses identity after every turn. Users had to repeatedly say "keep going" or "proceed" because agent kept asking "should I continue?"
+
+**Root Cause**: Without `.github/copilot-instructions.md`, Copilot doesn't remember it's acting as the meta-orchestrator maintenance agent.
+
+**Solution**: `.github/copilot-instructions.md` tells Copilot to:
+1. Read `AGENTS.md` on every turn
+2. Reaffirm role and authority
+3. Apply wisdom autonomously
+4. Make decisions without constant user approval
+
+**Benefits**:
+- Persistent identity: Agent remembers role across turns
+- Autonomous execution: Makes technical decisions without asking "how should I proceed?"
+- Context-aware: Reads principles, wisdom, patterns automatically
+- Better UX: Users focus on WHAT to build, agent handles HOW
+
+**Impact**:
+- Eliminates friction in maintenance workflows
+- Agent acts like true "virtual CTO" (makes decisions, doesn't ask permission for technical choices)
+- Same pattern can be applied to apps built by meta-orchestrator (add `.github/copilot-instructions.md` to generated apps)
+
+### Files Modified
+
+- `.github/copilot-instructions.md` (new): Custom agent configuration
+- `README.md`: Added custom agent mode documentation and updated Quick Commands Cheat Sheet
+
+---
+
 ## [1.7.0] - 2025-11-25 (Conversational Maintenance Mode)
 
 ### Added

@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 1.7.0** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 1.7.1** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -870,6 +870,52 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
+## 🔧 Using the Custom Agent Mode (GitHub Copilot)
+
+The repository includes `.github/copilot-instructions.md` which tells Copilot to act as the meta-orchestrator maintenance agent automatically.
+
+### Activation Phrases
+
+```bash
+# Option 1: Explicit invocation (recommended)
+@workspace Act as meta-orchestrator maintenance agent and [your request]
+
+# Option 2: Direct reference to AGENTS.md
+@workspace See AGENTS.md - act as that agent and [your request]
+
+# Option 3: Short form (if you prefer)
+@workspace /agents [your request]
+```
+
+### Key Benefits
+
+✅ **Persistent Identity**: Agent maintains role across turns (no more "waiting for confirmation")  
+✅ **Autonomous Decisions**: Makes technical choices without asking "how should I proceed?"  
+✅ **Context Aware**: Reads `.meta/` files, wisdom, patterns automatically  
+✅ **Applies Engine Philosophy**: Uses KISS, LEGO, Thompson #5 systematically
+
+### Example Usage
+
+```bash
+# Add a feature
+@workspace Act as meta-orchestrator maintenance agent and add observability LEGO
+
+# Fix a bug
+@workspace Act as meta-orchestrator maintenance agent and fix issue #42
+
+# Improve documentation
+@workspace Act as meta-orchestrator maintenance agent and improve README clarity
+```
+
+The agent will:
+1. Read `AGENTS.md` to reaffirm role and authority
+2. Apply wisdom from `.meta/principles.md` and `.meta/wisdom/`
+3. Make autonomous decisions (only asks WHAT to build, not HOW)
+4. Implement, test, document changes
+5. Update version files and CHANGELOG.md
+
+---
+
 ## 🎯 Quick Commands Cheat Sheet
 
 ```bash
@@ -878,15 +924,27 @@ MIT License - See [LICENSE](LICENSE) file
 # 2. Run:
 @workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
 
-# === ADD FEATURE TO EXISTING APP ===
+# === ADD FEATURE TO EXISTING APP (Conversational - v1.7.0+) ===
+# Just ask! The orchestrator will update app_intent.md for you:
+@workspace Act as meta-orchestrator. I want to add [feature description]
+# Agent will propose app_intent.md changes, get your approval, then proceed
+
+# === ADD FEATURE (Manual - Classic Workflow) ===
 # 1. Edit app_intent.md to add the feature
 # 2. Run:
 @workspace Act as meta-orchestrator (.meta/AGENTS.md). Add feature from app_intent.md (MAINTENANCE MODE)
 
+# === MAINTAIN ENGINE (Custom Agent Mode) ===
+@workspace Act as meta-orchestrator maintenance agent and [your request]
+# Examples:
+# - Add wisdom source from [author]
+# - Fix bug in Phase 5 of .meta/AGENTS.md
+# - Improve documentation for [topic]
+
 # === UPGRADE META-ORCHESTRATOR ===
 # 1. Copy new .meta/ files from latest version (if you have them in .meta/)
 # 2. Run:
-@workspace Act as meta-orchestrator. Upgrade this app to v1.5.0 (ENGINE UPGRADE MODE)
+@workspace Act as meta-orchestrator. Upgrade this app to v1.7.0 (ENGINE UPGRADE MODE)
 
 # === PROTECT YOUR CUSTOM CODE ===
 # Edit .meta-manifest.json:
@@ -894,7 +952,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 # === CHECK VERSION ===
 cat .meta-version  # Shows which meta-orchestrator version built your app (if it exists)
-cat VERSION        # Shows current meta-orchestrator version (1.5.0)
+cat VERSION        # Shows current meta-orchestrator version (1.7.0)
 ```
 
 ---
