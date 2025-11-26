@@ -117,7 +117,7 @@ I want an app that analyzes stock options and identifies profitable trades.
 ```bash
 # === OPTION 1: VS Code Copilot Agent Picker (Easiest - v1.7.1+) ===
 # 1. Click the agent picker icon in Copilot Chat (dropdown next to send button)
-# 2. Select "Meta-Orchestrator-Maintenance" from the list
+# 2. Select "Meta-Orchestrator" from the list
 # 3. Type: "Build the app from app_intent.md"
 # ✅ No activation phrases to remember!
 # ✅ Agent maintains identity across turns
@@ -884,13 +884,13 @@ MIT License - See [LICENSE](LICENSE) file
 # === NEW APP ===
 # 1. Fill in app_intent.md with your idea
 # 2. Run:
-# OPTION A (v1.7.1+): Click agent picker → "Meta-Orchestrator-Maintenance" → "Build the app"
+# OPTION A (v1.7.1+): Click agent picker → "Meta-Orchestrator" → "Build the app"
 # OPTION B (any version): @workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
 
 # === ADD FEATURE TO EXISTING APP ===
 # 1. Edit app_intent.md to add the feature
 # 2. Run:
-# OPTION A (v1.7.1+): Click agent picker → "{Your-App-Name}" → "Add feature from app_intent.md"
+# OPTION A (v1.7.1+): Click agent picker → "Meta-App-Orchestrator" → "Add feature from app_intent.md"
 # OPTION B (any version): @workspace Act as meta-orchestrator (.meta/AGENTS.md). Add feature from app_intent.md (MAINTENANCE MODE)
 
 # === UPGRADE META-ORCHESTRATOR ===

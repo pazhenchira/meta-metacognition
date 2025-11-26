@@ -11,21 +11,25 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 ### Added
 
 **VS Code Custom Agent Generation** (Section 11.2 in `.meta/AGENTS.md`):
-- `.github/agents/{APP_NAME}.agent.md` generated for all new apps
+- `.github/agents/meta-orchestrator.agent.md` for engine (reads `.meta/AGENTS.md`)
+- `.github/agents/meta-app-orchestrator.agent.md` for apps (reads `AGENTS.md`)
 - Appears in VS Code Copilot agent dropdown (no activation phrases needed)
-- Agent references `AGENTS.md` (root) for complete instructions
 - Template at `.meta/templates/agent.template.md`
 
 **Engine Upgrade Support**:
-- ENGINE UPGRADE mode creates/updates `.github/agents/{APP_NAME}.agent.md`
+- ENGINE UPGRADE mode creates/updates `.github/agents/meta-app-orchestrator.agent.md`
 - Ensures custom agents work after version upgrades
-- Safe name generation (`{APP_NAME_SAFE}` for agent identifiers)
+- Consistent naming: "Meta-Orchestrator" (engine) and "Meta-App-Orchestrator" (apps)
 
 ### Why This Matters
 
 **Problem**: Users had to remember activation phrases like `@workspace Act as {app} orchestrator` to use app-specific agents. No visual indicator that custom agent exists.
 
-**Solution**: Custom agent appears in VS Code Copilot dropdown as selectable option. Users can see and click the agent without memorizing commands.
+**Solution**: Two custom agents appear in VS Code Copilot dropdown:
+- **Meta-Orchestrator**: For engine work (reads `.meta/AGENTS.md`)
+- **Meta-App-Orchestrator**: For app work (reads `AGENTS.md`)
+
+Users can see and click the agent without memorizing commands.
 
 **Benefits**:
 - Discoverable: Agent visible in dropdown, no memorization needed
