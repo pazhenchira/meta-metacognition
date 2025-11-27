@@ -7,6 +7,74 @@
 
 ## Version-Specific Upgrade Notes
 
+### v1.7.4 → v1.7.5 (Current)
+
+**Changes**: Dual-runtime agent discovery - OpenAI Codex CLI + GitHub Copilot Chat support
+
+- **What changed**:
+  - Now supports BOTH GitHub Copilot Chat (VS Code) AND OpenAI Codex CLI (terminal)
+  - UPGRADE mode generates TWO agent configuration files:
+    - `.github/agents/meta-app-orchestrator.agent.md` → GitHub Copilot Chat agent picker
+    - `AGENTS.md` (root) → OpenAI Codex CLI memory system
+  - New template: `.meta/templates/AGENTS.codex.template.md` for Codex configuration
+  - Validation checks BOTH files exist
+
+- **Action required**:
+  - **For new apps**: Automatic (both files generated during build)
+  - **For apps upgraded to v1.7.4 WITHOUT `AGENTS.md`**: Run ENGINE UPGRADE again OR manual fix:
+    ```bash
+    # Copy template to root
+    copy .meta\templates\AGENTS.codex.template.md AGENTS.md
+    # Edit AGENTS.md: Replace {APP_NAME} with your app name from app_intent.md
+    ```
+
+- **Breaking changes**: None (only adds Codex support, doesn't break Copilot)
+
+- **Why upgrade**:
+  - Use EITHER GitHub Copilot Chat (VS Code) OR OpenAI Codex CLI (terminal)
+  - Switch between runtimes without losing agent discovery
+  - Codex CLI users get app-specific instructions via `AGENTS.md`
+
+- **Runtime-Specific Discovery**:
+  - **GitHub Copilot Chat**: Reads `.github/agents/*.agent.md` → Agent picker dropdown
+  - **OpenAI Codex CLI**: Reads `AGENTS.md` in directories → Memory/instructions
+  - Both reference same `.meta/AGENTS.md` for engine logic
+
+---
+
+### v1.7.3 → v1.7.4
+
+**Changes**: Fixed agent discoverability - MANDATORY `.github/agents/` generation during upgrades
+
+- **What changed**: 
+  - UPGRADE mode now **requires** `.github/agents/meta-app-orchestrator.agent.md` generation
+  - Added validation: Checks file exists after upgrade, stops if missing
+  - Creates `.github/agents/` directory if needed
+  - Ensures Codex CLI agent picker can discover "Meta-App-Orchestrator"
+  
+- **Action required**: 
+  - **For new apps**: Automatic (agent file generated during build)
+  - **For apps upgraded v1.7.1-v1.7.3 WITHOUT agent file**: Run ENGINE UPGRADE again OR manual fix:
+    ```bash
+    mkdir .github\agents
+    copy .meta\templates\agent.template.md .github\agents\meta-app-orchestrator.agent.md
+    # Edit file: Replace {APP_NAME} with your app name
+    ```
+  
+- **Breaking changes**: None (only improves discoverability)
+
+- **Why upgrade**: 
+  - "Meta-App-Orchestrator" appears in Codex CLI agent picker
+  - No need to remember activation phrases
+  - Consistent agent experience across all apps
+  
+- **Benefits**:
+  - One-click agent activation from dropdown
+  - Guaranteed agent discoverability after upgrade
+  - Validation prevents silent failures
+
+---
+
 ### v1.7.3 → Current
 
 **Changes**: Inline pre-flight checklist with version/docs checkpoint

@@ -180,12 +180,26 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
        - Show plan to user with recommendations, get approval.
        - Apply upgrade: add new LEGOs, enhance or regenerate files as decided.
        - Update `.meta-version` and `.meta-manifest.json`.
-       - **Update/Create `.github/agents/meta-app-orchestrator.agent.md`**:
+       - **MANDATORY: Generate agent configuration for BOTH runtimes**:
+         
+         **A. GitHub Copilot Chat (VS Code)** - Uses `.github/agents/` files:
+         - **ALWAYS generate `.github/agents/meta-app-orchestrator.agent.md`**
+         - Create `.github/agents/` directory if missing
          - If file doesn't exist: Generate from `.meta/templates/agent.template.md`
          - If file exists and outdated: Update with latest template
-         - Replace `{APP_NAME}` with actual app name
+         - Replace `{APP_NAME}` with actual app name from `app_intent.md`
          - Agent name: "Meta-App-Orchestrator" (consistent across all apps)
-         - This ensures custom agent mode works after upgrade
+         - **VALIDATION**: Verify file exists and contains "Meta-App-Orchestrator"
+         
+         **B. OpenAI Codex CLI** - Uses `AGENTS.md` in repo root:
+         - **ALWAYS generate `AGENTS.md` in repository root** (if not exists)
+         - Codex reads AGENTS.md files for memory/instructions (not `.github/agents/`)
+         - Include app-specific orchestration guidance
+         - Reference `.meta/AGENTS.md` for engine logic
+         - Format: Plain markdown (no YAML frontmatter needed)
+         - **VALIDATION**: Verify `AGENTS.md` exists in root with app instructions
+         
+         **If either validation fails**: STOP and report error (agent won't be discoverable in that runtime)
      - **Different version, app_intent.md CHANGED**: HYBRID MODE
        - User wants BOTH new engine features AND app requirement changes.
        - Do ENGINE UPGRADE first, then MAINTENANCE.
@@ -197,7 +211,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.7.3** (see `VERSION` file)
+Current meta-orchestrator version: **1.7.4** (see `VERSION` file)
 
 **Features in v1.7.3** (Inline Pre-Flight Checklist):
 - Pre-flight checklist embedded directly in agent files

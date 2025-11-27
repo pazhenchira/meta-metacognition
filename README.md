@@ -87,7 +87,8 @@ meta-metacognition/
 git clone https://github.com/pazhenchira/meta-metacognition.git
 cd meta-metacognition
 
-# Prerequisites: GitHub Copilot (or OpenAI Codex CLI)
+# Prerequisites: GitHub Copilot Chat (VS Code) OR OpenAI Codex CLI (terminal)
+# Both runtimes supported - use whichever you prefer!
 # That's it! The meta-orchestrator will guide you through the rest.
 ```
 
@@ -115,15 +116,19 @@ I want an app that analyzes stock options and identifies profitable trades.
 **3. Run the Meta-Orchestrator**
 
 ```bash
-# === OPTION 1: VS Code Copilot Agent Picker (Easiest - v1.7.1+) ===
-# 1. Click the agent picker icon in Copilot Chat (dropdown next to send button)
-# 2. Select "Meta-Orchestrator" from the list
-# 3. Type: "Build the app from app_intent.md"
-# ✅ No activation phrases to remember!
-# ✅ Agent maintains identity across turns
-# ✅ Same experience as built-in agents (Agent, Plan, Ask, Edit)
+# === OPTION 1: VS Code GitHub Copilot Chat Agent Picker (Easiest - v1.7.1+) ===
+# 1. Open Copilot Chat (Ctrl+Alt+I), click agent picker dropdown
+# 2. Select "Meta-Orchestrator"
+# 3. Say: "Build the app from app_intent.md"
+# ✅ No activation phrases! Agent maintains identity across turns
 
-# === OPTION 2: Activation Phrase (Works in all versions) ===
+# === OPTION 2: OpenAI Codex CLI (Terminal - v1.7.5+) ===
+# 1. In repository directory, run: codex
+# 2. Codex automatically reads AGENTS.md for instructions
+# 3. Say: "Build the app from app_intent.md"
+# ✅ Engine logic from .meta/AGENTS.md applied automatically
+
+# === OPTION 3: Manual Activation (Any Runtime, Any Version) ===
 @workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
 
 # The system will:

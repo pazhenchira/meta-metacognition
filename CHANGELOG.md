@@ -6,6 +6,75 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.7.5] - 2025-11-27 (Dual-Runtime Agent Discovery)
+
+### Added
+
+**OpenAI Codex CLI Support**:
+- Now supports BOTH GitHub Copilot Chat (VS Code) AND OpenAI Codex CLI (v0.63.0+)
+- New template: `.meta/templates/AGENTS.codex.template.md` for Codex CLI agent configuration
+- UPGRADE mode generates `AGENTS.md` in repository root (for Codex memory system)
+- Codex reads `AGENTS.md` files for instructions (documented in Codex getting-started.md)
+
+### Changed
+
+**Dual-Runtime Agent Generation**:
+- `.meta/AGENTS.md` UPGRADE mode now MANDATES both agent file types:
+  - `.github/agents/meta-app-orchestrator.agent.md` → GitHub Copilot Chat (VS Code)
+  - `AGENTS.md` (root) → OpenAI Codex CLI (terminal)
+- Validation checks BOTH files exist after upgrade
+- Documentation clarified runtime-specific terminology
+
+### Fixed
+
+**Agent Discoverability in OpenAI Codex CLI**:
+- v1.7.4 only generated GitHub Copilot agent file (`.github/agents/`)
+- Codex CLI couldn't discover agents (uses different mechanism: `AGENTS.md` files)
+- Now properly supports users who switch between VS Code and Codex CLI
+
+---
+
+## [1.7.4] - 2025-11-27 (Agent Discoverability Fix)
+
+### Fixed
+
+**MANDATORY Agent File Generation During Upgrades**:
+- UPGRADE mode now **requires** `.github/agents/meta-app-orchestrator.agent.md` generation
+- Added validation: Verifies file exists after upgrade, stops with error if missing
+- Creates `.github/agents/` directory if needed during upgrade
+- Ensures GitHub Copilot Chat agent picker can discover "Meta-App-Orchestrator" in upgraded apps
+
+**Problem Solved**:
+- Users upgrading apps to v1.7.1+ didn't see "Meta-App-Orchestrator" in VS Code Copilot Chat agent picker
+- UPGRADE mode mentioned agent file creation but didn't enforce it
+- Silent failure left apps without discoverable custom agents
+
+**Solution Applied (KISS + Thompson #5)**:
+- Made agent file generation explicit and mandatory
+- Added validation checkpoint (verify file exists with correct content)
+- Stop with clear error if validation fails
+- Updated UPGRADING.md with manual workaround for already-upgraded apps
+
+### Files Modified
+
+- `.meta/AGENTS.md`: Section 0 (UPGRADE mode) - Made agent file generation MANDATORY with validation
+- `UPGRADING.md`: Added v1.7.3 → v1.7.4 section with manual fix for affected apps
+- `CHANGELOG.md`: Documented fix
+- `.meta/VERSION`, `.meta-version`: Version bump to 1.7.4
+
+### Migration Path
+
+**For apps already upgraded (v1.7.1-v1.7.3) without agent file**:
+```bash
+mkdir .github\agents
+copy .meta\templates\agent.template.md .github\agents\meta-app-orchestrator.agent.md
+# Edit: Replace {APP_NAME} with your app name
+```
+
+**For new upgrades**: Automatic (validated during UPGRADE mode)
+
+---
+
 ## [1.7.3] - 2025-11-26 (Inline Pre-Flight Checklist)
 
 ### Added
