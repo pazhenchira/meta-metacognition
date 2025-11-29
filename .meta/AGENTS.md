@@ -244,7 +244,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.7.4** (see `VERSION` file)
+Current meta-orchestrator version: **1.7.8** (see `VERSION` file)
 
 **Features in v1.7.3** (Inline Pre-Flight Checklist):
 - Pre-flight checklist embedded directly in agent files
@@ -1169,8 +1169,8 @@ When all LEGOs are `done` AND experience validation passes:
   - This file serves as the **permanent record** of app-specific orchestration decisions.
 
 - **If NEW APP MODE** (`.meta-version` did not exist at start):
-  - Write `.meta-version` file (copy from `templates/.meta-version.template`, update dates to November 24, 2025).
-  - Write `.meta-manifest.json` file (copy from `templates/.meta-manifest.template.json`, populate with actual generated files and timestamps using November 24, 2025).
+  - Write `.meta-version` file (copy from `templates/.meta-version.template`, update dates to current date).
+  - Write `.meta-manifest.json` file (copy from `templates/.meta-manifest.template.json`, populate with actual generated files and timestamps using current date).
   - Mark all generated files with `user_modified: false` initially.
   - Include `APP_ORCHESTRATION.md` in manifest as a generated file.
 

@@ -732,7 +732,7 @@ This usually means the essence or requirements weren't clear enough.
 
 ```json
 {
-  "version": "1.5.0",
+  "version": "1.7.8",
   "generated_date": "2025-11-25",
   "files": {
     "src/signal_generator.py": {
@@ -878,7 +878,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Current Version**: 1.5.0 (November 2025)  
+**Current Version**: 1.7.8 (November 2025)  
 **Built with meta-cognitive AI orchestration principles.**
 
 ---
@@ -909,7 +909,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 # === CHECK VERSION ===
 cat .meta-version  # Shows which meta-orchestrator version built your app (if it exists)
-cat VERSION        # Shows current meta-orchestrator version (1.7.1)
+cat VERSION        # Shows current meta-orchestrator version (1.7.8)
 ```
 
 **Pro Tip (v1.7.1+)**: Use the VS Code Copilot agent picker dropdown for quickest activation. No activation phrases to remember!

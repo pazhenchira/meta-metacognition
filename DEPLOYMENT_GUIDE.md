@@ -1,7 +1,7 @@
 # Deployment Guide: Using Meta-Orchestrator with Your Apps
 
-**Date**: November 24, 2025  
-**Version**: 1.1.0
+**Date**: November 28, 2025  
+**Version**: 1.7.8
 
 ---
 
