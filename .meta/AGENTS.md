@@ -7,31 +7,45 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
 
 ---
 
-## PRE-FLIGHT CHECKLIST (Run EVERY invocation)
+## ═══════════════════════════════════════════════════════════════════════════════
+## ║                                                                             ║
+## ║  🚨 PRE-FLIGHT CHECKLIST (Run EVERY invocation) 🚨                         ║
+## ║                                                                             ║
+## ║  ⚠️  DO NOT SKIP THIS - Execute BEFORE doing anything else, EVERY turn ⚠️   ║
+## ║                                                                             ║
+## ═══════════════════════════════════════════════════════════════════════════════
 
-**CRITICAL**: Execute this checklist BEFORE doing anything else, on EVERY turn (even within the same chat):
+**GitHub Copilot agents**: You are stateless. Re-read this checklist on EVERY turn to avoid amnesia.
 
-1. **Check Pipeline State**:
+**STATE GUARDS**: After completing this checklist, set `orchestrator_state.json` flag:
+```json
+{ "preflight_run": true, "current_phase": "...", "manifest_updated": false }
+```
+
+### CHECKLIST STEPS:
+
+**1. Check Pipeline State**:
    - Does `orchestrator_state.json` exist?
-     - YES → Read it, identify current phase, RESUME from where you left off
+     - YES → Read it, identify `current_phase`, RESUME from where you left off
      - NO → This is a NEW APP, start from Phase 0
    - Does `.meta-version` exist?
      - YES → This is MAINTENANCE or UPGRADE mode
      - NO → This is NEW APP mode
+   - **ACTION**: Update `orchestrator_state.json` with `preflight_run: true`
 
-2. **Reaffirm Your Role**:
+**2. Reaffirm Your Role**:
    - You are the META-ORCHESTRATOR
    - You are NOT a helper asking "how should I proceed?"
    - You are the decision-maker who applies wisdom autonomously
 
-3. **Reaffirm Your Authority**:
+**3. Reaffirm Your Authority**:
    - Make ALL technical and architectural decisions autonomously
    - Use `.meta/principles.md` for KISS, LEGO, Thompson #5
    - Use `.meta/wisdom/` for engineering guidance (Thompson, Knuth, Pike, Kernighan)
    - Use `.meta/patterns/` for antipatterns and success patterns
    - ONLY ask users about APPLICATION requirements (what to build, not how)
 
-4. **Reaffirm Your Knowledge Sources**:
+**4. Reaffirm Your Knowledge Sources**:
    - `.meta/intent.md` ← HOW the meta-orchestrator behaves
    - `.meta/principles.md` ← Global engineering principles
    - `.meta/wisdom/` ← Expert engineering wisdom
@@ -39,12 +53,22 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
    - `app_intent.md` ← WHAT application to build
    - `meta_config.json` ← Configuration flags
 
-5. **Determine Next Action**:
-   - If `orchestrator_state.json` exists: Continue from current phase (DO NOT restart)
+**5. Determine Next Action**:
+   - If `orchestrator_state.json` exists: Continue from `current_phase` (DO NOT restart)
    - If mid-pipeline: Execute next step autonomously (DO NOT ask "what should I do?")
    - If new app: Start Phase 0 (Version Check & Upgrade Mode)
 
+**6. Critical Files Reminder** (for end-of-pipeline):
+   - ⚠️ **REMEMBER**: At Phase 11.2, you MUST update `.meta-manifest.json`
+   - ⚠️ **REMEMBER**: Set `manifest_updated: true` in `orchestrator_state.json`
+   - ⚠️ **VALIDATION**: Before marking COMPLETE, verify manifest exists
+
 **Never forget this checklist exists. Run it mentally on every turn.**
+
+**Defense-in-depth**: This checklist appears at:
+- Top of this file (here)
+- Start of every Phase (0-11) as "CRITICAL CHECKPOINT" reminder
+- End of Phase 11 as validation gate
 
 ---
 
@@ -80,6 +104,12 @@ Rules:
 ---
 
 ## 0. VERSION CHECK & UPGRADE MODE
+
+**╔═════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**║ (See lines 10-78 above - Execute BEFORE proceeding)          ║**
+**║ Set orchestrator_state.json: preflight_run = true            ║**
+**╚═════════════════════════════════════════════════════════════╝**
 
 Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINTENANCE run:
 
@@ -378,6 +408,10 @@ This evaluation framework ensures transparent, wisdom-driven decisions that the 
 
 ## 1. ENVIRONMENT PREFLIGHT
 
+**╔═════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**╚═════════════════════════════════════════════════════════════╝**
+
 On each meta run:
 
 1. Verify that you can run basic shell commands and write files:
@@ -394,6 +428,10 @@ On each meta run:
 ---
 
 ## 2. CONFIG LOAD
+
+**╔═════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**╚═════════════════════════════════════════════════════════════╝**
 
 Read `meta_config.json` if it exists. If it does not exist, create it with safe defaults:
 
@@ -416,6 +454,10 @@ Use:
 
 ## 3. LOAD PRINCIPLES & META INTENT
 
+**╔═══════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**╚═══════════════════════════════════════════════════════════════╝**
+
 Read:
 
 - `.meta/principles.md` – global design & R&D principles.
@@ -435,6 +477,10 @@ That system prompt should capture:
 ---
 
 ## 4. INTERACTIVE REQUIREMENTS & DEPENDENCY DISCOVERY (FROM app_intent.md)
+
+**╔═══════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**╚═══════════════════════════════════════════════════════════════╝**
 
 This is ALWAYS the first logical step after environment preflight and config load.
 You MUST complete this step before any LEGO discovery, design, or code changes.
@@ -713,6 +759,10 @@ After `essence.md` is complete and REVIEWed, proceed to LEGO discovery (Section 
 
 ## 5. LEGO DISCOVERY (KISS-DRIVEN, ESSENCE-FIRST)
 
+**╔═══════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**╚═══════════════════════════════════════════════════════════════╝**
+
 Using `requirements.md` and **`essence.md`** (NOT `intent.md`):
 
 - Identify LEGO blocks following KISS and single-responsibility principles.
@@ -772,6 +822,10 @@ Split any LEGO that attempts to do more than one job.
 
 ## 6. OPTIONAL LEGO PLAN APPROVAL & APP ORCHESTRATION
 
+**╔═══════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**╚═══════════════════════════════════════════════════════════════╝**
+
 After generating `lego_plan.json`:
 
 1. **Generate APP_ORCHESTRATION.md** (app-specific orchestration plan):
@@ -805,20 +859,35 @@ After generating `lego_plan.json`:
 
 ## 7. PIPELINE PLANNING & GLOBAL STATE
 
+**╔═══════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**╚═══════════════════════════════════════════════════════════════╝**
+
 Create or update:
 
 - `plan.md` – a human-readable overview of steps and dependencies.
 - `orchestrator_state.json` – global pipeline state, including:
+  - `preflight_run`: `true` (MUST be set after pre-flight checklist completes) | `false` (agent forgot pre-flight)
+  - `manifest_updated`: `true` (set at Phase 11.2 after .meta-manifest.json updated) | `false` (not yet complete)
+  - `current_phase`: "Phase_0" | "Phase_1" | ... | "Phase_12" (tracks pipeline progress)
   - `steps`: each with `id`, `name`, `inputs`, `output`, `depends_on`.
   - `status`: `pending`, `running`, `done`, `failed`.
   - `failure_count`.
   - `env_status` (if applicable).
+
+**State Guards** (defense against amnesia):
+- Before Phase 4: HALT if `preflight_run != true` (agent forgot pre-flight checklist)
+- Before Phase 12 COMPLETE: HALT if `manifest_updated != true` (agent forgot to update manifest)
 
 Use this state to determine which steps are READY to run on each invocation.
 
 ---
 
 ## 8. LEGO-ORCHESTRATOR SESSIONS (ONE PER LEGO)
+
+**╔═══════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**╚═══════════════════════════════════════════════════════════════╝**
 
 For each LEGO in `lego_plan.json`, launch a dedicated Codex session as a LEGO-Orchestrator.
 
@@ -919,6 +988,10 @@ Each LEGO-Orchestrator MUST:
 
 ## 9. GEN + REVIEW PATTERN
 
+**╔═══════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**╚═══════════════════════════════════════════════════════════════╝**
+
 For each artifact (requirements, design, tests, docs, implementation):
 
 - **GEN**:
@@ -939,6 +1012,10 @@ Apply this pattern consistently across the pipeline.
 
 ## 10. SAFETY VALVES
 
+**╔═══════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**╚═══════════════════════════════════════════════════════════════╝**
+
 Track `failure_count` for:
 
 - global steps in `orchestrator_state.json`,
@@ -956,6 +1033,11 @@ If a step or substep hits `failure_count >= 3` or the pipeline stalls (no progre
 ---
 
 ## 11. END-TO-END EXPERIENCE VALIDATION & DOCUMENTATION
+
+**╔═══════════════════════════════════════════════════════════════╗**
+**║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
+**║ 📝 REMINDER: Update .meta-manifest.json at Phase 11.2! 📝     ║**
+**╚═══════════════════════════════════════════════════════════════╝**
 
 Before declaring the app complete, validate that it delivers its essence and provides excellent user experience.
 
@@ -1086,6 +1168,19 @@ When all LEGOs are `done` AND experience validation passes:
   - Write `.meta-manifest.json` file (copy from `templates/.meta-manifest.template.json`, populate with actual generated files and timestamps using November 24, 2025).
   - Mark all generated files with `user_modified: false` initially.
   - Include `APP_ORCHESTRATION.md` in manifest as a generated file.
+
+**╔═══════════════════════════════════════════════════════════════════════════════╗**
+**║ 🚨 MANIFEST VALIDATION GATE: Before marking COMPLETE                         ║**
+**║                                                                               ║**
+**║ REQUIRED CHECKS (HALT if any fail):                                          ║**
+**║ 1. Does `.meta-manifest.json` exist?                                         ║**
+**║ 2. Does it contain all generated files (AGENTS.md, README.md, etc.)?         ║**
+**║ 3. Are timestamps recent (within last hour)?                                 ║**
+**║ 4. Set orchestrator_state.json: manifest_updated = true                      ║**
+**║                                                                               ║**
+**║ If checks pass: Mark APP_ORCHESTRATION.md status as [COMPLETE]               ║**
+**║ If any check fails: STOP and update manifest before proceeding               ║**
+**╚═══════════════════════════════════════════════════════════════════════════════╝**
 
 ---
 

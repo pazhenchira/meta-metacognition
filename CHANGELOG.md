@@ -6,6 +6,51 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.7.7] - 2025-11-28 (Workflow Enforcement Guards)
+
+### Added
+- **Defense-in-Depth for Stateless Runtimes**: Multiple enforcement layers to prevent agents from forgetting critical steps
+  - **Enhanced Pre-flight Checklist** (lines 10-78): 
+    - Visual reinforcement with `╔═══╗` CRITICAL CHECKPOINT boxes, 🚨 emojis
+    - Explicit state guard instructions (set `preflight_run: true`)
+    - Clear action items for each checklist step
+    - Reminder about stateless runtimes (GitHub Copilot)
+  - **Memory Joggers at Every Phase** (Phases 0-11):
+    - CRITICAL CHECKPOINT reminder at start of each phase
+    - Phase 11 includes additional 📝 MANIFEST REMINDER
+    - Visual consistency (unmissable boxes throughout pipeline)
+  - **State Guards** (orchestrator_state.json):
+    - `preflight_run`: true/false flag (set after pre-flight completes)
+    - `manifest_updated`: true/false flag (set at Phase 11.2)
+    - Before Phase 4: HALT if `preflight_run != true`
+    - Before Phase 12 COMPLETE: HALT if `manifest_updated != true`
+  - **Manifest Validation Gate** (Phase 11.2):
+    - Required checks before marking COMPLETE
+    - Verify `.meta-manifest.json` exists
+    - Verify all generated files are listed
+    - Verify timestamps are recent (within last hour)
+    - Set `manifest_updated = true` flag
+
+### Why This Matters
+- **Problem**: Stateless AI runtimes (GitHub Copilot Chat) forget instructions between turns
+- **Evidence**: User observed agents skipping pre-flight checklist and manifest updates
+- **Solution**: Multiple enforcement layers (visual + programmatic) prevent amnesia
+- **Aligns with**: Schneier #8 (defense in depth), Saltzer #4 (fail-safe defaults)
+
+### Technical Details
+- Pre-flight checklist expanded from 6 steps to comprehensive 69-line visual guide
+- Added 12 CRITICAL CHECKPOINT boxes (one per phase 0-11)
+- State guards act as programmatic enforcement (not just reminders)
+- Manifest validation gate prevents incomplete pipelines
+
+### Rationale
+- **Schneier #8 (Defense in Depth)**: Multiple independent safeguards (visual + state + validation)
+- **Saltzer #4 (Fail-Safe Defaults)**: System halts if critical steps skipped (safe by default)
+- **Evidence-based**: Addresses observed real-world failures (not theoretical optimization)
+- **KISS**: Simple state flags, clear visual markers (no complex infrastructure)
+
+---
+
 ## [1.7.6] - 2025-11-28 (Web Documentation Guidance)
 
 ### Added

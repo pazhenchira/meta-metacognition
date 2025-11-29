@@ -7,7 +7,52 @@
 
 ## Version-Specific Upgrade Notes
 
-### v1.7.5 → v1.7.6 (Current)
+### v1.7.6 → v1.7.7 (Current)
+
+**Changes**: Workflow enforcement guards - Defense against stateless runtime amnesia
+
+- **What changed**:
+  - Enhanced pre-flight checklist with visual reinforcement (CRITICAL CHECKPOINT boxes, 🚨 emojis)
+  - Memory joggers at every phase (Phases 0-11) remind agents of critical steps
+  - State guards in `orchestrator_state.json` (`preflight_run`, `manifest_updated` flags)
+  - Manifest validation gate at Phase 11.2 (HALT if manifest not updated before COMPLETE)
+  - Before Phase 4: System checks `preflight_run = true` (HALT if false)
+  - Before Phase 12 COMPLETE: System checks `manifest_updated = true` (HALT if false)
+
+- **Action required**:
+  - **For existing apps**: Automatic on next interaction
+  - **No manual changes needed** - agents will apply new enforcement automatically
+  - Apps using GitHub Copilot Chat will benefit most (prevents amnesia)
+
+- **Breaking changes**: None (only adds safeguards, doesn't change workflow logic)
+
+- **Why upgrade**:
+  - **Reliability**: Prevents agents from forgetting pre-flight checklist or manifest updates
+  - **Stateless runtime support**: GitHub Copilot Chat agents reminded on every turn
+  - **Defense in depth**: Multiple independent safeguards (visual + programmatic + validation)
+  - **Fail-safe defaults**: System halts if critical steps skipped (safe by default)
+
+- **Technical improvements**:
+  - Pre-flight checklist: 6 steps → 69-line comprehensive visual guide
+  - CRITICAL CHECKPOINT boxes: 12 total (one per phase 0-11)
+  - State guards: 2 new flags (`preflight_run`, `manifest_updated`)
+  - Validation gate: Verifies manifest exists, complete, and recent before COMPLETE
+
+- **What agents will do differently**:
+  - Read enhanced pre-flight checklist on every turn (stateless runtimes)
+  - Set `preflight_run: true` in `orchestrator_state.json` after checklist
+  - See CRITICAL CHECKPOINT reminder at start of each phase
+  - Set `manifest_updated: true` after updating `.meta-manifest.json`
+  - Pass validation gate checks before marking pipeline COMPLETE
+
+- **Evidence-based fix**:
+  - User reported: GitHub Copilot agents forgot pre-flight and manifest updates
+  - Root cause: Stateless runtimes have no memory between turns
+  - Solution: Multiple enforcement layers prevent amnesia
+
+---
+
+### v1.7.5 → v1.7.6
 
 **Changes**: Web documentation guidance - Agents search online for current API/package information
 
