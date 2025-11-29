@@ -1,13 +1,55 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: November 26, 2025  
+**Date**: November 28, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
 
 ## Version-Specific Upgrade Notes
 
-### v1.7.4 → v1.7.5 (Current)
+### v1.7.5 → v1.7.6 (Current)
+
+**Changes**: Web documentation guidance - Agents search online for current API/package information
+
+- **What changed**:
+  - New `[P-WEB]` principle in `.meta/principles.md` guides agents to search online documentation
+  - Phase 4 (REQUIREMENTS): Search for external API documentation, rate limits, pricing
+  - Phase 8 (CODING): Verify current package versions, API endpoints, security advisories
+  - Phase 9 (REVIEW): Check for outdated patterns, deprecated APIs
+  - New Engineering Wisdom #16: "Web Research Trigger" detects when web research needed
+  - Agents document research sources and dates in artifacts
+
+- **Action required**:
+  - **For existing apps**: Automatic on next interaction
+  - **No manual changes needed** - agents will apply new guidance automatically
+  - When modifying external dependencies, agents will now search for current info
+
+- **Breaking changes**: None (only adds guidance, doesn't change engine behavior)
+
+- **Why upgrade**:
+  - **Correctness**: Agents use current API endpoints/authentication (not frozen training data)
+  - **Security**: Latest CVEs and security best practices are consulted
+  - **Efficiency**: Current package versions include bug fixes and performance improvements
+  - **Prevents**: Deprecated API usage, outdated packages, security vulnerabilities
+
+- **Examples of automatic improvements**:
+  - External APIs: Agents search `docs.openai.com`, `docs.anthropic.com` for current endpoints
+  - Packages: Agents check PyPI, npm, NuGet for latest versions and security patches
+  - Frameworks: Agents verify React, FastAPI, Django patterns are current (not deprecated)
+  - Security: Agents consult CVE databases and OWASP guidance for auth/crypto
+  - Cloud: Agents check Azure, AWS, GCP docs for current configurations
+
+- **What agents will document**:
+  ```markdown
+  ## Web Research (2025-11-28)
+  - Source: https://platform.openai.com/docs/api-reference
+  - Current version: v1.52.0
+  - Key findings: Async client preferred, rate limits updated
+  ```
+
+---
+
+### v1.7.4 → v1.7.5
 
 **Changes**: Dual-runtime agent discovery - OpenAI Codex CLI + GitHub Copilot Chat support
 

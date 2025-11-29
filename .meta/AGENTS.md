@@ -516,6 +516,48 @@ After `requirements.md` is created/updated according to this template and REVIEW
 
 ### 4.2 Dependencies & External Services
 
+**Goal**: Document all external dependencies (APIs, databases, services, packages) in dedicated files to support LEGO planning.
+
+**IMPORTANT: Web Research Required** (from `[P-WEB]` in `.meta/principles.md`):
+
+Before documenting external dependencies, **ALWAYS search online for current information**:
+
+1. **For External APIs** (OpenAI, Anthropic, Azure, AWS, etc.):
+   - Search official documentation (e.g., `docs.openai.com`, `docs.anthropic.com`)
+   - Verify current API version and endpoints
+   - Check authentication methods (API keys, OAuth, custom headers)
+   - Document rate limits and pricing tiers
+   - Note any deprecation warnings
+
+2. **For Packages/Libraries**:
+   - Search package registries (`pypi.org`, `npmjs.com`, `nuget.org`)
+   - Verify latest stable version
+   - Check for security advisories (CVEs)
+   - Review changelogs for breaking changes
+   - Note compatibility requirements (Python 3.9+, Node 18+, etc.)
+
+3. **For Cloud Services**:
+   - Search provider documentation (`learn.microsoft.com`, `docs.aws.amazon.com`)
+   - Verify service configurations and limits
+   - Check pricing models
+   - Review security best practices
+
+4. **Documentation in `external_services.md`**:
+   ```markdown
+   ## [Service Name] (Researched YYYY-MM-DD)
+   
+   **Official Documentation**: [URL]
+   **Current Version**: [version]
+   **Authentication**: [method]
+   **Rate Limits**: [limits]
+   **Pricing**: [pricing model]
+   **Security Notes**: [any CVEs or best practices]
+   
+   **Last Verified**: YYYY-MM-DD ← Use actual current date
+   ```
+
+**Files to Create/Update**:
+
 Immediately after finalizing `requirements.md`, identify ALL dependencies needed and capture them in durable files.
 
 You MUST generate:
@@ -823,6 +865,12 @@ Each LEGO-Orchestrator MUST:
      - REVIEW for accuracy and usability.
 
    - **CODING (Implementation)**:  
+     - **Web Research for External Dependencies** (from `[P-WEB]` in `.meta/principles.md`):
+       - If LEGO uses external APIs: Search official documentation for current endpoints, authentication, parameters
+       - If LEGO installs packages: Search package registries for latest versions and security advisories
+       - If LEGO uses framework-specific patterns: Verify current best practices from official docs
+       - If LEGO handles security-critical operations: Check current CVEs and OWASP guidance
+       - Document research findings in code comments and design docs
      - Apply engineering wisdom triggers (complexity, optimization, readability).
      - Implement the LEGO in `src/<lego>.<ext>`.  
      - REVIEW code for clarity, correctness, and simplicity.
@@ -875,9 +923,15 @@ For each artifact (requirements, design, tests, docs, implementation):
 
 - **GEN**:
   - Create the initial artifact.
+  - **For artifacts involving external dependencies**: Apply `[P-WEB]` principle from `.meta/principles.md`:
+    - Search online documentation for current API patterns, package versions, security advisories
+    - Document sources and research date in artifact's REVIEW NOTES
 - **REVIEW**:
   - Critically evaluate the artifact and refine it.
+  - **Verify currency**: Check if artifact uses current patterns (not deprecated APIs, outdated packages)
+  - If external dependencies detected: Confirm web research was performed, sources are authoritative
   - Append a `REVIEW NOTES` section explaining changes, known limitations, and TODOs.
+  - Include web research summary if applicable (sources, dates, key findings)
 
 Apply this pattern consistently across the pipeline.
 

@@ -6,6 +6,37 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.7.6] - 2025-11-28 (Web Documentation Guidance)
+
+### Added
+- **Web Documentation Guidance** (`[P-WEB]` principle): Agents now search online documentation for current information about external APIs, packages, frameworks, security advisories, and cloud services
+  - New `[P-WEB]` principle in `.meta/principles.md` with trigger conditions (when to search)
+  - Trusted sources: Official documentation, package registries, security databases
+  - Integration into Phase 4 (REQUIREMENTS), Phase 8 (CODING), Phase 9 (REVIEW)
+  - Documentation requirements for web research (sources, dates, findings)
+  - New Engineering Wisdom #16: "Web Research Trigger" for detecting outdated patterns
+
+### Why This Matters
+- **Correctness**: AI training data is frozen (Claude: Oct 2024), but APIs/packages change frequently
+- **Security**: Latest CVEs and security best practices must be consulted
+- **Efficiency**: Using current patterns improves performance and maintainability
+- **Prevents**: Deprecated API usage, outdated package versions, security vulnerabilities
+
+### Examples of When to Search
+- External APIs: OpenAI, Anthropic, Azure, AWS (endpoints, auth, rate limits)
+- Packages: Python (PyPI), JavaScript (npm), .NET (NuGet) - latest versions, CVEs
+- Frameworks: React, FastAPI, Django - current best practices
+- Security: Authentication patterns, cryptography, OWASP guidance
+- Cloud: Azure, AWS, GCP configurations and pricing
+
+### Rationale
+- Aligns with Thompson #5: "Do one thing well" - building correct apps requires current info
+- Aligns with Schneier's Security Mindset: Current threat awareness is critical
+- Evidence-based: Discovered through real usage (agents suggesting deprecated patterns)
+- KISS: Simple guidance, not complex infrastructure
+
+---
+
 ## [1.7.5] - 2025-11-27 (Dual-Runtime Agent Discovery)
 
 ### Added

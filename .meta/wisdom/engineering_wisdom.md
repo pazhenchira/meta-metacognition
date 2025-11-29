@@ -357,11 +357,52 @@ Distilled principles from legendary engineers and computer scientists. Each prin
 - Consult ALL principles
 - Systematically check each principle
 - Document which wisdom was applied
+- **Check for outdated patterns**: If code references external APIs, packages, or frameworks:
+  - Trigger web research (see `[P-WEB]` in `.meta/principles.md`)
+  - Verify current versions, API signatures, security advisories
+  - Flag deprecated patterns for update
 
 ### During VALIDATION Phase
 - Verify that wisdom was followed
 - Tests should validate simplicity and correctness
 - Performance tests only if optimization was justified
+
+---
+
+## 16. Web Research Trigger (Current Information)
+
+**Source**: Meta-orchestrator operational experience (2024)
+
+**Principle**:
+> "AI agents work with frozen training data. For external dependencies (APIs, packages, frameworks), always verify current information from official documentation."
+
+**Application**: Consult online documentation when using external dependencies to ensure correctness and security.
+
+**Trigger**:
+- Code references external APIs (OpenAI, Anthropic, Azure, AWS, Google, etc.)
+- Installing or upgrading packages (Python, npm, NuGet, etc.)
+- Using framework-specific patterns (React, FastAPI, Django, etc.)
+- Security-critical operations (authentication, cryptography, authorization)
+- Cloud service configuration (Azure, AWS, GCP)
+
+**Action**:
+1. Search official documentation for current information:
+   - API endpoints and authentication methods
+   - Latest package versions and security advisories
+   - Current framework best practices
+   - Security guidance and CVEs
+2. Verify sources are authoritative (official docs, package registries, security databases)
+3. Document research in code comments and design docs:
+   ```markdown
+   ## Web Research (YYYY-MM-DD)
+   - Source: [URL]
+   - Current version: [version]
+   - Key findings: [summary]
+   ```
+4. If information conflicts with training data, prefer current documentation
+5. Flag if unable to verify currency (user should manually check)
+
+**Related**: See `[P-WEB]` in `.meta/principles.md` for detailed guidance on when/what/how to search.
 
 ---
 

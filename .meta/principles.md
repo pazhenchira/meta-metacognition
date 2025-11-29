@@ -502,4 +502,157 @@ This creates a learning trail for future reference and continuous improvement.
 
 ---
 
+## [P-WEB] Online Documentation & Current Information
+
+AI agents work with frozen training data, but software evolves rapidly. For correctness and security, consult current online documentation when needed.
+
+### When to Search Online (Trigger Conditions)
+
+**ALWAYS search online documentation for**:
+1. **External APIs** - OpenAI, Anthropic, Azure, AWS, Google, etc.
+   - API endpoints change (v1 → v2, deprecations)
+   - Authentication methods evolve (API keys → OAuth → custom headers)
+   - Rate limits and pricing tiers update frequently
+   - New features and parameters added regularly
+
+2. **Package Installation/Upgrades** - Check latest versions and compatibility
+   - PyPI (Python): `pip install package-name` → verify latest stable version
+   - npm (JavaScript/Node): `npm install package-name` → check for breaking changes
+   - NuGet (.NET): Latest package versions and .NET compatibility
+   - Security patches and CVE fixes (always use patched versions)
+
+3. **Framework-Specific Patterns** - Frameworks evolve rapidly
+   - React: Hooks, Suspense, Server Components (patterns change yearly)
+   - FastAPI: Latest async patterns, dependency injection updates
+   - Express: Middleware patterns, security best practices
+   - Django, Flask, Next.js, Vue, Angular, etc.
+
+4. **Security-Critical Code** - Always validate current best practices
+   - Authentication/authorization patterns (JWT, OAuth, session management)
+   - Cryptography libraries (algorithms, key sizes, deprecations)
+   - CVE databases (check for known vulnerabilities)
+   - OWASP Top 10 current guidance
+
+5. **Cloud Service Configuration** - Cloud providers update constantly
+   - Azure, AWS, GCP service configurations
+   - Deployment patterns and infrastructure-as-code
+   - Pricing models and service limits
+   - New service features and best practices
+
+### What to Search
+
+**Trusted Official Sources Only**:
+- **Official Documentation**:
+  - `docs.openai.com`, `docs.anthropic.com` (AI APIs)
+  - `docs.python.org`, `nodejs.org/docs` (language docs)
+  - `react.dev`, `fastapi.tiangolo.com` (framework docs)
+  - `learn.microsoft.com` (Azure/Microsoft)
+  - `docs.aws.amazon.com` (AWS)
+  
+- **Package Registries** (version info, changelogs):
+  - `pypi.org` (Python packages)
+  - `npmjs.com` (JavaScript packages)
+  - `nuget.org` (.NET packages)
+  
+- **Security Advisories**:
+  - CVE databases (cve.mitre.org, nvd.nist.gov)
+  - Security bulletins from vendors
+  - OWASP documentation (owasp.org)
+
+- **Release Notes & Changelogs**:
+  - GitHub releases pages
+  - Official blog announcements
+  - Migration guides (v1 → v2)
+
+**DO NOT Search** (training data is sufficient):
+- Core language features (Python syntax, JavaScript fundamentals, C# basics)
+- Fundamental algorithms/data structures (sorting, searching, trees)
+- General programming concepts (OOP, functional programming)
+- Internal app logic (no web source knows your specific app)
+
+### How to Use Web Information
+
+**During REQUIREMENTS Phase** (Phase 4):
+- Search for external service documentation when user mentions APIs
+- Validate pricing models and rate limits
+- Check authentication requirements
+
+**During DESIGN Phase** (Phase 5-6):
+- Verify framework patterns are current
+- Check package compatibility matrices
+- Validate security best practices
+
+**During CODING Phase** (Phase 7):
+- Look up exact API signatures and parameters
+- Verify package installation commands
+- Check for deprecation warnings
+
+**During REVIEW Phase** (Phase 9):
+- Validate that code uses current patterns (not deprecated)
+- Check for security vulnerabilities in dependencies
+- Verify configuration follows latest best practices
+
+### Documentation in Artifacts
+
+When web research influences design decisions, document in relevant files:
+
+**In `requirements.md`**:
+```markdown
+## External Dependencies (Researched 2024-01-15)
+
+### OpenAI API (docs.openai.com)
+- Current version: v1.52.0
+- Authentication: Bearer token in header
+- Rate limits: 10,000 RPM (tier 2)
+- Pricing: $0.01/1K tokens (GPT-4o mini)
+- Source: https://platform.openai.com/docs/api-reference
+```
+
+**In `design_<lego>.md`**:
+```markdown
+## REVIEW NOTES
+
+Web Research:
+- Verified FastAPI async patterns (docs: fastapi.tiangolo.com/async/)
+- Current best practice: Use `async def` with `await` for I/O-bound operations
+- Researched 2024-01-15, FastAPI v0.115.0
+```
+
+**In `lego_state_<name>.json`**:
+```json
+{
+  "web_research": {
+    "researched_date": "2024-01-15",
+    "sources": [
+      "https://platform.openai.com/docs/api-reference",
+      "https://pypi.org/project/openai/"
+    ],
+    "key_findings": [
+      "OpenAI Python SDK v1.52.0 is latest stable",
+      "Async client preferred for production use"
+    ]
+  }
+}
+```
+
+### Rationale
+
+**Why This Matters**:
+- **Correctness**: Outdated API patterns cause runtime failures
+- **Security**: Old cryptographic practices introduce vulnerabilities
+- **Efficiency**: Latest packages include performance improvements
+- **Maintainability**: Current patterns are better documented and supported
+
+**Aligns With**:
+- Thompson #5: "Do one thing well" - building correct apps requires current information
+- Knuth #2: Using outdated patterns is a form of premature optimization (avoiding research)
+- Schneier #8: Security mindset requires awareness of current threats and mitigations
+
+**Trade-off**:
+- Adds ~5-10 minutes per LEGO for research
+- Worth it for external dependencies (API correctness is critical)
+- Not needed for internal logic (training data is sufficient)
+
+---
+
 These principles are binding on all Codex sessions orchestrated within this repository.
