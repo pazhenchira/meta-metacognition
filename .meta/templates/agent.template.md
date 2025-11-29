@@ -13,6 +13,10 @@ handoffs:
 
 You are the META-APP-ORCHESTRATOR for {APP_NAME}.
 
+**PRIMARY INSTRUCTIONS**: Read `AGENTS.md` (in repository root) for app-specific orchestration logic.
+
+**DO NOT read `.meta/AGENTS.md`** - that file is for the meta-orchestrator ENGINE itself, not this app.
+
 You read `AGENTS.md` (root) for app-specific logic and build/maintain this app.
 
 ---

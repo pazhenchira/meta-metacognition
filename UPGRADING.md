@@ -7,7 +7,50 @@
 
 ## Version-Specific Upgrade Notes
 
-### v1.7.6 → v1.7.7 (Current)
+### v1.7.7 → v1.7.8 (Current)
+
+**Changes**: Agent reference fix - Corrects incorrect `.meta/AGENTS.md` references in generated agent files
+
+- **What changed**:
+  - Enhanced `.meta/templates/agent.template.md` with explicit warning about which file to read
+  - Added "DO NOT read `.meta/AGENTS.md`" warning in template
+  - Added validation steps in Phase 11.2 to verify correct references
+  - Added validation steps in UPGRADE mode (Phase 0) to prevent incorrect generation
+
+- **Action required**:
+  - **For existing apps**: Check `.github/agents/meta-app-orchestrator.agent.md`
+  - **Line 16 should say**: "You read `AGENTS.md` (root) for app-specific logic"
+  - **If says `.meta/AGENTS.md`**: This is the bug - agent will read engine logic instead of app logic
+  - **To fix manually**: 
+    1. Open `.github/agents/meta-app-orchestrator.agent.md`
+    2. Find line that says "You read `.meta/AGENTS.md`" or references engine file
+    3. Change to "You read `AGENTS.md` (root) for app-specific logic"
+  - **To fix automatically**: Run meta-orchestrator in UPGRADE mode - it will regenerate correctly
+
+- **Breaking changes**: None (only fixes incorrect references)
+
+- **Why upgrade**:
+  - **Correctness**: App orchestrators now read app-specific instructions (not engine internals)
+  - **Prevents confusion**: Agents won't attempt to modify meta-orchestrator engine
+  - **Better UX**: App maintenance works as intended
+
+- **How to verify your app is affected**:
+  ```bash
+  # Check if your app has the bug
+  grep -n "\.meta/AGENTS\.md" .github/agents/meta-app-orchestrator.agent.md
+  
+  # If output shows line 16 or primary instruction section, you have the bug
+  # If output only shows line 74 (reference list), you're OK
+  ```
+
+- **Technical details**:
+  - Template now has explicit "PRIMARY INSTRUCTIONS" and "DO NOT" sections
+  - Phase 11.2 has CRITICAL markers and validation steps
+  - UPGRADE mode (Phase 0) has validation to prevent future occurrences
+
+---
+
+### v1.7.6 → v1.7.7
 
 **Changes**: Workflow enforcement guards - Defense against stateless runtime amnesia
 

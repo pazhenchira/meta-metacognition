@@ -219,7 +219,10 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
          - If file exists and outdated: Update with latest template
          - Replace `{APP_NAME}` with actual app name from `app_intent.md`
          - Agent name: "Meta-App-Orchestrator" (consistent across all apps)
+         - **CRITICAL**: File must say "You read `AGENTS.md` (root)" NOT ".meta/AGENTS.md"
          - **VALIDATION**: Verify file exists and contains "Meta-App-Orchestrator"
+         - **VALIDATION**: Verify line 16 says "You read `AGENTS.md` (root)" (not `.meta/AGENTS.md`)
+         - **VALIDATION**: Grep file to ensure no incorrect ".meta/AGENTS.md" references for primary instructions
          
          **B. OpenAI Codex CLI** - Uses `AGENTS.md` in repo root:
          - **ALWAYS generate `AGENTS.md` in repository root** (if not exists)
@@ -1139,7 +1142,9 @@ When all LEGOs are `done` AND experience validation passes:
     - Agent name: "Meta-App-Orchestrator" (consistent across all apps)
     - Agent description: "Build and maintain {APP_NAME}"
     - This enables custom agent mode in VS Code Copilot dropdown
-    - Agent references `AGENTS.md` (root) for complete instructions
+    - **CRITICAL**: Agent references `AGENTS.md` (root) for complete instructions (NOT `.meta/AGENTS.md`)
+    - **VALIDATION**: Verify generated file contains "You read `AGENTS.md` (root)" on line 16
+    - **VALIDATION**: Verify file does NOT say "read `.meta/AGENTS.md`" anywhere
     - Provides quick activation: select "Meta-App-Orchestrator" from dropdown in Copilot Chat
     - Makes app orchestrator discoverable without remembering activation phrases
   - `README.md` – user-focused documentation of the app.

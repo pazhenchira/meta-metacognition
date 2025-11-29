@@ -6,6 +6,43 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.7.8] - 2025-11-28 (Agent Reference Fix)
+
+### Fixed
+- **Bug in generated `.github/agents/meta-app-orchestrator.agent.md`**: Agents were incorrectly referencing `.meta/AGENTS.md` (engine) instead of `AGENTS.md` (root, app-specific)
+  - **Problem**: When meta-orchestrator generated app agent files, some agents misunderstood instructions and pointed to engine file
+  - **Impact**: App orchestrators would read meta-orchestrator engine logic instead of app-specific maintenance instructions
+  - **Root cause**: Instructions were correct but not explicit enough to prevent misinterpretation
+
+### Changed
+- **Enhanced template** (`.meta/templates/agent.template.md`):
+  - Added explicit warning: "DO NOT read `.meta/AGENTS.md` - that file is for the ENGINE"
+  - Clarified: "PRIMARY INSTRUCTIONS: Read `AGENTS.md` (in repository root)"
+  - Makes distinction unmistakable for agents generating this file
+
+- **Enhanced generation instructions** (`.meta/AGENTS.md` Phase 11.2):
+  - Added CRITICAL marker: "Agent references `AGENTS.md` (root) for complete instructions (NOT `.meta/AGENTS.md`)"
+  - Added validation: "Verify generated file contains 'You read `AGENTS.md` (root)' on line 16"
+  - Added validation: "Verify file does NOT say 'read `.meta/AGENTS.md`' anywhere"
+
+- **Enhanced UPGRADE mode instructions** (`.meta/AGENTS.md` Phase 0):
+  - Added CRITICAL marker for GitHub Copilot Chat agent generation
+  - Added validation: "Verify line 16 says 'You read `AGENTS.md` (root)' (not `.meta/AGENTS.md`)"
+  - Added validation: "Grep file to ensure no incorrect '.meta/AGENTS.md' references"
+
+### Why This Matters
+- **Correctness**: App orchestrators must read app-specific instructions, not engine internals
+- **User experience**: Agents now maintain apps correctly (not attempt to modify engine)
+- **Clarity**: Explicit warnings prevent misinterpretation by AI agents
+
+### Action Required for Existing Apps
+If you have an app created with v1.7.7 or earlier, check `.github/agents/meta-app-orchestrator.agent.md`:
+- **Line 16 should say**: "You read `AGENTS.md` (root) for app-specific logic"
+- **If incorrect**: Regenerate from template or manually fix reference
+- **To regenerate**: Run meta-orchestrator in UPGRADE mode (it will detect and fix)
+
+---
+
 ## [1.7.7] - 2025-11-28 (Workflow Enforcement Guards)
 
 ### Added
