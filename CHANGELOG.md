@@ -6,6 +6,71 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.9.0] - 2025-12-04 (Role-Based Architecture)
+
+### Added
+
+**Role-Based Structure** (`.meta/roles/`):
+- **Product Manager** (`product_manager.md`): Essence Triangle (Customer Value, Business Impact, Feasibility), feature specification ownership, scope discipline
+- **Architect** (`architect.md`): Simplicity-first design, control flow & data flow analysis, design decision ownership
+- **Developer** (`developer.md`): Spec-faithful implementation, TDD workflow, code quality standards
+- **Tester** (`tester.md`): Spec-based validation, edge case hunting, bug reporting standards
+- **Technical Writer** (`tech_writer.md`): Audience-focused documentation, progressive disclosure, maintenance
+
+**Workflow Definitions** (`.meta/workflows/`):
+- **New Feature** (`new_feature.md`): Complete lifecycle from discovery to release
+- **Enhancement** (`enhancement.md`): Modifying existing features with immutable spec history
+- **Bug Fix** (`bug_fix.md`): Deviation from spec handling with root cause analysis
+
+**Artifact Templates** (`.meta/artifacts/templates/`):
+- **Feature Specification** (`feature_spec.template.md`): Complete FR-XXX template with Essence Triangle
+
+**Architecture Documentation**:
+- **Role Architecture** (`ROLE_ARCHITECTURE.md`): Overview of role-based model
+
+### Philosophy
+
+**The Essence Triangle** (Product Manager's Core Model):
+Every feature must satisfy THREE constraints:
+1. **Customer Value** (Desirability): What do users GET? Is there EVIDENCE?
+2. **Business Impact** (Viability): What does the business GET? How is value CAPTURED?
+3. **Product Building** (Feasibility): CAN we build it? With what effort/risk?
+
+All three must be true, or the feature should not proceed.
+
+**Immutable vs Living Artifacts**:
+- **Immutable** (append-only): Feature specs, design decisions, test plans, bug reports
+  - Once approved, never modified
+  - Changes create NEW artifacts that REFERENCE the old
+  - Maintains audit trail and traceability
+- **Living** (current state): Source code, tests, documentation, architecture diagrams
+  - Evolve with the system
+  - Represent current truth
+
+**Role Handoffs**:
+- PM → Architect: FR-XXX (approved feature spec)
+- Architect → Developer: DD-XXX (approved design decision)
+- Developer → Tester: Implementation + unit tests
+- Tester → Writer: Verified feature
+- Each handoff has explicit artifacts and expectations
+
+### Impact
+
+Apps built with v1.9.0 will:
+1. Have clear role separation in orchestration
+2. Use Essence Triangle for all feature decisions
+3. Generate immutable specs in `specs/` directory
+4. Maintain audit trail through artifact references
+5. Follow role-specific principles and workflows
+
+### Migration
+
+- **New apps**: Automatic role-based structure
+- **Existing apps**: Additive (create `specs/` directory, migrate over time)
+- **No breaking changes**: Existing artifacts continue to work
+
+---
+
 ## [1.8.0] - 2025-12-04 (Enhanced App Orchestration & Self-Awareness)
 
 ### Added
@@ -968,6 +1033,7 @@ LEGOs designed with Phase 1.5 will:
 
 | Version | Date | Phase | Key Feature | Lines Added |
 |---------|------|-------|-------------|-------------|
+| 1.9.0 | 2025-12-04 | 2.1 | Role-Based Architecture | ~800 |
 | 1.8.0 | 2025-12-04 | 2.0 | Enhanced App Orchestration & Self-Awareness | ~400 |
 | 1.5.0 | 2025-11-25 | 1.8 | Product-Market Fit & UX Focus | ~300 |
 | 1.4.0 | 2025-11-24 | 1.7 | Intelligent Maintenance Mode | ~400 |
@@ -979,6 +1045,23 @@ LEGOs designed with Phase 1.5 will:
 ---
 
 ## Upgrade Path
+
+### From 1.8.0 to 1.9.0
+
+**Breaking Changes**: None
+
+**New Capabilities**:
+- Role-based architecture with 5 distinct roles
+- Essence Triangle for product decisions
+- Immutable specification artifacts (specs/)
+- Three workflows: New Feature, Enhancement, Bug Fix
+- Role-specific principles and templates
+
+**Migration**:
+1. New apps automatically use role-based structure
+2. Existing apps: Create `specs/` directory structure when ready
+3. Migrate requirements to FR-XXX format over time
+4. No immediate action required (fully backward compatible)
 
 ### From 1.7.8 to 1.8.0
 

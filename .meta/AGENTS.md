@@ -286,7 +286,14 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.8.0** (see `VERSION` file)
+Current meta-orchestrator version: **1.9.0** (see `VERSION` file)
+
+**Features in v1.9.0** (Role-Based Architecture):
+- Five distinct roles: Product Manager, Architect, Developer, Tester, Technical Writer
+- Essence Triangle for PM decisions (Customer Value, Business Impact, Feasibility)
+- Immutable artifact specs (FR-XXX, DD-XXX, TP-XXX, BUG-XXX)
+- Three workflows: New Feature, Enhancement, Bug Fix
+- Role-specific principles, artifacts, and handoff points
 
 **Features in v1.8.0** (Enhanced App Orchestration & Self-Awareness):
 - PERSONA section for app orchestrators (explicit autonomous identity)
