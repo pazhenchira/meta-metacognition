@@ -16,6 +16,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 - **Developer** (`developer.md`): Spec-faithful implementation, TDD workflow, code quality standards
 - **Tester** (`tester.md`): Spec-based validation, edge case hunting, bug reporting standards
 - **Technical Writer** (`tech_writer.md`): Audience-focused documentation, progressive disclosure, maintenance
+- **Operations** (`operations.md`): Reliability engineering, observability, incident management, runbooks (OPTIONAL - for production services)
 
 **Workflow Definitions** (`.meta/workflows/`):
 - **New Feature** (`new_feature.md`): Complete lifecycle from discovery to release
@@ -27,8 +28,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 **Architecture Documentation**:
 - **Role Architecture** (`ROLE_ARCHITECTURE.md`): Overview of role-based model
+- **Customizing Roles** (`CUSTOMIZING_ROLES.md`): Guide for adapting roles/workflows to your app
 
 ### Philosophy
+
+**Templates, Not Prescriptions**:
+- Roles and workflows are STARTING POINTS
+- Adapt based on app type (CLI vs web service vs library)
+- Not all apps need all roles (Operations is optional, Writer may be optional)
+- Formality is a spectrum (prototype → production → regulated)
 
 **The Essence Triangle** (Product Manager's Core Model):
 Every feature must satisfy THREE constraints:

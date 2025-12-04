@@ -289,7 +289,8 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 Current meta-orchestrator version: **1.9.0** (see `VERSION` file)
 
 **Features in v1.9.0** (Role-Based Architecture):
-- Five distinct roles: Product Manager, Architect, Developer, Tester, Technical Writer
+- Six distinct roles: Product Manager, Architect, Developer, Tester, Technical Writer, Operations
+- Roles are TEMPLATES - adapt based on app needs (see CUSTOMIZING_ROLES.md)
 - Essence Triangle for PM decisions (Customer Value, Business Impact, Feasibility)
 - Immutable artifact specs (FR-XXX, DD-XXX, TP-XXX, BUG-XXX)
 - Three workflows: New Feature, Enhancement, Bug Fix

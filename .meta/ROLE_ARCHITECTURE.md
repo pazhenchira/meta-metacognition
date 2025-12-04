@@ -4,9 +4,13 @@
 
 The meta-orchestrator v1.9.0 introduces a role-based model that mirrors how real software teams operate. Instead of a single "super-agent," the system now orchestrates distinct roles with specific responsibilities, artifacts, and handoff points.
 
+**Important**: These are TEMPLATES, not prescriptions. See `CUSTOMIZING_ROLES.md` for guidance on which roles and workflows your app actually needs.
+
 ---
 
-## The Five Roles
+## The Six Roles
+
+**Note**: These are TEMPLATES. See `CUSTOMIZING_ROLES.md` for guidance on which roles your app needs.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
