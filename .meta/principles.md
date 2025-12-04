@@ -55,6 +55,55 @@ They are meant to be stable across projects. For each new app, you mainly change
 
 ---
 
+## [P-FLOW-ANALYSIS] Control Flow & Data Flow Analysis
+
+Every architectural decision must consider BOTH control flow AND data flow.
+
+### Control Flow (Who Decides What Happens)
+
+Analyze and document:
+- **Entry Points**: Where does execution begin? (API routes, CLI commands, events)
+- **Decision Points**: Where does branching occur? (conditionals, polymorphism)
+- **Error Handling**: Where and how are errors caught and handled?
+- **Exit Points**: Where does execution terminate? (returns, throws, exits)
+
+Principles for Control Flow:
+- Clear ownership: One component owns each decision
+- Single entry/single exit: Where practical, simplify paths
+- Fail-fast: Validate inputs at boundaries, don't propagate bad state
+- No hidden control: Avoid callbacks-within-callbacks, implicit triggers
+
+### Data Flow (What Information Moves Where)
+
+Analyze and document:
+- **Sources**: Where does data originate? (user input, APIs, databases)
+- **Transformations**: How is data changed? (parsing, validation, enrichment)
+- **Sinks**: Where does data end up? (storage, display, external services)
+
+Principles for Data Flow:
+- Immutability preferred: Transform, don't mutate
+- Clear ownership: One component owns each data type
+- No hidden data paths: Avoid global state, implicit caching, side effects
+- Validate at boundaries: Never trust external data
+
+### Why Both Matter
+
+A system can have:
+- Beautiful control flow + chaotic data flow = **Still a mess** (hard to debug data issues)
+- Clean data flow + spaghetti control = **Still a mess** (unpredictable execution)
+- Clean both = **Maintainable system**
+
+### When to Apply
+
+- **ALWAYS during DESIGN**: Map both flows before implementation
+- **During REVIEW**: Verify flows remain clean after changes
+- **When debugging**: Trace both flows to find root cause
+- **When adding features**: Ensure new code doesn't pollute existing flows
+
+See `.meta/wisdom/engineering_wisdom.md` #18 for detailed guidance.
+
+---
+
 ## [P-SESSIONS] Session Hygiene & Checkpoints
 
 - Avoid huge, long-running Codex sessions with massive conversation history.
@@ -156,6 +205,107 @@ This pattern enforces basic self-critique and metacognition.
   2. Integration tests after subsystem completion
   3. System tests after all LEGOs done
   4. Performance tests (if enabled) in final stage
+
+---
+
+## [P-E2E] End-to-End Scenario Testing
+
+End-to-end tests validate complete user scenarios with **minimal mock input and zero injected mock data**.
+
+### Philosophy
+
+E2E tests are **canaries for breaks**. They must:
+- Use real data flows (no fake data injections)
+- Validate business scenarios as users experience them
+- Catch integration failures that unit tests miss
+- Provide immediate signal when something breaks
+
+### E2E Test Principles
+
+1. **Minimal Mock Input**: 
+   - Mock ONLY external service boundaries (APIs, databases connections)
+   - Never inject fake data into the middle of a flow
+   - Use realistic test fixtures, not synthetic data generators
+   - Example: Mock the API client, not the response processing logic
+
+2. **Zero Injected Mock Data**:
+   - Data flows through the system as it would in production
+   - No bypassing validation, transformation, or business logic
+   - If a component needs data, it gets it through normal channels
+   - Example: Create real database records, don't mock repository responses
+
+3. **Scenario-Driven**:
+   - Each E2E test represents a user story or critical business flow
+   - Name tests after the scenario: `test_user_signup_to_first_purchase`
+   - Cover both happy paths and critical error scenarios
+   - Prioritize scenarios by business impact
+
+4. **Failure Clarity**:
+   - When E2E tests fail, the cause must be immediately obvious
+   - Include context in assertions (what was expected, what happened)
+   - Log key checkpoints during scenario execution
+   - Avoid flaky tests (deterministic inputs, stable assertions)
+
+### E2E Test Structure
+
+```python
+# tests/e2e/test_trading_scenario.py
+
+def test_options_trading_complete_workflow():
+    """
+    E2E Scenario: User creates strategy, receives signal, executes trade
+    
+    This test uses:
+    - Real market data (historical fixture, not mocked)
+    - Real calculation pipeline (no injection)
+    - Real signal generation (no fake signals)
+    - Mocked broker API (external boundary only)
+    """
+    # Arrange: Load real historical data fixture
+    market_data = load_fixture("options_chain_2024_01_15.json")
+    
+    # Act: Run through complete workflow
+    strategy = create_strategy(params=DEFAULT_PARAMS)
+    signals = generate_signals(strategy, market_data)  # Real calculation
+    
+    # Assert: Validate business outcomes
+    assert len(signals) > 0, "Should generate at least one signal"
+    assert all(s.confidence > 0.6 for s in signals), "All signals should meet confidence threshold"
+    
+    # Verify trade execution (mocked broker, real order logic)
+    with mock_broker() as broker:
+        execute_trades(signals[:1])
+        broker.assert_called_once()
+        order = broker.call_args.order
+        assert order.symbol == signals[0].symbol
+```
+
+### When to Use E2E vs Unit/Integration
+
+| Scenario | Test Type | Mock Level |
+|----------|-----------|------------|
+| Single function logic | Unit | Mock all dependencies |
+| 2-3 LEGOs interaction | Integration | Mock external services |
+| Complete user journey | E2E | Mock external boundaries only |
+| Critical business flow | E2E | Minimal mocks, real data flows |
+| External API behavior | Unit/Integration | Mock responses |
+| Database operations | Integration | Real test database |
+
+### E2E Test Requirements
+
+Every application MUST have E2E tests for:
+1. **Primary User Journey**: The main value-generating workflow
+2. **Onboarding Flow**: First-time user experience
+3. **Error Recovery**: What happens when things fail
+4. **Data Integrity**: Critical data flows remain consistent
+
+### Anti-Patterns in E2E Testing
+
+❌ **Mocking internal components**: If you mock the service layer, you're not testing E2E
+❌ **Injecting fake responses**: Data should flow through real transformations
+❌ **Testing implementation details**: E2E tests should validate outcomes, not internals
+❌ **Flaky time-dependent tests**: Use deterministic inputs or controlled time
+❌ **Testing everything E2E**: Reserve E2E for critical scenarios (expensive to maintain)
 
 ---
 

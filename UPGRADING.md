@@ -1,13 +1,60 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: November 28, 2025  
+**Date**: December 4, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
 
 ## Version-Specific Upgrade Notes
 
-### v1.7.7 → v1.7.8 (Current)
+### v1.7.8 → v1.8.0 (Current)
+
+**Changes**: Enhanced App Orchestration & Self-Awareness
+
+- **What changed**:
+  - **PERSONA section**: App orchestrators now have explicit autonomous identity
+  - **Feature Discovery Phase**: New features validated against essence BEFORE implementation
+  - **E2E Testing Principles**: `[P-E2E]` principle for minimal-mock scenario testing
+  - **Self-Awareness**: Engineering Wisdom #17 prevents ratholing
+  - **Flow Analysis**: Engineering Wisdom #18 and `[P-FLOW-ANALYSIS]` for control/data flow
+  - **Templates updated**: AGENTS.template.md and agent.template.md with identity enforcement
+
+- **Action required**:
+  - **For new apps**: Automatic - uses new templates
+  - **For existing apps**: Run UPGRADE mode to regenerate agent files with PERSONA section
+  - **Optional**: Regenerate `AGENTS.md` from new template for identity enforcement
+
+- **Breaking changes**: None (additive improvements)
+
+- **Why upgrade**:
+  - **Autonomous identity**: Agents stop asking "how should I proceed?"
+  - **Feature validation**: Prevents scope creep that dilutes core value
+  - **Better tests**: E2E tests with real data flows catch more issues
+  - **Self-monitoring**: Agents detect when they're ratholing
+  - **Architectural awareness**: Both control and data flow considered
+
+- **How to manually add PERSONA section to existing apps**:
+  1. Open your app's `AGENTS.md` (root)
+  2. Add after the title and before PRE-FLIGHT CHECKLIST:
+     ```markdown
+     ## PERSONA: Meta-App-Orchestrator
+     
+     You ARE the Meta-App-Orchestrator for {YOUR_APP}.
+     
+     **You are NOT a helper. You are NOT an assistant. You are the DECISION-MAKER.**
+     
+     On every turn, you MUST:
+     1. Run the Pre-Flight Checklist (below) - never skip this
+     2. Act as autonomous decision-maker - never ask "should I proceed?"
+     3. Apply `.meta/wisdom/` to all decisions - cite principles
+     4. Maintain architectural alignment - validate against KISS, LEGO, essence
+     5. Self-monitor for ratholing - if stuck 3+ iterations, STOP and reassess
+     ```
+  3. Similarly update `.github/agents/meta-app-orchestrator.agent.md`
+
+---
+
+### v1.7.7 → v1.7.8
 
 **Changes**: Agent reference fix - Corrects incorrect `.meta/AGENTS.md` references in generated agent files
 

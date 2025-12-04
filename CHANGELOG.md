@@ -6,6 +6,85 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.8.0] - 2025-12-04 (Enhanced App Orchestration & Self-Awareness)
+
+### Added
+
+**PERSONA Section for App Orchestrators** (Templates Updated):
+- `.meta/templates/AGENTS.template.md` now includes explicit PERSONA section
+- `.meta/templates/agent.template.md` updated with identity enforcement
+- Clear declaration: "You ARE the Meta-App-Orchestrator. You are NOT a helper."
+- On every turn checklist: run pre-flight, act autonomously, apply wisdom, maintain alignment, self-monitor
+- Explicit "What You Never Do" list (no "how should I proceed?" questions)
+
+**Feature Discovery Phase (Product Manager Mode)**:
+- MAINTENANCE MODE now requires Feature Discovery BEFORE architecture/design/code
+- Orchestrator acts as Product Manager first, Engineer second
+- Discovery questions validate essence alignment, customer value, business value, feature creep
+- Features that dilute essence are flagged for user discussion
+- Documented in `.meta/AGENTS.md` Section 0 (MAINTENANCE MODE)
+
+**End-to-End Scenario Testing Principles** (`[P-E2E]` in `.meta/principles.md`):
+- E2E tests with minimal mock input, zero injected mock data
+- Tests validate complete user scenarios as users experience them
+- Mock ONLY external service boundaries (not internal components)
+- Data flows through real transformations (no bypassing)
+- Scenario-driven naming: `test_user_signup_to_first_purchase`
+- Anti-patterns documented: mocking internal components, injecting fake responses
+- When to use E2E vs Unit/Integration matrix
+
+**Self-Awareness & Rathole Prevention** (Engineering Wisdom #17):
+- New wisdom principle in `.meta/wisdom/engineering_wisdom.md`
+- Triggers: >3 failed attempts, complexity exceeding problem, 5+ unrelated files changed
+- Actions: STOP, zoom out to essence, run architectural check
+- Red flags: "This is the only way", "Just this one exception", "I'll refactor later"
+- Self-awareness checkpoints every 3 iterations
+
+**Control Flow & Data Flow Analysis** (Engineering Wisdom #18, `[P-FLOW-ANALYSIS]`):
+- New wisdom principle and global principle for architectural analysis
+- Every decision must consider BOTH control flow AND data flow
+- Control flow: entry points, decision points, error handling, exit points
+- Data flow: sources, transformations, sinks
+- "Beautiful control flow + chaotic data flow = Still a mess"
+
+### Changed
+
+**MAINTENANCE MODE Workflow** (`.meta/AGENTS.md` Section 0):
+- Added Feature Discovery Phase before Two Paths
+- Path A now includes Feature Discovery step (read essence.md, validate alignment)
+- Path B now includes essence alignment validation (no more "skip questions")
+- Both paths document essence alignment rationale in APP_ORCHESTRATION.md
+
+**Templates Updated**:
+- `AGENTS.template.md`: Added PERSONA section with identity enforcement
+- `agent.template.md`: Added IDENTITY ENFORCEMENT section with explicit do/don't lists
+
+### Philosophy
+
+**From "Build features" → "Validate features serve essence"**:
+- Previously: User asks for feature → orchestrator plans implementation
+- Now: User asks for feature → orchestrator validates essence alignment FIRST
+- Orchestrator acts as Product Manager (validate) before Engineer (implement)
+- Features that dilute core value are flagged, not blindly implemented
+
+**From "Solve the problem" → "Know when you're ratholing"**:
+- Previously: Keep trying until it works
+- Now: After 3 iterations, STOP and reassess architectural alignment
+- Self-awareness prevents changes that violate KISS/LEGO principles
+- Explicit recognition that "quick fixes" often aren't
+
+### Impact
+
+Apps built/maintained with v1.8.0 will:
+1. Have orchestrators with clear autonomous identity (no "how should I proceed?")
+2. Validate new features against core essence before implementation
+3. Generate E2E tests with minimal mocking (real data flows)
+4. Self-monitor for ratholing and architectural drift
+5. Consider both control flow and data flow in all decisions
+6. Act as Product Manager (validate value) before Engineer (implement)
+
+---
+
 ## [1.7.8] - 2025-11-28 (Agent Reference Fix)
 
 ### Fixed
@@ -889,6 +968,7 @@ LEGOs designed with Phase 1.5 will:
 
 | Version | Date | Phase | Key Feature | Lines Added |
 |---------|------|-------|-------------|-------------|
+| 1.8.0 | 2025-12-04 | 2.0 | Enhanced App Orchestration & Self-Awareness | ~400 |
 | 1.5.0 | 2025-11-25 | 1.8 | Product-Market Fit & UX Focus | ~300 |
 | 1.4.0 | 2025-11-24 | 1.7 | Intelligent Maintenance Mode | ~400 |
 | 1.3.0 | 2025-11-24 | 1.6 | App-Specific Orchestration Documentation | ~200 |
@@ -899,6 +979,24 @@ LEGOs designed with Phase 1.5 will:
 ---
 
 ## Upgrade Path
+
+### From 1.7.8 to 1.8.0
+
+**Breaking Changes**: None
+
+**New Capabilities**:
+- PERSONA section for app orchestrators (explicit autonomous identity)
+- Feature Discovery Phase (Product Manager Mode before implementation)
+- E2E Scenario Testing principles (`[P-E2E]`)
+- Self-Awareness & Rathole Prevention (Engineering Wisdom #17)
+- Control Flow & Data Flow Analysis (Engineering Wisdom #18, `[P-FLOW-ANALYSIS]`)
+
+**Migration**:
+1. Read `UPGRADING.md` for detailed workflow
+2. Meta-orchestrator will detect version mismatch (1.7.8 vs 1.8.0)
+3. Run ENGINE UPGRADE MODE to regenerate agent files with PERSONA section
+4. Apps will now have orchestrators with autonomous identity enforcement
+5. New features will go through Feature Discovery (essence validation) before implementation
 
 ### From 1.4.0 to 1.5.0
 

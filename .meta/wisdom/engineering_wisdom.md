@@ -406,6 +406,142 @@ Distilled principles from legendary engineers and computer scientists. Each prin
 
 ---
 
+## 17. Self-Awareness & Rathole Prevention
+
+**Source**: Meta-orchestrator operational experience (2024-2025)
+
+**Principle**:
+> "When deep in problem-solving, agents can lose sight of the bigger picture. Every change must be validated against architectural principles before implementation. If you've been focused on one issue for 3+ iterations without resolution, STOP and reassess."
+
+**Application**: Prevent tunnel vision that leads to changes misaligned with KISS, LEGO principles, and the app's core essence.
+
+**Trigger**:
+- More than 3 failed attempts to solve the same problem
+- Solution complexity exceeds the problem complexity
+- Fix requires changes to 5+ unrelated files
+- Solution introduces new dependencies to "solve" a local issue
+- Agent has been focused on one issue for extended period
+- Proposed change contradicts earlier architectural decisions
+- "Quick fix" that violates established patterns
+- Growing scope during implementation ("while I'm here, I'll also...")
+
+**Action**:
+1. **STOP and Surface**: When any trigger fires, pause immediately
+2. **Zoom Out**: Re-read `essence.md` and `AGENTS.md` - what's the core purpose?
+3. **Architectural Check**: Does this solution align with:
+   - KISS (simplest correct solution?)
+   - LEGO principles (single responsibility maintained?)
+   - Thompson #5 (does each component still do one thing well?)
+   - Control flow (does data still flow cleanly?)
+   - Existing patterns (or are we inventing new ones unnecessarily?)
+4. **Rathole Detection**: Ask:
+   - "Am I solving the original problem or a symptom?"
+   - "Is this fix proportional to the problem?"
+   - "Would a fresh perspective see an obvious simpler approach?"
+   - "Am I adding complexity to avoid admitting the design is wrong?"
+5. **Reset if Needed**: If >3 iterations without resolution:
+   - Document what was tried and why it failed
+   - Step back to the last known-good state
+   - Consider if the requirement itself needs clarification
+   - Ask: "Is this problem solvable within current architecture?"
+6. **Seek Higher Context**: If architectural misalignment detected:
+   - Flag for discussion before proceeding
+   - Document the tension between current approach and principles
+   - Propose architectural revision if warranted
+
+**Self-Awareness Checkpoints**:
+- Every 3 implementation iterations, run architectural alignment check
+- Before committing any change, verify it doesn't violate established patterns
+- When adding workarounds, flag as technical debt (don't normalize)
+- If justifying complexity with "edge cases", reconsider the design
+
+**Red Flags** (immediate STOP):
+- "This is the only way" (usually isn't)
+- "It's complicated because the requirements are complicated" (often solvable differently)
+- "Just this one exception" (exceptions breed exceptions)
+- "I'll refactor later" (you won't)
+- "The tests will catch issues" (tests test what you write, not what you should write)
+
+---
+
+## 18. Control Flow & Data Flow Awareness
+
+**Source**: Structured programming principles (Dijkstra, Hoare, Parnas)
+
+**Principle**:
+> "Every system has two fundamental flows: control flow (who decides what happens) and data flow (what information moves where). All architectural decisions must consider both. A beautiful control flow with chaotic data flow is still a mess."
+
+**Application**: When designing, implementing, or reviewing, explicitly trace both control flow and data flow.
+
+**Trigger**:
+- ALWAYS during DESIGN phase
+- When adding new features
+- When debugging unexpected behavior
+- When reviewing code changes
+- When data appears in unexpected places
+- When control logic becomes convoluted
+
+**Action**:
+
+### Control Flow Analysis
+1. **Map Decision Points**: Who decides what happens?
+   - Entry points (API routes, CLI commands, event handlers)
+   - Branching logic (if/else, switches, polymorphism)
+   - Error handling (try/catch, Result types, fallbacks)
+   - Concurrency (async, threads, queues)
+   
+2. **Validate Control Flow Principles**:
+   - Single entry/single exit per function (where practical)
+   - Clear ownership (one component owns each decision)
+   - No hidden control (callbacks calling callbacks calling callbacks)
+   - Fail-fast at boundaries (validate inputs early)
+
+### Data Flow Analysis  
+1. **Trace Data Movement**: Where does data originate, transform, terminate?
+   - Sources (user input, API responses, database reads, config)
+   - Transformations (parsing, validation, enrichment, aggregation)
+   - Sinks (database writes, API calls, UI rendering, logs)
+   
+2. **Validate Data Flow Principles**:
+   - Data immutability (prefer transformations over mutations)
+   - Clear ownership (one component owns each data type)
+   - No hidden data paths (side effects, global state, implicit caching)
+   - Validation at boundaries (never trust external data)
+
+### Combined Analysis
+1. **Map Interactions**: Where do control and data flows intersect?
+   - Data-driven branching (content determines path)
+   - Control-driven data access (path determines what data)
+   - Error data propagation (how errors carry context)
+   
+2. **Identify Smells**:
+   - Control flow depending on data internals (violates encapsulation)
+   - Data transformed based on control path (should be explicit)
+   - Hidden side effects (control looks simple but data changes unexpectedly)
+
+**Documentation Template**:
+```
+## Control Flow: {Feature}
+Entry: [where it starts]
+Decision Points: [key branches]
+Exit: [where it ends, including error paths]
+
+## Data Flow: {Feature}
+Source: [where data originates]
+Transformations: [what changes]
+Sink: [where data ends up]
+
+## Flow Interaction Notes:
+[Any non-obvious interactions between control and data]
+```
+
+**Wisdom Applied**:
+- Thompson #5: Each LEGO should have clear control boundaries
+- Dijkstra #3: Simple control flow enables reliability
+- Parnas #6: Information hiding requires clean data flow boundaries
+
+---
+
 ## Adding Your Own Wisdom
 
 To add new engineering wisdom:
