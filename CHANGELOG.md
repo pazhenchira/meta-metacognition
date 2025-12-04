@@ -6,6 +6,47 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [1.10.0] - 2025-12-04 (Self-Contained App Architecture)
+
+### Added
+
+**Two-Folder Architecture** (`.meta/` vs `.app/`):
+- **`.meta/`**: ENGINE folder - contains templates, generators, wisdom library
+- **`.app/`**: APP-SPECIFIC folder - generated, self-contained, no `.meta/` references
+- Clear separation: `.meta/` for CREATE/UPGRADE, `.app/` for MAINTAIN
+- Apps can function with `.meta/` deleted (after generation)
+
+**Generator System** (`.meta/generators/`):
+- `app_folder_generation.md`: Documentation for how `.app/` is generated
+- `app_agents.template.md`: Template for self-contained app orchestrator
+
+**Self-Contained App Orchestrator**:
+- `.app/AGENTS.md` contains ALL context inline (no external references)
+- Wisdom principles INLINED, not referenced
+- Roles and workflows ADAPTED and copied, not referenced
+- `.app/.engine-version` tracks which engine version generated it
+
+### Philosophy
+
+**The Key Principle**:
+> After CREATE or UPGRADE, you could DELETE `.meta/` and the app would still be fully maintainable.
+
+**Three Modes**:
+| Mode | Uses .meta/? | Uses .app/? | Orchestrator |
+|------|--------------|-------------|--------------|
+| CREATE | ✅ Yes | Creates it | `.meta/AGENTS.md` |
+| UPGRADE | ✅ Yes | Regenerates | `.meta/AGENTS.md` |
+| MAINTAIN | ❌ No | ✅ Self-contained | `.app/AGENTS.md` |
+
+### Impact
+
+- **At runtime**: Apps don't need engine files (`.meta/` can be absent)
+- **For upgrades**: Copy new `.meta/` from meta-metacognition, run upgrade
+- **For maintenance**: Only `.app/` folder is needed
+- **Cleaner mental model**: Engine vs App separation is explicit
+
+---
+
 ## [1.9.0] - 2025-12-04 (Role-Based Architecture)
 
 ### Added
@@ -1041,6 +1082,7 @@ LEGOs designed with Phase 1.5 will:
 
 | Version | Date | Phase | Key Feature | Lines Added |
 |---------|------|-------|-------------|-------------|
+| 1.10.0 | 2025-12-04 | 2.2 | Self-Contained App Architecture | ~500 |
 | 1.9.0 | 2025-12-04 | 2.1 | Role-Based Architecture | ~800 |
 | 1.8.0 | 2025-12-04 | 2.0 | Enhanced App Orchestration & Self-Awareness | ~400 |
 | 1.5.0 | 2025-11-25 | 1.8 | Product-Market Fit & UX Focus | ~300 |
@@ -1053,6 +1095,23 @@ LEGOs designed with Phase 1.5 will:
 ---
 
 ## Upgrade Path
+
+### From 1.9.0 to 1.10.0
+
+**Breaking Changes**: None (but new folder structure)
+
+**New Capabilities**:
+- `.app/` folder for self-contained app orchestration
+- Apps don't need `.meta/` at runtime (after create/upgrade)
+- Generator system for creating `.app/` folder
+- Clear separation of ENGINE vs APP concerns
+
+**Migration**:
+1. Copy new `.meta/` from meta-metacognition (as usual)
+2. Run engine - it will detect version mismatch
+3. Engine generates `.app/` folder for your app
+4. Future maintenance uses `.app/AGENTS.md` only
+5. `.meta/` only needed for future upgrades
 
 ### From 1.8.0 to 1.9.0
 
