@@ -6,6 +6,8 @@ This workflow covers fixing a defect where implementation deviates from specific
 
 **Key Principle**: A bug is a deviation from spec. The spec (FR-XXX) is correct; the implementation is wrong. Fix the implementation, not the spec.
 
+**Review Model**: Bug fixes have lighter review gates (speed matters) but still require verification. See `REVIEW_GATES.md` for criteria.
+
 ---
 
 ## What Is a Bug?
@@ -210,6 +212,18 @@ Is behavior in spec (FR-XXX)?
 - Priority assigned
 - Developer assigned
 
+### Handoff
+- **To**: Developer
+- **Artifact**: BUG-XXX (triaged)
+
+### ⮕ REVIEW GATE: Triage → Developer
+Developer reviews before accepting:
+- [ ] Bug is reproducible with provided steps
+- [ ] Expected behavior is clear from spec
+- [ ] Severity/priority is reasonable
+
+**Gate Outcome**: Accept / Request Clarification
+
 ---
 
 ## Phase 3: Root Cause Analysis (Developer)
@@ -315,6 +329,18 @@ References: FR-XXX, DD-XXX
 - Fix implemented
 - All tests pass
 - Code review approved
+
+### Handoff
+- **To**: Tester
+- **Artifact**: Fix implementation
+
+### ⮕ REVIEW GATE: Developer → Tester (Bug Fix)
+Tester reviews before verifying:
+- [ ] Failing test exists for this bug
+- [ ] Fix is minimal (not over-engineered)
+- [ ] All tests pass
+
+**Gate Outcome**: Accept / Request Changes
 
 ---
 

@@ -6,6 +6,8 @@ This workflow covers modifying or extending an existing feature that was deliver
 
 **Key Principle**: Enhancements create NEW specs that REFERENCE the original. The original spec remains immutable, preserving the audit trail of what was originally built and why.
 
+**Review Model**: Each handoff is a review gate. The receiving role reviews and approves before proceeding. See `REVIEW_GATES.md` for detailed criteria.
+
 ---
 
 ## When to Use This Workflow
@@ -158,6 +160,15 @@ Do NOT use this workflow for:
 - **To**: Architect
 - **Artifacts**: EN-XXX + reference to FR-XXX
 
+### ⮕ REVIEW GATE 1: PM → Architect (Enhancement)
+See `REVIEW_GATES.md` for full criteria. Architect reviews:
+- [ ] Original FR-XXX is understood
+- [ ] Delta is clearly defined
+- [ ] Enhancement doesn't break original value
+- [ ] Backward compatibility is addressed
+
+**Gate Outcome**: Approve / Approve with Conditions / Reject
+
 ---
 
 ## Phase 2: Enhancement Design (Architect)
@@ -244,6 +255,15 @@ Do NOT use this workflow for:
 - **To**: Developer
 - **Artifacts**: DD-YYY + reference to DD-XXX
 
+### ⮕ REVIEW GATE 2: Architect → Developer (Enhancement)
+See `REVIEW_GATES.md` for full criteria. Developer reviews:
+- [ ] Enhancement design is implementable
+- [ ] Compatibility strategy is clear
+- [ ] Changes are minimal and surgical
+- [ ] Original tests provide safety net
+
+**Gate Outcome**: Approve / Approve with Conditions / Reject
+
 ---
 
 ## Phase 3: Implementation (Developer)
@@ -286,6 +306,15 @@ Do NOT use this workflow for:
 - **To**: Tester
 - **Artifacts**: Implementation
 
+### ⮕ REVIEW GATE 3: Developer → Tester (Enhancement)
+See `REVIEW_GATES.md` for full criteria. Tester reviews:
+- [ ] Original tests still exist and pass
+- [ ] New tests for enhancement exist
+- [ ] Code is testable
+- [ ] No obvious regressions
+
+**Gate Outcome**: Approve / Approve with Conditions / Reject
+
 ---
 
 ## Phase 4: Validation (Tester)
@@ -318,6 +347,14 @@ Do NOT use this workflow for:
 
 ### Handoff
 - **To**: Technical Writer
+
+### ⮕ REVIEW GATE 4: Tester → Technical Writer (Enhancement)
+See `REVIEW_GATES.md` for full criteria. Writer reviews:
+- [ ] No regressions found
+- [ ] Enhancement tests pass
+- [ ] Feature is stable for documentation
+
+**Gate Outcome**: Approve / Approve with Conditions / Reject
 
 ---
 

@@ -26,6 +26,20 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 - Roles and workflows ADAPTED and copied, not referenced
 - `.app/.engine-version` tracks which engine version generated it
 
+**Review Gates System** (`.meta/workflows/REVIEW_GATES.md`):
+- Explicit review gates at each handoff between roles
+- Six review gates: PM→Architect, Architect→Developer, Developer→Tester, Tester→Writer, Writer→Release, Operations Review
+- Receiving role is the reviewer (no separate Reviewer role needed)
+- Detailed criteria for each gate (what to look for, red flags)
+- Self-review checklists for each role
+- Anti-patterns to avoid (rubber-stamping, scope creep, vague rejections)
+- Timing guidelines for reviews
+
+**Updated Workflows**:
+- All three workflows (New Feature, Enhancement, Bug Fix) now include explicit review gate markers
+- Each handoff shows review criteria inline
+- Approval outcomes: Approve / Approve with Conditions / Reject
+
 ### Philosophy
 
 **The Key Principle**:

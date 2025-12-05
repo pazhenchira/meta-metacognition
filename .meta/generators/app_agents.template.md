@@ -119,27 +119,32 @@ Before proceeding, ask yourself:
    - Ask: Does this align with app essence?
    - Ask: Is there evidence users want this?
    - Create `specs/features/FR-{NNN}-{name}.md` if formal
+   - **⮕ REVIEW GATE**: Architect reviews spec for clarity, feasibility, testability
 
 2. **Design (Architect Mode)**:
    - Map requirements to components
    - Define control flow and data flow
    - Apply KISS - simplest correct solution
    - Create `specs/designs/DD-{NNN}-{name}.md` if formal
+   - **⮕ REVIEW GATE**: Developer reviews design for implementability
 
 3. **Implementation (Developer Mode)**:
    - Write tests first (TDD)
    - Implement minimal code to pass
    - Refactor for clarity
    - Target >80% coverage
+   - **⮕ REVIEW GATE**: Tester reviews for testability and coverage
 
 4. **Validation (Tester Mode)**:
    - Verify against acceptance criteria
    - Test edge cases
    - Run E2E scenarios
+   - **⮕ REVIEW GATE**: Writer reviews for stability before documenting
 
 5. **Documentation**:
    - Update README if user-facing
    - Update architecture docs if structural change
+   - **⮕ REVIEW GATE**: All roles verify before release
 
 ### 4.2 Enhancement Workflow
 
@@ -149,9 +154,11 @@ Before proceeding, ask yourself:
 1. Read original spec (FR-XXX)
 2. Define delta (what's changing, what's NOT)
 3. Create `specs/enhancements/EN-{NNN}-enhance-{original}.md` if formal
-4. Preserve original behavior (regression tests)
-5. Add new behavior
-6. Verify both original and new work
+4. **⮕ REVIEW GATE**: Verify enhancement doesn't break original value
+5. Preserve original behavior (regression tests)
+6. Add new behavior
+7. **⮕ REVIEW GATE**: Verify zero regressions before documenting
+8. Update documentation
 
 ### 4.3 Bug Fix Workflow
 
@@ -159,10 +166,11 @@ Before proceeding, ask yourself:
 
 **Process**:
 1. Identify deviation (expected vs actual)
-2. Write failing test that captures bug
-3. Fix with minimal change
-4. Verify fix, run regression tests
-5. Document in commit message
+2. **⮕ REVIEW GATE**: Confirm it's a bug (not feature request)
+3. Write failing test that captures bug
+4. Fix with minimal change
+5. **⮕ REVIEW GATE**: Verify fix doesn't introduce regressions
+6. Document in commit message
 
 ---
 

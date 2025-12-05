@@ -6,6 +6,8 @@ This workflow covers the complete lifecycle of a new feature from idea to produc
 
 **Key Principle**: Each role completes their work and hands off to the next. Artifacts are immutable once approved—changes require new artifacts that reference the old.
 
+**Review Model**: Each handoff is a review gate. The receiving role reviews and approves before proceeding. See `REVIEW_GATES.md` for detailed criteria.
+
 ---
 
 ## Workflow Diagram
@@ -97,6 +99,15 @@ This workflow covers the complete lifecycle of a new feature from idea to produc
 - **Artifact**: FR-XXX
 - **Expectation**: Create design that implements spec
 
+### ⮕ REVIEW GATE 1: PM → Architect
+See `REVIEW_GATES.md` for full criteria. Architect reviews:
+- [ ] Requirements are clear and unambiguous
+- [ ] Acceptance criteria are testable
+- [ ] No technical impossibilities
+- [ ] Scope is bounded
+
+**Gate Outcome**: Approve / Approve with Conditions / Reject
+
 ---
 
 ## Phase 2: Design (Architect)
@@ -147,6 +158,15 @@ This workflow covers the complete lifecycle of a new feature from idea to produc
 - **Artifact**: DD-XXX
 - **Expectation**: Implement as designed
 
+### ⮕ REVIEW GATE 2: Architect → Developer
+See `REVIEW_GATES.md` for full criteria. Developer reviews:
+- [ ] Components have clear responsibilities
+- [ ] Interfaces are fully specified
+- [ ] Dependencies are available
+- [ ] Each component is testable in isolation
+
+**Gate Outcome**: Approve / Approve with Conditions / Reject
+
 ---
 
 ## Phase 3: Implementation (Developer)
@@ -191,6 +211,15 @@ This workflow covers the complete lifecycle of a new feature from idea to produc
 - **To**: Tester
 - **Artifact**: Implementation + tests
 - **Expectation**: Validate against spec
+
+### ⮕ REVIEW GATE 3: Developer → Tester
+See `REVIEW_GATES.md` for full criteria. Tester reviews:
+- [ ] All FR-XXX requirements are implemented
+- [ ] Implementation matches DD-XXX design
+- [ ] Unit test coverage >80%
+- [ ] Code is testable
+
+**Gate Outcome**: Approve / Approve with Conditions / Reject
 
 ---
 
@@ -240,6 +269,15 @@ This workflow covers the complete lifecycle of a new feature from idea to produc
 - **Artifact**: Validated feature
 - **Expectation**: Document for users and developers
 
+### ⮕ REVIEW GATE 4: Tester → Technical Writer
+See `REVIEW_GATES.md` for full criteria. Writer reviews:
+- [ ] All tests pass
+- [ ] No critical/high bugs open
+- [ ] Feature is functionally complete
+- [ ] Sufficient technical docs exist
+
+**Gate Outcome**: Approve / Approve with Conditions / Reject
+
 ---
 
 ## Phase 5: Documentation (Technical Writer)
@@ -281,6 +319,16 @@ This workflow covers the complete lifecycle of a new feature from idea to produc
 
 ### Handoff
 - **To**: Release (all roles verify)
+
+### ⮕ REVIEW GATE 5: Technical Writer → Release
+See `REVIEW_GATES.md` for full criteria. All roles review:
+- [ ] PM: Feature delivers intended value
+- [ ] Architect: Meets architectural standards
+- [ ] Developer: Code is maintainable
+- [ ] Tester: Confident it works
+- [ ] Writer: Users can understand it
+
+**Gate Outcome**: Approve / Reject
 
 ---
 
