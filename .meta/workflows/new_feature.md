@@ -339,24 +339,41 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
 
 ### Activities
 
-1. **Final Verification**:
-   - PM: Feature delivers intended value
+1. **PM Final Acceptance** (REQUIRED):
+   - PM reviews against FR-XXX spec
+   - Verifies all acceptance criteria pass
+   - Confirms essence alignment (customer value + business impact)
+   - Signs off or rejects with specific deviations
+
+2. **Final Verification** (All Roles):
    - Architect: Implementation matches design
    - Developer: No known technical debt
    - Tester: All tests pass
    - Writer: Docs accurate and complete
+   - Operations: Ready to deploy (if applicable)
 
-2. **Release Preparation**:
+3. **Release Preparation**:
    - Version bump
    - CHANGELOG finalized
    - Release notes prepared
 
-3. **Release**:
+4. **Release**:
    - Merge to main
    - Deploy to production
    - Monitor for issues
 
+### ⮕ REVIEW GATE 7: PM Final Acceptance
+See `REVIEW_GATES.md` for full criteria. PM confirms:
+- [ ] All FR-XXX requirements implemented as specified
+- [ ] All acceptance criteria pass
+- [ ] Feature delivers promised Customer Value
+- [ ] Feature delivers promised Business Impact
+- [ ] No unauthorized scope additions
+
+**Gate Outcome**: ACCEPTED (release) / REJECTED (return to appropriate role)
+
 ### Exit Criteria
+- PM Final Acceptance signed
 - All roles verified
 - Released to production
 - Monitoring in place

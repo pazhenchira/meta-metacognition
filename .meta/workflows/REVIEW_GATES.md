@@ -200,6 +200,68 @@ Identify blocking issues, assign to responsible role, iterate.
 
 ---
 
+### Gate 7: PM Final Acceptance (Required)
+
+**The bookend gate.** PM started the feature (Gate 1), PM confirms it's done correctly.
+
+**Artifact**: Complete, tested, documented feature ready for release
+
+**PM Reviews For**:
+
+| Criterion | Question | Red Flags |
+|-----------|----------|-----------|
+| **Spec Fidelity** | Does this match FR-XXX exactly? | Missing requirements, changed behavior |
+| **Essence Alignment** | Does this deliver the promised value? | Technical success but user value missing |
+| **Acceptance Criteria** | Do all criteria pass? | Partial implementation, edge cases skipped |
+| **User Experience** | Would a user recognize this as the feature? | Over-engineered, confusing, different from spec |
+| **Scope Creep** | Did we add things not in spec? | Gold plating, unauthorized enhancements |
+
+**Approval Criteria**:
+- [ ] All FR-XXX requirements are implemented as specified
+- [ ] All acceptance criteria pass (verified by Tester)
+- [ ] Feature delivers the Customer Value promised in spec
+- [ ] Feature delivers the Business Impact promised in spec
+- [ ] No unauthorized scope additions
+- [ ] User can achieve stated goals
+
+**PM Final Acceptance Statement**:
+```markdown
+## PM Final Acceptance: FR-XXX
+
+**Date**: YYYY-MM-DD
+**PM**: {Name}
+**Verdict**: ACCEPTED / REJECTED
+
+### Verification
+- [ ] Reviewed FR-XXX requirements
+- [ ] Verified each acceptance criterion passes
+- [ ] Confirmed essence alignment (customer value + business impact)
+- [ ] Validated with stakeholder demo (if applicable)
+
+### Findings
+{Any observations, minor issues for future enhancement}
+
+### Acceptance
+I confirm this feature matches the specification FR-XXX and delivers
+the intended value. Ready for release.
+
+Signed: {PM}
+```
+
+**Rejection Response**:
+Return to appropriate role with specific deviations:
+- "Requirement X from FR-XXX is not implemented correctly"
+- "Acceptance criterion AC-3 is not passing"
+- "This delivers feature Y, but spec asked for feature Z"
+
+**Why This Gate Matters**:
+- PM owns the spec, PM confirms it was built correctly
+- Prevents "technically complete but wrong" releases
+- Ensures feature delivers actual user value, not just code
+- Creates accountability loop (PM specifies → PM accepts)
+
+---
+
 ## Review Outcomes
 
 Every review gate has three possible outcomes:
@@ -328,5 +390,8 @@ Each workflow document should reference this review gates document:
 | 4 | Tester | Writer | "Is this documentable?" |
 | 5 | Writer | Release | "Is this releasable?" |
 | 6 | All | Operations | "Is this operable?" |
+| **7** | **All** | **PM** | **"Is this what we specified?"** |
+
+**The PM Bookend**: PM starts the feature (writes spec) and PM ends it (accepts delivery). This creates accountability and ensures the feature delivers actual value, not just code.
 
 **Remember**: The receiving role is the reviewer. They accept responsibility when they approve.

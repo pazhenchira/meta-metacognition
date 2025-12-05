@@ -383,6 +383,20 @@ See `REVIEW_GATES.md` for full criteria. Writer reviews:
 
 ---
 
+## Phase 6: Release (Enhancement)
+
+### ⮕ REVIEW GATE 7: PM Final Acceptance (Enhancement)
+PM confirms enhancement meets EN-XXX spec AND preserves original FR-XXX value:
+- [ ] Original FR-XXX functionality still works
+- [ ] All EN-XXX requirements implemented as specified
+- [ ] Enhancement delivers promised additional value
+- [ ] No regressions in original feature
+- [ ] No unauthorized scope changes
+
+**Gate Outcome**: ACCEPTED / REJECTED
+
+---
+
 ## Artifact Relationships
 
 ```

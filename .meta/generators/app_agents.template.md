@@ -144,7 +144,12 @@ Before proceeding, ask yourself:
 5. **Documentation**:
    - Update README if user-facing
    - Update architecture docs if structural change
-   - **⮕ REVIEW GATE**: All roles verify before release
+
+6. **PM Final Acceptance**:
+   - PM reviews against original spec
+   - Confirms all acceptance criteria pass
+   - Verifies essence alignment
+   - **⮕ REVIEW GATE 7**: PM accepts or rejects with specific deviations
 
 ### 4.2 Enhancement Workflow
 
