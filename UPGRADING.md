@@ -1,13 +1,82 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: December 4, 2025  
+**Date**: December 6, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
+
+---
+
+## ⚠️ v1.x → v2.0.0 MAJOR UPGRADE
+
+**Status**: Breaking changes require migration  
+**Type**: Automated with rollback support  
+**Time**: 30-60 minutes  
+
+### Critical: Backup First!
+
+```bash
+cd /path/to/your-app
+git tag v1-backup
+git tag -l | grep backup  # Verify
+```
+
+### What Changes in v2.0
+
+- **New folders**: `.workspace/` (work items), `legos/` (self-documenting), `specs/` (immutable)
+- **Docs separated**: `docs/user/` (external) + `docs/dev/` (internal)
+- **LEGO structure**: Each LEGO gets README.md, interface.md, workflows.md
+- **State management**: `.workspace/tracker.json` for work item lifecycle
+- **Workflow**: Multi-role approval, immutable specs after promotion
+
+### Automated Migration Process
+
+1. **Copy new engine**:
+   ```bash
+   cp -r /path/to/meta-metacognition/.meta ./
+   cat .meta/VERSION  # Should show: 2.0.0
+   ```
+
+2. **Run upgrade** (in Codex CLI or GitHub Copilot):
+   ```
+   Upgrade this app to meta-orchestrator v2.0
+   ```
+
+3. **Orchestrator will**:
+   - Detect v1.x structure
+   - Show upgrade plan (folders to create, files to migrate)
+   - Ask for approval
+   - Execute automated migration:
+     - Create `.workspace/`, `legos/`, `specs/`, `docs/user/`, `docs/dev/`
+     - Move `src/*.py` → `legos/*/src/`
+     - Generate LEGO docs (README, interface, workflows) from code analysis
+     - Separate `docs/` → `docs/user/` + `docs/dev/`
+     - Initialize `tracker.json` and `_manifest.json`
+     - Update `.meta-version` to 2.0.0
+   - Commit changes
+   - Validate upgrade (folders exist, tests pass)
+
+### Rollback If Needed
+
+```bash
+git reset --hard v1-backup
+cat .meta-version  # Should show v1.x or missing
+```
+
+### Post-Upgrade Workflow
+
+**Old (v1.x)**: Edit code directly, commit  
+**New (v2.0)**: Create work item → multi-role approval → promote artifacts → delete workspace
+
+**LEGOs now self-documenting**: `legos/my_lego/README.md` contains complete spec to regenerate code.
+
+### See Full Guide
+
+For detailed migration steps, troubleshooting, FAQ, see archived v2.0 upgrade documentation.
 
 ---
 
 ## Version-Specific Upgrade Notes
 
-### v1.7.8 → v1.8.0 (Current)
+### v1.7.8 → v1.8.0
 
 **Changes**: Enhanced App Orchestration & Self-Awareness
 
