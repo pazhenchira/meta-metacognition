@@ -11,66 +11,163 @@
 **Type**: Automated with rollback support  
 **Time**: 30-60 minutes  
 
-### Critical: Backup First!
+---
+
+## Quick Start: 3-Step Upgrade
+
+### Step 1: Backup (CRITICAL!)
 
 ```bash
 cd /path/to/your-app
 git tag v1-backup
-git tag -l | grep backup  # Verify
+git tag -l | grep backup  # Verify backup exists
 ```
 
-### What Changes in v2.0
+**If this fails**: Fix git before continuing!
 
-- **New folders**: `.workspace/` (work items), `legos/` (self-documenting), `specs/` (immutable)
-- **Docs separated**: `docs/user/` (external) + `docs/dev/` (internal)
-- **LEGO structure**: Each LEGO gets README.md, interface.md, workflows.md
-- **State management**: `.workspace/tracker.json` for work item lifecycle
-- **Workflow**: Multi-role approval, immutable specs after promotion
+### Step 2: Copy New Engine
 
-### Automated Migration Process
+```bash
+# Copy .meta/ folder from meta-metacognition repo to your app
+cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 
-1. **Copy new engine**:
-   ```bash
-   cp -r /path/to/meta-metacognition/.meta ./
-   cat .meta/VERSION  # Should show: 2.0.0
-   ```
+# Verify new version
+cd /path/to/your-app
+cat .meta/VERSION
+# Should show: 2.0.0
+```
 
-2. **Run upgrade** (in Codex CLI or GitHub Copilot):
-   ```
-   Upgrade this app to meta-orchestrator v2.0
-   ```
+### Step 3: Run Upgrade
 
-3. **Orchestrator will**:
-   - Detect v1.x structure
-   - Show upgrade plan (folders to create, files to migrate)
-   - Ask for approval
-   - Execute automated migration:
-     - Create `.workspace/`, `legos/`, `specs/`, `docs/user/`, `docs/dev/`
-     - Move `src/*.py` → `legos/*/src/`
-     - Generate LEGO docs (README, interface, workflows) from code analysis
-     - Separate `docs/` → `docs/user/` + `docs/dev/`
-     - Initialize `tracker.json` and `_manifest.json`
-     - Update `.meta-version` to 2.0.0
-   - Commit changes
-   - Validate upgrade (folders exist, tests pass)
+Open your app in Codex CLI or GitHub Copilot and say:
 
-### Rollback If Needed
+```
+Upgrade this app to meta-orchestrator v2.0
+```
+
+**That's it!** The orchestrator will:
+1. Detect v1.x structure (checks for `.meta-version` or absence of v2.0 folders)
+2. Show you the upgrade plan (folders to create, files to migrate)
+3. Ask for your approval
+4. Execute automated migration (9 phases)
+5. Validate everything worked
+6. Commit changes to git
+
+**If anything goes wrong**:
+```bash
+git reset --hard v1-backup
+```
+
+---
+
+## What the Upgrade Does (Automated)
+
+### Creates New Folders
+
+```bash
+.workspace/          # Work item tracking
+legos/              # Self-documenting LEGO blocks
+specs/              # Immutable specifications
+  ├── features/
+  ├── design/
+  └── test_plans/
+docs/
+  ├── user/         # Customer-facing docs
+  └── dev/          # Developer-facing docs
+external_input/     # User-provided context files
+```
+
+### Migrates Your Code
+
+```bash
+# Old structure:
+src/config_validator.py
+src/signal_generator.py
+tests/unit/test_config_validator.py
+
+# New structure:
+legos/config_validator/
+  ├── README.md              # ✨ Auto-generated from code
+  ├── interface.md           # ✨ Auto-generated from signatures
+  ├── workflows.md           # ✨ Auto-generated from imports
+  └── src/
+      ├── config_validator.py   # Moved from src/
+      └── tests/                # Moved from tests/unit/
+          └── test_config_validator.py
+
+legos/signal_generator/
+  ├── README.md
+  ├── interface.md
+  ├── workflows.md
+  └── src/
+      ├── signal_generator.py
+      └── tests/
+```
+
+### Generates Documentation
+
+For each LEGO, the orchestrator auto-generates:
+- **README.md**: Complete spec (can regenerate code from this)
+- **interface.md**: Executable contract (function signatures, types, errors)
+- **workflows.md**: Inter-LEGO interactions (who calls whom, data flow)
+
+### Initializes State Files
+
+```bash
+.workspace/tracker.json       # Work item log (empty initially)
+legos/_manifest.json          # LEGO registry with dependencies
+```
+
+### Updates Import Paths
+
+```python
+# Old imports updated automatically:
+from src.config_validator import validate_config
+
+# Becomes:
+from legos.config_validator.src.config_validator import validate_config
+```
+
+---
+
+## Rollback If Needed
 
 ```bash
 git reset --hard v1-backup
 cat .meta-version  # Should show v1.x or missing
 ```
 
-### Post-Upgrade Workflow
+Git history is preserved, workspace is restored.
 
-**Old (v1.x)**: Edit code directly, commit  
-**New (v2.0)**: Create work item → multi-role approval → promote artifacts → delete workspace
+---
 
-**LEGOs now self-documenting**: `legos/my_lego/README.md` contains complete spec to regenerate code.
+## Post-Upgrade: New Workflow
 
-### See Full Guide
+### Old Way (v1.x)
+```bash
+# Edit app_intent.md
+# Run orchestrator
+# Files generated in src/
+# Edit code directly
+# Commit
+```
 
-For detailed migration steps, troubleshooting, FAQ, see archived v2.0 upgrade documentation.
+### New Way (v2.0)
+```bash
+# Say: "Add feature X"
+# Orchestrator creates WI-001 (work item)
+# .workspace/WI-001/ folder created
+# PM writes spec → all 5 roles review → approved
+# Architect writes design → all 5 roles review → approved
+# Developer writes LEGO docs + code → reviews → approved
+# Tester writes tests → reviews → approved
+# Writer writes docs → reviews → approved
+# All artifacts promoted to specs/, legos/, docs/
+# .workspace/WI-001/ DELETED
+# Git history preserves all decisions
+```
+
+**Key Difference**: Multi-role approval before promotion, immutable specs, clean workspace.
 
 ---
 
