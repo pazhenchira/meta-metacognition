@@ -1,752 +1,897 @@
-# Meta-Orchestrator Workflow Audit
+# v2.0 Workflow Quick Reference
 
-**Date**: 2025-11-28  
-**Purpose**: Complete trace of where principles, requirements, essence, and manifest updates occur throughout the pipeline
+**Purpose**: Zero-ambiguity guide to every action, outcome, hand-off, and cleanup in v2.0
 
----
-
-## Executive Summary
-
-**Current State Analysis**:
-- ✅ **Principles**: Applied in multiple phases but need explicit checkpoints
-- ⚠️ **Requirements**: Verified implicitly, need explicit validation gates
-- ✅ **Essence**: Discovered in Phase 4.3, used in Phase 5, validated in Phase 11
-- ⚠️ **Manifest**: Updated at end (Phase 11) but not incrementally during workflow
-- ⚠️ **Customer Value**: Defined in essence.md but not continuously validated
-
-**Gaps Identified**:
-1. No explicit "Requirements Verification Gate" after LEGO implementation
-2. Manifest updates only at pipeline completion (not incremental)
-3. Essence validation happens at end, not during LEGO development
-4. Principles applied ad-hoc, not systematically checked at phase transitions
-5. No clear pass/fail criteria for moving between phases
+**Date**: 2025-12-06  
+**Roles**: PM, Designer, Architect, Developer, Tester, Writer, Orchestrator
 
 ---
 
-## Complete Workflow Trace
+## Quick Navigation
 
-### PHASE 0: Version Check & Mode Detection
-
-**Where**: Lines 79-240 in `.meta/AGENTS.md`
-
-**Principles Applied**:
-- None explicitly (mode detection phase)
-
-**Requirements Verified**:
-- Checks if `.meta-version` exists
-- Reads `app_intent.md` for changes (MAINTENANCE mode)
-- Reads `.meta-manifest.json` for user-modified files
-
-**Essence Validation**:
-- None (no essence.md yet in NEW APP mode)
-
-**Manifest Updates**:
-- ❌ **NO UPDATE** - Only reads manifest if it exists
-
-**Customer Value**:
-- None (discovery happens in Phase 4.3)
-
-**Output**: Mode determination (NEW APP | MAINTENANCE | UPGRADE)
+- [New Feature Flow](#new-feature-complete-flow)
+- [Role Responsibilities](#role-responsibilities-summary)
+- [Hand-off Checklist](#hand-off-checklist)
+- [Git Workflow](#git-workflow)
+- [Cleanup Rules](#cleanup-rules)
 
 ---
 
-### PHASE 1: Environment Preflight
+## New Feature: Complete Flow
 
-**Where**: Lines 372-389 in `.meta/AGENTS.md`
+**User says**: `"Add sentiment analysis to trading signals"`
 
-**Principles Applied**:
-- None explicitly (environment check)
+### Phase 1: Work Item Creation (Orchestrator)
 
-**Requirements Verified**:
-- None (no requirements.md yet)
+**Actions**:
+```bash
+# 1. Generate ID
+WI_ID="WI-001"  # Next available from tracker.json
 
-**Essence Validation**:
-- None
+# 2. Create entry in tracker.json
+{
+  "id": "WI-001",
+  "type": "new_feature",
+  "state": "BACKLOG",
+  "created": "2025-12-06T10:00:00Z"
+}
 
-**Manifest Updates**:
-- ❌ **NO UPDATE**
+# 3. Transition to ACTIVE
+state: BACKLOG → ACTIVE
 
-**Customer Value**:
-- None
+# 4. Create workspace
+mkdir -p .workspace/WI-001/{pm,designer,architect,developer,tester,writer,reviews}
 
-**Output**: Environment diagnostics, halt if environment broken
+# 5. Create README.md and todos.md
+```
 
----
+**Outcomes**:
+- ✅ tracker.json updated (WI-001 in "active" array)
+- ✅ .workspace/WI-001/ created
+- ✅ User sees: "Created WI-001, starting work..."
 
-### PHASE 2: Config Load
-
-**Where**: Lines 391-420 in `.meta/AGENTS.md`
-
-**Principles Applied**:
-- `[P-CONFIG]` - R&D Modes (fast vs thorough)
-- `[P-SESSIONS]` - Approval flags
-
-**Requirements Verified**:
-- None
-
-**Essence Validation**:
-- None
-
-**Manifest Updates**:
-- ❌ **NO UPDATE**
-
-**Customer Value**:
-- None
-
-**Output**: `meta_config.json` loaded or created
+**Next**: PM Phase
 
 ---
 
-### PHASE 3: Load Principles & Meta Intent
+### Phase 2: PM Phase
 
-**Where**: Lines 422-436 in `.meta/AGENTS.md`
+**Actor**: Orchestrator (wearing PM hat)
 
-**Principles Applied**:
-- ✅ **ALL PRINCIPLES LOADED**:
-  - `.meta/principles.md` (KISS, LEGO, GEN+REVIEW, etc.)
-  - `.meta/intent.md` (meta-orchestrator behavior)
+**Reads ONLY**: `.app/roles/product_manager.md`
 
-**Requirements Verified**:
-- None (no requirements.md yet)
+**Actions**:
+```bash
+# 1. Write feature spec
+cat > .workspace/WI-001/pm/FR-001-draft.md << 'EOF'
+# Feature Spec: Sentiment Analysis (FR-001)
 
-**Essence Validation**:
-- None
+## Problem Statement
+[User problem clearly stated]
 
-**Manifest Updates**:
-- ❌ **NO UPDATE**
+## User Story
+As a [user], I want [feature], so I can [benefit]
 
-**Customer Value**:
-- None
+## Success Criteria
+- [Measurable criterion 1]
+- [Measurable criterion 2]
 
-**Output**: `system_prompt_global.txt` (may be synthesized)
+## Scope
+[In scope / Out of scope]
 
----
+## Dependencies
+[External dependencies]
 
-### PHASE 4.1: Requirements Discovery
+## Essence Alignment
+[How this aligns with app's core value proposition]
+EOF
 
-**Where**: Lines 437-515 in `.meta/AGENTS.md`
+# 2. Mark todo complete
+sed -i 's/\[ \] PM: Write FR-001/[x] PM: Write FR-001/' .workspace/WI-001/todos.md
+```
 
-**Principles Applied**:
-- `[P-KISS]` - Simple requirements language
-- `[P-DATA]` - Privacy classification
-- `[P-GENREVIEW]` - GEN+REVIEW on requirements.md
+**Outcomes**:
+- ✅ File: `.workspace/WI-001/pm/FR-001-draft.md`
+- ✅ Todo marked: `[x] PM: Write FR-001`
+- ⚠️ NOT promoted yet (still draft)
 
-**Requirements Verified**:
-- ❌ **NO VERIFICATION** - Requirements are *created*, not verified yet
-
-**Essence Validation**:
-- None (essence.md doesn't exist yet)
-
-**Manifest Updates**:
-- ❌ **NO UPDATE**
-
-**Customer Value**:
-- Implicit in requirements (functional requirements = user needs)
-- Not yet validated against essence
-
-**Output**: `requirements.md` (complete with FR-xx, NFR-xx IDs)
-
-**GAP**: No validation that requirements are complete or correct
+**Next**: Multi-Role Review
 
 ---
 
-### PHASE 4.2: Dependencies & External Services
+### Phase 3: Multi-Role Review (FR-001)
 
-**Where**: Lines 517-614 in `.meta/AGENTS.md`
+**Actor**: Orchestrator (switching hats: Designer, Architect, Developer, Tester, Writer, then Orchestrator)
 
-**Principles Applied**:
-- ✅ `[P-WEB]` - **Web Documentation Guidance** (NEW in v1.7.6)
-  - Search official docs for APIs (OpenAI, Anthropic, Azure, AWS)
-  - Verify latest package versions (PyPI, npm, NuGet)
-  - Check security advisories (CVEs)
-  - Document research in `external_services.md`
-- `[P-DATA]` - External data sources
-- `[P-PRIVACY]` - API key handling, no secrets in code
+**For EACH role**:
 
-**Requirements Verified**:
-- Validates that user approves paid services
-- Checks that authentication methods are available
+```bash
+# Switch to role (e.g., Designer)
+# Read ONLY .app/roles/designer.md
 
-**Essence Validation**:
-- None yet
+# Review FR-001
+# Check role-specific criteria
 
-**Manifest Updates**:
-- ❌ **NO UPDATE**
+# Write review
+cat >> .workspace/WI-001/reviews/FR-001_reviews.md << 'EOF'
+## Designer Review (2025-12-06T10:30:00Z)
 
-**Customer Value**:
-- Ensures external dependencies won't block value delivery
+**Status**: APPROVED ✅
 
-**Output**: 
-- `dependencies.md`
-- `requirements.txt` / `package.json`
-- `.env.example`
-- `external_services.md` (with web research findings)
+**Feedback**:
+- [Specific feedback]
+- [Suggestions]
 
-**GAP**: No verification that dependencies align with requirements
+**Conditions for Approval**:
+- [Any conditions]
 
----
+**Verdict**: APPROVED ✅
+EOF
+```
 
-### PHASE 4.3: Essence & Value Proposition Discovery
+**Possible Outcomes**:
 
-**Where**: Lines 615-710 in `.meta/AGENTS.md`
+1. **All 6 roles approve** → Mark todo, proceed
+2. **Any role rejects** → PM addresses feedback, re-submit (clear reviews, repeat)
 
-**Principles Applied**:
-- `[P-INTUITION]` - Strategic wisdom for problem validation
-- `[P-GENREVIEW]` - GEN+REVIEW on essence.md
-- Strategic wisdom: Sun Tzu #1 ("Know yourself"), Product wisdom
+**When All Approve**:
+```bash
+# Mark todo
+sed -i 's/\[ \] All roles review FR-001/[x] All roles review FR-001/' .workspace/WI-001/todos.md
+```
 
-**Requirements Verified**:
-- ✅ **IMPLICITLY** - Essence must align with requirements.md
-- Checks if UVP is strong, metrics are measurable
+**Outcomes**:
+- ✅ File: `.workspace/WI-001/reviews/FR-001_reviews.md`
+- ✅ All 6 roles written "APPROVED ✅"
+- ✅ Todo marked
+- ⚠️ FR-001-draft.md still in pm/ folder (not promoted yet)
 
-**Essence Validation**:
-- ✅ **CREATED AND VALIDATED**:
-  - Problem statement
-  - Unique value proposition
-  - Competitive landscape
-  - Success metrics (domain-specific)
-  - User journey (end-to-end)
-- REVIEW pass: "Are we solving the RIGHT problem?"
-
-**Manifest Updates**:
-- ❌ **NO UPDATE**
-
-**Customer Value**:
-- ✅ **EXPLICITLY DEFINED**:
-  - Core value delivered
-  - Success metrics (Sharpe ratio, latency, time-to-value)
-  - User journey mapped
-
-**Output**: `essence.md` (complete)
-
-**STRENGTH**: This is where customer value is discovered and validated!
-
-**GAP**: No checkpoint to verify essence aligns with requirements (bidirectional validation)
+**Next**: Designer Phase
 
 ---
 
-### PHASE 5: LEGO Discovery (Essence-First)
+### Phase 4: Designer Phase
 
-**Where**: Lines 714-805 in `.meta/AGENTS.md`
+**Actor**: Orchestrator (wearing Designer hat)
 
-**Principles Applied**:
-- ✅ `[P-KISS]` - Single-responsibility decomposition
-- ✅ `[P-LEGO]` - LEGO architecture
-- ✅ `[P-INTUITION]` - Engineering wisdom (Thompson #5)
-- ✅ **ESSENCE-DRIVEN PRIORITIZATION**:
-  - Core value LEGOs first (deliver essence)
-  - Supporting LEGOs second (enable core value)
-  - Config validation LEGO always first
+**Reads ONLY**: `.app/roles/designer.md`
 
-**Requirements Verified**:
-- ✅ **IMPLICITLY** - Each LEGO maps to requirements via `LEGO(s)` column in requirements.md
+**Actions**:
+```bash
+# 1. User research
+cat > .workspace/WI-001/designer/UR-001-draft.md << 'EOF'
+# User Research: [Feature] (UR-001)
 
-**Essence Validation**:
-- ✅ **USED FOR PRIORITIZATION**:
-  - Core value LEGOs have `essence_metric` field linking to essence.md
-  - Implementation order: core value → supporting → tests
+## Research Goals
+[What we want to learn]
 
-**Manifest Updates**:
-- ❌ **NO UPDATE** (lego_plan.json created but not manifest)
+## Methodology
+[Interviews, surveys, competitive analysis]
 
-**Customer Value**:
-- ✅ **PRIORITIZED**: Core value LEGOs implement essence first
+## Key Findings
+1. [Finding with evidence]
+2. [Finding with evidence]
 
-**Output**: `lego_plan.json` (with priority_tier, essence_metric)
+## Design Implications
+[How findings inform design]
+EOF
 
-**STRENGTH**: Essence drives LEGO prioritization!
+# 2. Wireframes
+cat > .workspace/WI-001/designer/WF-001-draft.md << 'EOF'
+# Wireframes: [Feature] (WF-001)
 
-**GAP**: No validation that all requirements are covered by LEGOs
+## Screen Flow
+[Login] → [Dashboard] → [Detail]
 
----
+## Screen: Dashboard
+```
++------------------------------------+
+| [ASCII art wireframe]              |
++------------------------------------+
+```
 
-### PHASE 6: Dependency Ordering
+## Interaction Notes
+[Click behaviors, states]
+EOF
 
-**Where**: Lines 806-819 in `.meta/AGENTS.md`
+# 3. Visual design
+cat > .workspace/WI-001/designer/VD-001-draft.md << 'EOF'
+# Visual Design: [Feature] (VD-001)
 
-**Principles Applied**:
-- `[P-FLOW]` - Hierarchical flow
-- `[P-RESTART]` - Restartable state
+## Colors
+- Primary: #HEX
+- Success: #HEX
 
-**Requirements Verified**:
-- None
+## Typography
+- Headings: [Font, weight]
 
-**Essence Validation**:
-- None (already done in Phase 5)
+## Components
+[Design system components]
 
-**Manifest Updates**:
-- ❌ **NO UPDATE**
+## Accessibility
+- Color contrast: WCAG AA
+- Keyboard navigation: Full support
+EOF
 
-**Customer Value**:
-- Ensures core value LEGOs can be implemented in correct order
+# 4. Mark todos
+sed -i 's/\[ \] Designer: Create UR-001/[x] Designer: Create UR-001/' .workspace/WI-001/todos.md
+[repeat for WF-001, VD-001]
+```
 
-**Output**: `lego_plan.json` (with dependency graph)
+**Outcomes**:
+- ✅ Files: UR-001-draft.md, WF-001-draft.md, VD-001-draft.md
+- ✅ Todos marked
+- ⚠️ Still in designer/ folder (not promoted)
 
----
-
-### PHASE 7: Pipeline Planning & Global State
-
-**Where**: Lines 806-819 in `.meta/AGENTS.md`
-
-**Principles Applied**:
-- `[P-RESTART]` - State management
-- `[P-SESSIONS]` - Session isolation
-
-**Requirements Verified**:
-- None
-
-**Essence Validation**:
-- None
-
-**Manifest Updates**:
-- ❌ **NO UPDATE**
-
-**Customer Value**:
-- None (infrastructure phase)
-
-**Output**: `orchestrator_state.json`, `plan.md`
+**Next**: Multi-Role Review (design)
 
 ---
 
-### PHASE 8: LEGO-Orchestrator Sessions
+### Phase 5: Multi-Role Review (Design)
 
-**Where**: Lines 821-919 in `.meta/AGENTS.md`
+**Same as Phase 3, but reviewing design artifacts**
 
-**Principles Applied** (PER LEGO):
-- ✅ **DESIGN Substep**:
-  - `[P-INTUITION]` - All wisdom categories
-  - `[P-LEGO]` - Single responsibility
-  - `[P-KISS]` - Simplicity
-  - Success patterns, antipatterns, trade-off matrix
-  - Confidence scoring
+**Outcomes**:
+- ✅ All roles approved design
+- ✅ Todo marked: `[x] All roles review UR-001 + WF-001 + VD-001`
 
-- ✅ **TEST AUTHORING Substep**:
-  - `[P-TESTING]` - Test pyramid (>80% coverage)
-  - `[P-GENREVIEW]` - GEN+REVIEW on tests
-
-- ✅ **DOCUMENTATION Substep**:
-  - `[P-DOC-INT]` - Internal notes (why, trade-offs)
-  - Intuition documentation (wisdom applied, antipatterns avoided)
-
-- ✅ **CODING Substep**:
-  - `[P-WEB]` - **Web research for external dependencies** (NEW in v1.7.6)
-  - `[P-CODE]` - Code quality (Kernighan #1: debuggability)
-  - `[P-INTUITION]` - Engineering wisdom triggers
-  - Antipattern detection during implementation
-
-- ✅ **VALIDATION Substep**:
-  - `[P-TEST]` - Run tests
-  - `[P-SAFETY]` - Red-team for sensitive LEGOs
-  - `[P-INTUITION]` - Risk wisdom (security principles)
-
-**Requirements Verified**:
-- ⚠️ **PARTIALLY** - LEGO implements requirements but no explicit checkpoint
-- Tests verify LEGO behavior but not requirement fulfillment
-
-**Essence Validation**:
-- ⚠️ **IMPLICIT** - Core value LEGOs should deliver essence metrics
-- No explicit validation that essence_metric is achieved
-
-**Manifest Updates**:
-- ❌ **NO UPDATE** - State tracked in `lego_state_<name>.json` but not manifest
-
-**Customer Value**:
-- ⚠️ **IMPLICIT** - Core value LEGOs should deliver value
-- No explicit checkpoint: "Does this LEGO actually deliver the essence?"
-
-**Output** (per LEGO):
-- `design_<lego>.md`
-- `tests/test_<lego>.py` (or equivalent)
-- `internal-notes_<lego>.md`
-- `src/<lego>.<ext>`
-- `lego_state_<lego>.json` (with intuition check)
-
-**STRENGTH**: Comprehensive wisdom application at every substep!
-
-**GAP**: 
-1. No explicit "Requirement Verification Gate" after LEGO implementation
-2. No explicit "Essence Delivery Validation" for core value LEGOs
-3. Manifest not updated incrementally as LEGOs complete
+**Next**: Architect Phase
 
 ---
 
-### PHASE 9: GEN + REVIEW Pattern
+### Phase 6: Architect Phase
 
-**Where**: Lines 926-939 in `.meta/AGENTS.md`
+**Actor**: Orchestrator (wearing Architect hat)
 
-**Principles Applied**:
-- ✅ `[P-GENREVIEW]` - GEN+REVIEW for all artifacts
-- ✅ `[P-WEB]` - **Verify currency of external dependencies** (NEW in v1.7.6)
-  - Check for deprecated APIs
-  - Check for outdated packages
-  - Confirm web research was performed
+**Reads ONLY**: `.app/roles/architect.md`
 
-**Requirements Verified**:
-- ⚠️ **IMPLICIT** - REVIEW checks correctness but not requirement alignment
+**Actions**:
+```bash
+# Write design doc
+cat > .workspace/WI-001/architect/DD-001-draft.md << 'EOF'
+# Design Doc: [Feature] (DD-001)
 
-**Essence Validation**:
-- None (should validate essence metrics here)
+## Architecture Overview
+[Diagram showing LEGOs and data flow]
 
-**Manifest Updates**:
-- ❌ **NO UPDATE**
+## New LEGOs
+### LEGO: sentiment_analyzer
+**Responsibility**: [Single responsibility]
+**Dependencies**: [List]
+**Interface**: [High-level API]
 
-**Customer Value**:
-- None (quality check, not value check)
+## Modified LEGOs
+[Which existing LEGOs change and how]
 
-**Output**: Refined artifacts with REVIEW NOTES
+## Data Flow
+[Step-by-step data flow]
 
-**GAP**: REVIEW phase doesn't validate against requirements or essence
+## Performance Requirements
+[Latency, throughput]
 
----
+## Error Handling
+[How errors propagate]
 
-### PHASE 10: Safety Valves
+## Security
+[Security considerations]
 
-**Where**: Lines 941-955 in `.meta/AGENTS.md`
+## Testing Strategy
+[Unit, integration, e2e tests]
+EOF
 
-**Principles Applied**:
-- `[P-SAFETY]` - Failure tracking, stuck detection
+# Mark todo
+sed -i 's/\[ \] Architect: Write DD-001/[x] Architect: Write DD-001/' .workspace/WI-001/todos.md
+```
 
-**Requirements Verified**:
-- None
+**Outcomes**:
+- ✅ File: DD-001-draft.md
+- ✅ Todo marked
+- ⚠️ Still in architect/ folder
 
-**Essence Validation**:
-- None
-
-**Manifest Updates**:
-- ❌ **NO UPDATE**
-
-**Customer Value**:
-- Prevents infinite loops (protects user time)
-
-**Output**: `meta_error.md` (if stuck)
-
----
-
-### PHASE 11: End-to-End Experience Validation
-
-**Where**: Lines 957-1029 in `.meta/AGENTS.md`
-
-**Principles Applied**:
-- `[P-INTUITION]` - Design wisdom (Norman, Krug, Alexander)
-- `[P-TESTING]` - System/E2E tests
-
-**Requirements Verified**:
-- ✅ **IMPLICITLY** - System tests validate complete user journeys
-- No explicit "Requirements Traceability Matrix" check
-
-**Essence Validation**:
-- ✅ **EXPLICITLY VALIDATED**:
-  - Getting Started assessment (time-to-first-value)
-  - Core workflow validation (essence delivery)
-  - Success metrics verification (domain-specific targets)
-  - Edge cases and failure modes
-  - Continuous monitoring framework
-
-**Manifest Updates**:
-- ❌ **NO UPDATE YET** (happens in Phase 11.2)
-
-**Customer Value**:
-- ✅ **EXPLICITLY VALIDATED**:
-  - User can achieve success metrics
-  - Value is delivered in expected timeframe
-  - Failure modes are handled gracefully
-
-**Output**: 
-- System tests (E2E)
-- `review.md` (with essence validation results)
-
-**STRENGTH**: This is where essence and customer value are explicitly validated!
-
-**GAP**: Happens at end of pipeline (not incremental during LEGO development)
+**Next**: Multi-Role Review (DD-001)
 
 ---
 
-### PHASE 11.2: Final Documentation & Manifest
+### Phase 7: Multi-Role Review (DD-001)
 
-**Where**: Lines 1030-1096 in `.meta/AGENTS.md`
+**Same process**
 
-**Principles Applied**:
-- `[P-DOC-INT]` - Internal documentation
-- `[P-DOC-PUB]` - User-facing docs
-- `[P-AGENT]` - App-specific orchestrator
-
-**Requirements Verified**:
-- ⚠️ **NO FINAL CHECK** - Should validate all FR-xx/NFR-xx are "completed"
-
-**Essence Validation**:
-- Documented in `AGENTS.md` and `APP_ORCHESTRATION.md`
-- No final "Essence Delivered" checkpoint
-
-**Manifest Updates**:
-- ✅ **FINALLY UPDATED**:
-  - `.meta-version` created/updated
-  - `.meta-manifest.json` created/updated
-  - All generated files marked with `user_modified: false`
-  - Timestamps recorded
-
-**Customer Value**:
-- Documented in README.md (user-facing)
-- Documented in AGENTS.md (app-specific orchestrator)
-- No final "Value Delivered" certification
-
-**Output**:
-- `AGENTS.md` (root) - **App-specific orchestrator with complete context**:
-  - Essence & value proposition
-  - User journey
-  - LEGO architecture with rationale
-  - Wisdom applied, antipatterns avoided, trade-offs resolved
-  - Development guidelines
-  - Common tasks guidance
-- `.github/agents/meta-app-orchestrator.agent.md` - VS Code Copilot agent
-- `README.md` - User documentation
-- `internal-notes.md` - Technical rationale
-- `review.md` - System-level review
-- `APP_ORCHESTRATION.md` - Permanent orchestration record
-- `.meta-version` - Engine version and features
-- `.meta-manifest.json` - Generated files inventory
-
-**STRENGTH**: Comprehensive documentation of everything!
-
-**GAP**: 
-1. Manifest only updated at end (not incrementally)
-2. No final "Requirements Completeness Check"
-3. No final "Essence Delivered Certification"
+**Next**: Developer Phase
 
 ---
 
-### PHASE 12: Restartability
+### Phase 8: Developer Phase
 
-**Where**: Lines 1098-1120 in `.meta/AGENTS.md`
+**Actor**: Orchestrator (wearing Developer hat)
 
-**Principles Applied**:
-- `[P-RESTART]` - File-based state management
-- `[P-SESSIONS]` - Session isolation
+**Reads ONLY**: `.app/roles/developer.md`
 
-**Requirements Verified**:
-- None (resume from saved state)
+**Actions**:
+```bash
+# Create LEGO structure
+mkdir -p .workspace/WI-001/developer/sentiment_analyzer/src/tests
 
-**Essence Validation**:
-- None
+# 1. README.md (complete spec - can regenerate code from this)
+cat > .workspace/WI-001/developer/sentiment_analyzer/README.md << 'EOF'
+# Sentiment Analyzer LEGO
 
-**Manifest Updates**:
-- ❌ **NO UPDATE** (reads existing state)
+## Purpose & Responsibility
+[Single responsibility statement]
 
-**Customer Value**:
-- Pipeline can be restarted without losing progress
+## Dependencies
+- External: [APIs, services]
+- Internal: [Other LEGOs]
 
-**Output**: Resumed execution from saved state
+## Interface Contract
+See `interface.md` for detailed API
 
----
+## Implementation Strategy
+[High-level approach]
 
-## GAPS SUMMARY
+## Error Handling
+[How errors are handled]
 
-### Critical Gaps
+## Testing Strategy
+[Test coverage plan]
 
-1. **No Explicit Requirements Verification Gates**:
-   - **Where missing**: After Phase 8 (LEGO implementation)
-   - **Impact**: LEGOs might not fulfill requirements
-   - **Fix**: Add "Requirements Traceability Check" after all LEGOs complete
-   - **Validation**: Check that every FR-xx/NFR-xx has status="completed" and LEGO(s) listed
+## Performance Characteristics
+[Time/space complexity]
 
-2. **Manifest Updated Only at End**:
-   - **Where missing**: Throughout Phases 4-11
-   - **Impact**: Can't track incremental progress in manifest
-   - **Fix**: Update `.meta-manifest.json` after each major phase
-   - **Alternative**: Accept this (manifest is final state snapshot, not progress tracker)
+## Usage Examples
+```python
+[Code examples]
+```
+EOF
 
-3. **Essence Validation Happens Only at End**:
-   - **Where missing**: During Phase 8 (LEGO implementation)
-   - **Impact**: Core value LEGOs might not deliver essence until final testing
-   - **Fix**: Add "Essence Checkpoint" after each core value LEGO completes
-   - **Validation**: Run success metric checks (mini E2E tests) per core LEGO
+# 2. interface.md (executable contract)
+cat > .workspace/WI-001/developer/sentiment_analyzer/interface.md << 'EOF'
+# Sentiment Analyzer Interface
 
-4. **No Final Certification**:
-   - **Where missing**: End of Phase 11
-   - **Impact**: No clear "DONE" signal with requirements/essence verification
-   - **Fix**: Add "Pipeline Completion Checklist":
-     - ✅ All FR-xx/NFR-xx status="completed"
-     - ✅ All essence metrics achieved (from essence.md)
-     - ✅ All LEGOs have tests with >80% coverage
-     - ✅ Manifest updated with all generated files
-     - ✅ Documentation complete (README, AGENTS.md, review.md)
+```python
+def get_sentiment(symbol: str) -> SentimentScore:
+    """
+    [Full docstring]
+    
+    Args:
+        symbol: [Description with constraints]
+    
+    Returns:
+        [Return type and structure]
+    
+    Raises:
+        [All exceptions]
+    
+    Side Effects:
+        - [File I/O]
+        - [Network calls]
+        - [State mutations]
+    
+    Thread Safety: [Thread-safe or not]
+    Performance: [O(n) complexity]
+    Cost: [API costs if applicable]
+    """
+```
+EOF
 
-### Minor Gaps
+# 3. workflows.md (inter-LEGO interactions)
+cat > .workspace/WI-001/developer/sentiment_analyzer/workflows.md << 'EOF'
+# Sentiment Analyzer Workflows
 
-5. **GEN+REVIEW Doesn't Check Requirements**:
-   - **Where**: Phase 9
-   - **Impact**: Code quality verified but not requirement alignment
-   - **Fix**: Add to REVIEW checklist: "Does this artifact fulfill its requirements?"
+## Callers
+- [Which LEGOs call this]
 
-6. **No Bidirectional Essence ↔ Requirements Validation**:
-   - **Where**: Between Phase 4.1 and 4.3
-   - **Impact**: Requirements might not support essence, or essence might not cover requirements
-   - **Fix**: Add validation in Phase 4.3: "Do requirements enable essence? Does essence deliver on requirements?"
+## Callees
+- [Which LEGOs this calls]
 
----
+## Normal Flow
+1. [Step-by-step normal execution]
 
-## STRENGTHS TO PRESERVE
+## Error Flow
+1. [Step-by-step error handling]
 
-1. **Essence-Driven LEGO Prioritization** (Phase 5):
-   - Core value LEGOs implemented first
-   - `essence_metric` field links LEGOs to value
+## Data Flow
+[What data moves where]
+EOF
 
-2. **Comprehensive Wisdom Application** (Phase 8):
-   - Every LEGO substep applies relevant wisdom
-   - Intuition documented in state files
+# 4. Implement code
+cat > .workspace/WI-001/developer/sentiment_analyzer/src/sentiment_analyzer.py << 'EOF'
+"""Sentiment analyzer implementation."""
+[Full implementation matching interface.md]
+EOF
 
-3. **End-to-End Experience Validation** (Phase 11):
-   - Explicit validation of user journey
-   - Success metrics checked against targets
+# 5. Write tests
+cat > .workspace/WI-001/developer/sentiment_analyzer/src/tests/test_sentiment_analyzer.py << 'EOF'
+"""Tests for sentiment analyzer."""
+[Comprehensive tests: happy path, edge cases, errors]
+EOF
 
-4. **Complete Documentation** (Phase 11.2):
-   - `AGENTS.md` captures everything for future maintenance
-   - Wisdom, antipatterns, trade-offs all documented
+# Mark todos
+sed -i 's/\[ \] Developer: Create LEGO docs/[x] Developer: Create LEGO docs/' .workspace/WI-001/todos.md
+sed -i 's/\[ \] Developer: Implement code/[x] Developer: Implement code/' .workspace/WI-001/todos.md
+```
 
-5. **Web Research Integration** (Phases 4.2, 8, 9):
-   - Current API/package information researched
-   - Sources and dates documented
+**Outcomes**:
+- ✅ LEGO created with complete docs
+- ✅ Code implemented
+- ✅ Tests written
+- ⚠️ Still in developer/ folder
 
----
-
-## RECOMMENDATIONS
-
-### High Priority (Critical Gaps)
-
-1. **Add Requirements Traceability Matrix Check** (After Phase 8):
-   ```markdown
-   ### 8.7 Requirements Verification Gate
-   
-   After all LEGOs complete, validate requirements fulfillment:
-   
-   1. Read `requirements.md`
-   2. For each FR-xx and NFR-xx:
-      - Check status = "completed"
-      - Verify LEGO(s) column is populated
-      - Confirm LEGO tests pass and cover requirement
-   3. Generate `requirements_traceability.md`:
-      - Table: Requirement ID | Name | Status | LEGOs | Tests | Coverage
-   4. If ANY requirement status != "completed":
-      - HALT pipeline
-      - Report incomplete requirements to user
-      - Ask: Continue anyway? Or implement missing LEGOs?
-   ```
-
-2. **Add Essence Delivery Checkpoints** (During Phase 8):
-   ```markdown
-   ### 8.X Essence Checkpoint (For Core Value LEGOs)
-   
-   After each core value LEGO completes:
-   
-   1. Read `essence.md` for this LEGO's `essence_metric`
-   2. Run mini E2E test validating success metric:
-      - Example (OptionsTrader): Check if signal_generator achieves Sharpe >1.5
-      - Example (Database): Check if query_optimizer achieves <100ms p99 latency
-   3. Document result in `lego_state_<name>.json`:
-      - `essence_validation`: { "metric": "...", "target": "...", "achieved": "...", "status": "pass|fail" }
-   4. If FAIL:
-      - HALT and report to user
-      - Ask: Adjust target? Or improve LEGO?
-   ```
-
-3. **Add Pipeline Completion Checklist** (End of Phase 11):
-   ```markdown
-   ### 11.3 Pipeline Completion Certification
-   
-   Before declaring app complete, validate:
-   
-   **Requirements Completeness**:
-   - [ ] All FR-xx status = "completed"
-   - [ ] All NFR-xx status = "completed"
-   - [ ] All requirements have LEGOs assigned
-   - [ ] All LEGO tests pass with >80% coverage
-   
-   **Essence Delivery**:
-   - [ ] All core value LEGOs validated (essence checkpoints passed)
-   - [ ] End-to-end experience validation passed
-   - [ ] Success metrics from essence.md achieved
-   - [ ] User journey tested (getting started → core workflow → ongoing)
-   
-   **Documentation**:
-   - [ ] README.md complete (user-facing)
-   - [ ] AGENTS.md complete (app-specific orchestrator)
-   - [ ] APP_ORCHESTRATION.md finalized
-   - [ ] review.md documents system-level validation
-   
-   **Manifest**:
-   - [ ] .meta-version created/updated
-   - [ ] .meta-manifest.json created/updated
-   - [ ] All generated files tracked with timestamps
-   
-   If ALL checkboxes pass:
-   - Mark `orchestrator_state.json` status = "COMPLETE"
-   - Generate `COMPLETION_CERTIFICATE.md` with:
-     - Date completed
-     - Engine version used
-     - All checkpoints validated
-     - Success metrics achieved
-     - Ready for deployment
-   
-   If ANY checkbox fails:
-   - HALT and report gaps to user
-   - Provide remediation guidance
-   ```
-
-### Medium Priority (Enhancements)
-
-4. **Add Essence ↔ Requirements Bidirectional Validation** (Phase 4.3):
-   ```markdown
-   After creating essence.md, validate alignment:
-   
-   1. Check: Do all FR-xx support achieving the essence?
-      - Map each requirement to essence component
-      - Flag orphan requirements (don't support essence)
-   2. Check: Does essence require capabilities not in FR-xx?
-      - Flag missing requirements for essence delivery
-   3. If misalignment detected:
-      - Show gaps to user
-      - Ask: Update requirements? Or refine essence?
-   ```
-
-5. **Enhance REVIEW Phase** (Phase 9):
-   ```markdown
-   Add to REVIEW checklist:
-   - Does this artifact fulfill its requirement? (cite FR-xx/NFR-xx)
-   - Does this artifact contribute to essence? (cite essence_metric)
-   - Are wisdom principles followed? (cite specific wisdom)
-   ```
-
-### Low Priority (Optional)
-
-6. **Incremental Manifest Updates**:
-   ```markdown
-   After each major phase, update `.meta-manifest.json`:
-   - Phase 4: Add requirements.md, dependencies.md, essence.md
-   - Phase 5: Add lego_plan.json
-   - Phase 8: Add each LEGO's files as they complete
-   - Phase 11: Finalize with all documentation
-   
-   Trade-off: Adds complexity vs current "snapshot at end" approach
-   ```
+**Next**: Multi-Role Review (LEGO)
 
 ---
 
-## CONCLUSION
+### Phase 9: Multi-Role Review (LEGO)
 
-**Current State**: 
-- Principles are comprehensively applied throughout (✅ STRONG)
-- Essence is discovered and used for prioritization (✅ STRONG)
-- Requirements are created but not explicitly verified (⚠️ GAP)
-- Manifest is updated only at end (⚠️ ACCEPTABLE)
-- Customer value is validated at end but not during development (⚠️ GAP)
+**Same process**
 
-**Recommended Improvements**:
-1. ✅ Add Requirements Traceability Matrix (HIGH PRIORITY)
-2. ✅ Add Essence Delivery Checkpoints per core LEGO (HIGH PRIORITY)
-3. ✅ Add Pipeline Completion Certification (HIGH PRIORITY)
-4. Consider bidirectional essence ↔ requirements validation (MEDIUM)
-5. Consider enhancing REVIEW phase with requirement checks (MEDIUM)
+**Next**: Tester Phase
 
-**Impact**: 
-- Fixes critical gaps in requirement verification and essence validation
-- Provides clear "DONE" signal with certification
-- Maintains existing strengths (wisdom application, documentation, web research)
+---
+
+### Phase 10: Tester Phase
+
+**Actor**: Orchestrator (wearing Tester hat)
+
+**Reads ONLY**: `.app/roles/tester.md`
+
+**Actions**:
+```bash
+# Write test plan
+cat > .workspace/WI-001/tester/TP-001-draft.md << 'EOF'
+# Test Plan: [Feature] (TP-001)
+
+## Test Strategy
+[Unit, integration, e2e, performance, security]
+
+## Test Cases
+
+### TC-001: Happy Path
+**Given**: [Precondition]
+**When**: [Action]
+**Then**: [Expected result]
+
+### TC-002: Edge Case
+[...]
+
+### TC-003: Error Handling
+[...]
+
+## Performance Tests
+[Load, stress, latency]
+
+## Security Tests
+[Input validation, auth, rate limiting]
+
+## Accessibility Tests
+[Keyboard nav, screen reader, color contrast]
+
+## Test Data
+[What data is needed]
+
+## Pass/Fail Criteria
+[When to consider test passed]
+EOF
+
+# Write additional tests (beyond what Developer wrote)
+cat >> .workspace/WI-001/developer/sentiment_analyzer/src/tests/test_edge_cases.py << 'EOF'
+"""Edge case tests."""
+[Additional test scenarios]
+EOF
+
+# Mark todos
+sed -i 's/\[ \] Tester: Write TP-001/[x] Tester: Write TP-001/' .workspace/WI-001/todos.md
+sed -i 's/\[ \] Tester: Write tests/[x] Tester: Write tests/' .workspace/WI-001/todos.md
+```
+
+**Outcomes**:
+- ✅ Test plan written
+- ✅ Additional tests written
+- ⚠️ Still in tester/ folder
+
+**Next**: Multi-Role Review (tests)
+
+---
+
+### Phase 11: Multi-Role Review (Tests)
+
+**Same process**
+
+**Next**: Writer Phase
+
+---
+
+### Phase 12: Writer Phase
+
+**Actor**: Orchestrator (wearing Writer hat)
+
+**Reads ONLY**: `.app/roles/tech_writer.md`
+
+**Actions**:
+```bash
+# Write user documentation
+cat > .workspace/WI-001/writer/user_guide_draft.md << 'EOF'
+# Using Sentiment Analysis
+
+## What is Sentiment Analysis?
+[Explain feature in user terms]
+
+## How to Use It
+1. [Step 1 with screenshot]
+2. [Step 2 with screenshot]
+
+## Understanding Sentiment Scores
+- 0-30: Negative [red icon]
+- 30-70: Neutral [amber icon]
+- 70-100: Positive [green icon]
+
+## Troubleshooting
+**Q**: What if sentiment shows "N/A"?
+**A**: [Explanation]
+
+## Tips for Success
+[Best practices]
+EOF
+
+# Update API docs
+cat >> .workspace/WI-001/writer/api_reference_draft.md << 'EOF'
+# Sentiment API
+
+## get_sentiment(symbol)
+
+**Description**: [User-friendly explanation]
+
+**Parameters**:
+- symbol (string): Stock ticker (e.g., "AAPL")
+
+**Returns**: Sentiment score with trend
+
+**Example**:
+```python
+score = get_sentiment("AAPL")
+print(score.value)  # 78
+```
+
+**Common Errors**:
+- "Invalid symbol": [How to fix]
+EOF
+
+# Mark todos
+sed -i 's/\[ \] Writer: Write user docs/[x] Writer: Write user docs/' .workspace/WI-001/todos.md
+```
+
+**Outcomes**:
+- ✅ User docs written
+- ✅ API docs updated
+- ⚠️ Still in writer/ folder
+
+**Next**: Multi-Role Review (docs)
+
+---
+
+### Phase 13: Multi-Role Review (Docs)
+
+**Same process**
+
+**Outcome**: All artifacts approved
+
+**Next**: Promotion
+
+---
+
+### Phase 14: Artifact Promotion (Orchestrator)
+
+**Actor**: Orchestrator
+
+**Actions**:
+```bash
+# 1. Transition state
+jq "(.work_items[] | select(.id == \"WI-001\") | .state) = \"IN_REVIEW\"" .workspace/tracker.json > temp && mv temp .workspace/tracker.json
+
+# 2. Check all reviews approved
+grep -q "APPROVED ✅" .workspace/WI-001/reviews/*.md || { echo "Not all approved"; exit 1; }
+
+# 3. Transition to APPROVED
+jq "(.work_items[] | select(.id == \"WI-001\") | .state) = \"APPROVED\"" .workspace/tracker.json > temp && mv temp .workspace/tracker.json
+
+# 4. Promote artifacts
+# PM artifacts → specs/features/
+mv .workspace/WI-001/pm/FR-001-draft.md specs/features/FR-001.md
+chmod 444 specs/features/FR-001.md  # Read-only
+
+# Designer artifacts → specs/design/ (or archive)
+mv .workspace/WI-001/designer/UR-001-draft.md specs/design/UR-001.md
+mv .workspace/WI-001/designer/WF-001-draft.md specs/design/WF-001.md
+mv .workspace/WI-001/designer/VD-001-draft.md specs/design/VD-001.md
+chmod 444 specs/design/*-001.md
+
+# Architect artifacts → specs/design/
+mv .workspace/WI-001/architect/DD-001-draft.md specs/design/DD-001.md
+chmod 444 specs/design/DD-001.md
+
+# Developer artifacts → legos/
+mv .workspace/WI-001/developer/sentiment_analyzer legos/sentiment_analyzer
+
+# Tester artifacts → specs/test_plans/
+mv .workspace/WI-001/tester/TP-001-draft.md specs/test_plans/TP-001.md
+chmod 444 specs/test_plans/TP-001.md
+
+# Writer artifacts → docs/user/ and docs/dev/
+# (Merge into existing docs, don't replace)
+cat .workspace/WI-001/writer/user_guide_draft.md >> docs/user/user-guide.md
+cat .workspace/WI-001/writer/api_reference_draft.md >> docs/user/api-reference.md
+
+# 5. Update LEGO manifest
+jq ".legos += [{
+  \"name\": \"sentiment_analyzer\",
+  \"version\": \"1.0.0\",
+  \"dependencies\": [],
+  \"interface_hash\": \"$(sha256sum legos/sentiment_analyzer/interface.md | cut -d' ' -f1)\",
+  \"breaking_changes\": []
+}]" legos/_manifest.json > temp && mv temp legos/_manifest.json
+
+# 6. Update dependency graph
+jq ".dependency_graph.sentiment_analyzer = []" legos/_manifest.json > temp && mv temp legos/_manifest.json
+
+# 7. Git commit (ATOMIC)
+git add -A
+git commit -m "Complete WI-001: Add sentiment analysis to trading signals
+
+Artifacts promoted:
+- specs/features/FR-001.md (feature spec, immutable)
+- specs/design/UR-001.md, WF-001.md, VD-001.md, DD-001.md (design, immutable)
+- specs/test_plans/TP-001.md (test plan, immutable)
+- legos/sentiment_analyzer/ (new LEGO with docs + code + tests)
+- docs/user/user-guide.md (updated)
+- docs/user/api-reference.md (updated)
+
+All artifacts reviewed and approved by 6 roles.
+Tests pass. Ready for production.
+"
+
+# 8. Delete workspace
+rm -rf .workspace/WI-001/
+
+# 9. Transition to COMPLETE
+jq "(.work_items[] | select(.id == \"WI-001\") | .state) = \"COMPLETE\"" .workspace/tracker.json > temp && mv temp .workspace/tracker.json
+jq "(.work_items[] | select(.id == \"WI-001\") | .completed) = \"$(date -Iseconds)\"" .workspace/tracker.json > temp && mv temp .workspace/tracker.json
+jq ".active -= [\"WI-001\"]" .workspace/tracker.json > temp && mv temp .workspace/tracker.json
+jq ".current_work_item = null" .workspace/tracker.json > temp && mv temp .workspace/tracker.json
+
+# 10. Update CHANGELOG (optional but recommended)
+cat >> CHANGELOG.md << 'EOF'
+## [Unreleased]
+
+### Added
+- Sentiment analysis feature (WI-001, FR-001)
+  - Real-time sentiment scores on signal dashboard
+  - Sentiment filter for signals
+  - Integration with Twitter API
+EOF
+```
+
+**Outcomes**:
+- ✅ All artifacts promoted to permanent locations
+- ✅ Specs are immutable (chmod 444)
+- ✅ LEGO in `legos/` folder
+- ✅ Docs updated in `docs/user/`
+- ✅ Git committed (atomic)
+- ✅ `.workspace/WI-001/` DELETED
+- ✅ tracker.json updated (state: COMPLETE)
+- ✅ CHANGELOG updated
+
+**User Sees**:
+```
+WI-001 complete! 🎉
+
+Artifacts:
+- Feature spec: specs/features/FR-001.md
+- Design docs: specs/design/UR-001.md, WF-001.md, VD-001.md, DD-001.md
+- LEGO: legos/sentiment_analyzer/
+- Test plan: specs/test_plans/TP-001.md
+- User docs: docs/user/user-guide.md (updated)
+
+Total time: 4h 30m
+Next: Check backlog for WI-002
+```
+
+**Repository State After WI-001**:
+```
+my-app/
+├── .workspace/
+│   └── tracker.json           # WI-001 marked COMPLETE
+├── legos/
+│   ├── _manifest.json         # Updated with sentiment_analyzer
+│   └── sentiment_analyzer/    # NEW
+│       ├── README.md          # Complete spec
+│       ├── interface.md       # Executable contract
+│       ├── workflows.md       # Inter-LEGO interactions
+│       └── src/
+│           ├── sentiment_analyzer.py
+│           └── tests/
+│               ├── test_sentiment_analyzer.py
+│               └── test_edge_cases.py
+├── specs/
+│   ├── features/
+│   │   └── FR-001.md          # NEW, immutable (chmod 444)
+│   ├── design/
+│   │   ├── UR-001.md          # NEW, immutable
+│   │   ├── WF-001.md          # NEW, immutable
+│   │   ├── VD-001.md          # NEW, immutable
+│   │   └── DD-001.md          # NEW, immutable
+│   └── test_plans/
+│       └── TP-001.md          # NEW, immutable
+├── docs/
+│   └── user/
+│       ├── user-guide.md      # UPDATED
+│       └── api-reference.md   # UPDATED
+└── CHANGELOG.md               # UPDATED
+```
+
+**NO clutter in root**: All temp files deleted, git history preserves decisions.
+
+---
+
+## Role Responsibilities Summary
+
+| Role | Creates | Reviews | Hand-off To |
+|------|---------|---------|-------------|
+| **PM** | FR-XXX (feature specs) | All artifacts for feasibility | Designer |
+| **Designer** | UR-XXX, WF-XXX, VD-XXX, ID-XXX, AA-XXX | All artifacts for UX | Architect, Developer |
+| **Architect** | DD-XXX (design docs) | All artifacts for technical feasibility | Developer |
+| **Developer** | LEGO docs + code | All artifacts for implementability | Tester |
+| **Tester** | TP-XXX (test plans) + tests | All artifacts for testability | Writer |
+| **Writer** | User docs, API docs | All artifacts for documentability | Orchestrator |
+| **Orchestrator** | Work items, state management | All artifacts for completeness | User (delivery) |
+
+---
+
+## Hand-off Checklist
+
+### PM → Designer
+- [ ] Feature spec complete (FR-XXX)
+- [ ] Success criteria measurable through UI
+- [ ] User problem clearly defined
+
+### Designer → Architect
+- [ ] User research complete (UR-XXX)
+- [ ] Wireframes show all screens (WF-XXX)
+- [ ] Visual design specifies design system (VD-XXX)
+- [ ] Performance requirements specified (<1s page load)
+
+### Architect → Developer
+- [ ] Design doc complete (DD-XXX)
+- [ ] LEGO structure defined
+- [ ] Dependencies identified
+- [ ] Performance requirements specified
+
+### Developer → Tester
+- [ ] LEGO docs complete (README, interface, workflows)
+- [ ] Code implemented
+- [ ] Unit tests written
+- [ ] Test data provided
+
+### Tester → Writer
+- [ ] Test plan complete (TP-XXX)
+- [ ] All test cases pass
+- [ ] Edge cases documented
+- [ ] Performance validated
+
+### Writer → Orchestrator
+- [ ] User docs complete
+- [ ] API docs complete
+- [ ] Terminology consistent
+- [ ] Screenshots/diagrams included
+
+---
+
+## Git Workflow
+
+**During Work Item (WI-001 ACTIVE)**:
+```bash
+# Workspace IS committed (preserves decisions)
+git add .workspace/WI-001/
+git commit -m "WI-001: PM completed FR-001"
+
+git add .workspace/WI-001/
+git commit -m "WI-001: Designer completed UR-001, WF-001, VD-001"
+
+# Continue committing workspace changes
+```
+
+**After Promotion (WI-001 COMPLETE)**:
+```bash
+# Final atomic commit
+git add -A
+git commit -m "Complete WI-001: [title]
+
+Artifacts:
+- specs/features/FR-001.md
+- legos/sentiment_analyzer/
+[...]
+"
+
+# Workspace deleted (but preserved in git history)
+rm -rf .workspace/WI-001/
+
+# Can still see workspace history
+git log --all -- .workspace/WI-001/
+git show HEAD~1:.workspace/WI-001/reviews/FR-001_reviews.md
+```
+
+**Benefit**: Full audit trail, can replay any decision.
+
+---
+
+## Cleanup Rules
+
+### After WI-001 COMPLETE
+
+**DELETE** (Ephemeral):
+```bash
+.workspace/WI-001/  # ALL contents
+```
+
+**PRESERVE** (Permanent):
+```bash
+specs/features/FR-001.md           # Immutable
+specs/design/UR-001.md, WF-001.md, VD-001.md, DD-001.md
+specs/test_plans/TP-001.md
+legos/sentiment_analyzer/          # Self-documenting
+docs/user/user-guide.md            # Updated
+```
+
+**PRESERVE** (Git History):
+```bash
+git log -- .workspace/WI-001/      # All decisions preserved
+```
+
+### NO Clutter in Root
+
+**Orchestrator NEVER creates**:
+- ❌ Temp scripts
+- ❌ Summary files
+- ❌ Work logs
+- ❌ Notes
+
+**Orchestrator ONLY updates**:
+- ✅ CHANGELOG.md (append new entry)
+- ✅ APP_ORCHESTRATION.md (append high-level decision, NOT work item details)
+
+---
+
+## State Transitions
+
+```
+BACKLOG     No .workspace/WI-XXX/ folder
+   ↓
+ACTIVE      .workspace/WI-XXX/ created, work in progress
+   ↓
+IN_REVIEW   All artifacts created, awaiting reviews
+   ↓
+APPROVED    All roles approved, promoting artifacts
+   ↓
+COMPLETE    .workspace/WI-XXX/ DELETED, artifacts promoted
+```
+
+**State Change Authority**: Orchestrator ONLY (automated based on conditions)
+
+---
+
+## Summary
+
+**Key Principle**: All WIP in `.workspace/`, deleted after promotion. Git history preserves everything. Root stays clean.
+
+**Roles**: 6 roles, each reviews all others. Multi-stakeholder approval prevents rework.
+
+**Artifacts**: Immutable after approval (specs/ is chmod 444). LEGOs self-documenting (docs can regenerate code).
+
+**Git**: Workspace committed during work, deleted after completion. Full audit trail.
+
+**Cleanup**: Zero clutter in root. Only permanent, well-organized files.
+
+---
+
+**For complete details, see**:
+- WORK_ITEM_TRACKER.md (tracker.json spec)
+- PROPOSED_WORKFLOWS.md (detailed workflows)
+- .meta/roles/*.md (role responsibilities)
