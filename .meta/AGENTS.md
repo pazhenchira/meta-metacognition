@@ -451,7 +451,24 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **1.10.0** (see `VERSION` file)
+Current meta-orchestrator version: **2.0.0** (see `VERSION` file)
+
+**Features in v2.0.0** (Workspace-Centric, Self-Documenting, Idempotent) - MAJOR REFACTOR:
+- **Workspace-centric execution**: `.workspace/` folder for ephemeral work items (deleted after completion)
+- **Work item tracking**: `.workspace/tracker.json` logs all work items (BACKLOG → ACTIVE → IN_REVIEW → APPROVED → COMPLETE)
+- **Per-work-item state**: `.workspace/WI-XXX/todos.md` tracks role tasks and review gates
+- **Multi-role approval**: All 5 roles must explicitly approve before artifact promotion (blocking)
+- **Idempotent restart**: Can resume from any point by reading `tracker.json` + `todos.md` (no context loss)
+- **Immutable specs**: `specs/` folder is read-only after approval (chmod 444), changes require new work item
+- **Self-documenting LEGOs**: `legos/` structure with complete docs (README, interface, workflows) that can regenerate code
+- **LEGO dependency management**: `legos/_manifest.json` tracks dependencies, versions, breaking changes
+- **Breaking change policy**: Just break and discover through tests (no deprecation, fast feedback loop)
+- **Auto-documentation**: Inline comments + LEGO doc sync + generated API docs (quality, not logging)
+- **Role context isolation**: Orchestrator reads one role file at a time (prevents role confusion)
+- **Docs separation**: `docs/user/` (external) + `docs/dev/` (internal) - industry standard pattern
+- **Git integration**: Workspace committed during work, deleted after completion (git is source of truth)
+- **Tamper-proof brain**: `.app/` frozen except during engine upgrades (prevents runtime modification)
+- **Breaking changes**: Directory structure, workflow model, state management (requires migration from v1.x)
 
 **Features in v1.10.0** (Self-Contained App Architecture):
 - Two-folder model: `.meta/` (engine) vs `.app/` (app-specific)

@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 1.7.0** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.0** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -878,7 +878,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Current Version**: 1.7.8 (November 2025)  
+**Current Version**: 2.0.0 (December 2025)  
 **Built with meta-cognitive AI orchestration principles.**
 
 ---

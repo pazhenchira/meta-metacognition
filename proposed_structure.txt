@@ -1,0 +1,205 @@
+my-awesome-app/                    # Git-enabled repository root
+│
+├── .meta/                         # ENGINE (stable, only during upgrades)
+│   ├── AGENTS.md                  # Meta-orchestrator (CREATE/UPGRADE mode)
+│   ├── generators/                # Templates for generating .app/
+│   ├── roles/                     # Role TEMPLATES (source)
+│   ├── workflows/                 # Workflow TEMPLATES (source)
+│   ├── wisdom/                    # Full wisdom library
+│   └── VERSION                    # Engine version
+│
+├── .app/                          # READ-ONLY AGENT BRAIN (frozen except during upgrades)
+│   ├── AGENTS.md                  # App orchestrator (self-contained)
+│   ├── essence.md                 # Value proposition
+│   ├── roles/                     # ROLE-SPECIFIC INSTRUCTIONS (adapted from templates)
+│   │   ├── product_manager.md     # PM sees ONLY PM wisdom/instructions
+│   │   ├── architect.md           # Architect sees ONLY Architect wisdom
+│   │   ├── developer.md           # Developer sees ONLY Developer wisdom
+│   │   ├── tester.md              # Tester sees ONLY Tester wisdom
+│   │   ├── writer.md              # Writer sees ONLY Writer wisdom
+│   │   └── operations.md          # Operations sees ONLY Ops wisdom (optional)
+│   ├── workflows/                 # Workflow definitions
+│   │   ├── new_feature.md
+│   │   ├── enhancement.md
+│   │   ├── bug_fix.md
+│   │   └── REVIEW_GATES.md
+│   └── .engine-version            # Which .meta/ version built this
+│
+├── .workspace/                    # ACTIVE WORK AREA (ephemeral per work item)
+│   ├── tracker.json               # 🎯 GLOBAL LOG (survives workspace deletion)
+│   │                              # Schema:
+│   │                              # {
+│   │                              #   "work_items": [
+│   │                              #     {
+│   │                              #       "id": "WI-001",
+│   │                              #       "state": "COMPLETE",
+│   │                              #       "created": "2025-12-06T10:00:00Z",
+│   │                              #       "completed": "2025-12-06T14:30:00Z",
+│   │                              #       "state_transitions": [
+│   │                              #         {"from": "BACKLOG", "to": "ACTIVE", "timestamp": "..."},
+│   │                              #         {"from": "ACTIVE", "to": "REVIEW", "timestamp": "..."},
+│   │                              #         {"from": "REVIEW", "to": "APPROVED", "timestamp": "..."},
+│   │                              #         {"from": "APPROVED", "to": "COMPLETE", "timestamp": "..."}
+│   │                              #       ]
+│   │                              #     }
+│   │                              #   ],
+│   │                              #   "backlog": ["WI-002", "WI-003"],
+│   │                              #   "active": [],
+│   │                              #   "current_work_item": null
+│   │                              # }
+│   │
+│   ├── WI-001/                    # Work item folder (deleted when COMPLETE)
+│   │   ├── README.md              # Work item overview (what, why, current status)
+│   │   ├── todos.md               # Checklist:
+│   │                              # - [ ] PM: Write FR-001
+│   │                              # - [ ] Architect: Review FR-001
+│   │                              # - [ ] Developer: Review FR-001
+│   │                              # - [ ] Tester: Review FR-001
+│   │                              # - [ ] Writer: Review FR-001
+│   │                              # - [ ] Orchestrator: Approve FR-001
+│   │                              # - [ ] Architect: Write DD-001
+│   │                              # - [ ] [repeat review cycle]
+│   │                              # - [ ] Developer: Implement
+│   │                              # - [ ] Tester: Write tests
+│   │                              # - [ ] Writer: Write docs
+│   │                              # - [ ] All: Final review gate
+│   │   │
+│   │   ├── pm/                    # Product Manager workspace
+│   │   │   ├── FR-001-draft.md    # Feature spec (work in progress)
+│   │   │   └── discovery_notes.md
+│   │   │
+│   │   ├── architect/             # Architect workspace
+│   │   │   ├── DD-001-draft.md    # Design doc (work in progress)
+│   │   │   ├── control_flow.md    # Control & data flow analysis
+│   │   │   └── lego_impact.md     # Which LEGOs affected
+│   │   │
+│   │   ├── developer/             # Developer workspace
+│   │   │   ├── impl_notes.md
+│   │   │   ├── prototype.py       # Experimental code
+│   │   │   └── refactoring_plan.md
+│   │   │
+│   │   ├── tester/                # Tester workspace
+│   │   │   ├── TP-001-draft.md    # Test plan (work in progress)
+│   │   │   ├── edge_cases.md
+│   │   │   └── test_results.md
+│   │   │
+│   │   ├── writer/                # Writer workspace
+│   │   │   ├── user_guide_draft.md
+│   │   │   └── api_docs_draft.md
+│   │   │
+│   │   └── reviews/               # 🔍 REVIEW FEEDBACK (multi-role approval)
+│   │       ├── FR-001_reviews.md  # PM spec reviews:
+│   │       │                      # ---
+│   │       │                      # Architect: APPROVED ✅
+│   │       │                      # Developer: APPROVED ✅
+│   │       │                      # Tester: APPROVED ✅
+│   │       │                      # Writer: APPROVED ✅
+│   │       │                      # Orchestrator: APPROVED ✅ (promotes to specs/)
+│   │       │                      # ---
+│   │       └── DD-001_reviews.md
+│   │
+│   └── WI-002/                    # Next work item (active)
+│
+├── external_input/                # USER-PROVIDED CONTEXT (user manages lifecycle)
+│   ├── competitor_analysis.pdf
+│   ├── api_spec.json
+│   └── README.md                  # User's notes: "Delete after WI-003 completes"
+│
+├── legos/                         # 🧱 LEGO BLOCKS (self-contained, regenerable)
+│   ├── _manifest.json             # 🎯 LEGO REGISTRY
+│   │                              # Schema:
+│   │                              # {
+│   │                              #   "legos": [
+│   │                              #     {
+│   │                              #       "name": "signal_generator",
+│   │                              #       "version": "1.0.0",
+│   │                              #       "dependencies": ["market_data_fetcher", "greeks_calculator"],
+│   │                              #       "interface_hash": "sha256:abc123...",
+│   │                              #       "breaking_change_policy": "strict"
+│   │                              #     }
+│   │                              #   ],
+│   │                              #   "dependency_graph": {
+│   │                              #     "signal_generator": ["market_data_fetcher", "greeks_calculator"],
+│   │                              #     "market_data_fetcher": [],
+│   │                              #     "greeks_calculator": []
+│   │                              #   }
+│   │                              # }
+│   │
+│   ├── config_validator/
+│   │   ├── README.md              # 📘 INTERNAL AGENT DOC (complete spec, can recreate code)
+│   │   │                          # Sections:
+│   │   │                          # - Purpose & Responsibility
+│   │   │                          # - Dependencies (which LEGOs)
+│   │   │                          # - Interface Contract (see interface.md)
+│   │   │                          # - Implementation Strategy
+│   │   │                          # - Error Handling
+│   │   │                          # - Testing Strategy
+│   │   │                          # - Usage Examples
+│   │   │
+│   │   ├── interface.md           # 📐 EXECUTABLE INTERFACE SPEC
+│   │   │                          # Must include:
+│   │   │                          # - Function signatures (exact API)
+│   │   │                          # - Input/output schemas (types, validation rules)
+│   │   │                          # - Error conditions (what exceptions raised)
+│   │   │                          # - Side effects (file writes, network calls)
+│   │   │                          # - Thread safety guarantees
+│   │   │                          # - Performance characteristics
+│   │   │
+│   │   ├── workflows.md           # 🔄 INTER-LEGO INTERACTIONS
+│   │   │                          # - Which LEGOs call this LEGO?
+│   │   │                          # - Which LEGOs does this call?
+│   │   │                          # - Call sequences (normal flow)
+│   │   │                          # - Error propagation
+│   │   │
+│   │   └── src/                   # Implementation (regenerable from above docs)
+│   │       ├── config_validator.py
+│   │       └── __init__.py
+│   │
+│   ├── signal_generator/
+│   │   ├── README.md              # Complete internal spec
+│   │   ├── interface.md           # Executable contract
+│   │   ├── workflows.md           # Inter-LEGO interactions
+│   │   └── src/
+│   │       ├── signal_generator.py
+│   │       └── __init__.py
+│   │
+│   └── market_data_fetcher/
+│       ├── README.md
+│       ├── interface.md
+│       ├── workflows.md
+│       └── src/
+│
+├── specs/                         # 🔒 IMMUTABLE APPROVED SPECIFICATIONS
+│   ├── features/                  # FR-XXX (from PM, approved by all)
+│   │   └── FR-001.md              # IMMUTABLE (read-only after approval)
+│   ├── design/                    # DD-XXX (from Architect, approved by all)
+│   │   └── DD-001.md
+│   └── test_plans/                # TP-XXX (from Tester, approved by all)
+│       └── TP-001.md
+│
+├── tests/                         # TEST SUITES
+│   ├── unit/
+│   ├── integration/
+│   └── e2e/
+│
+├── docs/                          # 📚 DOCUMENTATION (separated by audience)
+│   ├── README.md                  # Landing page (navigation guide)
+│   ├── user/                      # EXTERNAL (customer-facing)
+│   │   ├── getting-started.md     # Quick start guide
+│   │   ├── user-guide.md          # How to use the app
+│   │   ├── api-reference.md       # Public API docs
+│   │   ├── troubleshooting.md     # Common issues
+│   │   └── faq.md                 # Frequently asked questions
+│   └── dev/                       # INTERNAL (developer/agent-facing)
+│       ├── architecture.md        # System architecture overview
+│       ├── design-decisions.md    # ADRs (Architecture Decision Records)
+│       ├── contributing.md        # How to contribute
+│       ├── testing-strategy.md    # Testing philosophy
+│       └── deployment.md          # Internal deployment notes
+│
+├── app_intent.md                  # ORIGINAL USER INTENT (user edits)
+├── AGENTS.md                      # ROUTER (points to .app/AGENTS.md)
+├── CHANGELOG.md                   # USER-VISIBLE CHANGES (updated when specs promoted)
+├── APP_ORCHESTRATION.md           # DECISION LOG (high-level decisions only)
+└── .git/                          # VERSION CONTROL (initialized at app creation)
+

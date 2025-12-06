@@ -6,6 +6,148 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.0] - 2025-12-06 (Workspace-Centric, Self-Documenting, Idempotent) - MAJOR REFACTOR
+
+### Added
+
+**Workspace-Centric Execution Model**:
+- **`.workspace/` folder**: Ephemeral workspace for active work items (deleted after completion)
+- **Work item tracking**: `.workspace/tracker.json` logs all work items with state transitions and timestamps
+- **Per-work-item state**: Each `WI-XXX/` folder contains README.md, todos.md, role workspaces, reviews/
+- **Role-specific workspaces**: `WI-XXX/pm/`, `WI-XXX/architect/`, `WI-XXX/developer/`, etc.
+- **Review tracking**: `WI-XXX/reviews/*.md` records multi-role approval feedback
+
+**Work Item Lifecycle**:
+- Five states: BACKLOG → ACTIVE → IN_REVIEW → APPROVED → COMPLETE
+- State transitions logged with timestamps in tracker.json
+- Work items deleted after completion (git history is source of truth)
+
+**Multi-Role Approval System**:
+- **Blocking approval**: All 5 roles (PM, Architect, Developer, Tester, Writer) must explicitly approve
+- **Review gates**: Orchestrator switches roles sequentially, each reviews and writes feedback
+- **Promotion logic**: Artifacts promoted to `specs/` only after all approvals
+- **Rejection handling**: Originating role addresses feedback, re-submits for review
+
+**Idempotent Restart Model**:
+- **No context loss**: Restart from any point by reading tracker.json + WI-XXX/todos.md
+- **Resume detection**: Orchestrator identifies current work item and task from state files
+- **Role resumption**: Switches to correct role based on pending task in todos.md
+
+**Immutable Specifications**:
+- **`specs/` folder**: Immutable approved specifications (features/, design/, test_plans/)
+- **Read-only enforcement**: chmod 444 after promotion
+- **Change policy**: Modifications require new work item with new spec referencing original
+
+**Self-Documenting LEGOs**:
+- **`legos/` structure**: Each LEGO has README.md (complete spec), interface.md (contract), workflows.md (interactions)
+- **Code regeneration**: LEGO docs contain enough detail to completely regenerate code
+- **Interface contracts**: Exact function signatures, input/output schemas, error conditions, side effects
+- **Inter-LEGO workflows**: Explicit documentation of which LEGOs call which, data flow, error propagation
+
+**LEGO Dependency Management**:
+- **`legos/_manifest.json`**: Registry of all LEGOs with dependencies, versions, interface hashes
+- **Dependency graph**: Automatically tracks which LEGOs depend on which
+- **Breaking change detection**: Interface hash comparison detects breaking changes
+- **Affected caller analysis**: Dependency graph identifies LEGOs impacted by interface changes
+
+**Breaking Change Policy**:
+- **Just break**: No deprecation, no versioning - fast feedback loop
+- **Test-driven discovery**: Tests intentionally break to show affected callers
+- **Major version bump**: Breaking changes increment major version (1.0.0 → 2.0.0)
+- **Rapid iteration**: Simple mental model (one version, always current)
+
+**Auto-Documentation**:
+- **Inline code comments**: Comprehensive docstrings with examples, args, returns, raises
+- **LEGO doc sync**: README.md updated when code changes, verified in review gates
+- **Generated API docs**: Auto-generated from docstrings (Sphinx/pdoc) → `docs/user/api-reference.md`
+- **Not auto**: Architectural decisions (manual ADRs), user guides (manual), trade-off rationale (manual)
+
+**Role Context Isolation**:
+- **One role at a time**: Orchestrator reads `.app/roles/{role}.md` exclusively (no multi-role context)
+- **Role switching**: Orchestrator identifies role from todos.md, activates role, executes, steps back
+- **Wisdom focus**: Each role sees only role-relevant principles and responsibilities
+- **Prevents confusion**: No cross-role contamination of context
+
+**Documentation Separation**:
+- **Industry standard**: `docs/user/` (customer-facing) + `docs/dev/` (developer/agent-facing)
+- **Clear audience**: Users see getting-started, user-guide, API reference, troubleshooting, FAQ
+- **Internal docs**: Developers see architecture, design-decisions, contributing, testing-strategy
+- **Pattern**: Used by Kubernetes, React, Django, Rails
+
+**Git Integration**:
+- **Initialized at creation**: `git init` on new app, all changes versioned
+- **Workspace commits**: `.workspace/` committed during active work (preserves decisions)
+- **Deletion after completion**: Workspace deleted after work item COMPLETE (git history remains)
+- **Atomic commits**: Small, clear commit messages per artifact promotion
+- **Alternative VCS**: Detects and adapts to Mercurial, SVN, etc.
+
+**Tamper-Proof Brain**:
+- **`.app/` frozen**: Agent brain (roles, workflows, wisdom) only modified during engine upgrades
+- **Runtime protection**: Cannot be modified during work item execution
+- **Prevents corruption**: User/agent cannot accidentally break orchestrator logic
+
+### Changed
+
+**Directory Structure** (BREAKING):
+- Added `.workspace/` for ephemeral work items
+- Added `legos/` for self-documenting LEGO blocks
+- Added `specs/` for immutable approved specifications
+- Changed `docs/` structure to `docs/user/` + `docs/dev/`
+- `.app/` remains but enforced as read-only except during upgrades
+
+**Workflow Model** (BREAKING):
+- Work items now explicit (WI-XXX folders)
+- Multi-role approval required before artifact promotion
+- Specs immutable after approval (changes require new work item)
+- LEGO docs written before code (docs-driven development)
+
+**State Management** (BREAKING):
+- Centralized in `.workspace/tracker.json` (was scattered in root)
+- Per-work-item state in `WI-XXX/todos.md` (was implicit)
+- Review history in `WI-XXX/reviews/*.md` (was not tracked)
+
+**LEGO Structure** (BREAKING):
+- LEGOs now have `legos/{name}/README.md`, `interface.md`, `workflows.md`, `src/`
+- LEGO docs are complete specifications (can regenerate code)
+- Tests co-located with code in `legos/{name}/src/tests/`
+
+### Removed
+
+**Deprecated Features** (BREAKING):
+- No more `orchestrator_state.json` in root (now `.workspace/tracker.json`)
+- No more implicit approval (now explicit multi-role review gates)
+- No more mutable specs (now immutable in `specs/`)
+- No more single `docs/` folder (now separated by audience)
+
+### Migration
+
+**v1.x → v2.0 requires migration**:
+- See UPGRADING.md for detailed step-by-step instructions
+- Not backward compatible (clean break for long-term stability)
+- Backup recommended: `git tag v1-backup` before upgrading
+
+### Philosophy
+
+**The Key Principle**:
+> **After CREATE or UPGRADE, you could DELETE `.meta/` and the app would still be fully maintainable.**
+> The `.app/` folder is COMPLETELY SELF-CONTAINED.
+
+**Three Modes**:
+| Mode | Uses .meta/? | Uses .app/? | Orchestrator |
+|------|--------------|-------------|--------------|
+| CREATE | ✅ Yes | Creates it | `.meta/AGENTS.md` |
+| UPGRADE | ✅ Yes | Regenerates | `.meta/AGENTS.md` |
+| MAINTAIN | ❌ No | ✅ Self-contained | `.app/AGENTS.md` |
+
+### Impact
+
+- **At runtime**: Apps don't need engine files (`.meta/` can be absent)
+- **For upgrades**: Copy new `.meta/` from meta-metacognition, run upgrade
+- **For maintenance**: Only `.app/` folder is needed
+- **Cleaner mental model**: Engine vs App separation is explicit
+
+---
+
 ## [1.10.0] - 2025-12-04 (Self-Contained App Architecture)
 
 ### Added
