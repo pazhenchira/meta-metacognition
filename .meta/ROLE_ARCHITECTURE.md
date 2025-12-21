@@ -50,7 +50,7 @@ The meta-orchestrator v1.9.0 introduces a role-based model that mirrors how real
 
 These roles are used **only when the app requires them**:
 
-- **Essence Analyst**: Defines and protects the core value proposition
+- **Essence Analyst**: Defines and protects the core value proposition (REQUIRED)
 - **Monetization Strategist**: Pricing and value capture
 - **Growth Marketer**: Acquisition, activation, retention
 - **Evangelist**: Narrative, demos, community assets

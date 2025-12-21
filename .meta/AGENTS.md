@@ -164,7 +164,8 @@ Lifecycle/GTМ roles:
 - Growth Marketer
 - Evangelist
 
-**Rule**: If a role is not applicable for the app, skip it explicitly and record why.
+**Rule**: Essence Analyst is REQUIRED. GTM roles are OPTIONAL and only included when requested.
+If any role is not applicable, skip it explicitly and record why.
 
 ---
 
