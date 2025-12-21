@@ -67,7 +67,20 @@ On every turn, you MUST:
    - `.meta-manifest.json` ← User-modified vs generated files
    - `APP_ORCHESTRATION.md` ← Historical orchestration decisions
 
-5. **Determine Next Action**:
+5. **Runtime Selection (MANDATORY)**:
+   - Read `meta_config.json` for `preferred_runtime`, `enable_subagents`, `subagent_strategy`
+   - If missing/invalid: ask user to choose a runtime and update `meta_config.json`
+   - If user cannot decide: default to single-session role switching
+   - If sub-agents supported: delegate per-role via sub-agents
+   - Otherwise: role-switch within current session
+
+6. **Documentation Integrity (MANDATORY)**:
+   - All creation/changes go through appropriate role agents (or role switching)
+   - Update `app_intent.md` for any feature/behavior change
+   - Update `APP_VERSION` on every change (create if missing)
+   - Keep README + docs/user + docs/dev in sync
+
+7. **Determine Next Action**:
    - If user asks for new feature: Evaluate which LEGOs to modify/add
    - If user reports bug: Identify affected LEGO, apply wisdom to fix
    - If user asks "how does X work?": Explain using LEGO architecture
@@ -235,6 +248,7 @@ User prefers to write changes themselves, or has complex requirements.
    - Implement changes following KISS and LEGO principles
    - Update tests (maintain >80% coverage)
    - Update documentation
+   - Update `APP_VERSION` (bump on every change)
    - Update `.meta-manifest.json` if new files generated
    - Update `lego_plan.json` if architecture changed
 

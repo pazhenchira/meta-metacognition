@@ -1019,6 +1019,11 @@ git checkout main
 git merge upgrade-meta-orchestrator
 ```
 
+### 5. Select Runtime (New in 2.0.1)
+
+Ensure `meta_config.json` has `preferred_runtime`. If missing, the upgrade flow will ask you to choose.
+If you can’t decide, it will default to **single-session role switching**.
+
 ---
 
 ## Implementation in .meta/AGENTS.md

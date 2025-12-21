@@ -8,6 +8,8 @@ This workflow covers modifying or extending an existing feature that was deliver
 
 **Review Model**: Each handoff is a review gate. The receiving role reviews and approves before proceeding. See `REVIEW_GATES.md` for detailed criteria.
 
+**Execution Rule**: If runtime supports sub-agents or agent profiles, each phase MUST be executed by the corresponding role agent. Otherwise, role-switch sequentially in a single session.
+
 ---
 
 ## When to Use This Workflow
@@ -70,6 +72,27 @@ Do NOT use this workflow for:
 │  Update existing docs → Add enhancement docs → Changelog                    │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## Phase 0: Essence Validation (Essence Analyst)
+
+### Trigger
+- Any enhancement request
+
+### Activities
+1. Validate enhancement aligns with `essence.md`
+2. Update `essence.md` if the core value proposition evolves
+3. Confirm success metrics remain measurable
+
+### Artifacts Produced
+- Updated `essence.md` (LIVING)
+
+### Exit Criteria
+- Essence alignment confirmed
+
+### Handoff
+- **To**: Product Manager
 
 ---
 
@@ -373,13 +396,37 @@ See `REVIEW_GATES.md` for full criteria. Writer reviews:
    - Document enhancement
    - Reference EN-XXX
 
-3. **Review**:
+3. **Versioning & Intent**:
+   - Update `app_intent.md` to reflect enhancement
+   - Bump `APP_VERSION` per P-VERSIONING (minor unless breaking)
+4. **Review**:
    - Verify accuracy
    - Verify original docs still accurate
 
 ### Exit Criteria
 - Documentation updated
 - No stale information
+
+---
+
+## Phase 5b: Go-To-Market (Optional Roles)
+
+**Trigger**: App intent explicitly requests monetization, growth, or evangelism.
+
+**Roles**: Monetization Strategist, Growth Marketer, Evangelist (as applicable)
+
+**Activities**:
+- Monetization: Update pricing/value capture assumptions
+- Growth: Update acquisition/activation/retention metrics
+- Evangelism: Update demos/launch assets
+
+**Artifacts Produced**:
+- `specs/monetization.md` or `docs/user/monetization.md` (if applicable)
+- `specs/growth.md` or `docs/user/growth.md` (if applicable)
+- `docs/user/evangelism.md` (if applicable)
+
+**Exit Criteria**:
+- GTM artifacts complete (if requested)
 
 ---
 

@@ -8,6 +8,8 @@ This workflow covers the complete lifecycle of a new feature from idea to produc
 
 **Review Model**: Each handoff is a review gate. The receiving role reviews and approves before proceeding. See `REVIEW_GATES.md` for detailed criteria.
 
+**Execution Rule**: If runtime supports sub-agents or agent profiles, each phase MUST be executed by the corresponding role agent. Otherwise, role-switch sequentially in a single session.
+
 ---
 
 ## Workflow Diagram
@@ -53,6 +55,27 @@ This workflow covers the complete lifecycle of a new feature from idea to produc
 │                          (All roles verify)                                  │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## Phase 0: Essence Validation (Essence Analyst)
+
+### Trigger
+- Any new feature request
+
+### Activities
+1. Validate feature aligns with `essence.md`
+2. Update `essence.md` if the core value proposition evolves
+3. Confirm success metrics remain measurable
+
+### Artifacts Produced
+- Updated `essence.md` (LIVING)
+
+### Exit Criteria
+- Essence alignment confirmed
+
+### Handoff
+- **To**: Product Manager
 
 ---
 
@@ -297,6 +320,8 @@ See `REVIEW_GATES.md` for full criteria. Writer reviews:
    - Create/update user guides
    - Update ARCHITECTURE.md if needed
    - Update API reference if applicable
+   - Update `app_intent.md` to reflect the new feature
+   - Bump `APP_VERSION`
 
 3. **Review**:
    - Technical accuracy (Developer review)
@@ -332,6 +357,27 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
 
 ---
 
+## Phase 5b: Go-To-Market (Optional Roles)
+
+**Trigger**: App intent explicitly requests monetization, growth, or evangelism.
+
+**Roles**: Monetization Strategist, Growth Marketer, Evangelist (as applicable)
+
+**Activities**:
+- Monetization: Define pricing/value capture assumptions
+- Growth: Define acquisition/activation/retention metrics
+- Evangelism: Define narrative, demos, and launch assets
+
+**Artifacts Produced**:
+- `specs/monetization.md` or `docs/user/monetization.md` (if applicable)
+- `specs/growth.md` or `docs/user/growth.md` (if applicable)
+- `docs/user/evangelism.md` (if applicable)
+
+**Exit Criteria**:
+- GTM artifacts complete (if requested)
+
+---
+
 ## Phase 6: Release
 
 ### Trigger
@@ -353,7 +399,7 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
    - Operations: Ready to deploy (if applicable)
 
 3. **Release Preparation**:
-   - Version bump
+   - Version bump (`APP_VERSION`) per P-VERSIONING (patch/minor/major)
    - CHANGELOG finalized
    - Release notes prepared
 

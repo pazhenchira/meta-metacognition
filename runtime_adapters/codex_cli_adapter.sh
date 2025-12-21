@@ -72,6 +72,53 @@ case "$COMMAND" in
         
         echo "$SESSION_ID"
         ;;
+
+    spawn_subagent)
+        ROLE="${1:-}"
+        BRIEF_FILE="${2:-}"
+        STATE_FILE="${3:-}"
+        PROMPT="${4:-}"
+
+        if [[ -z "$ROLE" ]] || [[ -z "$BRIEF_FILE" ]] || [[ -z "$STATE_FILE" ]] || [[ -z "$PROMPT" ]]; then
+            log "ERROR: spawn_subagent requires role, brief_file, state_file, and prompt"
+            exit 1
+        fi
+
+        SESSION_ID="subagent_$(date +%s)_$$"
+        SESSION_PATH="$SESSION_DIR/$SESSION_ID"
+        mkdir -p "$SESSION_PATH"
+
+        cp "$BRIEF_FILE" "$SESSION_PATH/brief.md"
+        ln -sf "$(realpath "$STATE_FILE")" "$SESSION_PATH/state.json"
+
+        log "Spawning Codex MCP sub-agent: $SESSION_ID"
+        log "Role: $ROLE"
+        log "Brief: $BRIEF_FILE"
+        log "Prompt: $PROMPT"
+
+        {
+            echo "SESSION_ID=$SESSION_ID"
+            echo "ROLE=$ROLE"
+            echo "BRIEF=$BRIEF_FILE"
+            echo "STATE=$STATE_FILE"
+            echo "PROMPT=$PROMPT"
+            echo "STATUS=active"
+            echo "STARTED=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        } > "$SESSION_PATH/metadata.txt"
+
+        echo "$SESSION_ID"
+        ;;
+
+    start_mcp_server)
+        if command -v codex >/dev/null 2>&1; then
+            SERVER_CMD="${1:-codex mcp-server}"
+        else
+            SERVER_CMD="${1:-npx -y codex mcp}"
+        fi
+        log "Starting MCP server: $SERVER_CMD"
+        bash -lc "$SERVER_CMD" &
+        echo $!
+        ;;
         
     resume)
         SESSION_ID="${1:-}"
@@ -98,6 +145,12 @@ case "$COMMAND" in
         #     >> "$SESSION_PATH/output.log" 2>> "$SESSION_PATH/error.log"
         
         echo "Session $SESSION_ID resumed"
+        ;;
+
+    capabilities)
+        cat << 'EOF'
+{"supports_subagents": true, "subagent_style": "mcp", "supports_agent_profiles": false, "supports_handoffs": true, "supports_parallel_sessions": true, "supports_resume": true}
+EOF
         ;;
         
     check_status)

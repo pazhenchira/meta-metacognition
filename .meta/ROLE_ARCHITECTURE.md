@@ -8,7 +8,7 @@ The meta-orchestrator v1.9.0 introduces a role-based model that mirrors how real
 
 ---
 
-## The Six Roles
+## Core Roles
 
 **Note**: These are TEMPLATES. See `CUSTOMIZING_ROLES.md` for guidance on which roles your app needs.
 
@@ -45,6 +45,15 @@ The meta-orchestrator v1.9.0 introduces a role-based model that mirrors how real
 | **Technical Writer** | "Can users UNDERSTAND it?" | Documentation |
 
 ---
+
+## Extended Role Pool (Optional)
+
+These roles are used **only when the app requires them**:
+
+- **Essence Analyst**: Defines and protects the core value proposition
+- **Monetization Strategist**: Pricing and value capture
+- **Growth Marketer**: Acquisition, activation, retention
+- **Evangelist**: Narrative, demos, community assets
 
 ## The Essence Triangle (Product Manager's Core Model)
 

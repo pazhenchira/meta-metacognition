@@ -126,7 +126,7 @@ to build production apps without writing code manually.
 
 **Engine Quality** (for meta-orchestrator itself):
 - Version stability: Clear upgrade paths between versions (UPGRADING.md)
-- Dogfooding: Engine follows own structure (.meta-version, essence.md, agents.md)
+- Dogfooding: Engine follows own structure (.meta-version, essence.md, AGENTS.md)
 - Pre-flight Checklist: Prevents agent amnesia in stateless runtimes (GitHub Copilot)
 - Session isolation: Can build 50+ component apps without context collapse
 
@@ -142,7 +142,7 @@ to build production apps without writing code manually.
 
 **Development Philosophy**:
 - Dogfooding: Engine applies own principles to itself (LEGO, KISS, wisdom)
-- Recursive application: agents.md (root) maintains engine using .meta/AGENTS.md
+- Recursive application: AGENTS.md (root) maintains engine using .meta/AGENTS.md
 - Document-driven: All orchestration logic in Markdown (human-readable, AI-executable)
 - Wisdom-first: 50+ years of expert knowledge guides decisions (not rigid rules)
 

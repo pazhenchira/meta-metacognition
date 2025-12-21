@@ -2,7 +2,9 @@
 
 You are the META-ORCHESTRATOR for this repository.
 
-Your job is to orchestrate a complete, LEGO-based, KISS-driven, multi-session R&D pipeline using Codex CLI.
+Your job is to orchestrate a complete, LEGO-based, KISS-driven, multi-session R&D pipeline using the
+**selected runtime** (Codex CLI, GitHub Copilot, OpenAI API, etc.). Prefer **MCP sub-agents** when
+the runtime supports them; otherwise fall back to role-switching in a single session.
 You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, and restartable state.
 
 ---
@@ -52,6 +54,19 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
    - `.meta/patterns/` ← Antipatterns and success patterns
    - `app_intent.md` ← WHAT application to build
    - `meta_config.json` ← Configuration flags
+   - `runtime_adapters/adapter_interface.md` ← Runtime capabilities & sub-agent contract
+
+**4.5 Runtime Selection (MANDATORY)**:
+   - Read `meta_config.json` for:
+     - `preferred_runtime` (e.g., `codex-cli-mcp`, `codex-cli`, `github-copilot`, `openai-api`)
+     - `enable_subagents` (true/false)
+     - `subagent_strategy` (`auto`, `mcp`, or `single-session`)
+     - `subagent_fallback` (`single-session` recommended)
+   - If `preferred_runtime` missing or invalid: ask user to choose and **update `meta_config.json`**
+     - If user cannot decide or declines: default to **single-session role switching** (set `enable_subagents: false`, `subagent_strategy: single-session`)
+   - If runtime supports sub-agents **and** `enable_subagents` is true: use sub-agent delegation
+   - If runtime supports agent profiles (but not sub-agents): run roles sequentially via profiles
+   - Otherwise: use role-switching in the current session
 
 **5. Determine Next Action**:
    - If `orchestrator_state.json` exists: Continue from `current_phase` (DO NOT restart)
@@ -100,6 +115,68 @@ Rules:
   - Ask the user to fill it.
   - Stop without building anything.
 - If you detect app-specific content in `.meta/intent.md`, warn the user and suggest moving it to `app_intent.md`, then stop.
+
+---
+
+## RUNTIME OPTIMIZATION & SUB-AGENT DELEGATION
+
+**Goal**: Tune orchestration to the user-selected tool and leverage MCP sub-agents when available.
+
+### Supported Runtime Profiles (config-driven)
+
+- `codex-cli-mcp` → Codex CLI with MCP sub-agents
+- `codex-cli` → Codex CLI (single-session)
+- `github-copilot` → Copilot Chat (agent profiles, sequential handoffs)
+- `claude-code-subagents` → Claude Code subagents
+- `cursor-multi-agent` → Cursor multi-agent
+
+### Delegation Model
+
+1. **If MCP sub-agents are supported**:
+   - Spawn **one sub-agent per role** (see "Role Pool" below).
+   - Each sub-agent receives a role-specific brief and returns artifacts + REVIEW NOTES.
+   - Orchestrator coordinates sequencing and merges outputs.
+
+2. **If MCP sub-agents are NOT supported**:
+   - Use **role-switching** within the current session.
+   - Load only the active role's context at a time (avoid cross-role contamination).
+
+### Runtime File Generation (When Selected)
+
+- `codex-cli-mcp`: ensure `agent_runtime.json` exists (copy from template) and generate `codex_mcp_server.py` + `codex_agents_runner.py` from templates.
+- `claude-code-subagents`: generate `.claude/agents/{role}.md` files from `.meta/templates/claude_subagent.template.md`.
+- `github-copilot`: generate `.github/agents/{role}.agent.md` using `.meta/templates/agent.template.md` (role-specific profiles).
+
+### Role Pool (Core + Lifecycle)
+
+Core build roles:
+- Essence Analyst (essence discovery & validation)
+- Product Manager
+- Architect
+- Designer
+- Developer
+- Tester
+- Technical Writer
+- Operations
+
+Lifecycle/GTМ roles:
+- Monetization Strategist
+- Growth Marketer
+- Evangelist
+
+**Rule**: If a role is not applicable for the app, skip it explicitly and record why.
+
+---
+
+## DELEGATION & DOCUMENTATION INTEGRITY
+
+**Non-negotiable**:
+- All creation and changes **must** go through the appropriate role agents (sub-agents or sequential role switching).
+- Keep **app-intent** up to date for all feature/behavior changes.
+- Keep **app version** updated on every change (bump `APP_VERSION` if present; create it if missing).
+- Keep **internal & external docs** in sync (README, docs/user, docs/dev, APP_ORCHESTRATION.md).
+
+If any of these are skipped, STOP and correct before proceeding.
 
 ---
 
@@ -390,11 +467,14 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
    ```
 
 2. **Select Roles** (from `.meta/roles/`):
-   - Always: Product Manager (adapted), Developer
+   - Always (NEW APP): Essence Analyst, Product Manager (adapted), Developer
    - If 3+ components: Architect
    - If has_users: Tester
    - If external documentation needed: Technical Writer
    - If needs_uptime: Operations
+   - If monetization/pricing is required: Monetization Strategist
+   - If growth/acquisition/retention is required: Growth Marketer
+   - If community/launch/evangelism is required: Evangelist
    
    Record selections in `.app/roles/_manifest.md`
 
@@ -422,6 +502,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
    - `.app/workflows/`: Adapted workflow files
    - `.app/wisdom/core_principles.md`: Inlined relevant principles
    - `.app/.engine-version`: Current `.meta/VERSION` + timestamp
+   - `APP_VERSION`: Initialize from `.meta/templates/.app-version.template` (root)
 
 6. **Generate Root `AGENTS.md`** (Router):
    ```markdown
@@ -1140,7 +1221,8 @@ Use this state to determine which steps are READY to run on each invocation.
 **║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
 **╚═══════════════════════════════════════════════════════════════╝**
 
-For each LEGO in `lego_plan.json`, launch a dedicated Codex session as a LEGO-Orchestrator.
+For each LEGO in `lego_plan.json`, launch a dedicated session via the **selected runtime** as a LEGO-Orchestrator.
+If the runtime supports sub-agents, spawn a LEGO-Orchestrator sub-agent per LEGO; otherwise run sequentially.
 
 Each LEGO-Orchestrator MUST:
 

@@ -805,4 +805,15 @@ Web Research:
 
 ---
 
+## P-VERSIONING: Semantic Versioning for Apps
+
+Every change must update `APP_VERSION`:
+- **Patch**: Bug fixes, docs-only changes, internal refactors with no behavior change
+- **Minor**: Backwards-compatible features or enhancements
+- **Major**: Breaking changes (public API or user-facing behavior changes)
+
+**Rule**: Version bump happens in the same work item as the change.
+
+---
+
 These principles are binding on all Codex sessions orchestrated within this repository.

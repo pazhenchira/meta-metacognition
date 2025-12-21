@@ -25,6 +25,7 @@ Different apps have different needs:
 ## Role Selection Guide
 
 ### Always Required
+- **Essence Analyst**: Defines and protects the core value proposition
 - **Product Manager**: Someone must define WHAT to build and WHY
 - **Developer**: Someone must build it
 
@@ -35,6 +36,9 @@ Different apps have different needs:
 ### Sometimes Required
 - **Technical Writer**: For apps with external users who need docs
 - **Operations**: For apps deployed to production with uptime needs
+- **Monetization Strategist**: When pricing/revenue model is required
+- **Growth Marketer**: When acquisition/retention loops are a requirement
+- **Evangelist**: When community, demos, or launch assets are required
 
 ### Decision Matrix
 
@@ -45,6 +49,9 @@ Different apps have different needs:
 | Do external users need to understand it? | Technical Writer |
 | Does it run in production with uptime needs? | Operations |
 | Does it have compliance/security requirements? | Operations + enhanced Tester |
+| Does it need a pricing/revenue model? | Monetization Strategist |
+| Does it need growth loops or acquisition strategy? | Growth Marketer |
+| Does it need community/launch materials? | Evangelist |
 
 ---
 

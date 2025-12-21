@@ -1,10 +1,262 @@
 {
-  "version": "2.0.0",
-  "last_updated": "2025-12-06T10:58:58.3753066-08:00",
-  "current_work_item": null,
-  "created": "2025-12-06T10:58:58.3750161-08:00",
-  "next_id": 1,
-  "active": [],
+  "work_items": [
+    {
+      "id": "WI-001",
+      "type": "enhancement",
+      "title": "Version & instruction consistency (v2.0 alignment)",
+      "description": "Resolve version drift, agent file casing, and update docs for runtime selection and sub-agent model.",
+      "source": "conversation",
+      "state": "COMPLETE",
+      "created_by": "user",
+      "created": "2025-12-21T00:00:00Z",
+      "started": "2025-12-21T00:00:00Z",
+      "state_transitions": [
+        {
+          "from": null,
+          "to": "BACKLOG",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Created from audit results"
+        },
+        {
+          "from": "BACKLOG",
+          "to": "ACTIVE",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Starting immediate execution"
+        },
+        {
+          "from": "ACTIVE",
+          "to": "IN_REVIEW",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "All role tasks completed, pending orchestrator review"
+        },
+        {
+          "from": "IN_REVIEW",
+          "to": "APPROVED",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Orchestrator review complete"
+        },
+        {
+          "from": "APPROVED",
+          "to": "COMPLETE",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Artifacts updated and aligned"
+        }
+      ],
+      "artifacts": [
+        "AGENTS.md",
+        ".meta-version",
+        ".meta-manifest.json",
+        "app_intent.md"
+      ],
+      "related_work_items": [
+        "WI-002",
+        "WI-003"
+      ],
+      "completed": "2025-12-21T00:00:00Z"
+    },
+    {
+      "id": "WI-002",
+      "type": "new_feature",
+      "title": "Runtime optimization + MCP sub-agent support",
+      "description": "Add runtime selection prompts/config and MCP-based sub-agent delegation (Codex CLI MCP server).",
+      "source": "conversation",
+      "state": "COMPLETE",
+      "created_by": "user",
+      "created": "2025-12-21T00:00:00Z",
+      "state_transitions": [
+        {
+          "from": null,
+          "to": "BACKLOG",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Created from user request"
+        },
+        {
+          "from": "BACKLOG",
+          "to": "ACTIVE",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Starting runtime optimization work"
+        },
+        {
+          "from": "ACTIVE",
+          "to": "IN_REVIEW",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "All role tasks completed, pending orchestrator review"
+        },
+        {
+          "from": "IN_REVIEW",
+          "to": "APPROVED",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Orchestrator review complete"
+        },
+        {
+          "from": "APPROVED",
+          "to": "COMPLETE",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Runtime capability updates applied"
+        }
+      ],
+      "artifacts": [
+        ".meta/AGENTS.md",
+        "meta_config.json",
+        "runtime_adapters/adapter_interface.md",
+        "runtime_adapters/codex_cli_adapter.sh",
+        "runtime_adapters/copilot_adapter.sh",
+        "runtime_adapters/claude_code_adapter.sh",
+        "runtime_adapters/cursor_adapter.sh",
+        ".meta/templates/agent_runtime.json",
+        "agent_runtime.json",
+        "README.md",
+        "docs/user/README.md",
+        ".meta/generators/app_agents.template.md",
+        ".meta/templates/AGENTS.template.md",
+        ".meta/templates/AGENTS.codex.template.md"
+      ],
+      "related_work_items": [
+        "WI-001",
+        "WI-003"
+      ],
+      "started": "2025-12-21T00:00:00Z",
+      "completed": "2025-12-21T00:00:00Z"
+    },
+    {
+      "id": "WI-003",
+      "type": "enhancement",
+      "title": "Lifecycle role expansion (essence, monetization, evangelism, growth)",
+      "description": "Add new roles and integrate into orchestrator delegation model.",
+      "source": "conversation",
+      "state": "COMPLETE",
+      "created_by": "user",
+      "created": "2025-12-21T00:00:00Z",
+      "state_transitions": [
+        {
+          "from": null,
+          "to": "BACKLOG",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Created from user request"
+        },
+        {
+          "from": "BACKLOG",
+          "to": "ACTIVE",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Starting lifecycle role expansion"
+        },
+        {
+          "from": "ACTIVE",
+          "to": "IN_REVIEW",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "All role tasks completed, pending orchestrator review"
+        },
+        {
+          "from": "IN_REVIEW",
+          "to": "APPROVED",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Orchestrator review complete"
+        },
+        {
+          "from": "APPROVED",
+          "to": "COMPLETE",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Lifecycle roles and workflows updated"
+        }
+      ],
+      "artifacts": [
+        ".meta/roles/essence_analyst.md",
+        ".meta/roles/monetization_strategist.md",
+        ".meta/roles/growth_marketer.md",
+        ".meta/roles/evangelist.md",
+        ".meta/AGENTS.md",
+        ".meta/CUSTOMIZING_ROLES.md",
+        ".meta/ROLE_ARCHITECTURE.md",
+        ".meta/workflows/new_feature.md",
+        ".meta/workflows/enhancement.md",
+        ".meta/workflows/bug_fix.md",
+        ".meta/generators/app_agents.template.md",
+        ".meta/templates/AGENTS.template.md"
+      ],
+      "related_work_items": [
+        "WI-001",
+        "WI-002"
+      ],
+      "started": "2025-12-21T00:00:00Z",
+      "completed": "2025-12-21T00:00:00Z"
+    },
+    {
+      "id": "WI-004",
+      "type": "enhancement",
+      "title": "Runtime capability verification + versioning policy + fallback",
+      "description": "Integrate latest tool capabilities, add versioning policy, and runtime fallback logic.",
+      "source": "conversation",
+      "state": "COMPLETE",
+      "created_by": "user",
+      "created": "2025-12-21T00:00:00Z",
+      "started": "2025-12-21T00:00:00Z",
+      "completed": "2025-12-21T00:00:00Z",
+      "state_transitions": [
+        {
+          "from": null,
+          "to": "BACKLOG",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Created from user request"
+        },
+        {
+          "from": "BACKLOG",
+          "to": "ACTIVE",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Started immediately"
+        },
+        {
+          "from": "ACTIVE",
+          "to": "IN_REVIEW",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "All role tasks completed"
+        },
+        {
+          "from": "IN_REVIEW",
+          "to": "APPROVED",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Orchestrator review complete"
+        },
+        {
+          "from": "APPROVED",
+          "to": "COMPLETE",
+          "timestamp": "2025-12-21T00:00:00Z",
+          "reason": "Artifacts updated"
+        }
+      ],
+      "artifacts": [
+        ".meta/principles.md",
+        ".meta/workflows/new_feature.md",
+        ".meta/workflows/enhancement.md",
+        ".meta/workflows/bug_fix.md",
+        ".meta/AGENTS.md",
+        "runtime_adapters/adapter_interface.md",
+        ".meta/templates/agent_runtime.json",
+        "agent_runtime.json",
+        "meta_config.json",
+        ".meta/templates/codex_mcp_server.py",
+        ".meta/templates/codex_agents_runner.py",
+        "codex_mcp_server.py",
+        "codex_agents_runner.py",
+        ".meta/templates/claude_subagent.template.md",
+        "README.md",
+        "docs/user/README.md",
+        "UPGRADING.md",
+        "docs/user/UPGRADING.md",
+        "CHANGELOG.md",
+        "docs/dev/CHANGELOG.md",
+        "APP_VERSION"
+      ],
+      "related_work_items": [
+        "WI-002",
+        "WI-003"
+      ]
+    }
+  ],
   "backlog": [],
-  "work_items": []
+  "active": [],
+  "current_work_item": null,
+  "next_id": 4,
+  "version": "2.0.0",
+  "created": "2025-12-21T00:00:00Z",
+  "last_updated": "2025-12-21T00:00:00Z"
 }

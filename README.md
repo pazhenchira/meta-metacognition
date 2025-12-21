@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 2.0.0** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.1** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -61,6 +61,7 @@ meta-metacognition/
 │   └── templates/                  ← Reference templates
 │
 ├── app_intent.md                   ← 👉 YOU EDIT THIS: Describe your app
+├── APP_VERSION                     ← App version (bump on every change)
 ├── meta_config.json                ← Optional: Configure behavior
 ├── README.md                       ← This file (will be regenerated for your app)
 │
@@ -113,7 +114,28 @@ I want an app that analyzes stock options and identifies profitable trades.
 - Keep it simple—I'm not a quant expert
 ```
 
-**3. Run the Meta-Orchestrator**
+**3. Choose Your Runtime (Tool Optimization)**
+
+Set your preferred runtime in `meta_config.json`:
+```json
+{
+  "preferred_runtime": "codex-cli-mcp",
+  "enable_subagents": true
+}
+```
+
+**Tip**: `codex-cli-mcp` enables MCP sub-agent delegation (one agent per role).
+If you can't decide, the orchestrator will default to **single-session role switching**.
+
+Supported runtimes (tool-optimized):
+- `codex-cli-mcp` (default)
+- `claude-code-subagents`
+- `github-copilot`
+- `cursor-multi-agent`
+
+Note: Sub-agent support depends on the runtime; MCP is one mechanism, not the only one.
+
+**4. Run the Meta-Orchestrator**
 
 ```bash
 # === OPTION 1: VS Code GitHub Copilot Chat Agent Picker (Easiest - v1.7.1+) ===

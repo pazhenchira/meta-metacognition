@@ -78,6 +78,65 @@ Each adapter is a **shell script** (or executable) that implements these command
 
 ---
 
+### 4. `capabilities`
+
+**Purpose**: Report runtime capabilities (used to decide sub-agent strategy)
+
+**Input**: none
+
+**Output**:
+- Stdout: JSON string
+- Exit code: 0 on success
+
+**Example Output**:
+```json
+{
+  "supports_subagents": true,
+  "subagent_style": "mcp",
+  "supports_agent_profiles": true,
+  "supports_handoffs": true,
+  "supports_parallel_sessions": true,
+  "supports_resume": true
+}
+```
+
+---
+
+### 5. `spawn_subagent` (optional)
+
+**Purpose**: Start a nested sub-agent (role-specific) when the runtime supports subagents
+
+**Input**:
+- `$1` - Role name (e.g., `architect`, `tester`)
+- `$2` - Brief file path
+- `$3` - State file path
+- `$4` - Initial prompt
+
+**Output**:
+- Stdout: Sub-agent session ID
+- Exit code: 0 on success, non-zero on failure
+
+**Example**:
+```bash
+./codex_cli_adapter.sh spawn_subagent architect session_arch_brief.md lego_state_arch.json "Review design for KISS"
+# Output: subagent_98765
+```
+
+---
+
+### 6. `start_mcp_server` (optional)
+
+**Purpose**: Start an MCP server when required by the runtime (e.g., Codex CLI MCP)
+
+**Input**:
+- `$1` - Server command (string) or config file path
+
+**Output**:
+- Stdout: PID or session identifier
+- Exit code: 0 on success
+
+---
+
 ## File-Based Communication
 
 Adapters communicate with sessions via **files only**:
@@ -121,12 +180,21 @@ Handle user authentication and session management.
 
 ---
 
+**Sub-agent Notes**:
+- Some runtimes (e.g., Claude Code) use **file-based sub-agent definitions** under `.claude/agents/`.
+- Some runtimes (e.g., Copilot) use **agent profiles** in `.github/agents/`.
+- Some runtimes are **UI-first** (e.g., Cursor) and may not expose stable CLI sub-agent commands.
+
+---
+
 ## Supported Runtimes
 
 See `agent_runtime.json` for currently supported runtimes:
+- `codex-cli-mcp` - OpenAI Codex CLI with MCP sub-agents
 - `codex-cli` - OpenAI Codex CLI
-- `github-copilot` - GitHub Copilot Chat
-- `claude-mcp` - Anthropic Claude with MCP
+- `github-copilot` - GitHub Copilot Chat (agent profiles)
+- `claude-code-subagents` - Anthropic Claude Code subagents
+- `cursor-multi-agent` - Cursor multi-agent
 
 To add a new runtime:
 1. Create an adapter script implementing this interface

@@ -6,6 +6,22 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.1] - 2025-12-21 (Runtime Capability Matrix + Lifecycle Roles)
+
+### Added
+
+- **Runtime capability matrix**: Config-driven runtime selection with sub-agent/agent-profile awareness
+- **Sub-agent delegation rules**: Role-specific delegation when runtime supports it, fallback to role switching
+- **New lifecycle roles**: Essence Analyst, Monetization Strategist, Growth Marketer, Evangelist
+- **New runtime stubs**: Claude Code and Cursor adapter placeholders
+- **App version tracking**: `APP_VERSION` initialized and enforced in workflows
+
+### Changed
+
+- **Workflows**: New Feature/Enhancement/Bug Fix now include essence validation and doc/version updates
+- **Role selection logic**: Optional GTM roles included only when requested in app intent
+- **Documentation**: README now includes runtime selection and APP_VERSION in structure
+
 ## [2.0.0] - 2025-12-06 (Workspace-Centric, Self-Documenting, Idempotent) - MAJOR REFACTOR
 
 ### Added

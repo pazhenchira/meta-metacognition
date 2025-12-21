@@ -5,6 +5,8 @@ This file describes the **specific application** you want the meta-orchestrator 
 You should edit THIS file for each new app you build.  
 Do **not** mix application details into `intent.md` (that file is only about how the meta-engine works).
 
+Keep `APP_VERSION` updated whenever you change this file or make feature changes.
+
 Below is a template you can fill in.
 
 ---

@@ -1,7 +1,7 @@
 {
-  "meta_orchestrator_version": "1.1.0",
-  "created_date": "2025-11-24",
-  "last_updated": "2025-11-24",
+  "meta_orchestrator_version": "2.0.1",
+  "created_date": "2025-12-21",
+  "last_updated": "2025-12-21",
   "features": [
     "lego_architecture",
     "unit_tests",
@@ -9,6 +9,10 @@
     "config_validation",
     "integration_tests",
     "system_tests",
-    "runtime_adapters"
+    "runtime_adapters",
+    "runtime_capability_matrix",
+    "subagent_delegation",
+    "lifecycle_roles",
+    "app_versioning"
   ]
 }

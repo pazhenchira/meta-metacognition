@@ -8,6 +8,8 @@ This workflow covers fixing a defect where implementation deviates from specific
 
 **Review Model**: Bug fixes have lighter review gates (speed matters) but still require verification. See `REVIEW_GATES.md` for criteria.
 
+**Execution Rule**: If runtime supports sub-agents or agent profiles, each phase MUST be executed by the corresponding role agent. Otherwise, role-switch sequentially in a single session.
+
 ---
 
 ## What Is a Bug?
@@ -396,6 +398,23 @@ Tester reviews before verifying:
 - Fix verified
 - Regression check passed
 - Bug closed
+
+---
+
+## Phase 6: Documentation & Versioning (Writer + PM)
+
+### Trigger
+- Bug verified
+
+### Activities
+1. **Update Docs** (if user-visible):
+   - Update README or docs to clarify behavior
+2. **Update app_intent.md** (if behavior/requirements changed)
+3. **Bump APP_VERSION** per P-VERSIONING (patch)
+
+### Exit Criteria
+- Docs and intent updated (when applicable)
+- APP_VERSION bumped
 
 ---
 

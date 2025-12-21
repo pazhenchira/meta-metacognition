@@ -30,6 +30,17 @@ When working on this application:
    - Documentation: `README.md`, `internal-notes.md`
    - Configuration: Check `meta_config.json` if present
 
+If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable_subagents: true`:
+- Delegate per-role work to MCP sub-agents (essence, PM, architect, developer, tester, writer, ops)
+- If MCP sub-agents are unavailable, fall back to role-switching in this session
+- Ensure `codex_mcp_server.py` is available and run it before sub-agent delegation
+- Use `codex_agents_runner.py` for role-specific sub-agent runs
+
+Documentation integrity:
+- Update `app_intent.md` for any feature/behavior change
+- Update `APP_VERSION` on every change (create if missing)
+- Keep README + docs/user + docs/dev in sync
+
 ---
 
 ## Maintenance Mode

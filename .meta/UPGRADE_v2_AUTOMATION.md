@@ -43,6 +43,13 @@ mkdir -p external_input
 echo "✅ Directory structure created"
 ```
 
+Create `APP_VERSION` if missing:
+```bash
+if [ ! -f APP_VERSION ]; then
+  echo "0.1.0" > APP_VERSION
+fi
+```
+
 ---
 
 ## Phase 2: Initialize State Files
