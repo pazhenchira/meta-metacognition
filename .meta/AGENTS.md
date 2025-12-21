@@ -58,7 +58,7 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
 
 **4.5 Runtime Selection (MANDATORY)**:
    - Read `meta_config.json` for:
-     - `preferred_runtime` (e.g., `codex-cli-mcp`, `codex-cli`, `github-copilot`, `openai-api`)
+  - `preferred_runtime` (e.g., `codex-cli-parallel`, `codex-cli-mcp`, `codex-cli`, `github-copilot`)
      - `enable_subagents` (true/false)
      - `subagent_strategy` (`auto`, `mcp`, or `single-session`)
      - `subagent_fallback` (`single-session` recommended)
@@ -120,11 +120,12 @@ Rules:
 
 ## RUNTIME OPTIMIZATION & SUB-AGENT DELEGATION
 
-**Goal**: Tune orchestration to the user-selected tool and leverage MCP sub-agents when available.
+**Goal**: Tune orchestration to the user-selected tool and leverage role-specific sub-agents when available.
 
 ### Supported Runtime Profiles (config-driven)
 
-- `codex-cli-mcp` → Codex CLI with MCP sub-agents
+- `codex-cli-parallel` → Codex CLI with **parallel role sessions** (`codex exec` per role)
+- `codex-cli-mcp` → Codex CLI as **MCP worker(s)** (Codex acting as MCP server; tool-driven)
 - `codex-cli` → Codex CLI (single-session)
 - `github-copilot` → Copilot Chat (agent profiles, sequential handoffs)
 - `claude-code-subagents` → Claude Code subagents
@@ -132,18 +133,26 @@ Rules:
 
 ### Delegation Model
 
-1. **If MCP sub-agents are supported**:
-   - Spawn **one sub-agent per role** (see "Role Pool" below).
-   - Each sub-agent receives a role-specific brief and returns artifacts + REVIEW NOTES.
+1. **If Codex CLI + parallel mode** (`codex-cli-parallel`):
+   - Spawn **one Codex exec session per role** with the role brief.
+   - Treat each session as a sub-agent; collect outputs + REVIEW NOTES.
    - Orchestrator coordinates sequencing and merges outputs.
 
-2. **If MCP sub-agents are NOT supported**:
+2. **If Codex MCP worker mode** (`codex-cli-mcp`):
+   - Start **one Codex MCP server per role** (or a single server if configured).
+   - The **main Codex session acts as MCP client**, calling each role server as a tool.
+   - Role brief is passed in the tool call prompt (no OpenAI Agents SDK).
+
+3. **If sub-agents are NOT supported**:
    - Use **role-switching** within the current session.
    - Load only the active role's context at a time (avoid cross-role contamination).
 
 ### Runtime File Generation (When Selected)
 
-- `codex-cli-mcp`: ensure `agent_runtime.json` exists (copy from template) and generate `codex_mcp_server.py` from template; sub-agents run via the Codex MCP tool in the main session (no OpenAI Agents SDK).
+- `codex-cli-parallel`: ensure `agent_runtime.json` exists (copy from template); use `codex exec` per role session.
+- `codex-cli-mcp`: ensure `agent_runtime.json` exists (copy from template) and generate `codex_mcp_server.py` + `.app/runtime/codex_mcp_servers.toml` from templates.
+  - Merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` **before** starting the main Codex session.
+  - Main session uses the MCP tools for each role server (tool calls include role brief).
 - `claude-code-subagents`: generate `.claude/agents/{role}.md` files from `.meta/templates/claude_subagent.template.md`.
 - `github-copilot`: generate `.github/agents/{role}.agent.md` using `.meta/templates/agent.template.md` (role-specific profiles).
 

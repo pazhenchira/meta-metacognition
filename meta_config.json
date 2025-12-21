@@ -14,8 +14,10 @@
   "enable_subagents": true,
   "subagent_strategy": "auto",
   "subagent_fallback": "single-session",
+  "codex_subagent_mode": "mcp-workers",
   "runtime_profiles": {
-    "codex-cli-mcp": { "supports_subagents": true, "subagent_style": "mcp", "notes": "Codex CLI acting as MCP server" },
+    "codex-cli-parallel": { "supports_subagents": true, "subagent_style": "parallel-exec", "notes": "Parallel codex exec sessions per role" },
+    "codex-cli-mcp": { "supports_subagents": true, "subagent_style": "mcp-worker", "notes": "Codex CLI acting as MCP server (tool-driven)" },
     "codex-cli": { "supports_subagents": false, "subagent_style": "single-session" },
     "github-copilot": { "supports_subagents": false, "subagent_style": "agent-profiles" },
     "claude-code-subagents": { "supports_subagents": true, "subagent_style": "claude-subagents" },

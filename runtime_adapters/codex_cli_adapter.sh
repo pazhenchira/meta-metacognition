@@ -91,13 +91,15 @@ case "$COMMAND" in
         cp "$BRIEF_FILE" "$SESSION_PATH/brief.md"
         ln -sf "$(realpath "$STATE_FILE")" "$SESSION_PATH/state.json"
 
-        log "Spawning Codex MCP sub-agent: $SESSION_ID"
+        log "Spawning Codex sub-agent: $SESSION_ID"
         log "Role: $ROLE"
         log "Brief: $BRIEF_FILE"
         log "Prompt: $PROMPT"
 
-        # NOTE: Codex MCP sub-agents are invoked via the Codex MCP tool in the main session.
-        # This adapter records metadata only; execution happens inside the orchestrator session.
+        # NOTE: Sub-agent execution depends on mode.
+        # - parallel-exec: use codex exec per role (non-interactive)
+        # - mcp-workers: invoked via Codex MCP tools in the main session
+        MODE=$(jq -r '.codex_subagent_mode // "parallel-exec"' meta_config.json 2>/dev/null || echo "parallel-exec")
         {
             echo "SESSION_ID=$SESSION_ID"
             echo "ROLE=$ROLE"
@@ -106,7 +108,17 @@ case "$COMMAND" in
             echo "PROMPT=$PROMPT"
             echo "STATUS=active"
             echo "STARTED=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "MODE=$MODE"
         } > "$SESSION_PATH/metadata.txt"
+
+        if [[ "$MODE" == "parallel-exec" ]]; then
+            log "Running parallel Codex exec for role: $ROLE"
+            codex exec -f "$BRIEF_FILE" --state "$STATE_FILE" "$PROMPT" \
+                > "$SESSION_PATH/output.log" 2> "$SESSION_PATH/error.log" &
+            echo $! > "$SESSION_PATH/pid"
+        else
+            log "MCP worker mode: invoke role via Codex MCP tool in main session."
+        fi
 
         echo "$SESSION_ID"
         ;;

@@ -4,8 +4,26 @@
   "runtime": "codex-cli-mcp",
   
   "runtimes": {
+    "codex-cli-parallel": {
+      "name": "OpenAI Codex CLI (Parallel Role Sessions)",
+      "adapter": "runtime_adapters/codex_cli_adapter.sh",
+      "commands": {
+        "spawn": "codex exec -f {brief_file} --state {state_file} \"{prompt}\"",
+        "resume": "codex exec resume --last --state {state_file} \"{prompt}\"",
+        "check_status": "test -f {state_file} && echo 'active' || echo 'pending'",
+        "spawn_subagent": "codex exec -f {brief_file} --state {state_file} \"{prompt}\""
+      },
+      "session_dir": "sessions/",
+      "max_context_tokens": 128000,
+      "supports_parallel": true,
+      "supports_subagents": true,
+      "subagent_style": "parallel-exec",
+      "supports_agent_profiles": false,
+      "supports_handoffs": true
+    },
+
     "codex-cli-mcp": {
-      "name": "OpenAI Codex CLI (MCP Sub-Agents)",
+      "name": "OpenAI Codex CLI (MCP Worker Sub-Agents)",
       "adapter": "runtime_adapters/codex_cli_adapter.sh",
       "commands": {
         "spawn": "codex exec -f {brief_file} --state {state_file} \"{prompt}\"",
@@ -18,7 +36,7 @@
       "max_context_tokens": 128000,
       "supports_parallel": true,
       "supports_subagents": true,
-      "subagent_style": "mcp",
+      "subagent_style": "mcp-worker",
       "supports_agent_profiles": false,
       "supports_handoffs": true
     },

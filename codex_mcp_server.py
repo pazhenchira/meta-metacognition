@@ -1,6 +1,13 @@
+import argparse
 import shutil
 import subprocess
 import sys
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--role", default="", help="Optional role label for logging")
+    return parser.parse_args()
 
 
 def build_command() -> list[str]:
@@ -10,8 +17,10 @@ def build_command() -> list[str]:
 
 
 def main() -> int:
+    args = parse_args()
     cmd = build_command()
-    print(f"Starting Codex MCP server: {' '.join(cmd)}", flush=True)
+    role_label = f" [{args.role}]" if args.role else ""
+    print(f"Starting Codex MCP server{role_label}: {' '.join(cmd)}", flush=True)
 
     proc = None
     try:

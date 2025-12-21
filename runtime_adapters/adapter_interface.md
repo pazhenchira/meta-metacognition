@@ -190,8 +190,9 @@ Handle user authentication and session management.
 ## Supported Runtimes
 
 See `agent_runtime.json` for currently supported runtimes:
-- `codex-cli-mcp` - OpenAI Codex CLI with MCP sub-agents
-- `codex-cli` - OpenAI Codex CLI
+- `codex-cli-parallel` - OpenAI Codex CLI (parallel role sessions)
+- `codex-cli-mcp` - OpenAI Codex CLI (MCP worker sub-agents)
+- `codex-cli` - OpenAI Codex CLI (single-session)
 - `github-copilot` - GitHub Copilot Chat (agent profiles)
 - `claude-code-subagents` - Anthropic Claude Code subagents
 - `cursor-multi-agent` - Cursor multi-agent

@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 2.0.2** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.3** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -119,16 +119,19 @@ I want an app that analyzes stock options and identifies profitable trades.
 Set your preferred runtime in `meta_config.json`:
 ```json
 {
-  "preferred_runtime": "codex-cli-mcp",
+  "preferred_runtime": "codex-cli-parallel",
   "enable_subagents": true
 }
 ```
 
-**Tip**: `codex-cli-mcp` enables MCP sub-agent delegation (one agent per role) using Codex CLI's native MCP server (no OpenAI Agents SDK).
+**Tip**: `codex-cli-parallel` is the most reliable Codex CLI mode (one `codex exec` per role).
+If you want Codex MCP worker sub-agents, set `preferred_runtime` to `codex-cli-mcp` and merge
+`.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` before starting Codex.
 If you can't decide, the orchestrator will default to **single-session role switching**.
 
 Supported runtimes (tool-optimized):
-- `codex-cli-mcp` (default)
+- `codex-cli-parallel` (default)
+- `codex-cli-mcp`
 - `claude-code-subagents`
 - `github-copilot`
 - `cursor-multi-agent`

@@ -5,6 +5,18 @@
 
 ---
 
+## Current Version (v2.x)
+
+**Current Engine Version**: 2.0.3  
+
+### v2.0.3 Notes (Codex Parallel + MCP Worker Mode)
+
+- **Default Codex subagents**: `codex-cli-parallel` (one `codex exec` per role)
+- **MCP worker mode**: Set `preferred_runtime: "codex-cli-mcp"` and merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml`
+- **Config**: Add `"codex_subagent_mode": "mcp-workers"` to force MCP workers
+
+---
+
 ## ⚠️ v1.x → v2.0.0 MAJOR UPGRADE
 
 **Status**: Breaking changes require migration  

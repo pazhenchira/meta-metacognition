@@ -6,6 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.3] - 2025-12-21 (Codex Parallel Subagents + MCP Worker Config)
+
+### Added
+
+- **Codex parallel subagents**: `codex-cli-parallel` runtime (role-specific `codex exec` sessions)
+- **Codex MCP workers config**: `codex_mcp_servers.toml` template for per-role MCP servers
+
+### Changed
+
+- **Runtime guidance**: Codex defaults to parallel subagents; MCP worker mode documented as tool-driven
+- **Codex adapter**: Subagent mode recorded and supports parallel exec
+
 ## [2.0.2] - 2025-12-21 (Codex MCP Native Subagents)
 
 ### Changed
