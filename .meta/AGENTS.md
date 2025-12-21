@@ -143,7 +143,7 @@ Rules:
 
 ### Runtime File Generation (When Selected)
 
-- `codex-cli-mcp`: ensure `agent_runtime.json` exists (copy from template) and generate `codex_mcp_server.py` + `codex_agents_runner.py` from templates.
+- `codex-cli-mcp`: ensure `agent_runtime.json` exists (copy from template) and generate `codex_mcp_server.py` from template; sub-agents run via the Codex MCP tool in the main session (no OpenAI Agents SDK).
 - `claude-code-subagents`: generate `.claude/agents/{role}.md` files from `.meta/templates/claude_subagent.template.md`.
 - `github-copilot`: generate `.github/agents/{role}.agent.md` using `.meta/templates/agent.template.md` (role-specific profiles).
 

@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 2.0.1** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.2** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -124,7 +124,7 @@ Set your preferred runtime in `meta_config.json`:
 }
 ```
 
-**Tip**: `codex-cli-mcp` enables MCP sub-agent delegation (one agent per role).
+**Tip**: `codex-cli-mcp` enables MCP sub-agent delegation (one agent per role) using Codex CLI's native MCP server (no OpenAI Agents SDK).
 If you can't decide, the orchestrator will default to **single-session role switching**.
 
 Supported runtimes (tool-optimized):

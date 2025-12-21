@@ -34,7 +34,7 @@ If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable
 - Delegate per-role work to MCP sub-agents (essence, PM, architect, developer, tester, writer, ops)
 - If MCP sub-agents are unavailable, fall back to role-switching in this session
 - Ensure `codex_mcp_server.py` is available and run it before sub-agent delegation
-- Use `codex_agents_runner.py` for role-specific sub-agent runs
+- Use the Codex MCP tool to run role-specific sub-agent prompts (no OpenAI Agents SDK)
 
 Documentation integrity:
 - Update `app_intent.md` for any feature/behavior change

@@ -6,6 +6,14 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.2] - 2025-12-21 (Codex MCP Native Subagents)
+
+### Changed
+
+- **Codex MCP runner**: `codex_mcp_server.py` now starts the native Codex MCP server without OpenAI Agents SDK
+- **Runtime configs**: Codex MCP subagent spawning clarified as MCP tool usage (no SDK runner script)
+- **Templates**: Removed `codex_agents_runner.py` from generated artifacts
+
 ## [2.0.1] - 2025-12-21 (Runtime Capability Matrix + Lifecycle Roles)
 
 ### Added

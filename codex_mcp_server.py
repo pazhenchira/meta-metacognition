@@ -1,23 +1,34 @@
-import asyncio
 import shutil
+import subprocess
+import sys
 
-from agents.mcp import MCPServerStdio
 
-
-async def main() -> None:
+def build_command() -> list[str]:
     if shutil.which("codex"):
-        params = {"command": "codex", "args": ["mcp-server"]}
-    else:
-        params = {"command": "npx", "args": ["-y", "codex", "mcp"]}
+        return ["codex", "mcp-server"]
+    return ["npx", "-y", "codex", "mcp"]
 
-    async with MCPServerStdio(
-        name="Codex CLI",
-        params=params,
-        client_session_timeout_seconds=360000,
-    ) as codex_mcp_server:
-        print("Codex MCP server started.")
-        await codex_mcp_server.wait()
+
+def main() -> int:
+    cmd = build_command()
+    print(f"Starting Codex MCP server: {' '.join(cmd)}", flush=True)
+
+    proc = None
+    try:
+        proc = subprocess.Popen(cmd)
+        proc.wait()
+        return proc.returncode or 0
+    except FileNotFoundError:
+        print(
+            "ERROR: Unable to start Codex MCP server. Install 'codex' or ensure 'npx' is available.",
+            file=sys.stderr,
+        )
+        return 1
+    except KeyboardInterrupt:
+        if proc and proc.poll() is None:
+            proc.terminate()
+        return 130
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    sys.exit(main())

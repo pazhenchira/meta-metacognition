@@ -96,6 +96,8 @@ case "$COMMAND" in
         log "Brief: $BRIEF_FILE"
         log "Prompt: $PROMPT"
 
+        # NOTE: Codex MCP sub-agents are invoked via the Codex MCP tool in the main session.
+        # This adapter records metadata only; execution happens inside the orchestrator session.
         {
             echo "SESSION_ID=$SESSION_ID"
             echo "ROLE=$ROLE"
