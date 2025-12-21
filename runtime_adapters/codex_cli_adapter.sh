@@ -124,13 +124,19 @@ case "$COMMAND" in
         ;;
 
     start_mcp_server)
-        if command -v codex >/dev/null 2>&1; then
+        ROLE="${1:-}"
+        if [[ -n "$ROLE" ]] && [[ -f "codex_mcp_server.py" ]]; then
+            SERVER_CMD="python codex_mcp_server.py --role \"$ROLE\""
+        elif command -v codex >/dev/null 2>&1; then
             SERVER_CMD="${1:-codex mcp-server}"
         else
             SERVER_CMD="${1:-npx -y codex mcp}"
         fi
+        LOG_DIR=".app/runtime"
+        mkdir -p "$LOG_DIR"
+        LOG_FILE="$LOG_DIR/mcp_${ROLE:-server}.log"
         log "Starting MCP server: $SERVER_CMD"
-        bash -lc "$SERVER_CMD" &
+        bash -lc "$SERVER_CMD" > "$LOG_FILE" 2>&1 &
         echo $!
         ;;
         

@@ -449,6 +449,19 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
          - **VALIDATION**: Verify `AGENTS.md` exists in root with app instructions
          
          **If either validation fails**: STOP and report error (agent won't be discoverable in that runtime)
+
+       - **MANDATORY: Runtime Session Setup (Codex CLI)**
+         - Read `meta_config.json`:
+           - If `preferred_runtime` is `codex-cli-mcp` and `enable_subagents: true`:
+             - Generate `.app/runtime/codex_mcp_servers.toml` from template if missing.
+             - Auto-register MCP servers (one per active role):
+               - `codex mcp add <role> -- codex mcp-server`
+               - If already present, skip and continue.
+             - Validate with `codex mcp list` that role servers are registered.
+             - **IMPORTANT**: If the Codex session is already running, instruct the user to restart it so MCP servers are attached.
+             - If any step fails, fall back to `codex-cli-parallel` or single-session per `subagent_fallback`.
+           - If `preferred_runtime` is `codex-cli-parallel` and `enable_subagents: true`:
+             - Prepare to spawn `codex exec` role sessions on demand (no MCP config required).
      - **Different version, app_intent.md CHANGED**: HYBRID MODE
        - User wants BOTH new engine features AND app requirement changes.
        - Do ENGINE UPGRADE first, then MAINTENANCE.

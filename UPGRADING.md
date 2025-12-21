@@ -15,6 +15,11 @@
 - **MCP worker mode**: Set `preferred_runtime: "codex-cli-mcp"` and merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml`
 - **Config**: Add `"codex_subagent_mode": "mcp-workers"` to force MCP workers
 
+### v2.0.4 Notes (Auto-Setup Codex MCP Registration)
+
+- **Upgrade auto-setup**: The upgrade workflow registers MCP servers (`codex mcp add`) for active roles.
+- **Restart reminder**: existing Codex sessions must be restarted to attach MCP servers.
+
 ---
 
 ## ⚠️ v1.x → v2.0.0 MAJOR UPGRADE

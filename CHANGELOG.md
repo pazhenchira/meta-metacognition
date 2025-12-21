@@ -6,6 +6,16 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.4] - 2025-12-21 (Upgrade Auto-Setup for Codex MCP)
+
+### Added
+
+- **Upgrade auto-setup**: MCP servers are registered for active roles during upgrade
+
+### Changed
+
+- **Codex adapter**: `start_mcp_server` accepts an optional role label
+
 ## [2.0.3] - 2025-12-21 (Codex Parallel Subagents + MCP Worker Config)
 
 ### Added

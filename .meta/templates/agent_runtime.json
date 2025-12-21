@@ -29,7 +29,7 @@
         "spawn": "codex exec -f {brief_file} --state {state_file} \"{prompt}\"",
         "resume": "codex exec resume --last --state {state_file} \"{prompt}\"",
         "check_status": "test -f {state_file} && echo 'active' || echo 'pending'",
-        "start_mcp_server": "codex mcp-server (fallback: npx -y codex mcp)",
+        "start_mcp_server": "python codex_mcp_server.py --role {role} (fallback: codex mcp-server)",
         "spawn_subagent": "mcp: use codex tool with role brief + prompt (requires codex_mcp_server.py running)"
       },
       "session_dir": "sessions/",
