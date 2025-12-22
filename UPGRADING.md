@@ -7,23 +7,15 @@
 
 ## Current Version (v2.x)
 
-**Current Engine Version**: 2.0.3  
+**Current Engine Version**: 2.0.7  
 
-### v2.0.3 Notes (Codex Parallel + MCP Worker Mode)
+### v2.x Notes (Codex MCP Default + Upgrade Auto-Setup)
 
-- **Default Codex subagents**: `codex-cli-parallel` (one `codex exec` per role)
-- **MCP worker mode**: Set `preferred_runtime: "codex-cli-mcp"` and merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml`
-- **Config**: Add `"codex_subagent_mode": "mcp-workers"` to force MCP workers
-
-### v2.0.4 Notes (Auto-Setup Codex MCP Registration)
-
-- **Upgrade auto-setup**: The upgrade workflow registers MCP servers (`codex mcp add`) for active roles.
-- **Restart reminder**: existing Codex sessions must be restarted to attach MCP servers.
-
-### v2.0.6 Notes (Codex MCP Default)
-
-- **Default runtime**: Missing/invalid runtime now defaults to `codex-cli-mcp`.
-- **Setup prompt**: If MCP tools are not attached, the upgrade asks the user to restart Codex.
+- **Default runtime**: `codex-cli-mcp` (MCP tools inside the Codex session)
+- **Auto-setup on upgrade**: registers MCP servers for each active role (`codex mcp add`)
+- **Verification**: upgrade checks `codex mcp list` and requires a **Codex restart** if tools were added after session start
+- **Sanity check**: each MCP tool is asked for a one-sentence role confirmation and recorded in `APP_ORCHESTRATION.md`
+- **Fallback**: if MCP setup fails, fallback to `codex-cli-parallel` or single-session per `subagent_fallback`
 
 ---
 
