@@ -62,11 +62,14 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
   - `enable_subagents` (true/false)
   - `subagent_strategy` (`auto`, `mcp`, or `single-session`)
   - `subagent_fallback` (`single-session` recommended)
-  - If `preferred_runtime` missing or invalid:
+- If `preferred_runtime` missing or invalid:
     - Default to **codex-cli-mcp**.
     - If MCP setup is incomplete, **request the user to apply the required setup** (restart Codex).
     - Update `meta_config.json` with the chosen default.
     - If user cannot decide or declines: keep `preferred_runtime: "codex-cli-mcp"` and `enable_subagents: true`.
+  - If any MCP tool call **times out or fails**:
+    - Treat MCP as unavailable for this work item.
+    - Fall back to `codex-cli-parallel` (preferred) or single-session per `subagent_fallback`.
   - If `agent_runtime` exists (legacy key), treat it as **deprecated**; do not override `preferred_runtime`.
    - If runtime supports sub-agents **and** `enable_subagents` is true: use sub-agent delegation
    - If runtime supports agent profiles (but not sub-agents): run roles sequentially via profiles
@@ -152,6 +155,7 @@ Rules:
    - Start **one Codex MCP server per role** (or a single server if configured).
    - The **main Codex session acts as MCP client**, calling each role server as a tool.
    - Role brief is passed in the tool call prompt (no OpenAI Agents SDK).
+   - If any MCP tool call times out, **switch to fallback** immediately and continue.
 
 3. **If sub-agents are NOT supported**:
    - Use **role-switching** within the current session.
@@ -470,6 +474,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
              - Validate with `codex mcp list` that role servers are registered.
              - **IMPORTANT**: If the Codex session is already running, instruct the user to restart it so MCP servers are attached.
              - **Sanity check**: Call each role MCP tool once and record a one-sentence role confirmation in `APP_ORCHESTRATION.md`.
+             - If any sanity-check tool call times out, **switch to fallback** for this work item.
              - If any step fails, fall back to `codex-cli-parallel` or single-session per `subagent_fallback`.
            - If `preferred_runtime` is `codex-cli-parallel` and `enable_subagents: true`:
              - Prepare to spawn `codex exec` role sessions on demand (no MCP config required).

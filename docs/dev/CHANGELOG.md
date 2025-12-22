@@ -6,6 +6,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.8] - 2025-12-21 (MCP Timeout Fallback)
+
+### Changed
+
+- **Fallback default**: MCP tool timeouts fall back to `codex-cli-parallel`
+- **Docs**: clarified MCP timeout fallback in runtime guidance
+
 ## [2.0.7] - 2025-12-21 (Codex MCP Default)
 
 ### Changed

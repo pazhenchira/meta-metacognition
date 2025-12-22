@@ -38,6 +38,7 @@ If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable
 - Use the Codex MCP tools (one per role server) with role briefs in the prompt (no OpenAI Agents SDK)
 - If the session was already running before MCP registration, restart Codex to attach tools
 - Sanity check: ask each MCP tool for a one-sentence role confirmation and record it
+- If MCP tools time out or fail, fall back to `codex-cli-parallel` (preferred) or role switching
 
 If `meta_config.json` specifies `preferred_runtime: "codex-cli-parallel"` and `enable_subagents: true`:
 - Spawn one `codex exec` session per role with the role brief

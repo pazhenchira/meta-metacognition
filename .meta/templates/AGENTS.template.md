@@ -73,6 +73,7 @@ On every turn, you MUST:
    - If user cannot decide: set `preferred_runtime: "codex-cli-mcp"` and `enable_subagents: true`
    - If sub-agents supported: delegate per-role via sub-agents
    - Otherwise: role-switch within current session
+   - If MCP tool calls time out: fall back to `codex-cli-parallel` (preferred) or single-session
 
 6. **Documentation Integrity (MANDATORY)**:
    - All creation/changes go through appropriate role agents (or role switching)

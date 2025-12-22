@@ -16,6 +16,7 @@
 - For MCP workers: merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml`
 - If this session started before MCP registration, restart Codex to attach tools
 - Sanity check: call each MCP tool for a one-sentence role confirmation
+- If MCP tools time out: fall back to codex-cli-parallel for this work item
 - If subagents unavailable: fall back to role switching
 
 ## Active Roles

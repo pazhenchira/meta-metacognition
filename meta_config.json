@@ -13,7 +13,7 @@
   "preferred_runtime": "codex-cli-mcp",
   "enable_subagents": true,
   "subagent_strategy": "auto",
-  "subagent_fallback": "single-session",
+  "subagent_fallback": "codex-cli-parallel",
   "codex_subagent_mode": "mcp-workers",
   "runtime_profiles": {
     "codex-cli-parallel": { "supports_subagents": true, "subagent_style": "parallel-exec", "notes": "Parallel codex exec sessions per role" },
