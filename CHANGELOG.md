@@ -6,6 +6,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.5] - 2025-12-21 (MCP Tool Clarity + Sanity Check)
+
+### Added
+
+- **MCP mental model**: Codex MCP servers are tools inside the session; restart required after registration
+- **Sanity check**: one-sentence role confirmations recorded during upgrade setup
+
 ## [2.0.4] - 2025-12-21 (Upgrade Auto-Setup for Codex MCP)
 
 ### Added

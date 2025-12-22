@@ -36,6 +36,8 @@ If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable
 - Ensure `codex_mcp_server.py` is available and run it before sub-agent delegation
 - Ensure `.app/runtime/codex_mcp_servers.toml` is merged into `~/.codex/config.toml` before starting Codex
 - Use the Codex MCP tools (one per role server) with role briefs in the prompt (no OpenAI Agents SDK)
+- If the session was already running before MCP registration, restart Codex to attach tools
+- Sanity check: ask each MCP tool for a one-sentence role confirmation and record it
 
 If `meta_config.json` specifies `preferred_runtime: "codex-cli-parallel"` and `enable_subagents: true`:
 - Spawn one `codex exec` session per role with the role brief

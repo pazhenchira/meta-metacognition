@@ -122,6 +122,12 @@ Rules:
 
 **Goal**: Tune orchestration to the user-selected tool and leverage role-specific sub-agents when available.
 
+**MCP Mental Model (Codex CLI)**:
+- MCP **servers appear as tools** inside a Codex session.
+- Tools are only callable **inside** the active Codex session UI.
+- `codex mcp-server` runs Codex as a server for **external** MCP clients; it is not a way to call tools from a shell.
+- If MCP servers were added after the session started, **restart Codex** to attach them.
+
 ### Supported Runtime Profiles (config-driven)
 
 - `codex-cli-parallel` → Codex CLI with **parallel role sessions** (`codex exec` per role)
@@ -459,6 +465,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
                - If already present, skip and continue.
              - Validate with `codex mcp list` that role servers are registered.
              - **IMPORTANT**: If the Codex session is already running, instruct the user to restart it so MCP servers are attached.
+             - **Sanity check**: Call each role MCP tool once and record a one-sentence role confirmation in `APP_ORCHESTRATION.md`.
              - If any step fails, fall back to `codex-cli-parallel` or single-session per `subagent_fallback`.
            - If `preferred_runtime` is `codex-cli-parallel` and `enable_subagents: true`:
              - Prepare to spawn `codex exec` role sessions on demand (no MCP config required).
