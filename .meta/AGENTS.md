@@ -63,10 +63,10 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
   - `subagent_strategy` (`auto`, `mcp`, or `single-session`)
   - `subagent_fallback` (`single-session` recommended)
   - If `preferred_runtime` missing or invalid:
-    - Propose **codex-cli-parallel** as the default (best reliability).
-    - Mention **codex-cli-mcp** as the upgrade path if MCP servers are desired.
+    - Default to **codex-cli-mcp**.
+    - If MCP setup is incomplete, **request the user to apply the required setup** (restart Codex).
     - Update `meta_config.json` with the chosen default.
-    - If user cannot decide or declines: set `preferred_runtime: "codex-cli-parallel"` and `enable_subagents: true`.
+    - If user cannot decide or declines: keep `preferred_runtime: "codex-cli-mcp"` and `enable_subagents: true`.
   - If `agent_runtime` exists (legacy key), treat it as **deprecated**; do not override `preferred_runtime`.
    - If runtime supports sub-agents **and** `enable_subagents` is true: use sub-agent delegation
    - If runtime supports agent profiles (but not sub-agents): run roles sequentially via profiles

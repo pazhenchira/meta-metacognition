@@ -1,5 +1,5 @@
 {
-  "meta_orchestrator_version": "2.0.6",
+  "meta_orchestrator_version": "2.0.7",
   "created_date": "2025-12-21",
   "last_updated": "2025-12-21",
   "features": [
@@ -19,6 +19,7 @@
     "codex_mcp_workers_config",
     "codex_mcp_upgrade_autosetup",
     "codex_mcp_sanity_check",
-    "codex_parallel_default"
+    "codex_parallel_default",
+    "codex_mcp_default"
   ]
 }

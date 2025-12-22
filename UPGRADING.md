@@ -20,10 +20,10 @@
 - **Upgrade auto-setup**: The upgrade workflow registers MCP servers (`codex mcp add`) for active roles.
 - **Restart reminder**: existing Codex sessions must be restarted to attach MCP servers.
 
-### v2.0.6 Notes (Codex Parallel Default)
+### v2.0.6 Notes (Codex MCP Default)
 
-- **Default runtime**: Missing/invalid runtime now defaults to `codex-cli-parallel`.
-- **Prompt clarity**: MCP worker mode is always offered as an optional path.
+- **Default runtime**: Missing/invalid runtime now defaults to `codex-cli-mcp`.
+- **Setup prompt**: If MCP tools are not attached, the upgrade asks the user to restart Codex.
 
 ---
 

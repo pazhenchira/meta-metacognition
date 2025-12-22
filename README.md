@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 2.0.6** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.7** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -125,13 +125,13 @@ Set your preferred runtime in `meta_config.json`:
 ```
 
 **Tip**: `codex-cli-parallel` is the most reliable Codex CLI mode (one `codex exec` per role).
-If you want Codex MCP worker sub-agents, set `preferred_runtime` to `codex-cli-mcp` and merge
-`.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` before starting Codex.
+Default is `codex-cli-mcp` (MCP tools inside the Codex session). If MCP tools don’t appear,
+merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` and restart Codex.
 If you can't decide, the orchestrator will default to **single-session role switching**.
 
 Supported runtimes (tool-optimized):
-- `codex-cli-parallel` (default)
-- `codex-cli-mcp`
+- `codex-cli-mcp` (default)
+- `codex-cli-parallel`
 - `claude-code-subagents`
 - `github-copilot`
 - `cursor-multi-agent`

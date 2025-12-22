@@ -6,6 +6,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.7] - 2025-12-21 (Codex MCP Default)
+
+### Changed
+
+- **Runtime selection**: Missing/invalid runtime now defaults to `codex-cli-mcp`
+- **Upgrade behavior**: If MCP tools aren’t attached, the upgrade instructs a Codex restart
+
 ## [2.0.6] - 2025-12-21 (Codex Parallel Default)
 
 ### Changed
