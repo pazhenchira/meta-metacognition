@@ -16,7 +16,7 @@
 - **Verification**: upgrade checks `codex mcp list` and requires a **Codex restart** if tools were added after session start
 - **Sanity check**: each MCP tool is asked for a one-sentence role confirmation and recorded in `APP_ORCHESTRATION.md`
 - **Fallback**: if MCP setup fails, fallback to `codex-cli-parallel` or single-session per `subagent_fallback`
-- **Timeouts**: MCP tool calls use `mcp_tool_timeout_seconds` (default 180s) before fallback
+- **Timeouts**: MCP tool calls use `mcp_tool_timeout_seconds` (default 7200s) before fallback
 
 ---
 

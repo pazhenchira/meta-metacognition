@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.10] - 2025-12-21 (MCP Timeout 120 Minutes)
+
+### Changed
+
+- **Default MCP timeout**: `mcp_tool_timeout_seconds` set to 7200 (120 minutes)
+
 ## [2.0.9] - 2025-12-21 (Configurable MCP Timeout)
 
 ### Added
