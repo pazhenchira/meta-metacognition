@@ -68,12 +68,12 @@ On every turn, you MUST:
    - `APP_ORCHESTRATION.md` ← Historical orchestration decisions
 
 5. **Runtime Selection (MANDATORY)**:
-   - Read `meta_config.json` for `preferred_runtime`, `enable_subagents`, `subagent_strategy`
+   - Read `meta_config.json` for `preferred_runtime`, `enable_subagents`, `subagent_strategy`, `mcp_tool_timeout_seconds`
    - If missing/invalid: default to `codex-cli-mcp` and request MCP setup if needed
    - If user cannot decide: set `preferred_runtime: "codex-cli-mcp"` and `enable_subagents: true`
    - If sub-agents supported: delegate per-role via sub-agents
    - Otherwise: role-switch within current session
-   - If MCP tool calls time out: fall back to `codex-cli-parallel` (preferred) or single-session
+   - If MCP tool calls exceed `mcp_tool_timeout_seconds`: fall back to `codex-cli-parallel` (preferred) or single-session
 
 6. **Documentation Integrity (MANDATORY)**:
    - All creation/changes go through appropriate role agents (or role switching)

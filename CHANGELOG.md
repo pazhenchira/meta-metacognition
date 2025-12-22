@@ -6,6 +6,16 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.9] - 2025-12-21 (Configurable MCP Timeout)
+
+### Added
+
+- **MCP timeout config**: `mcp_tool_timeout_seconds` in `meta_config.json`
+
+### Changed
+
+- **Fallback rule**: timeouts are compared against `mcp_tool_timeout_seconds`
+
 ## [2.0.8] - 2025-12-21 (MCP Timeout Fallback)
 
 ### Changed

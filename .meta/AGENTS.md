@@ -62,6 +62,7 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
   - `enable_subagents` (true/false)
   - `subagent_strategy` (`auto`, `mcp`, or `single-session`)
   - `subagent_fallback` (`single-session` recommended)
+  - `mcp_tool_timeout_seconds` (how long to wait on an MCP tool call before fallback)
 - If `preferred_runtime` missing or invalid:
     - Default to **codex-cli-mcp**.
     - If MCP setup is incomplete, **request the user to apply the required setup** (restart Codex).
@@ -155,7 +156,7 @@ Rules:
    - Start **one Codex MCP server per role** (or a single server if configured).
    - The **main Codex session acts as MCP client**, calling each role server as a tool.
    - Role brief is passed in the tool call prompt (no OpenAI Agents SDK).
-   - If any MCP tool call times out, **switch to fallback** immediately and continue.
+   - If any MCP tool call exceeds `mcp_tool_timeout_seconds`, **switch to fallback** immediately and continue.
 
 3. **If sub-agents are NOT supported**:
    - Use **role-switching** within the current session.
@@ -474,7 +475,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
              - Validate with `codex mcp list` that role servers are registered.
              - **IMPORTANT**: If the Codex session is already running, instruct the user to restart it so MCP servers are attached.
              - **Sanity check**: Call each role MCP tool once and record a one-sentence role confirmation in `APP_ORCHESTRATION.md`.
-             - If any sanity-check tool call times out, **switch to fallback** for this work item.
+             - If any sanity-check tool call exceeds `mcp_tool_timeout_seconds`, **switch to fallback** for this work item.
              - If any step fails, fall back to `codex-cli-parallel` or single-session per `subagent_fallback`.
            - If `preferred_runtime` is `codex-cli-parallel` and `enable_subagents: true`:
              - Prepare to spawn `codex exec` role sessions on demand (no MCP config required).
