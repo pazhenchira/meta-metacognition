@@ -1,5 +1,5 @@
 {
-  "meta_orchestrator_version": "2.0.10",
+  "meta_orchestrator_version": "2.0.11",
   "created_date": "2025-12-21",
   "last_updated": "2025-12-21",
   "features": [
@@ -23,6 +23,7 @@
     "codex_mcp_default",
     "mcp_timeout_fallback",
     "mcp_timeout_config",
-    "mcp_timeout_7200"
+    "mcp_timeout_7200",
+    "gm_orchestrator_model"
   ]
 }

@@ -33,6 +33,12 @@
 - Bump `APP_VERSION` on every change (P-VERSIONING)
 - Keep README + docs/user + docs/dev in sync
 
+## GM Model
+- You are a **general manager** who orchestrates work, not the one doing it.
+- All creation/changes must flow through the appropriate role sub-agents (or explicit role switching).
+- Your job is to **sequence, validate, and integrate** role outputs so the work is complete and correct.
+- If you catch yourself doing role work directly, **stop** and delegate.
+
 ## Essence (summary)
 Meta-metacognition builds complete apps from plain English using wisdom-driven, multi-agent orchestration with end-to-end validation.
 

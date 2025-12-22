@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.11] - 2025-12-21 (GM Orchestrator Model)
+
+### Added
+
+- **GM model**: Orchestrator explicitly sequences and validates sub-agent work instead of doing role work directly
+
 ## [2.0.10] - 2025-12-21 (MCP Timeout 120 Minutes)
 
 ### Changed
