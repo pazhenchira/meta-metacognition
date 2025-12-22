@@ -69,8 +69,8 @@ On every turn, you MUST:
 
 5. **Runtime Selection (MANDATORY)**:
    - Read `meta_config.json` for `preferred_runtime`, `enable_subagents`, `subagent_strategy`
-   - If missing/invalid: ask user to choose a runtime and update `meta_config.json`
-   - If user cannot decide: default to single-session role switching
+   - If missing/invalid: propose `codex-cli-parallel` as default and mention `codex-cli-mcp` as optional
+   - If user cannot decide: set `preferred_runtime: "codex-cli-parallel"` and `enable_subagents: true`
    - If sub-agents supported: delegate per-role via sub-agents
    - Otherwise: role-switch within current session
 

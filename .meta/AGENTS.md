@@ -59,11 +59,15 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
 **4.5 Runtime Selection (MANDATORY)**:
    - Read `meta_config.json` for:
   - `preferred_runtime` (e.g., `codex-cli-parallel`, `codex-cli-mcp`, `codex-cli`, `github-copilot`)
-     - `enable_subagents` (true/false)
-     - `subagent_strategy` (`auto`, `mcp`, or `single-session`)
-     - `subagent_fallback` (`single-session` recommended)
-   - If `preferred_runtime` missing or invalid: ask user to choose and **update `meta_config.json`**
-     - If user cannot decide or declines: default to **single-session role switching** (set `enable_subagents: false`, `subagent_strategy: single-session`)
+  - `enable_subagents` (true/false)
+  - `subagent_strategy` (`auto`, `mcp`, or `single-session`)
+  - `subagent_fallback` (`single-session` recommended)
+  - If `preferred_runtime` missing or invalid:
+    - Propose **codex-cli-parallel** as the default (best reliability).
+    - Mention **codex-cli-mcp** as the upgrade path if MCP servers are desired.
+    - Update `meta_config.json` with the chosen default.
+    - If user cannot decide or declines: set `preferred_runtime: "codex-cli-parallel"` and `enable_subagents: true`.
+  - If `agent_runtime` exists (legacy key), treat it as **deprecated**; do not override `preferred_runtime`.
    - If runtime supports sub-agents **and** `enable_subagents` is true: use sub-agent delegation
    - If runtime supports agent profiles (but not sub-agents): run roles sequentially via profiles
    - Otherwise: use role-switching in the current session

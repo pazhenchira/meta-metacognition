@@ -6,6 +6,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.6] - 2025-12-21 (Codex Parallel Default)
+
+### Changed
+
+- **Runtime selection**: Missing/invalid runtime now defaults to `codex-cli-parallel`
+- **Upgrade prompt**: MCP worker mode explicitly offered as optional path
+
 ## [2.0.5] - 2025-12-21 (MCP Tool Clarity + Sanity Check)
 
 ### Added
