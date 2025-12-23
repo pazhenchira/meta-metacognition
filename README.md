@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 2.0.13** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.14** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -130,6 +130,7 @@ merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` and rest
 If MCP tools exceed `mcp_tool_timeout_seconds` (default 7200s), the orchestrator falls back to `codex-cli-parallel`.
 If MCP warm-up fails within `mcp_fastfail_seconds` (default 60s), the orchestrator falls back immediately.
 Ensure each `[mcp_servers.<role>]` in `~/.codex/config.toml` sets `tool_timeout_sec` to `mcp_tool_timeout_seconds`.
+When using multiple apps, namespace MCP servers by app: `{app_slug}__{role}`, and set `cwd` per app.
 If you can't decide, the orchestrator will default to **single-session role switching**.
 
 Supported runtimes (tool-optimized):

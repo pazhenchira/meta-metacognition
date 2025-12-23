@@ -2,20 +2,32 @@
 # Merge these into ~/.codex/config.toml under [mcp_servers.*]
 # One server per role is recommended for clearer tool routing.
 
-[mcp_servers.essence_analyst]
+[mcp_servers.meta-metacognition__essence_analyst]
 command = ["codex", "mcp-server"]
+cwd = "/mnt/c/dev/meta-metacognition"
+tool_timeout_sec = 7200
 
-[mcp_servers.product_manager]
+[mcp_servers.meta-metacognition__product_manager]
 command = ["codex", "mcp-server"]
+cwd = "/mnt/c/dev/meta-metacognition"
+tool_timeout_sec = 7200
 
-[mcp_servers.architect]
+[mcp_servers.meta-metacognition__architect]
 command = ["codex", "mcp-server"]
+cwd = "/mnt/c/dev/meta-metacognition"
+tool_timeout_sec = 7200
 
-[mcp_servers.developer]
+[mcp_servers.meta-metacognition__developer]
 command = ["codex", "mcp-server"]
+cwd = "/mnt/c/dev/meta-metacognition"
+tool_timeout_sec = 7200
 
-[mcp_servers.tester]
+[mcp_servers.meta-metacognition__tester]
 command = ["codex", "mcp-server"]
+cwd = "/mnt/c/dev/meta-metacognition"
+tool_timeout_sec = 7200
 
-[mcp_servers.tech_writer]
+[mcp_servers.meta-metacognition__tech_writer]
 command = ["codex", "mcp-server"]
+cwd = "/mnt/c/dev/meta-metacognition"
+tool_timeout_sec = 7200

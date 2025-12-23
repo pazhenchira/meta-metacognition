@@ -75,6 +75,9 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
   - `mcp_tool_timeout_seconds` must be mirrored into **Codex config**:
     - Set `tool_timeout_sec = <mcp_tool_timeout_seconds>` under each `[mcp_servers.<role>]` in `~/.codex/config.toml`.
     - If not set, Codex defaults to ~60s per tool call, causing premature timeouts.
+  - **Multi-app safety**: MCP server names must be **namespaced per app**:
+    - Use `app_slug` from `meta_config.json` (or slugify app name) and name servers `{app_slug}__{role}`.
+    - This prevents collisions when multiple apps use MCP concurrently.
 - If `preferred_runtime` missing or invalid:
     - Default to **codex-cli-mcp**.
     - If MCP setup is incomplete, **request the user to apply the required setup** (restart Codex).
@@ -483,14 +486,15 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
        - **MANDATORY: Runtime Session Setup (Codex CLI)**
          - Read `meta_config.json`:
            - If `preferred_runtime` is `codex-cli-mcp` and `enable_subagents: true`:
-             - Generate `.app/runtime/codex_mcp_servers.toml` from template if missing.
-             - Auto-register MCP servers (one per active role):
-               - `codex mcp add <role> -- codex mcp-server`
-               - If already present, skip and continue.
-             - Validate with `codex mcp list` that role servers are registered.
-             - **IMPORTANT**: If the Codex session is already running, instruct the user to restart it so MCP servers are attached.
-             - **IMPORTANT**: Ensure `tool_timeout_sec` is set in `~/.codex/config.toml` for each role server to match `mcp_tool_timeout_seconds`.
-             - **Sanity check**: Call each role MCP tool once and record a one-sentence role confirmation in `APP_ORCHESTRATION.md`.
+              - Generate `.app/runtime/codex_mcp_servers.toml` from template if missing.
+              - Auto-register MCP servers (one per active role):
+                - `codex mcp add <app_slug>__<role> -- codex mcp-server`
+                - If already present, skip and continue.
+              - Validate with `codex mcp list` that role servers are registered.
+              - **IMPORTANT**: If the Codex session is already running, instruct the user to restart it so MCP servers are attached.
+              - **IMPORTANT**: Ensure `tool_timeout_sec` is set in `~/.codex/config.toml` for each role server to match `mcp_tool_timeout_seconds`.
+              - **IMPORTANT**: Ensure each MCP server has `cwd` set to the app root so tools operate within the correct app context.
+              - **Sanity check**: Call each role MCP tool once and record a one-sentence role confirmation in `APP_ORCHESTRATION.md`.
              - If any sanity-check tool call exceeds `mcp_tool_timeout_seconds`, **switch to fallback** for this work item.
              - Log MCP warm-up failures/timeouts in `APP_ORCHESTRATION.md` with fallback decision.
              - If any step fails, fall back to `codex-cli-parallel` or single-session per `subagent_fallback`.

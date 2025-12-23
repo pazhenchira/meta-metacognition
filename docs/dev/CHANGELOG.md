@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.14] - 2025-12-21 (MCP App Namespacing)
+
+### Added
+
+- **App-scoped MCP servers**: `{app_slug}__{role}` naming with app `cwd` to avoid multi-app collisions
+
 ## [2.0.13] - 2025-12-21 (Codex Tool Timeout Sync)
 
 ### Added

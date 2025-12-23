@@ -19,6 +19,7 @@
 - **Timeouts**: MCP tool calls use `mcp_tool_timeout_seconds` (default 7200s) before fallback
 - **Fast-fail**: MCP warm-up pings require a response within `mcp_fastfail_seconds` (default 60s)
 - **Codex config**: set `tool_timeout_sec` for each MCP server in `~/.codex/config.toml` to match `mcp_tool_timeout_seconds`
+- **Multi-app safety**: namespace MCP servers as `{app_slug}__{role}` and set `cwd` to the app root in `~/.codex/config.toml`
 
 ---
 

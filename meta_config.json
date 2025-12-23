@@ -10,6 +10,7 @@
   "enable_system_tests": true,
   
   "_comment_runtime": "Runtime selection and sub-agent delegation",
+  "app_slug": "meta-metacognition",
   "preferred_runtime": "codex-cli-mcp",
   "enable_subagents": true,
   "subagent_strategy": "auto",

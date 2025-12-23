@@ -35,7 +35,8 @@ If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable
 - If MCP sub-agents are unavailable, fall back to role-switching in this session
 - Ensure `codex_mcp_server.py` is available and run it before sub-agent delegation
 - Ensure `.app/runtime/codex_mcp_servers.toml` is merged into `~/.codex/config.toml` before starting Codex
-- Ensure each `[mcp_servers.<role>]` in `~/.codex/config.toml` sets `tool_timeout_sec` to `mcp_tool_timeout_seconds`
+- Ensure each `[mcp_servers.{app_slug}__<role>]` in `~/.codex/config.toml` sets `tool_timeout_sec` to `mcp_tool_timeout_seconds`
+- Ensure each MCP server entry sets `cwd` to the app root (context isolation for multi-app use)
 - Use the Codex MCP tools (one per role server) with role briefs in the prompt (no OpenAI Agents SDK)
 - If the session was already running before MCP registration, restart Codex to attach tools
 - Sanity check: ask each MCP tool for a one-sentence role confirmation and record it
