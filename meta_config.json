@@ -1,6 +1,8 @@
 {
   "require_lego_plan_approval": false,
   "r_and_d_mode": "fast",
+  "branching_policy": "auto",
+  "branching_risk_threshold": "medium",
   
   "_comment_phase1": "Phase 1: Session Isolation, Tool Agnosticism, Integration Tests",
   "agent_runtime": "codex-cli",

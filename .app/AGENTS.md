@@ -44,6 +44,13 @@
 - Your job is to **sequence, validate, and integrate** role outputs so the work is complete and correct.
 - If you catch yourself doing role work directly, **stop** and delegate.
 
+## Branching Policy (Git)
+- branching_policy: auto
+- branching_risk_threshold: medium
+- Auto mode: branch per work item if risk ≥ threshold or parallel work items exist; else commit to main.
+- Always: branch per work item and merge after validation.
+- Never: commit directly to main.
+
 ## Essence (summary)
 Meta-metacognition builds complete apps from plain English using wisdom-driven, multi-agent orchestration with end-to-end validation.
 

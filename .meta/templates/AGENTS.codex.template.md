@@ -98,6 +98,17 @@ For engine upgrades (new `.meta/` folder version):
 
 ---
 
+## Branching Policy (Git)
+
+- Read `meta_config.json`:
+  - `branching_policy`: `auto` | `always` | `never`
+  - `branching_risk_threshold`: `low` | `medium` | `high`
+- **Auto mode**: branch per work item if risk ≥ threshold or parallel work items exist; else commit to main.
+- **Always**: branch per work item and merge after validation.
+- **Never**: commit directly to main.
+
+---
+
 ## References
 
 - **App Intent**: `app_intent.md` ← What the app should do

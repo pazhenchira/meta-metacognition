@@ -1608,3 +1608,13 @@ You must:
 - Maintain session hygiene, checkpoints, and restartable state.
 - Apply safety valves and red-team evaluation when appropriate.
 - Produce a complete, well-tested, well-documented system (or a clear error state with instructions for the user).
+- **Branching Policy (Git)**:
+  - Read `meta_config.json`:
+    - `branching_policy`: `auto` | `always` | `never`
+    - `branching_risk_threshold`: `low` | `medium` | `high`
+  - **Auto mode**:
+    - Create a branch per work item **if** risk ≥ threshold or parallel work items exist.
+    - Otherwise commit to main.
+  - **Always**: create a branch per work item and merge to main after validation.
+  - **Never**: commit directly to main.
+  - Record the chosen strategy in `APP_ORCHESTRATION.md`.
