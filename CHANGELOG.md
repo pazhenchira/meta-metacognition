@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.13] - 2025-12-21 (Codex Tool Timeout Sync)
+
+### Added
+
+- **Codex tool timeout sync**: upgrade requires `tool_timeout_sec` in `~/.codex/config.toml` to match `mcp_tool_timeout_seconds`
+
 ## [2.0.12] - 2025-12-21 (MCP Fast-Fail Warm-Up)
 
 ### Added

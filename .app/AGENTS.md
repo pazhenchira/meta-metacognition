@@ -18,6 +18,7 @@
 - mcp_warmup_enabled: true
 - mcp_retry_once: true
 - For MCP workers: merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml`
+- Ensure each `[mcp_servers.<role>]` in `~/.codex/config.toml` sets `tool_timeout_sec` to `mcp_tool_timeout_seconds`
 - If this session started before MCP registration, restart Codex to attach tools
 - Sanity check: call each MCP tool for a one-sentence role confirmation
 - If MCP tools exceed `mcp_tool_timeout_seconds`: fall back to codex-cli-parallel for this work item
