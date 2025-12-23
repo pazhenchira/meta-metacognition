@@ -39,6 +39,7 @@ If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable
 - If the session was already running before MCP registration, restart Codex to attach tools
 - Sanity check: ask each MCP tool for a one-sentence role confirmation and record it
 - If MCP tools exceed `mcp_tool_timeout_seconds` or fail, fall back to `codex-cli-parallel` (preferred) or role switching
+- Warm-up: ping each MCP tool; require a response within `mcp_fastfail_seconds` (retry once if `mcp_retry_once`)
 
 If `meta_config.json` specifies `preferred_runtime: "codex-cli-parallel"` and `enable_subagents: true`:
 - Spawn one `codex exec` session per role with the role brief

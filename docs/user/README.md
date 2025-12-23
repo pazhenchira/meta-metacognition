@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 2.0.11** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.12** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -128,6 +128,7 @@ Set your preferred runtime in `meta_config.json`:
 Default is `codex-cli-mcp` (MCP tools inside the Codex session). If MCP tools don’t appear,
 merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` and restart Codex.
 If MCP tools exceed `mcp_tool_timeout_seconds` (default 7200s), the orchestrator falls back to `codex-cli-parallel`.
+If MCP warm-up fails within `mcp_fastfail_seconds` (default 60s), the orchestrator falls back immediately.
 If you can't decide, the orchestrator will default to **single-session role switching**.
 
 Supported runtimes (tool-optimized):

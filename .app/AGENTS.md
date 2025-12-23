@@ -14,6 +14,9 @@
 - enable_subagents: true
 - codex_subagent_mode: mcp-workers
 - mcp_tool_timeout_seconds: 7200
+- mcp_fastfail_seconds: 60
+- mcp_warmup_enabled: true
+- mcp_retry_once: true
 - For MCP workers: merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml`
 - If this session started before MCP registration, restart Codex to attach tools
 - Sanity check: call each MCP tool for a one-sentence role confirmation

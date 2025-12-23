@@ -6,6 +6,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.12] - 2025-12-21 (MCP Fast-Fail Warm-Up)
+
+### Added
+
+- **Fast-fail watchdog**: `mcp_fastfail_seconds`, `mcp_warmup_enabled`, `mcp_retry_once`
+- **Warm-up ping**: quick MCP health check before long tasks
+
 ## [2.0.11] - 2025-12-21 (GM Orchestrator Model)
 
 ### Added

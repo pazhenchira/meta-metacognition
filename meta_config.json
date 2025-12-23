@@ -16,6 +16,9 @@
   "subagent_fallback": "codex-cli-parallel",
   "codex_subagent_mode": "mcp-workers",
   "mcp_tool_timeout_seconds": 7200,
+  "mcp_fastfail_seconds": 60,
+  "mcp_warmup_enabled": true,
+  "mcp_retry_once": true,
   "mcp_tool_timeout_seconds": 180,
   "runtime_profiles": {
     "codex-cli-parallel": { "supports_subagents": true, "subagent_style": "parallel-exec", "notes": "Parallel codex exec sessions per role" },

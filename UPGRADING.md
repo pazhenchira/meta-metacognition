@@ -17,6 +17,7 @@
 - **Sanity check**: each MCP tool is asked for a one-sentence role confirmation and recorded in `APP_ORCHESTRATION.md`
 - **Fallback**: if MCP setup fails, fallback to `codex-cli-parallel` or single-session per `subagent_fallback`
 - **Timeouts**: MCP tool calls use `mcp_tool_timeout_seconds` (default 7200s) before fallback
+- **Fast-fail**: MCP warm-up pings require a response within `mcp_fastfail_seconds` (default 60s)
 
 ---
 
