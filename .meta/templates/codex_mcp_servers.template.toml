@@ -3,31 +3,37 @@
 # One server per role is recommended for clearer tool routing.
 
 [mcp_servers.{APP_SLUG}__essence_analyst]
-command = ["codex", "mcp-server"]
+command = "codex"
+args = ["mcp-server"]
 cwd = "{APP_ROOT}"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__product_manager]
-command = ["codex", "mcp-server"]
+command = "codex"
+args = ["mcp-server"]
 cwd = "{APP_ROOT}"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__architect]
-command = ["codex", "mcp-server"]
+command = "codex"
+args = ["mcp-server"]
 cwd = "{APP_ROOT}"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__developer]
-command = ["codex", "mcp-server"]
+command = "codex"
+args = ["mcp-server"]
 cwd = "{APP_ROOT}"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__tester]
-command = ["codex", "mcp-server"]
+command = "codex"
+args = ["mcp-server"]
 cwd = "{APP_ROOT}"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__tech_writer]
-command = ["codex", "mcp-server"]
+command = "codex"
+args = ["mcp-server"]
 cwd = "{APP_ROOT}"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}

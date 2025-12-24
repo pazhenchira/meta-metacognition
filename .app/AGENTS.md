@@ -303,12 +303,15 @@ meta-metacognition/
 
 ### 5.1 Active Roles for This App
 
-- Essence Analyst
+- Essence Analyst (required)
 - Product Manager
 - Architect
 - Developer
 - Tester
 - Technical Writer
+- Monetization Strategist
+- Growth Marketer
+- Evangelist
 
 ### 5.2 Role Summaries
 

@@ -6,5 +6,9 @@
 - Developer
 - Tester
 - Technical Writer
+- Monetization Strategist
+- Growth Marketer
+- Evangelist
 
-GTM roles (Monetization, Growth, Evangelist) are included only when requested in app_intent.md.
+
+GTM roles are ACTIVE for this app (Monetization, Growth, Evangelist).
