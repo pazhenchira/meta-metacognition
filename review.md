@@ -1,7 +1,7 @@
 # Meta-Orchestrator: System Review
 
-**Date**: November 25, 2025  
-**Version**: 1.7.8  
+**Date**: December 24, 2025  
+**Version**: 2.0.21  
 **Purpose**: System-level review covering fundamentals, limitations, and future improvements
 
 ---
@@ -14,10 +14,11 @@
 
 **Key Components**:
 1. **Meta-Orchestrator** (CTO role): Strategy, coordination, dependency management
-2. **LEGO-Orchestrators** (Tech Lead role): Component implementation, testing, validation
-3. **Wisdom System** (24,000+ lines): Engineering principles, antipatterns, success patterns
-4. **Runtime Adapters**: Abstract Codex CLI, GitHub Copilot, OpenAI API differences
-5. **State Management**: File-based JSON state for restartable pipeline
+2. **App Orchestrator** (App owner): Role sequencing, integration, Sponsor interface
+3. **LEGO-Orchestrators** (Tech Lead role): Component implementation, testing, validation
+4. **Wisdom System** (24,000+ lines): Engineering principles, antipatterns, success patterns
+5. **Runtime Adapters**: Abstract Codex CLI, GitHub Copilot, OpenAI API differences
+6. **State Management**: File-based JSON state for restartable pipeline
 
 **Technology Stack**:
 - Orchestration: Markdown (declarative), JSON (state)

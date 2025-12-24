@@ -15,17 +15,21 @@ git tag v1-backup
 ### 2️⃣ Copy Engine (10 seconds)
 ```bash
 cp -r /path/to/meta-metacognition/.meta ./
-cat .meta/VERSION  # Verify: 2.0.0
+cat .meta/VERSION  # Verify: 2.0.21
 ```
 
 ### 3️⃣ Run Upgrade (30-60 minutes, automated)
 
 Open app in Codex CLI or GitHub Copilot:
 ```
-Upgrade this app to meta-orchestrator v2.0
+Upgrade this app to meta-orchestrator v2.0.21
 ```
 
 **Done!** ✅
+
+**Note (2.0.21)**:
+- Decision-critical apps require **Strategy Gate 0** (STR-XXX) before PM specs.
+- Role lock is enforced via `orchestrator_state.json` (`primary_role`, `role_lock`).
 
 ---
 
@@ -165,7 +169,7 @@ A: Yes! Create branch: `git checkout -b test-v2`, run upgrade, test, rollback if
 ```bash
 git tag v1-backup
 cp -r /path/to/meta-metacognition/.meta ./
-# Say: "Upgrade this app to meta-orchestrator v2.0"
+# Say: "Upgrade this app to meta-orchestrator v2.0.21"
 ```
 
 **Rollback = 1 command**:

@@ -12,6 +12,21 @@ This workflow covers fixing a defect where implementation deviates from specific
 
 ---
 
+## Optional Role Insertions (When Applicable)
+
+- **Strategy Owner**: Insert if bug impacts decision framework or benchmarks.
+- **Essence Analyst**: Only if the bug undermines the core value proposition or success metrics.
+- **Designer**: If fix affects UX, accessibility, or interaction flows.
+- **Operations**: If bug involves reliability, uptime, monitoring, or deployment (Gate 6 before production deploy).
+- **Writer**: If bug fix changes user-facing behavior or documentation.
+
+## Decision-Critical Guardrail
+
+If the app is **decision-critical** and the bug impacts decision logic, benchmarks, or risk limits:
+- **Strategy Owner is REQUIRED**.
+- **Gate 0 must be completed** before PM triage proceeds.
+- If not applicable, record **"Gate 0 N/A"** with a brief rationale.
+
 ## What Is a Bug?
 
 A bug is when:
@@ -26,6 +41,27 @@ A bug is NOT:
 
 ---
 
+## Phase 0.5: Strategy Check (Strategy Owner) — Conditional
+
+### Trigger
+- Bug affects or undermines the domain decision framework
+
+### Activities
+1. Validate whether strategy still meets benchmarks
+2. Update STR-XXX if the decision logic is flawed
+3. Provide revised evaluation criteria if needed
+
+### Artifacts Produced
+- Updated `specs/strategy/STR-XXX-{name}.md` (new version, immutable)
+
+### Exit Criteria
+- Strategy alignment confirmed or updated
+
+### Handoff
+- **To**: Product Manager and Tester (via App Orchestrator)
+- **Review Gate**: See `REVIEW_GATES.md` Gate 0 (Strategy Owner → PM)
+
+---
 ## Workflow Diagram
 
 ```
@@ -69,7 +105,34 @@ A bug is NOT:
 │                          VERIFICATION                                        │
 │                            (Tester)                                          │
 │                                                                              │
-│  Verify fix → Check for regressions → Close bug                             │
+│  Verify fix → Check for regressions                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+        │
+        │ Bug verified
+        ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    DOCUMENTATION & VERSIONING                                │
+│                        (Writer + PM)                                         │
+│                                                                              │
+│  Update docs → Bump version                                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+        │
+        │ Release candidate ready
+        ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                   OPERATIONS REVIEW (If Applicable)                          │
+│                             (Operations)                                     │
+│                                                                              │
+│  Deployability → Monitoring → Runbooks                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+        │
+        │ Ops signoff (if applicable)
+        ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     PM FINAL ACCEPTANCE                                      │
+│                                (PM)                                          │
+│                                                                              │
+│  Confirm value restored → Accept or reject                                  │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -151,6 +214,7 @@ A bug is NOT:
 
 ## Impact Assessment
 - **User Impact**: {How users are affected}
+- **Business Impact**: {Revenue, compliance, trust, risk exposure}
 - **Workaround**: {If any, describe}
 ```
 
@@ -189,7 +253,11 @@ A bug is NOT:
    | P3 | Fix in next sprint |
    | P4 | Fix when convenient |
 
-4. **Assign to Developer**:
+4. **Confirm Value Impact**:
+   - Customer value impact documented
+   - Business impact documented (revenue, compliance, trust, risk)
+
+5. **Assign to Developer**:
    - Based on component ownership
    - Based on availability
 
@@ -212,6 +280,7 @@ Is behavior in spec (FR-XXX)?
 - Confirmed as bug (not feature request)
 - Severity assessed
 - Priority assigned
+- Customer value + business impact documented
 - Developer assigned
 
 ### Handoff
@@ -415,6 +484,59 @@ Tester reviews before verifying:
 ### Exit Criteria
 - Docs and intent updated (when applicable)
 - APP_VERSION bumped
+
+---
+
+## Phase 6.5: Operations Review (If Applicable)
+
+**Trigger**: Production bug fix or reliability/deploy impact.
+
+**Activities**:
+- Review deployment plan and rollback
+- Verify monitoring/alerting coverage
+- Validate runbooks and operational notes
+- Confirm capacity/SLO impact
+
+### Exit Criteria
+- Ops readiness confirmed
+- Gate 6 approval recorded (or issues returned)
+
+### Handoff
+- **To**: PM (Final Acceptance)
+- **Artifact**: Release candidate + ops readiness confirmation
+
+### ⮕ REVIEW GATE 6: Operations Review (If Applicable)
+See `REVIEW_GATES.md` for full criteria. Operations reviews:
+- [ ] Deployment plan exists with rollback
+- [ ] Monitoring and alerting configured
+- [ ] Runbooks updated
+- [ ] No expected SLO impact
+
+**Gate Outcome**: Approve / Approve with Conditions / Reject
+
+---
+
+## Phase 7: PM Final Acceptance (Bug Fix)
+
+**Trigger**: Bug verified and docs/versioning complete
+
+**Activities**:
+1. Confirm BUG-XXX restores FR-XXX behavior
+2. Verify customer value + business impact restored
+3. Record PM acceptance in BUG-XXX (PM Acceptance section)
+
+### Exit Criteria
+- PM acceptance recorded
+- Gate 7 approval recorded
+
+### ⮕ REVIEW GATE 7: PM Final Acceptance (Bug Fix)
+See `REVIEW_GATES.md` for full criteria. PM confirms:
+- [ ] Bug fix matches FR-XXX spec
+- [ ] Acceptance criteria pass
+- [ ] Customer value + business impact restored
+- [ ] No unauthorized scope changes
+
+**Gate Outcome**: ACCEPTED / REJECTED
 
 ---
 

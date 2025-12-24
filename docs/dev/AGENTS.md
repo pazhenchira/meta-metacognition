@@ -103,6 +103,11 @@ The meta-orchestrator is the only AI system that:
 
 ## USER JOURNEY
 
+## SPONSOR (Human Owner)
+
+- The Sponsor provides app intent, constraints, and approvals.
+- The **App Orchestrator is the only role that communicates with the Sponsor**.
+
 **Discovery Phase**:
 1. User reads README.md (human-centric explanation)
 2. Understands the "virtual CTO" concept

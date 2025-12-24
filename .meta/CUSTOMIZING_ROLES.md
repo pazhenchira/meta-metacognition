@@ -24,10 +24,20 @@ Different apps have different needs:
 
 ## Role Selection Guide
 
+### Sponsor (Human Owner)
+
+The **Sponsor** is the human decision-maker for app intent, constraints, and approvals. This is not a sub-agent role and is **always present**.
+
+- The **App Orchestrator is the only role that communicates with the Sponsor**.
+- All other roles route questions/decisions through the App Orchestrator.
+
 ### Always Required
 - **Essence Analyst**: Defines and protects the core value proposition (REQUIRED for all apps)
 - **Product Manager**: Someone must define WHAT to build and WHY
 - **Developer**: Someone must build it
+
+### Conditionally Required
+- **Strategy Owner (Domain Expert)**: REQUIRED when the app’s value depends on a domain decision framework (finance, medical, legal, safety, etc.)
 
 ### Usually Required
 - **Architect**: For apps with >3 components or complex interactions
@@ -49,6 +59,7 @@ Different apps have different needs:
 | Do external users need to understand it? | Technical Writer |
 | Does it run in production with uptime needs? | Operations |
 | Does it have compliance/security requirements? | Operations + enhanced Tester |
+| Does the app’s value depend on a domain decision framework? | Strategy Owner |
 | Does it need a pricing/revenue model? | Monetization Strategist |
 | Does it need growth loops or acquisition strategy? | Growth Marketer |
 | Does it need community/launch materials? | Evangelist |
@@ -172,6 +183,9 @@ Based on `.meta/roles/developer.md` with these changes:
 Our developer role for this app...
 [Custom content]
 ```
+
+**Preferred for upgrades**: Use the **App/Sponsor Overrides** block inside each role file.  
+The engine preserves this block across upgrades, so Sponsor-specific guardrails survive.
 
 ### Step 3: Document Your Workflow
 

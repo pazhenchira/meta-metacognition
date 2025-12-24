@@ -1,6 +1,6 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: December 6, 2025  
+**Date**: December 24, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
@@ -10,6 +10,12 @@
 **Status**: Breaking changes require migration  
 **Type**: Automated with rollback support  
 **Time**: 30-60 minutes  
+
+**Note**: App/Sponsor-specific guardrails in `APP_OVERRIDES` blocks are preserved across upgrades.
+
+### v2.x Notes (Current)
+- **Strategy Gate 0**: Decision-critical apps require STR-XXX approval before PM creates FR-XXX
+- **Role lock state guard**: `orchestrator_state.json` includes `primary_role` and `role_lock` (HALT if missing/mismatched)
 
 ---
 
@@ -34,7 +40,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.0
+# Should show: 2.0.21
 ```
 
 ### Step 3: Run Upgrade
@@ -203,9 +209,9 @@ Git history is preserved, workspace is restored.
   1. Open your app's `AGENTS.md` (root)
   2. Add after the title and before PRE-FLIGHT CHECKLIST:
      ```markdown
-     ## PERSONA: Meta-App-Orchestrator
+     ## PERSONA: App Orchestrator
      
-     You ARE the Meta-App-Orchestrator for {YOUR_APP}.
+     You ARE the App Orchestrator for {YOUR_APP}.
      
      **You are NOT a helper. You are NOT an assistant. You are the DECISION-MAKER.**
      
@@ -216,7 +222,7 @@ Git history is preserved, workspace is restored.
      4. Maintain architectural alignment - validate against KISS, LEGO, essence
      5. Self-monitor for ratholing - if stuck 3+ iterations, STOP and reassess
      ```
-  3. Similarly update `.github/agents/meta-app-orchestrator.agent.md`
+  3. Similarly update `.github/agents/app-orchestrator.agent.md`
 
 ---
 
@@ -231,11 +237,11 @@ Git history is preserved, workspace is restored.
   - Added validation steps in UPGRADE mode (Phase 0) to prevent incorrect generation
 
 - **Action required**:
-  - **For existing apps**: Check `.github/agents/meta-app-orchestrator.agent.md`
+  - **For existing apps**: Check `.github/agents/app-orchestrator.agent.md`
   - **Line 16 should say**: "You read `AGENTS.md` (root) for app-specific logic"
   - **If says `.meta/AGENTS.md`**: This is the bug - agent will read engine logic instead of app logic
   - **To fix manually**: 
-    1. Open `.github/agents/meta-app-orchestrator.agent.md`
+    1. Open `.github/agents/app-orchestrator.agent.md`
     2. Find line that says "You read `.meta/AGENTS.md`" or references engine file
     3. Change to "You read `AGENTS.md` (root) for app-specific logic"
   - **To fix automatically**: Run meta-orchestrator in UPGRADE mode - it will regenerate correctly
@@ -250,7 +256,7 @@ Git history is preserved, workspace is restored.
 - **How to verify your app is affected**:
   ```bash
   # Check if your app has the bug
-  grep -n "\.meta/AGENTS\.md" .github/agents/meta-app-orchestrator.agent.md
+  grep -n "\.meta/AGENTS\.md" .github/agents/app-orchestrator.agent.md
   
   # If output shows line 16 or primary instruction section, you have the bug
   # If output only shows line 74 (reference list), you're OK
@@ -270,7 +276,7 @@ Git history is preserved, workspace is restored.
 - **What changed**:
   - Enhanced pre-flight checklist with visual reinforcement (CRITICAL CHECKPOINT boxes, 🚨 emojis)
   - Memory joggers at every phase (Phases 0-11) remind agents of critical steps
-  - State guards in `orchestrator_state.json` (`preflight_run`, `manifest_updated` flags)
+  - State guards in `orchestrator_state.json` (`preflight_run`, `manifest_updated`, `primary_role`, `role_lock`)
   - Manifest validation gate at Phase 11.2 (HALT if manifest not updated before COMPLETE)
   - Before Phase 4: System checks `preflight_run = true` (HALT if false)
   - Before Phase 12 COMPLETE: System checks `manifest_updated = true` (HALT if false)
@@ -291,7 +297,7 @@ Git history is preserved, workspace is restored.
 - **Technical improvements**:
   - Pre-flight checklist: 6 steps → 69-line comprehensive visual guide
   - CRITICAL CHECKPOINT boxes: 12 total (one per phase 0-11)
-  - State guards: 2 new flags (`preflight_run`, `manifest_updated`)
+  - State guards: 2 new flags (`preflight_run`, `manifest_updated`) + later versions add `primary_role`, `role_lock`
   - Validation gate: Verifies manifest exists, complete, and recent before COMPLETE
 
 - **What agents will do differently**:
@@ -357,7 +363,7 @@ Git history is preserved, workspace is restored.
 - **What changed**:
   - Now supports BOTH GitHub Copilot Chat (VS Code) AND OpenAI Codex CLI (terminal)
   - UPGRADE mode generates TWO agent configuration files:
-    - `.github/agents/meta-app-orchestrator.agent.md` → GitHub Copilot Chat agent picker
+    - `.github/agents/app-orchestrator.agent.md` → GitHub Copilot Chat agent picker
     - `AGENTS.md` (root) → OpenAI Codex CLI memory system
   - New template: `.meta/templates/AGENTS.codex.template.md` for Codex configuration
   - Validation checks BOTH files exist
@@ -390,24 +396,24 @@ Git history is preserved, workspace is restored.
 **Changes**: Fixed agent discoverability - MANDATORY `.github/agents/` generation during upgrades
 
 - **What changed**: 
-  - UPGRADE mode now **requires** `.github/agents/meta-app-orchestrator.agent.md` generation
+  - UPGRADE mode now **requires** `.github/agents/app-orchestrator.agent.md` generation
   - Added validation: Checks file exists after upgrade, stops if missing
   - Creates `.github/agents/` directory if needed
-  - Ensures Codex CLI agent picker can discover "Meta-App-Orchestrator"
+  - Ensures Codex CLI agent picker can discover "App Orchestrator"
   
 - **Action required**: 
   - **For new apps**: Automatic (agent file generated during build)
   - **For apps upgraded v1.7.1-v1.7.3 WITHOUT agent file**: Run ENGINE UPGRADE again OR manual fix:
     ```bash
     mkdir .github\agents
-    copy .meta\templates\agent.template.md .github\agents\meta-app-orchestrator.agent.md
+    copy .meta\templates\agent.template.md .github\agents\app-orchestrator.agent.md
     # Edit file: Replace {APP_NAME} with your app name
     ```
   
 - **Breaking changes**: None (only improves discoverability)
 
 - **Why upgrade**: 
-  - "Meta-App-Orchestrator" appears in Codex CLI agent picker
+  - "App Orchestrator" appears in Codex CLI agent picker
   - No need to remember activation phrases
   - Consistent agent experience across all apps
   

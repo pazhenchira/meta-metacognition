@@ -53,6 +53,16 @@ All developer documentation follows these standards:
 - **Complete**: Cover edge cases and errors
 - **Consistent**: Same terminology across all docs
 
+
+---
+
+## Sponsor Interface (Human Owner)
+
+- The **App Orchestrator is the only role that communicates with the Sponsor**.
+- All other roles route questions/decisions through the App Orchestrator.
+- Sponsor inputs: intent, constraints, approvals.
+- Sponsor outputs: decisions, trade-offs, release notes.
+- App/Sponsor-specific guardrails live in the **App/Sponsor Overrides** block in each role file (preserved on upgrade).
 ---
 
 ## Document Types
@@ -145,5 +155,5 @@ When adding new developer documentation:
 
 ---
 
-**Last Updated**: 2025-12-07  
-**Maintainer**: Meta-Orchestrator v2.0
+**Last Updated**: 2025-12-24  
+**Maintainer**: Meta-Orchestrator v2.0.21

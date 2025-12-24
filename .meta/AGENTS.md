@@ -27,7 +27,7 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
 
 **STATE GUARDS**: After completing this checklist, set `orchestrator_state.json` flag:
 ```json
-{ "preflight_run": true, "current_phase": "...", "manifest_updated": false }
+{ "preflight_run": true, "current_phase": "...", "manifest_updated": false, "primary_role": "meta_orchestrator", "role_lock": true }
 ```
 
 ### CHECKLIST STEPS:
@@ -39,7 +39,7 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
    - Does `.meta-version` exist?
      - YES → This is MAINTENANCE or UPGRADE mode
      - NO → This is NEW APP mode
-   - **ACTION**: Update `orchestrator_state.json` with `preflight_run: true`
+   - **ACTION**: Update `orchestrator_state.json` with `preflight_run: true`, `primary_role: "meta_orchestrator"`, `role_lock: true`
 
 **2. Reaffirm Your Role**:
    - You are the META-ORCHESTRATOR
@@ -191,8 +191,11 @@ Rules:
 
 ### Role Pool (Core + Lifecycle)
 
+Sub-agent mapping: If sub-agents are supported, **every active role** runs as a sub-agent; the App Orchestrator remains the primary session. Sponsor is human.
+
 Core build roles:
 - Essence Analyst (essence discovery & validation)
+- Strategy Owner (domain decision framework; required for decision-critical apps)
 - Product Manager
 - Architect
 - Designer
@@ -206,7 +209,12 @@ Lifecycle/GTМ roles:
 - Growth Marketer
 - Evangelist
 
-**Rule**: Essence Analyst is REQUIRED. GTM roles are OPTIONAL and only included when requested.
+**Sponsor (Human Owner)**:
+- The Sponsor provides app intent, constraints, and approvals.
+- The **App Orchestrator is the only role that communicates with the Sponsor**.
+- All other roles route questions/decisions through the App Orchestrator.
+
+**Rule**: Essence Analyst is REQUIRED. Strategy Owner is REQUIRED for decision-critical apps. GTM roles are OPTIONAL and only included when requested.
 If any role is not applicable, skip it explicitly and record why.
 
 ---
@@ -458,18 +466,22 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
          - Which files are protected (user_modified: true)
        - Show plan to user with recommendations, get approval.
        - Apply upgrade: add new LEGOs, enhance or regenerate files as decided.
+       - **Preserve App/Sponsor Overrides**:
+         - Before regenerating `.app/roles/*.md`, extract the `APP_OVERRIDES` block from each role.
+         - After regeneration, reinsert the preserved block into the corresponding role file.
+         - If a role is removed, archive its overrides in `.app/roles/_overrides_archive.md`.
        - Update `.meta-version` and `.meta-manifest.json`.
        - **MANDATORY: Generate agent configuration for BOTH runtimes**:
          
          **A. GitHub Copilot Chat (VS Code)** - Uses `.github/agents/` files:
-         - **ALWAYS generate `.github/agents/meta-app-orchestrator.agent.md`**
+         - **ALWAYS generate `.github/agents/app-orchestrator.agent.md`**
          - Create `.github/agents/` directory if missing
          - If file doesn't exist: Generate from `.meta/templates/agent.template.md`
          - If file exists and outdated: Update with latest template
          - Replace `{APP_NAME}` with actual app name from `app_intent.md`
-         - Agent name: "Meta-App-Orchestrator" (consistent across all apps)
+         - Agent name: "App Orchestrator" (consistent across all apps)
          - **CRITICAL**: File must say "You read `AGENTS.md` (root)" NOT ".meta/AGENTS.md"
-         - **VALIDATION**: Verify file exists and contains "Meta-App-Orchestrator"
+         - **VALIDATION**: Verify file exists and contains "App Orchestrator"
          - **VALIDATION**: Verify line 16 says "You read `AGENTS.md` (root)" (not `.meta/AGENTS.md`)
          - **VALIDATION**: Grep file to ensure no incorrect ".meta/AGENTS.md" references for primary instructions
          
@@ -522,20 +534,28 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
    ```
    app_type: [web_service | cli_tool | library | internal_tool | prototype]
    has_users: [true | false]
+   needs_correctness: [true | false]
    needs_uptime: [true | false]
+   has_ui: [true | false]
+   needs_pricing: [true | false]
+   needs_growth: [true | false]
+   needs_evangelism: [true | false]
    team_size: [1 | small | medium | large]
    formality: [minimal | light | standard | full]
+   decision_critical: [true | false]
    ```
 
 2. **Select Roles** (from `.meta/roles/`):
    - Always (NEW APP): Essence Analyst, Product Manager (adapted), Developer
+   - If decision_critical: Strategy Owner
    - If 3+ components: Architect
-   - If has_users: Tester
+   - If has_users + needs_correctness: Tester
+   - If has_ui: Designer
    - If external documentation needed: Technical Writer
    - If needs_uptime: Operations
-   - If monetization/pricing is required: Monetization Strategist
-   - If growth/acquisition/retention is required: Growth Marketer
-   - If community/launch/evangelism is required: Evangelist
+   - If needs_pricing: Monetization Strategist
+   - If needs_growth: Growth Marketer
+   - If needs_evangelism: Evangelist
    
    Record selections in `.app/roles/_manifest.md`
 
@@ -593,7 +613,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **2.0.0** (see `VERSION` file)
+Current meta-orchestrator version: **2.0.21** (see `VERSION` file)
 
 **Features in v2.0.0** (Workspace-Centric, Self-Documenting, Idempotent) - MAJOR REFACTOR:
 - **Workspace-centric execution**: `.workspace/` folder for ephemeral work items (deleted after completion)
@@ -649,7 +669,7 @@ Current meta-orchestrator version: **2.0.0** (see `VERSION` file)
 
 **Features in v1.7.1** (VS Code Custom Agents):
 - `.github/agents/meta-orchestrator.agent.md` for engine (reads `.meta/AGENTS.md`)
-- `.github/agents/meta-app-orchestrator.agent.md` for apps (reads `AGENTS.md`)
+- `.github/agents/app-orchestrator.agent.md` for apps (reads `AGENTS.md`)
 - Custom agents appear in VS Code Copilot agent picker dropdown
 - No activation phrases needed - select from dropdown
 - Template for generated apps (`.meta/templates/agent.template.md`)
@@ -1262,6 +1282,8 @@ Create or update:
 - `orchestrator_state.json` – global pipeline state, including:
   - `preflight_run`: `true` (MUST be set after pre-flight checklist completes) | `false` (agent forgot pre-flight)
   - `manifest_updated`: `true` (set at Phase 11.2 after .meta-manifest.json updated) | `false` (not yet complete)
+  - `primary_role`: `meta_orchestrator` | `app_orchestrator` (set based on mode)
+  - `role_lock`: `true` | `false` (must be `true` while session is active)
   - `current_phase`: "Phase_0" | "Phase_1" | ... | "Phase_12" (tracks pipeline progress)
   - `steps`: each with `id`, `name`, `inputs`, `output`, `depends_on`.
   - `status`: `pending`, `running`, `done`, `failed`.
@@ -1269,6 +1291,7 @@ Create or update:
   - `env_status` (if applicable).
 
 **State Guards** (defense against amnesia):
+- Before any phase: HALT if `role_lock != true` or `primary_role` is missing/incorrect for the current mode
 - Before Phase 4: HALT if `preflight_run != true` (agent forgot pre-flight checklist)
 - Before Phase 12 COMPLETE: HALT if `manifest_updated != true` (agent forgot to update manifest)
 
@@ -1527,16 +1550,16 @@ When all LEGOs are `done` AND experience validation passes:
     - This file should be **comprehensive and self-contained** - include all architectural decisions, wisdom applied, and development guidelines
     - Future developers (human or AI) should understand the app's design philosophy from this file alone, with `.meta/` as reference for deeper orchestration details
     - **The template ensures the app orchestrator has the same Pre-flight Checklist** to avoid amnesia during maintenance
-  - **`.github/agents/meta-app-orchestrator.agent.md`** (for VS Code Copilot agent dropdown):
+  - **`.github/agents/app-orchestrator.agent.md`** (for VS Code Copilot agent dropdown):
     - **Use `.meta/templates/agent.template.md` as the base template**
     - Replace `{APP_NAME}` with actual app name (from `app_intent.md`)
-    - Agent name: "Meta-App-Orchestrator" (consistent across all apps)
+    - Agent name: "App Orchestrator" (consistent across all apps)
     - Agent description: "Build and maintain {APP_NAME}"
     - This enables custom agent mode in VS Code Copilot dropdown
     - **CRITICAL**: Agent references `AGENTS.md` (root) for complete instructions (NOT `.meta/AGENTS.md`)
     - **VALIDATION**: Verify generated file contains "You read `AGENTS.md` (root)" on line 16
     - **VALIDATION**: Verify file does NOT say "read `.meta/AGENTS.md`" anywhere
-    - Provides quick activation: select "Meta-App-Orchestrator" from dropdown in Copilot Chat
+    - Provides quick activation: select "App Orchestrator" from dropdown in Copilot Chat
     - Makes app orchestrator discoverable without remembering activation phrases
   - `README.md` – user-focused documentation of the app.
   - `internal-notes.md` – technical notes, architecture rationale, and trade-offs.

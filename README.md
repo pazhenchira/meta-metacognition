@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 2.0.15** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.21** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -24,11 +24,14 @@ Most AI coding tools work in a single conversation that gets overwhelmed as proj
 
 **It spawns multiple specialized AI "agents"** (like a real team):
 - A meta-orchestrator (the "CTO") coordinates everything
+- An app orchestrator (the "app owner") coordinates role outputs
 - Individual agents (like "tech leads") build each component independently
 - Each agent has a focused job, preventing context overload
 - They work in parallel, just like a real engineering team
 
 **Result**: Can build apps with 50+ components without breaking a sweat.
+
+**Decision-critical apps** (finance, medical, legal, safety) add a **Strategy/Domain Expert** to define the decision framework and benchmarks, and require **Strategy Gate 0 (STR-XXX)** approval before PM specs.
 
 ---
 
@@ -604,6 +607,25 @@ See [UPGRADING.md](UPGRADING.md) for detailed upgrade workflows.
 
 ---
 
+## 🤝 Sponsor & App Orchestrator
+
+**Role Lock (App Orchestrator)**: Start Codex CLI with the App Orchestrator instructions so the role is assumed from the first turn.
+Role lock is enforced via `orchestrator_state.json` (`primary_role: "app_orchestrator"`, `role_lock: true`).
+
+Example (Codex CLI):
+```bash
+codex exec -f AGENTS.md "You are the App Orchestrator. Begin pre-flight."
+```
+
+**You are the Sponsor**: the human owner who provides intent, constraints, and approvals.
+**The App Orchestrator** is the app-level owner that coordinates roles and is the **only** agent that communicates with the Sponsor.
+
+If you need something, tell the App Orchestrator; it will route work to the right role and bring back decisions.
+
+**App/Sponsor guardrails**: Add them in the **App/Sponsor Overrides** block inside each role file so they survive upgrades.
+
+---
+
 ## 🧠 Advanced: Understanding The Wisdom System
 
 The meta-orchestrator doesn't just generate code—it applies 50+ principles from legendary engineers.
@@ -763,7 +785,7 @@ This usually means the essence or requirements weren't clear enough.
 
 ```json
 {
-  "version": "1.7.8",
+  "version": "2.0.21",
   "generated_date": "2025-11-25",
   "files": {
     "src/signal_generator.py": {
@@ -909,7 +931,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Current Version**: 2.0.0 (December 2025)  
+**Current Version**: 2.0.21 (December 24, 2025)  
 **Built with meta-cognitive AI orchestration principles.**
 
 ---
@@ -926,13 +948,13 @@ MIT License - See [LICENSE](LICENSE) file
 # === ADD FEATURE TO EXISTING APP ===
 # 1. Edit app_intent.md to add the feature
 # 2. Run:
-# OPTION A (v1.7.1+): Click agent picker → "Meta-App-Orchestrator" → "Add feature from app_intent.md"
+# OPTION A (v1.7.1+): Click agent picker → "App Orchestrator" → "Add feature from app_intent.md"
 # OPTION B (any version): @workspace Act as meta-orchestrator (.meta/AGENTS.md). Add feature from app_intent.md (MAINTENANCE MODE)
 
 # === UPGRADE META-ORCHESTRATOR ===
 # 1. Copy new .meta/ files from latest version (if you have them in .meta/)
 # 2. Run:
-@workspace Act as meta-orchestrator. Upgrade this app to v1.7.1 (ENGINE UPGRADE MODE)
+@workspace Act as meta-orchestrator. Upgrade this app to v2.0.21 (ENGINE UPGRADE MODE)
 
 # === PROTECT YOUR CUSTOM CODE ===
 # Edit .meta-manifest.json:
@@ -940,7 +962,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 # === CHECK VERSION ===
 cat .meta-version  # Shows which meta-orchestrator version built your app (if it exists)
-cat VERSION        # Shows current meta-orchestrator version (1.7.8)
+cat VERSION        # Shows current meta-orchestrator version (2.0.21)
 ```
 
 **Pro Tip (v1.7.1+)**: Use the VS Code Copilot agent picker dropdown for quickest activation. No activation phrases to remember!

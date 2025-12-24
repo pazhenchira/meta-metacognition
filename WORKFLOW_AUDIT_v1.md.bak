@@ -497,7 +497,7 @@
   - Wisdom applied, antipatterns avoided, trade-offs resolved
   - Development guidelines
   - Common tasks guidance
-- `.github/agents/meta-app-orchestrator.agent.md` - VS Code Copilot agent
+- `.github/agents/app-orchestrator.agent.md` - VS Code Copilot agent
 - `README.md` - User documentation
 - `internal-notes.md` - Technical rationale
 - `review.md` - System-level review

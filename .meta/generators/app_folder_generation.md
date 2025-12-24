@@ -49,10 +49,16 @@ From `app_intent.md` and PM discovery, determine:
 ```yaml
 app_type: web_service | cli_tool | library | internal_tool | prototype
 has_users: true | false
+needs_correctness: true | false
 needs_uptime: true | false
 has_external_deps: true | false
+has_ui: true | false
+needs_pricing: true | false
+needs_growth: true | false
+needs_evangelism: true | false
 team_size: 1 | small | medium | large
 formality: minimal | light | standard | full
+decision_critical: true | false
 ```
 
 ### Step 2: Select Roles
@@ -61,11 +67,16 @@ Based on characteristics:
 
 | Characteristic | Roles Included |
 |---------------|----------------|
-| Always | Product Manager (light), Developer |
+| Always | Essence Analyst, Product Manager (light), Developer |
 | has_users + needs_correctness | Tester |
+| has_ui | Designer |
+| decision_critical | Strategy Owner |
 | 3+ components | Architect |
 | external users needing docs | Technical Writer |
 | needs_uptime | Operations |
+| needs_pricing | Monetization Strategist |
+| needs_growth | Growth Marketer |
+| needs_evangelism | Evangelist |
 
 ### Step 3: Adapt Role Templates
 
@@ -74,6 +85,7 @@ For each selected role:
 2. Remove sections not applicable to this app
 3. Inline any referenced principles
 4. Customize examples for this app's domain
+5. Preserve **App/Sponsor Overrides** block (APP_OVERRIDES) for future upgrades
 
 ### Step 4: Select and Adapt Workflows
 

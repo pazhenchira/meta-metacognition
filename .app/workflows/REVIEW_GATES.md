@@ -31,7 +31,36 @@ Reviews happen at **handoffs between roles**. Each receiving role reviews what t
 
 ---
 
-## The Six Review Gates
+## The Review Gates (Gate 0 is conditional)
+
+### Gate 0: Strategy Owner → PM (Decision-Critical Only)
+
+**Artifact**: Strategy Specification (STR-XXX)
+
+**PM Reviews For**:
+
+| Criterion | Question | Red Flags |
+|-----------|----------|-----------|
+| **Correctness** | Is the decision framework logically sound? | Undefined logic, hand-waving, contradictions |
+| **Benchmarks** | Are benchmarks clear and measurable? | "Good" or "best" without thresholds |
+| **Risk Limits** | Are risk constraints explicit? | Missing limits, unclear risk ownership |
+| **Inputs/Outputs** | Are inputs/outputs defined? | Missing data sources, undefined outputs |
+| **Operationalization** | Can we encode this into acceptance criteria? | No way to test or verify |
+
+**Approval Criteria**:
+- [ ] Decision framework is explicit and logically coherent
+- [ ] Benchmarks are measurable and testable
+- [ ] Risk limits and constraints are explicit
+- [ ] Inputs/outputs are clearly defined
+- [ ] Strategy can be encoded into FR-XXX acceptance criteria
+
+**Rejection Response**:
+Return to Strategy Owner with specific concerns:
+- "Benchmark X is subjective—define the measurable threshold"
+- "Risk limit Y is missing—what is the maximum drawdown?"
+- "Input source Z is undefined—where does the data come from?"
+
+---
 
 ### Gate 1: PM → Architect
 
@@ -311,6 +340,7 @@ Every review gate has three possible outcomes:
 
 | Review Gate | Target Duration | Max Duration |
 |-------------|-----------------|--------------|
+| Strategy Owner → PM | 1 day | 2 days |
 | PM → Architect | 1 day | 2 days |
 | Architect → Developer | 1 day | 2 days |
 | Developer → Tester | 2 hours | 1 day |
@@ -331,6 +361,12 @@ Every role should self-review before handing off:
 - [ ] Requirements are clear and testable
 - [ ] Scope is bounded
 - [ ] Stakeholders are aligned
+
+### Strategy Owner Self-Review
+- [ ] Decision framework is explicit and consistent
+- [ ] Benchmarks are measurable and testable
+- [ ] Risk limits are explicit and acceptable
+- [ ] Inputs/outputs are fully defined
 
 ### Architect Self-Review
 - [ ] Design follows KISS principle
@@ -371,6 +407,12 @@ Every role should self-review before handing off:
 Each workflow document should reference this review gates document:
 
 ```markdown
+### Handoff: Strategy Owner → PM
+
+**Artifact**: STR-XXX
+**Review Gate**: See `REVIEW_GATES.md` Gate 0 (Strategy Owner → PM)
+**Approval Required Before**: PM creates FR-XXX
+
 ### Handoff: PM → Architect
 
 **Artifact**: FR-XXX
@@ -384,6 +426,7 @@ Each workflow document should reference this review gates document:
 
 | Gate | Sender | Receiver | Primary Question |
 |------|--------|----------|------------------|
+| 0 | Strategy Owner | PM | "Is the decision framework correct and testable?" |
 | 1 | PM | Architect | "Is this buildable?" |
 | 2 | Architect | Developer | "Is this implementable?" |
 | 3 | Developer | Tester | "Is this testable?" |

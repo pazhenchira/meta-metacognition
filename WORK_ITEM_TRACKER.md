@@ -1,5 +1,7 @@
 # Work Item Tracker Specification
 
+**Note**: In app context, "Orchestrator" means the **App Orchestrator** (the app-level owner).
+
 **File**: `.workspace/tracker.json`  
 **Purpose**: Central log of all work items (past, present, future)  
 **Owner**: App-Orchestrator  
@@ -61,27 +63,27 @@ BACKLOG → ACTIVE → IN_REVIEW → APPROVED → COMPLETE
 
 | State | Meaning | `.workspace/WI-XXX/` exists? | Who can transition? |
 |-------|---------|------------------------------|---------------------|
-| **BACKLOG** | Queued, not started | ❌ No | Orchestrator only |
-| **ACTIVE** | Work in progress | ✅ Yes | Orchestrator only |
+| **BACKLOG** | Queued, not started | ❌ No | App Orchestrator only |
+| **ACTIVE** | Work in progress | ✅ Yes | App Orchestrator only |
 | **IN_REVIEW** | Awaiting multi-role approval | ✅ Yes | Orchestrator (after artifacts complete) |
 | **BLOCKED** | Waiting on external dependency | ✅ Yes | Orchestrator (when dependency detected) |
 | **APPROVED** | All approvals received, promoting | ✅ Yes | Orchestrator (after all approvals) |
-| **COMPLETE** | Done, workspace deleted | ❌ No | Orchestrator only |
+| **COMPLETE** | Done, workspace deleted | ❌ No | App Orchestrator only |
 
 ---
 
 ## Who Creates Work Items?
 
-### **Primary: Orchestrator (Automated)**
+### **Primary: App Orchestrator (Automated)**
 
 When user says "Add feature X" or edits `app_intent.md`:
 
 ```markdown
 1. User: "Add sentiment analysis to trading signals"
 
-2. Orchestrator detects new feature request
+2. App App Orchestrator detects new feature request
 
-3. Orchestrator creates work item:
+3. App Orchestrator creates work item:
    - Generates ID: "WI-001" (next available)
    - Type: "new_feature" (inferred from conversation)
    - Title: Extracted from user request
@@ -94,7 +96,7 @@ When user says "Add feature X" or edits `app_intent.md`:
    - backlog array gets "WI-001"
    - next_id incremented to 2
 
-5. Orchestrator shows user:
+5. App Orchestrator shows user:
    "Created WI-001: Add sentiment analysis to trading signals"
    "State: BACKLOG"
    "Starting work..."
@@ -109,7 +111,7 @@ When Developer finds "need circuit breaker":
 
 2. Realizes: "This LEGO needs a circuit breaker pattern"
 
-3. Orchestrator creates child work item:
+3. App Orchestrator creates child work item:
    - ID: "WI-002"
    - Type: "enhancement"
    - Title: "Add circuit breaker to market_data_fetcher"
@@ -527,7 +529,7 @@ Orchestrator **never creates** in root:
 - ❌ User never edits tracker.json directly
 
 **State Transitions**:
-- ✅ Orchestrator only (automated based on conditions)
+- ✅ App Orchestrator only (automated based on conditions)
 - ❌ User cannot manually change states
 
 **Workspace Boundaries**:

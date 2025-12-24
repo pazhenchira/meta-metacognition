@@ -33,7 +33,15 @@ handle complex multi-component systems, and don't validate that apps actually de
 **Target Users**: Non-technical founders, solo developers, small teams, prototypers, anyone who wants 
 to build production apps without writing code manually.
 
+## Sponsor (Human Owner)
+
+**Sponsor**: [Name or role] (e.g., founder, product lead)  
+**Business Goal**: [What business outcome this app must drive]  
+**Success Metrics**: [Customer value metrics → business impact]  
+**Decision-Critical?**: [Yes/No — if yes, require Strategy/Domain Expert and define benchmarks]
+
 ---
+
 
 ## Constraints & Priorities
 

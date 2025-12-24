@@ -8,9 +8,36 @@ The meta-orchestrator v1.9.0 introduces a role-based model that mirrors how real
 
 ---
 
+## Orchestration Layer & Sponsor (Human Owner)
+
+These are not peer roles to PM/Architect/Developer; they sit **above** the role pool.
+
+| Role | Purpose | Interaction Rule |
+|------|---------|------------------|
+| **Meta-Orchestrator (engine)** | Builds/upgrades apps by running the engine pipeline | Interacts with the **Sponsor** during engine operations |
+| **App Orchestrator (app owner)** | Owns delivery of a specific app by sequencing roles and integrating outputs | **Only role that communicates with the Sponsor** |
+| **Sponsor (human owner)** | Provides app intent, constraints, and approvals | Communicates **only** with the App Orchestrator |
+
+**Key Principle**: The App Orchestrator is accountable for essence alignment and integration quality. Roles produce artifacts; the App Orchestrator integrates and enforces gates.
+
+---
+
+## Sub-Agent Mapping (MCP / Parallel Runtimes)
+
+- **Primary session**: App Orchestrator (coordinates, integrates, gates)
+- **Sub-agents**: Every active role in the role pool (Essence Analyst, PM, Architect, Designer, Developer, Tester, Writer, Operations, and any active GTM roles)
+- **Sponsor**: Human owner (never a sub-agent)
+
+**Tool-Agnostic Rule**: Role definitions are tool-agnostic. Any tools mentioned are optional examples, not requirements.
+
+---
+
 ## Core Roles
 
 **Note**: These are TEMPLATES. See `CUSTOMIZING_ROLES.md` for guidance on which roles your app needs.
+
+**Decision-Critical Role**:
+- **Strategy Owner (Domain Expert)** is REQUIRED when the app’s value depends on a domain decision framework (finance, medical, legal, safety, etc.).
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -51,6 +78,7 @@ The meta-orchestrator v1.9.0 introduces a role-based model that mirrors how real
 These roles are used **only when the app requires them**:
 
 - **Essence Analyst**: Defines and protects the core value proposition (REQUIRED)
+- **Strategy Owner (Domain Expert)**: Defines the decision framework and benchmarks (REQUIRED for decision-critical apps)
 - **Monetization Strategist**: Pricing and value capture
 - **Growth Marketer**: Acquisition, activation, retention
 - **Evangelist**: Narrative, demos, community assets
@@ -90,6 +118,7 @@ Once approved, these artifacts are NEVER modified. Changes create NEW artifacts 
 |----------|---------|-------|---------|
 | Feature Spec | `specs/features/FR-XXX-*.md` | PM | What to build and why |
 | Enhancement Spec | `specs/enhancements/EN-XXX-*.md` | PM | Changes to existing features |
+| Strategy Spec | `specs/strategy/STR-XXX-*.md` | Strategy Owner | Decision framework + benchmarks |
 | Design Decision | `specs/designs/DD-XXX-*.md` | Architect | How to build it |
 | Test Plan | `specs/tests/TP-XXX-*.md` | Tester | How to verify it |
 | Bug Report | `specs/bugs/BUG-XXX-*.md` | Tester | Deviations from spec |
@@ -118,17 +147,23 @@ These evolve with the system:
 
 ### 1. New Feature Workflow
 ```
+Essence Validation (Essence Analyst) → 
+Strategy Definition (Strategy Owner, if decision-critical) → 
 PM Discovery → Architect Design → Developer Implementation → 
-Tester Validation → Writer Documentation → Release
+Tester Validation → Writer Documentation → Ops Review (if applicable) → 
+PM Final Acceptance → Release
 ```
 
 ### 2. Enhancement Workflow
 ```
+Essence Validation (Essence Analyst) → 
+Strategy Check (Strategy Owner, if decision logic changes) → 
 PM Enhancement Spec (references original) → 
 Architect Delta Design (references original) → 
 Developer Implementation (preserve + extend) → 
 Tester Regression + New Tests → 
-Writer Update Docs
+Writer Update Docs → Ops Review (if applicable) → 
+PM Final Acceptance
 ```
 
 ### 3. Bug Fix Workflow
@@ -136,7 +171,9 @@ Writer Update Docs
 Tester/User Discovery → PM/Architect Triage → 
 Developer Root Cause + Fix → 
 Tester Verification → 
-Close (no new spec needed)
+Writer/PM Update Docs + Version → 
+Ops Review (if applicable) → 
+PM Final Acceptance → Close
 ```
 
 ---
@@ -156,6 +193,8 @@ my-app/
 │   ├── features/              # FR-XXX feature specs
 │   │   ├── FR-001-user-auth.md
 │   │   └── FR-002-reporting.md
+│   ├── strategy/              # STR-XXX strategy specs
+│   │   └── STR-001-trading-strategy.md
 │   ├── enhancements/          # EN-XXX enhancement specs
 │   │   └── EN-001-enhance-reporting.md
 │   ├── designs/               # DD-XXX design decisions

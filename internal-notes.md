@@ -1,6 +1,6 @@
 # Meta-Orchestrator: Internal Architecture Notes
 
-**Generated**: November 25, 2025  
+**Generated**: December 24, 2025  
 **Purpose**: Technical notes on meta-orchestrator architecture, rationale, and trade-offs
 
 ---
@@ -124,6 +124,25 @@
 1. Flat orchestration (all LEGOs equal) → Rejected: no prioritization, no strategy
 2. Four+ levels → Rejected: diminishing returns, over-engineering
 3. Event-driven (publish/subscribe) → Rejected: too complex for file-based system
+
+---
+
+### 6. Sponsor Interface & App Orchestrator Ownership
+
+**Decision**: Define the human Sponsor as the single source of intent/approvals, and make the App Orchestrator the only agent that communicates with the Sponsor.
+
+**Rationale**:
+- Prevents conflicting requests from multiple roles
+- Preserves clean accountability for app delivery and essence alignment
+- Mirrors real-world product ownership and decision flow
+
+**Trade-offs**:
+- ❌ Slightly slower clarification loop (must route via App Orchestrator)
+- ✅ Eliminates ambiguity and cross-role contention
+
+**Alternatives Considered**:
+1. Allow any role to contact Sponsor → Rejected: conflict and duplication
+2. No explicit Sponsor role → Rejected: unclear ownership of intent/approvals
 
 ---
 

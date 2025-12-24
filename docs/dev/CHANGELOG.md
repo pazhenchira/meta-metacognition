@@ -6,6 +6,111 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.21] - 2025-12-24 (Workflow Gate Alignment)
+
+### Added
+
+- **Ops Gate 6 phases** in new feature, enhancement, and bug-fix workflows
+- **PM Final Acceptance for bug fixes** (Gate 7)
+- **Decision-critical guardrails** for enhancements and bug fixes (Gate 0 required or N/A recorded)
+
+### Changed
+
+- **Role selection inputs**: add `needs_correctness`, `has_ui`, GTM toggles for clearer selection
+- **Workflow summaries**: Strategy Gate 0 + Ops Gate 6 reflected in app orchestrator templates
+- **Operations handoffs**: explicit Gate 6 signoff path to PM/Release
+- **App AGENTS template**: remove engine path references to keep `.app/AGENTS.md` self-contained
+
+### Migration
+
+1. When generating `.app/`, set `needs_correctness`/`has_ui`/GTM flags explicitly
+2. For decision-critical apps, ensure STR-XXX exists and Gate 0 is completed before FR-XXX
+3. For production apps, insert Ops Gate 6 before PM Final Acceptance
+
+## [2.0.20] - 2025-12-24 (Strategy Gate + Role Lock State Guard)
+
+### Added
+
+- **Strategy review gate (Gate 0)**: Strategy Owner → PM approval for decision-critical specs
+- **Role lock state guard**: `primary_role` + `role_lock` in orchestrator state, enforced in app templates
+
+### Changed
+
+- **Role selection for .app generation**: Essence Analyst always included; Strategy Owner added for decision-critical apps
+- **Workflows**: strategy phases now reference Gate 0 review criteria
+
+### Migration
+
+1. If decision-critical, route STR-XXX through Gate 0 before FR-XXX creation
+2. Ensure `orchestrator_state.json` includes `primary_role` and `role_lock` for active sessions
+
+## [2.0.19] - 2025-12-24 (App/Sponsor Overrides Preservation)
+
+### Added
+
+- **App/Sponsor Overrides block** in every role file (preserved across upgrades)
+- **Upgrade preservation rule**: APP_OVERRIDES extracted and reinserted on role regeneration
+
+### Changed
+
+- **Role customization guidance**: app/sponsor guardrails must live in APP_OVERRIDES
+
+### Migration
+
+1. Add app-specific guardrails under APP_OVERRIDES in each role file
+2. On upgrade, verify APP_OVERRIDES blocks are preserved
+
+## [2.0.18] - 2025-12-24 (Role Lock Protocol)
+
+### Added
+
+- **Role Lock Protocol**: App Orchestrator must affirm role and detect drift on every session start
+- **Codex CLI startup guidance**: start sessions with App Orchestrator instructions to prevent role loss
+
+### Changed
+
+- **App Orchestrator templates**: explicit role lock and drift detection inserted
+
+### Migration
+
+1. Ensure App Orchestrator sessions start from `AGENTS.md`
+2. If role drift occurs, re-run pre-flight and re-affirm role
+
+## [2.0.17] - 2025-12-24 (Strategy Owner Role)
+
+### Added
+
+- **Strategy Owner (Domain Expert) role**: defines decision frameworks and benchmarks for decision-critical apps
+- **Strategy spec template**: `specs/strategy/STR-XXX-*.md`
+
+### Changed
+
+- **Workflows**: strategy definition/check phase added for decision-critical features/enhancements/bugs
+- **Role selection**: Strategy Owner is conditionally required for decision-critical apps
+
+### Migration
+
+1. If your app is decision-critical, add Strategy Owner role and STR-XXX specs
+2. Update workflows to include Strategy Definition/Check phases
+
+## [2.0.16] - 2025-12-24 (App Orchestrator + Sponsor Interface)
+
+### Added
+
+- **Sponsor interface**: explicit human owner contract and routing rules (only App Orchestrator communicates with Sponsor)
+- **Role specification summaries**: consistent Identity/Mission/Scope/Decision Rights/Guardrails across all role templates
+
+### Changed
+
+- **App Orchestrator naming**: standardized across docs/templates/agent files (replaces Meta-App-Orchestrator)
+- **App Orchestrator ownership**: explicitly accountable for delivery and essence alignment
+- **PM enforcement**: value→business impact check required for features and bug fixes
+
+### Migration
+
+1. Rename `.github/agents/meta-app-orchestrator.agent.md` → `.github/agents/app-orchestrator.agent.md`
+2. Update any custom tooling to reference "App Orchestrator"
+
 ## [2.0.15] - 2025-12-21 (Branching Policy)
 
 ### Added
@@ -404,7 +509,7 @@ Apps built with v1.9.0 will:
 **PERSONA Section for App Orchestrators** (Templates Updated):
 - `.meta/templates/AGENTS.template.md` now includes explicit PERSONA section
 - `.meta/templates/agent.template.md` updated with identity enforcement
-- Clear declaration: "You ARE the Meta-App-Orchestrator. You are NOT a helper."
+- Clear declaration: "You ARE the App Orchestrator. You are NOT a helper."
 - On every turn checklist: run pre-flight, act autonomously, apply wisdom, maintain alignment, self-monitor
 - Explicit "What You Never Do" list (no "how should I proceed?" questions)
 
@@ -479,7 +584,7 @@ Apps built/maintained with v1.8.0 will:
 ## [1.7.8] - 2025-11-28 (Agent Reference Fix)
 
 ### Fixed
-- **Bug in generated `.github/agents/meta-app-orchestrator.agent.md`**: Agents were incorrectly referencing `.meta/AGENTS.md` (engine) instead of `AGENTS.md` (root, app-specific)
+- **Bug in generated `.github/agents/app-orchestrator.agent.md`**: Agents were incorrectly referencing `.meta/AGENTS.md` (engine) instead of `AGENTS.md` (root, app-specific)
   - **Problem**: When meta-orchestrator generated app agent files, some agents misunderstood instructions and pointed to engine file
   - **Impact**: App orchestrators would read meta-orchestrator engine logic instead of app-specific maintenance instructions
   - **Root cause**: Instructions were correct but not explicit enough to prevent misinterpretation
@@ -506,7 +611,7 @@ Apps built/maintained with v1.8.0 will:
 - **Clarity**: Explicit warnings prevent misinterpretation by AI agents
 
 ### Action Required for Existing Apps
-If you have an app created with v1.7.7 or earlier, check `.github/agents/meta-app-orchestrator.agent.md`:
+If you have an app created with v1.7.7 or earlier, check `.github/agents/app-orchestrator.agent.md`:
 - **Line 16 should say**: "You read `AGENTS.md` (root) for app-specific logic"
 - **If incorrect**: Regenerate from template or manually fix reference
 - **To regenerate**: Run meta-orchestrator in UPGRADE mode (it will detect and fix)
@@ -603,7 +708,7 @@ If you have an app created with v1.7.7 or earlier, check `.github/agents/meta-ap
 
 **Dual-Runtime Agent Generation**:
 - `.meta/AGENTS.md` UPGRADE mode now MANDATES both agent file types:
-  - `.github/agents/meta-app-orchestrator.agent.md` → GitHub Copilot Chat (VS Code)
+  - `.github/agents/app-orchestrator.agent.md` → GitHub Copilot Chat (VS Code)
   - `AGENTS.md` (root) → OpenAI Codex CLI (terminal)
 - Validation checks BOTH files exist after upgrade
 - Documentation clarified runtime-specific terminology
@@ -622,13 +727,13 @@ If you have an app created with v1.7.7 or earlier, check `.github/agents/meta-ap
 ### Fixed
 
 **MANDATORY Agent File Generation During Upgrades**:
-- UPGRADE mode now **requires** `.github/agents/meta-app-orchestrator.agent.md` generation
+- UPGRADE mode now **requires** `.github/agents/app-orchestrator.agent.md` generation
 - Added validation: Verifies file exists after upgrade, stops with error if missing
 - Creates `.github/agents/` directory if needed during upgrade
-- Ensures GitHub Copilot Chat agent picker can discover "Meta-App-Orchestrator" in upgraded apps
+- Ensures GitHub Copilot Chat agent picker can discover "App Orchestrator" in upgraded apps
 
 **Problem Solved**:
-- Users upgrading apps to v1.7.1+ didn't see "Meta-App-Orchestrator" in VS Code Copilot Chat agent picker
+- Users upgrading apps to v1.7.1+ didn't see "App Orchestrator" in VS Code Copilot Chat agent picker
 - UPGRADE mode mentioned agent file creation but didn't enforce it
 - Silent failure left apps without discoverable custom agents
 
@@ -650,7 +755,7 @@ If you have an app created with v1.7.7 or earlier, check `.github/agents/meta-ap
 **For apps already upgraded (v1.7.1-v1.7.3) without agent file**:
 ```bash
 mkdir .github\agents
-copy .meta\templates\agent.template.md .github\agents\meta-app-orchestrator.agent.md
+copy .meta\templates\agent.template.md .github\agents\app-orchestrator.agent.md
 # Edit: Replace {APP_NAME} with your app name
 ```
 
@@ -662,7 +767,7 @@ copy .meta\templates\agent.template.md .github\agents\meta-app-orchestrator.agen
 
 ### Added
 
-**Inline Pre-Flight Checklist** (in both Meta-Orchestrator and Meta-App-Orchestrator agents):
+**Inline Pre-Flight Checklist** (in both Meta-Orchestrator and App Orchestrator agents):
 - Pre-flight checklist now embedded directly in `.agent.md` files
 - Executed immediately on agent activation (not buried in `AGENTS.md`)
 - **Checkpoint #6 added**: Version & Documentation verification before commits
@@ -677,7 +782,7 @@ copy .meta\templates\agent.template.md .github\agents\meta-app-orchestrator.agen
 5. Determine next action (evaluate with wisdom framework)
 6. **Version & documentation checkpoint** (CRITICAL)
 
-**Meta-App-Orchestrator Checklist** (`.github/agents/meta-app-orchestrator.agent.md`):
+**App Orchestrator Checklist** (`.github/agents/app-orchestrator.agent.md`):
 1. Check repository context (application, not engine)
 2. Reaffirm role (app orchestrator)
 3. Reaffirm authority (autonomous decisions, apply wisdom)
@@ -699,7 +804,7 @@ copy .meta\templates\agent.template.md .github\agents\meta-app-orchestrator.agen
 ### Files Modified
 
 - `.github/agents/meta-orchestrator.agent.md`: Added inline checklist with checkpoint #6
-- `.github/agents/meta-app-orchestrator.agent.md`: Added inline checklist
+- `.github/agents/app-orchestrator.agent.md`: Added inline checklist
 - `.meta/templates/agent.template.md`: Template updated with checklist
 - `.meta/VERSION`, `.meta-version`: Version bump to 1.7.3
 
@@ -724,13 +829,13 @@ copy .meta\templates\agent.template.md .github\agents\meta-app-orchestrator.agen
 
 **Impact**:
 - Meta-Orchestrator can run git commands, terminal operations, file edits
-- Meta-App-Orchestrator has full implementation capabilities
+- App Orchestrator has full implementation capabilities
 - No artificial restrictions on agent capabilities
 
 ### Files Modified
 
 - `.github/agents/meta-orchestrator.agent.md`: Removed `tools` field
-- `.github/agents/meta-app-orchestrator.agent.md`: Removed `tools` field
+- `.github/agents/app-orchestrator.agent.md`: Removed `tools` field
 - `.meta/templates/agent.template.md`: Removed `tools` field from template
 - `.meta/VERSION`, `.meta-version`: Version bump to 1.7.2
 
@@ -742,14 +847,14 @@ copy .meta\templates\agent.template.md .github\agents\meta-app-orchestrator.agen
 
 **VS Code Custom Agent Generation** (Section 11.2 in `.meta/AGENTS.md`):
 - `.github/agents/meta-orchestrator.agent.md` for engine (reads `.meta/AGENTS.md`)
-- `.github/agents/meta-app-orchestrator.agent.md` for apps (reads `AGENTS.md`)
+- `.github/agents/app-orchestrator.agent.md` for apps (reads `AGENTS.md`)
 - Appears in VS Code Copilot agent dropdown (no activation phrases needed)
 - Template at `.meta/templates/agent.template.md`
 
 **Engine Upgrade Support**:
-- ENGINE UPGRADE mode creates/updates `.github/agents/meta-app-orchestrator.agent.md`
+- ENGINE UPGRADE mode creates/updates `.github/agents/app-orchestrator.agent.md`
 - Ensures custom agents work after version upgrades
-- Consistent naming: "Meta-Orchestrator" (engine) and "Meta-App-Orchestrator" (apps)
+- Consistent naming: "Meta-Orchestrator" (engine) and "App Orchestrator" (apps)
 
 ### Why This Matters
 
@@ -757,7 +862,7 @@ copy .meta\templates\agent.template.md .github\agents\meta-app-orchestrator.agen
 
 **Solution**: Two custom agents appear in VS Code Copilot dropdown:
 - **Meta-Orchestrator**: For engine work (reads `.meta/AGENTS.md`)
-- **Meta-App-Orchestrator**: For app work (reads `AGENTS.md`)
+- **App Orchestrator**: For app work (reads `AGENTS.md`)
 
 Users can see and click the agent without memorizing commands.
 

@@ -12,6 +12,22 @@ This workflow covers modifying or extending an existing feature that was deliver
 
 ---
 
+## Optional Role Insertions (When Applicable)
+
+- **Strategy Owner**: Insert after Essence when the enhancement changes decision logic.
+- **Designer**: Insert between PM and Architect for UX changes.
+- **Operations**: Insert after Documentation and before PM Final Acceptance for deploy readiness (Gate 6). Optional early consult after Architect if reliability implications are significant.
+- **Monetization Strategist**: Insert after Essence and before PM spec if pricing impact changes.
+- **Growth Marketer**: Insert after Essence and before PM spec if growth loops change.
+- **Evangelist**: Insert after Writer and before Release if new demo/launch assets are needed.
+
+## Decision-Critical Guardrail
+
+If the app is **decision-critical** and the enhancement touches decision logic, benchmarks, or risk limits:
+- **Strategy Owner is REQUIRED**.
+- **Gate 0 must be completed** before PM work proceeds.
+- If not applicable, record **"Gate 0 N/A"** with a brief rationale.
+
 ## When to Use This Workflow
 
 Use Enhancement workflow when:
@@ -26,6 +42,28 @@ Do NOT use this workflow for:
 
 ---
 
+## Phase 0.5: Strategy Check (Strategy Owner) — Conditional
+
+### Trigger
+- Enhancement affects the domain decision framework or benchmarks
+
+### Activities
+1. Validate existing strategy still holds
+2. Update STR-XXX if decision logic changes
+3. Provide updated benchmarks if needed
+
+### Artifacts Produced
+- Updated `specs/strategy/STR-XXX-{name}.md` (new version, immutable)
+
+### Exit Criteria
+- Strategy alignment confirmed
+
+### Handoff
+- **To**: Product Manager
+- **Artifact**: STR-XXX (if updated)
+- **Review Gate**: See `REVIEW_GATES.md` Gate 0 (Strategy Owner → PM)
+
+---
 ## Workflow Diagram
 
 ```
@@ -70,6 +108,24 @@ Do NOT use this workflow for:
 │                       (Technical Writer)                                     │
 │                                                                              │
 │  Update existing docs → Add enhancement docs → Changelog                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+        │
+        │ Docs complete
+        ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                   OPERATIONS REVIEW (If Applicable)                          │
+│                             (Operations)                                     │
+│                                                                              │
+│  Deployability → Monitoring → Runbooks                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+        │
+        │ Ops signoff (if applicable)
+        ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     PM FINAL ACCEPTANCE                                      │
+│                                (PM)                                          │
+│                                                                              │
+│  Confirm value + no regressions → Accept or reject                          │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -407,6 +463,20 @@ See `REVIEW_GATES.md` for full criteria. Writer reviews:
 - Documentation updated
 - No stale information
 
+### Handoff
+- **To**: Release (all roles verify)
+
+### ⮕ REVIEW GATE 5: Technical Writer → Release (Enhancement)
+See `REVIEW_GATES.md` for full criteria. All roles review:
+- [ ] PM: Enhancement delivers intended value
+- [ ] Architect: Meets architectural standards
+- [ ] Developer: Code is maintainable
+- [ ] Tester: Confident it works
+- [ ] Writer: Users can understand it
+- [ ] Operations: Operational readiness (if applicable)
+
+**Gate Outcome**: Approve / Reject
+
 ---
 
 ## Phase 5b: Go-To-Market (Optional Roles)
@@ -430,7 +500,42 @@ See `REVIEW_GATES.md` for full criteria. Writer reviews:
 
 ---
 
+## Phase 5c: Operations Review (If Applicable)
+
+**Trigger**: Production deployment or reliability/SLO impact.
+
+**Activities**:
+- Review deployment plan and rollback
+- Verify monitoring/alerting coverage
+- Validate runbooks and operational docs
+- Confirm capacity/SLO impact
+
+### Artifacts Produced
+- Updated `ops/runbooks/` or `DEPLOYMENT.md` (if needed)
+- Ops readiness notes (if required)
+
+### Exit Criteria
+- Ops readiness confirmed
+- Gate 6 approval recorded (or issues returned)
+
+### Handoff
+- **To**: PM (Final Acceptance)
+- **Artifact**: Release candidate + ops readiness confirmation
+
+### ⮕ REVIEW GATE 6: Operations Review (If Applicable)
+See `REVIEW_GATES.md` for full criteria. Operations reviews:
+- [ ] Deployment plan exists with rollback
+- [ ] Monitoring and alerting configured
+- [ ] Runbooks updated
+- [ ] No expected SLO impact
+
+**Gate Outcome**: Approve / Approve with Conditions / Reject
+
+---
+
 ## Phase 6: Release (Enhancement)
+
+**Prerequisite**: Gate 6 completed (if applicable).
 
 ### ⮕ REVIEW GATE 7: PM Final Acceptance (Enhancement)
 PM confirms enhancement meets EN-XXX spec AND preserves original FR-XXX value:

@@ -12,9 +12,39 @@ This workflow covers the complete lifecycle of a new feature from idea to produc
 
 ---
 
+## Optional Role Insertions (When Applicable)
+
+- **Strategy Owner**: Insert between Essence and PM when the app is decision-critical.
+- **Designer**: Insert between PM and Architect when UX/UI is non-trivial; produces UX artifacts that shape design.
+- **Operations**: Insert after Documentation and before PM Final Acceptance for deploy readiness (Gate 6). Optional early consult after Architect if reliability requirements are non-trivial.
+- **Monetization Strategist**: Insert after Essence and before PM spec when pricing/value capture is in scope.
+- **Growth Marketer**: Insert after Essence and before PM spec when acquisition/retention loops are required.
+- **Evangelist**: Insert after Writer and before Release when demos/launch assets are needed.
+
+## Decision-Critical Guardrail
+
+If the app is **decision-critical**:
+- **Strategy Owner is REQUIRED**.
+- **Gate 0 must be completed** before PM creates FR-XXX.
+- If not applicable, record **"Gate 0 N/A"** with a brief rationale.
+
 ## Workflow Diagram
 
 ```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         ESSENCE VALIDATION                                   │
+│                         (Essence Analyst)                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+        │
+        │ Essence aligned
+        ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        STRATEGY DEFINITION                                   │
+│                    (Strategy Owner - Conditional)                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+        │
+        │ STR-XXX approved (if applicable)
+        ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                            DISCOVERY PHASE                                   │
 │                           (Product Manager)                                  │
@@ -76,6 +106,31 @@ This workflow covers the complete lifecycle of a new feature from idea to produc
 
 ### Handoff
 - **To**: Product Manager
+
+---
+
+## Phase 0.5: Strategy Definition (Strategy Owner) — Conditional
+
+### Trigger
+- Decision-critical apps (finance, medical, legal, safety)
+
+### Activities
+1. Define the decision framework and benchmarks
+2. Specify inputs, constraints, and risk limits
+3. Provide evaluation criteria and datasets
+
+### Artifacts Produced
+- `specs/strategy/STR-XXX-{name}.md` (IMMUTABLE)
+
+### Exit Criteria
+- Strategy spec approved
+- Benchmarks and risk limits explicit
+
+### Handoff
+- **To**: Product Manager
+- **Artifact**: STR-XXX
+- **Expectation**: PM encodes benchmarks as acceptance criteria
+- **Review Gate**: See `REVIEW_GATES.md` Gate 0 (Strategy Owner → PM)
 
 ---
 
@@ -352,6 +407,7 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
 - [ ] Developer: Code is maintainable
 - [ ] Tester: Confident it works
 - [ ] Writer: Users can understand it
+- [ ] Operations: Operational readiness (if applicable)
 
 **Gate Outcome**: Approve / Reject
 
@@ -378,10 +434,44 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
 
 ---
 
+## Phase 5c: Operations Review (If Applicable)
+
+**Trigger**: Production deployment or reliability/SLO impact.
+
+**Activities**:
+- Review deployment plan and rollback
+- Verify monitoring/alerting coverage
+- Validate runbooks and operational docs
+- Confirm capacity/SLO impact
+
+### Artifacts Produced
+- Updated `ops/runbooks/` or `DEPLOYMENT.md` (if needed)
+- Ops readiness notes (if required)
+
+### Exit Criteria
+- Ops readiness confirmed
+- Gate 6 approval recorded (or issues returned)
+
+### Handoff
+- **To**: PM (Final Acceptance)
+- **Artifact**: Release candidate + ops readiness confirmation
+
+### ⮕ REVIEW GATE 6: Operations Review (If Applicable)
+See `REVIEW_GATES.md` for full criteria. Operations reviews:
+- [ ] Deployment plan exists with rollback
+- [ ] Monitoring and alerting configured
+- [ ] Runbooks updated
+- [ ] No expected SLO impact
+
+**Gate Outcome**: Approve / Approve with Conditions / Reject
+
+---
+
 ## Phase 6: Release
 
 ### Trigger
 - Documentation complete
+ - Gate 6 complete (if applicable)
 
 ### Activities
 
@@ -396,7 +486,7 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
    - Developer: No known technical debt
    - Tester: All tests pass
    - Writer: Docs accurate and complete
-   - Operations: Ready to deploy (if applicable)
+   - Operations: Gate 6 signoff recorded (if applicable)
 
 3. **Release Preparation**:
    - Version bump (`APP_VERSION`) per P-VERSIONING (patch/minor/major)
