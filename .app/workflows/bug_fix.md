@@ -19,6 +19,7 @@ This workflow covers fixing a defect where implementation deviates from specific
 - **Designer**: If fix affects UX, accessibility, or interaction flows.
 - **Operations (REQUIRED)**: Gate 6 before production deploy (or explicit release equivalent).
 - **Writer**: If bug fix changes user-facing behavior or documentation.
+- **Product Manager (Optional)**: Only for user impact, priority, and acceptance criteria; does not gate technical triage.
 
 ## Decision-Critical Guardrail
 
@@ -38,6 +39,13 @@ A bug is NOT:
 - User requesting new feature (that's Enhancement or New Feature)
 - Spec was wrong from the start (that's a spec issue, handled differently)
 - User doesn't like how it works (that may be Enhancement)
+
+## Bug vs Incident Triage
+
+Before role selection, classify:
+
+- **Bug**: Deviation from spec or previously working behavior → Dev/Test lead; PM optional for impact/priority.
+- **Incident**: Operational failure (auth, delivery, integrations, outages) → Ops + Dev lead for containment; PM only for comms/priority.
 
 ---
 
@@ -75,10 +83,10 @@ A bug is NOT:
         │ BUG-XXX created
         ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           BUG TRIAGE                                         │
-│                      (PM + Architect)                                        │
+│                      BUG/INCIDENT TRIAGE                                     │
+│                 (App Orchestrator + Ops/Dev)                                 │
 │                                                                              │
-│  Confirm it's a bug → Assess severity → Prioritize                          │
+│  Classify bug vs incident → Assess severity → Prioritize                    │
 └─────────────────────────────────────────────────────────────────────────────┘
         │
         │ Priority assigned
@@ -112,7 +120,7 @@ A bug is NOT:
         ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    DOCUMENTATION & VERSIONING                                │
-│                        (Writer + PM)                                         │
+│                        (Writer, PM optional)                                 │
 │                                                                              │
 │  Update docs → Bump version                                                  │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -129,8 +137,8 @@ A bug is NOT:
         │ Ops signoff (required)
         ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                     PM FINAL ACCEPTANCE                                      │
-│                                (PM)                                          │
+│                     FINAL ACCEPTANCE                                         │
+│                         (App Orchestrator)                                   │
 │                                                                              │
 │  Confirm value restored → Accept or reject                                  │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -225,17 +233,17 @@ A bug is NOT:
 
 ---
 
-## Phase 2: Bug Triage (PM + Architect)
+## Phase 2: Bug / Incident Triage (App Orchestrator + Ops/Dev)
 
 ### Trigger
 - BUG-XXX created
 
 ### Activities
 
-1. **Confirm It's a Bug**:
+1. **Classify**:
    - Compare to FR-XXX specification
    - Is implementation wrong, or was spec wrong?
-   - Is this a bug, or a feature request?
+   - Is this a bug, a feature request, or an incident?
 
 2. **Assess Severity**:
    | Severity | Definition |
@@ -253,11 +261,11 @@ A bug is NOT:
    | P3 | Fix in next sprint |
    | P4 | Fix when convenient |
 
-4. **Confirm Value Impact**:
-   - Customer value impact documented
+4. **Confirm Impact** (PM optional for comms/priority):
+   - Customer impact documented
    - Business impact documented (revenue, compliance, trust, risk)
 
-5. **Assign to Developer**:
+5. **Assign to Ops/Dev**:
    - Based on component ownership
    - Based on availability
 
@@ -267,7 +275,8 @@ A bug is NOT:
 Is behavior in spec (FR-XXX)?
 ├── YES, but implementation differs → BUG (proceed)
 ├── NO, user wants new behavior → ENHANCEMENT (not a bug)
-└── NO, spec was wrong → SPEC ISSUE (see below)
+├── NO, spec was wrong → SPEC ISSUE (see below)
+└── Operational failure (auth/delivery/integrations) → INCIDENT (Ops+Dev lead)
 ```
 
 **If Spec Was Wrong**:
@@ -287,7 +296,7 @@ Is behavior in spec (FR-XXX)?
 - **To**: Developer
 - **Artifact**: BUG-XXX (triaged)
 
-### ⮕ REVIEW GATE: Triage → Developer
+### ⮕ REVIEW GATE: Triage → Ops/Developer
 Developer reviews before accepting:
 - [ ] Bug is reproducible with provided steps
 - [ ] Expected behavior is clear from spec
@@ -470,7 +479,7 @@ Tester reviews before verifying:
 
 ---
 
-## Phase 6: Documentation & Versioning (Writer + PM)
+## Phase 6: Documentation & Versioning (Writer, PM optional)
 
 ### Trigger
 - Bug verified
@@ -502,7 +511,7 @@ Tester reviews before verifying:
 - Gate 6 approval recorded (or issues returned)
 
 ### Handoff
-- **To**: PM (Final Acceptance)
+- **To**: App Orchestrator (Final Acceptance)
 - **Artifact**: Release candidate + ops readiness confirmation
 
 ### ⮕ REVIEW GATE 6: Operations Review (Required)
@@ -516,21 +525,21 @@ See `REVIEW_GATES.md` for full criteria. Operations reviews:
 
 ---
 
-## Phase 7: PM Final Acceptance (Bug Fix)
+## Phase 7: App Orchestrator Final Acceptance (Bug Fix)
 
 **Trigger**: Bug verified and docs/versioning complete
 
 **Activities**:
 1. Confirm BUG-XXX restores FR-XXX behavior
 2. Verify customer value + business impact restored
-3. Record PM acceptance in BUG-XXX (PM Acceptance section)
+3. Record acceptance in BUG-XXX (PM optional for comms/priority)
 
 ### Exit Criteria
-- PM acceptance recorded
+- Acceptance recorded
 - Gate 7 approval recorded
 
-### ⮕ REVIEW GATE 7: PM Final Acceptance (Bug Fix)
-See `REVIEW_GATES.md` for full criteria. PM confirms:
+### ⮕ REVIEW GATE 7: Final Acceptance (Bug Fix)
+See `REVIEW_GATES.md` for full criteria. App Orchestrator confirms:
 - [ ] Bug fix matches FR-XXX spec
 - [ ] Acceptance criteria pass
 - [ ] Customer value + business impact restored

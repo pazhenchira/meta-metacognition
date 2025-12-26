@@ -175,6 +175,24 @@ get a second-opinion review (sub-agent or independent review pass) BEFORE implem
 
 ---
 
+## [P-TRIAGE] Bug vs Feature vs Incident Triage
+
+Before any work item proceeds, classify it:
+
+- **Bug**: Deviation from specified or previously working behavior.
+  - **PM input** is minimal: user impact, priority, and acceptance criteria for “fixed.”
+  - **Do not gate engineering triage** on PM discovery or new specs.
+- **Feature / Enhancement**: New capability or behavior change.
+  - **PM input is required**: goals, success metrics, scope boundaries, trade-offs.
+  - Requires FR/EN specs before design/implementation.
+- **Incident**: Operational failure (auth, delivery, integrations, outages).
+  - **Route to Ops + Dev first** for containment and recovery.
+  - PM is only required for comms and priority, not technical triage.
+
+Rationale: KISS + Thompson #5 — avoid unnecessary role gates and keep response tight for bugs/incidents.
+
+---
+
 ## [P-DATA] External Data & Subscriptions
 
 - Explicitly enumerate all external data sources and APIs used by the app.

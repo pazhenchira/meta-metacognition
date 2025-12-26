@@ -1,4 +1,9 @@
 
+## Engine Upgrade v2.0.27
+- 2025-12-26: Added triage model (bug vs feature vs incident) and role selection matrix.
+- Bug/incident workflows now route Ops/Dev first; PM is optional for impact/priority.
+- Review gates clarified for final acceptance on non-feature work items.
+
 ## Engine Upgrade v2.0.26
 - 2025-12-26: Added automated consistency audit gate for upgrades and completions.
 - New script `scripts/consistency_audit.py` validates sources of truth, work item state, and self-contained app instructions.

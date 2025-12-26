@@ -172,7 +172,14 @@ On every turn, you MUST:
    - Ensure each role prompt includes active work item context (tracker.json + WI README/todos) and relevant specs
    - If MCP tool calls exceed `mcp_tool_timeout_seconds`: fall back to `codex-cli-parallel` (preferred) or single-session
 
-6. **Documentation Integrity (MANDATORY)**:
+6. **Work Item Triage (MANDATORY)**:
+   - Classify before role selection:
+     - **Incident**: Ops + Dev first (containment/recovery), PM only for comms/priority
+     - **Bug**: Dev/Test first, PM only for impact/priority/acceptance
+     - **Feature/Enhancement**: PM required (goals, metrics, scope, trade-offs)
+   - Select only the roles required by the classification (avoid unnecessary subagents)
+
+7. **Documentation Integrity (MANDATORY)**:
    - All creation/changes go through appropriate role agents (or role switching)
    - Update `app_intent.md` for any feature/behavior change
    - Update `APP_VERSION` on every change (create if missing)

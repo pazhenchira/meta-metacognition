@@ -222,6 +222,13 @@ Lifecycle/GTМ roles:
 **Rule**: Essence Analyst is REQUIRED. Strategy Owner is REQUIRED for decision-critical apps. Operations is REQUIRED (production deployment is mandatory).
 GTM roles are REQUIRED when requested OR when GTM agents are available/enabled. If any role is not applicable or unavailable, skip it explicitly and record why.
 
+**Work Item Role Matrix (Use to select sub-agents)**:
+- **Incident** (operational failure): Ops + Dev first; Tester as needed; Writer if user-facing docs change; PM only for comms/priority.
+- **Bug** (spec deviation): Dev + Tester + Ops; PM only for impact/priority/acceptance; Designer/Writer only if UX/docs affected.
+- **Feature/Enhancement** (new behavior): PM required; Architect/Dev/Tester/Writer/Operations as standard; Strategy Owner if decision-critical; GTM roles if applicable.
+
+Select and spawn only the roles required by the classification. Avoid unnecessary sub-agents.
+
 ---
 
 ## DELEGATION & DOCUMENTATION INTEGRITY
@@ -402,31 +409,40 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
          **Path A: Conversational (User Asks in Chat)** - RECOMMENDED
          1. User asks: "Add feature X" or "Fix bug Y" (without editing app_intent.md first)
-         2. **Run Feature Discovery** (Product Manager Mode):
-            - Read `essence.md` - understand core value proposition
-            - Ask: "How does this feature serve users who want [core value]?"
-            - Validate alignment before proceeding
-         3. Orchestrator asks 2-3 clarifying questions:
-            - Specific requirements? (e.g., "Which crypto exchanges?")
-            - Constraints? (e.g., "Real-time or daily batch?")
-            - Integration points? (e.g., "Same report or separate?")
-            - Success criteria? (e.g., "What's acceptable latency?")
-         4. User answers questions in chat
-         5. Orchestrator generates proposed app_intent.md update:
-            - Distills conversation into clear feature description
-            - **Includes essence alignment rationale** (how this serves core value)
-            - Includes constraints, success criteria, integration notes
-            - Applies wisdom (technical precision, KISS, domain metrics)
-         6. Orchestrator shows diff: "Here's what I'll add to app_intent.md:"
-         7. Orchestrator asks: "Approve this update? (y/n)"
-         8. If approved:
-            - Update app_intent.md with proposed changes
-            - Log conversation and **essence alignment rationale** in APP_ORCHESTRATION.md
-            - Proceed to requirements discovery (Section 4)
-         9. If rejected:
-            - Ask user what to change
-            - Regenerate proposed update
-            - Show diff again, get approval
+         2. **Triage** (App Orchestrator):
+            - **Incident**: Operational failure (auth/delivery/integrations/outages) → Ops + Dev first
+            - **Bug**: Deviation from spec/previous behavior → Dev/Test first; PM only for impact/priority/acceptance
+            - **Feature/Enhancement**: New behavior → PM required
+         3. If **Feature/Enhancement**:
+            - **Run Feature Discovery** (Product Manager Mode):
+              - Read `essence.md` - understand core value proposition
+              - Ask: "How does this feature serve users who want [core value]?"
+              - Validate alignment before proceeding
+            - Orchestrator asks 2-3 clarifying questions:
+              - Specific requirements? (e.g., "Which crypto exchanges?")
+              - Constraints? (e.g., "Real-time or daily batch?")
+              - Integration points? (e.g., "Same report or separate?")
+              - Success criteria? (e.g., "What's acceptable latency?")
+            - User answers questions in chat
+            - Orchestrator generates proposed app_intent.md update:
+              - Distills conversation into clear feature description
+              - **Includes essence alignment rationale** (how this serves core value)
+              - Includes constraints, success criteria, integration notes
+              - Applies wisdom (technical precision, KISS, domain metrics)
+            - Orchestrator shows diff: "Here's what I'll add to app_intent.md:"
+            - Orchestrator asks: "Approve this update? (y/n)"
+            - If approved:
+              - Update app_intent.md with proposed changes
+              - Log conversation and **essence alignment rationale** in APP_ORCHESTRATION.md
+              - Proceed to requirements discovery (Section 4)
+            - If rejected:
+              - Ask user what to change
+              - Regenerate proposed update
+              - Show diff again, get approval
+         4. If **Bug/Incident**:
+            - Collect minimal inputs (expected vs actual, impact, acceptance criteria)
+            - Create/advance BUG/INCIDENT work item
+            - Route to Ops/Dev triage without PM gate
 
          **Path B: Manual (User Edited app_intent.md First)**
          1. Detect app_intent.md changed via git diff or file timestamp
@@ -498,18 +514,18 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
          - If file exists and outdated: Update with latest template
          - Replace `{APP_NAME}` with actual app name from `app_intent.md`
          - Agent name: "App Orchestrator" (consistent across all apps)
-         - **CRITICAL**: File must say "You read `AGENTS.md` (root)" NOT ".meta/AGENTS.md"
-         - **VALIDATION**: Verify file exists and contains "App Orchestrator"
-         - **VALIDATION**: Verify line 16 says "You read `AGENTS.md` (root)" (not `.meta/AGENTS.md`)
-         - **VALIDATION**: Grep file to ensure no incorrect ".meta/AGENTS.md" references for primary instructions
+        - **CRITICAL**: File must say "You read `.app/AGENTS.md`" and must not reference engine files
+        - **VALIDATION**: Verify file exists and contains "App Orchestrator"
+        - **VALIDATION**: Verify file says "You read `.app/AGENTS.md`"
+        - **VALIDATION**: Grep file to ensure no `.meta/` references for primary instructions
          
          **B. OpenAI Codex CLI** - Uses `AGENTS.md` in repo root:
          - **ALWAYS generate `AGENTS.md` in repository root** (if not exists)
          - Codex reads AGENTS.md files for memory/instructions (not `.github/agents/`)
-         - Include app-specific orchestration guidance
-         - Reference `.meta/AGENTS.md` for engine logic
-         - Format: Plain markdown (no YAML frontmatter needed)
-         - **VALIDATION**: Verify `AGENTS.md` exists in root with app instructions
+        - Root `AGENTS.md` acts as a router that points to `.app/AGENTS.md` for maintenance
+        - Do not embed engine guidance in root `AGENTS.md` beyond routing
+        - Format: Plain markdown (no YAML frontmatter needed)
+        - **VALIDATION**: Verify `AGENTS.md` exists in root and routes to `.app/AGENTS.md`
          
          **If either validation fails**: STOP and report error (agent won't be discoverable in that runtime)
 

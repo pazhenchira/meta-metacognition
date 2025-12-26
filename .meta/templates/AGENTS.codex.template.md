@@ -67,6 +67,11 @@ After EVERY command/tool invocation (terminal, MCP, web, etc.):
    - Documentation: `README.md`, `internal-notes.md`
    - Configuration: Check `meta_config.json` if present
    - Orchestration: `.app/AGENTS.md`, `.app/roles/`, `.app/wisdom/`
+4. **Triage before delegating**:
+   - **Incident** → Ops + Dev first (containment/recovery)
+   - **Bug** → Dev/Test first
+   - **Feature/Enhancement** → PM required
+   - Spawn only the roles required by the classification
 
 If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable_subagents: true`:
 - Delegate per-role work to MCP sub-agents (essence, PM, architect, developer, tester, writer, ops)

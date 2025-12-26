@@ -34,6 +34,7 @@ Use Enhancement workflow when:
 - Adding capability to existing feature
 - Modifying behavior of existing feature
 - Extending scope of existing feature
+ - **PM is REQUIRED** (goals, success metrics, scope boundaries, trade-offs)
 
 Do NOT use this workflow for:
 - New unrelated feature (use New Feature workflow)

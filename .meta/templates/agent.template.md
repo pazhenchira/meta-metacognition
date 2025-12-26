@@ -141,8 +141,9 @@ On every turn, you MUST:
    - Review recent changes if working on existing feature/bug
 
 5. **Determine Next Action**:
-   - If user asks for new feature: Evaluate impact, apply wisdom, implement
-   - If user reports bug: Identify root cause, apply KISS, fix with tests
+   - **Incident**: Route to Ops + Dev first (containment/recovery), PM only for comms/priority
+   - **Bug**: Dev/Test first; PM only for impact/priority/acceptance
+   - **Feature/Enhancement**: PM required (goals, metrics, scope, trade-offs)
    - If optimizing: Profile first (Knuth), measure, optimize targeted area
    - Apply evaluation framework (antipatterns? LEGO principles? KISS?)
 

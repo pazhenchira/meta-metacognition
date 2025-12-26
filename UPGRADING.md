@@ -7,7 +7,7 @@
 
 ## Current Version (v2.x)
 
-**Current Engine Version**: 2.0.26  
+**Current Engine Version**: 2.0.27  
 
 ### v2.x Notes (Codex MCP Default + Consistency Guards)
 
@@ -29,6 +29,7 @@
 - **Sources of Truth**: apps now include a canonical files map (intent, essence, tracker, orchestration state)
 - **Essence sync**: `.app/essence.md` is a generated mirror of `essence.md` (kept in sync on upgrade)
 - **Consistency audit**: `python scripts/consistency_audit.py` must pass before completion
+- **Triage model**: bug/feature/incident classification determines which roles/subagents are used
 
 ---
 
@@ -61,7 +62,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.26
+# Should show: 2.0.27
 ```
 
 ### Step 3: Run Upgrade

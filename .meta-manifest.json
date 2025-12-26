@@ -1,5 +1,5 @@
 {
-  "meta_orchestrator_version": "2.0.26",
+  "meta_orchestrator_version": "2.0.27",
   "generated_date": "2025-12-26",
   "files": {
     ".meta/AGENTS.md": {
@@ -52,8 +52,8 @@
     },
     ".meta/patterns/success_patterns.md": {
       "user_modified": true,
-      "generated_date": "2024-01-15",
-      "last_modified": "2025-11-25",
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
       "description": "Circuit Breaker, Config Validator, etc."
     },
     ".meta/patterns/trade_off_matrix.md": {
@@ -246,7 +246,8 @@
       "user_modified": false,
       "regenerate_on_upgrade": true,
       "description": "App workflow: new feature",
-      "phase": "engine"
+      "phase": "engine",
+      "generated_date": "2025-12-26"
     },
     ".app/workflows/enhancement.md": {
       "generated": "2025-12-26",
@@ -254,7 +255,8 @@
       "user_modified": false,
       "regenerate_on_upgrade": true,
       "description": "App workflow: enhancement",
-      "phase": "engine"
+      "phase": "engine",
+      "generated_date": "2025-12-26"
     },
     ".app/workflows/bug_fix.md": {
       "generated": "2025-12-26",
@@ -262,7 +264,8 @@
       "user_modified": false,
       "regenerate_on_upgrade": true,
       "description": "App workflow: bug fix",
-      "phase": "engine"
+      "phase": "engine",
+      "generated_date": "2025-12-26"
     },
     ".app/workflows/REVIEW_GATES.md": {
       "generated": "2025-12-26",
@@ -270,7 +273,8 @@
       "user_modified": false,
       "regenerate_on_upgrade": true,
       "description": "App workflow: review gates",
-      "phase": "engine"
+      "phase": "engine",
+      "generated_date": "2025-12-26"
     },
     ".app/wisdom/core_principles.md": {
       "generated": "2025-12-26",
@@ -278,7 +282,8 @@
       "user_modified": false,
       "regenerate_on_upgrade": true,
       "description": "Inlined core principles for app brain",
-      "phase": "engine"
+      "phase": "engine",
+      "generated_date": "2025-12-26"
     },
     ".meta/generators/app_folder_generation.md": {
       "user_modified": true,
@@ -357,6 +362,42 @@
       "generated_date": "2025-12-26",
       "last_modified": "2025-12-26",
       "description": "Consistency audit support"
+    },
+    ".app/roles/product_manager.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Triage model updates"
+    },
+    ".meta/workflows/enhancement.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Triage model updates"
+    },
+    ".meta/workflows/new_feature.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Triage model updates"
+    },
+    ".meta/workflows/bug_fix.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Triage model updates"
+    },
+    ".meta/workflows/REVIEW_GATES.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Triage model updates"
+    },
+    ".meta/roles/product_manager.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Triage model updates"
     }
   },
   "generated_by": "meta-orchestrator/2.0.24",

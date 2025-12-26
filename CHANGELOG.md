@@ -6,6 +6,19 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.27] - 2025-12-26 (Triage + Subagent Selection)
+
+### Added
+
+- **Bug/Feature/Incident triage model** enforced in app orchestrator templates and workflows
+- **Role selection matrix** to spawn only the required subagents
+- **Final acceptance gate** clarified for bugs/incidents (App Orchestrator)
+
+### Changed
+
+- **Bug fix workflow** updated to route incidents to Ops/Dev first and make PM optional for impact/priority
+- **Review gates** updated for non-feature final acceptance
+
 ## [2.0.26] - 2025-12-26 (Automated Consistency Audit)
 
 ### Added

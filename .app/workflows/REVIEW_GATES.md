@@ -230,13 +230,14 @@ Identify blocking issues, assign to responsible role, iterate.
 
 ---
 
-### Gate 7: PM Final Acceptance (Required)
+### Gate 7: Final Acceptance (Required)
 
-**The bookend gate.** PM started the feature (Gate 1), PM confirms it's done correctly.
+**The bookend gate.** For new features/enhancements, PM confirms it matches the spec.
+For bugs/incidents, the App Orchestrator confirms restored behavior (PM optional for comms/priority).
 
 **Artifact**: Complete, tested, documented feature ready for release
 
-**PM Reviews For**:
+**PM Reviews For** (features/enhancements):
 
 | Criterion | Question | Red Flags |
 |-----------|----------|-----------|
@@ -254,7 +255,7 @@ Identify blocking issues, assign to responsible role, iterate.
 - [ ] No unauthorized scope additions
 - [ ] User can achieve stated goals
 
-**PM Final Acceptance Statement**:
+**PM Final Acceptance Statement** (features/enhancements):
 ```markdown
 ## PM Final Acceptance: FR-XXX
 
@@ -276,6 +277,29 @@ I confirm this feature matches the specification FR-XXX and delivers
 the intended value. Ready for release.
 
 Signed: {PM}
+```
+
+**App Orchestrator Acceptance Statement** (bugs/incidents):
+```markdown
+## Final Acceptance: BUG/INCIDENT
+
+**Date**: YYYY-MM-DD
+**App Orchestrator**: {Name}
+**Verdict**: ACCEPTED / REJECTED
+
+### Verification
+- [ ] Restored expected behavior (per FR-XXX / previous working behavior)
+- [ ] Acceptance criteria for “fixed” satisfied
+- [ ] Regression checks pass
+- [ ] Ops readiness confirmed (if applicable)
+
+### Findings
+{Any observations, follow-ups, or residual risk}
+
+### Acceptance
+I confirm the bug/incident is resolved and the app behavior is restored.
+
+Signed: {App Orchestrator}
 ```
 
 **Rejection Response**:

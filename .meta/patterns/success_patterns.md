@@ -118,6 +118,26 @@ class APIGateway:
 - Centralized auth/rate limiting
 - Can aggregate/transform responses
 
+---
+
+## 5. Bug/Feature/Incident Triage Gate
+
+**Problem**: Work items get routed through the wrong roles, slowing bugs/incidents or skipping PM rigor for new capabilities.
+
+**Solution**: Classify each request before role selection:
+- **Bug** → Dev/Test first; PM only for impact/priority/acceptance.
+- **Feature/Enhancement** → PM required (goals, metrics, scope, trade-offs) before design.
+- **Incident** → Ops + Dev first for containment; PM only for comms/priority.
+
+**When to Use**: Always, before selecting sub-agents or opening a work item.
+
+**Benefits**:
+- Faster recovery for incidents
+- Less bureaucracy for bug fixes
+- Proper discovery for new behavior
+
+**Wisdom**: KISS + Thompson #5 (do one thing well; don’t force irrelevant gates)
+
 **Wisdom**: Parnas (#10 Engineering), Norman (#4.4 Design - Conceptual Models)
 
 ---

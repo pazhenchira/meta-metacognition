@@ -28,6 +28,13 @@ If the app is **decision-critical**:
 - **Gate 0 must be completed** before PM creates FR-XXX.
 - If not applicable, record **"Gate 0 N/A"** with a brief rationale.
 
+## Feature Classification
+
+Use this workflow only for **new capabilities or behavior changes**.
+
+- **PM is REQUIRED** (goals, success metrics, scope boundaries, trade-offs).
+- Do **NOT** use this workflow for bugs or incidents (use Bug Fix workflow).
+
 ## Workflow Diagram
 
 ```

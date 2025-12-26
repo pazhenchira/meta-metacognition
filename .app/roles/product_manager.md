@@ -310,6 +310,8 @@ Is it sustainable?                    In what timeframe?
 3. **Priority Decision**:
    - Priority based on value impact, not technical severity
 
+**Boundary**: PM does **not** gate technical triage for bugs or incidents. Ops/Dev lead containment and root-cause; PM provides impact, priority, and comms inputs.
+
 ---
 
 ## PM Principles
