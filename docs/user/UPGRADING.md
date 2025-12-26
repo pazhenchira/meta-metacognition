@@ -1,6 +1,6 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: December 25, 2025  
+**Date**: December 26, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
@@ -17,6 +17,9 @@
 - **Strategy Gate 0**: Decision-critical apps require STR-XXX approval before PM creates FR-XXX
 - **Role lock state guard**: `orchestrator_state.json` includes `primary_role` and `role_lock` (HALT if missing/mismatched)
 - **MCP activation**: servers are disabled by default; start Codex with `-p <app_slug>` to enable only this app’s MCP servers
+- **Sources of Truth**: canonical files map (intent, essence, tracker, orchestration state) included in app docs
+- **Essence sync**: `.app/essence.md` is a generated mirror of `essence.md` (kept in sync on upgrade)
+- **Consistency audit**: `python scripts/consistency_audit.py` must pass before completion
 
 ---
 
@@ -41,7 +44,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.24
+# Should show: 2.0.26
 ```
 
 ### Step 3: Run Upgrade

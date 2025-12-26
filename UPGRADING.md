@@ -7,9 +7,9 @@
 
 ## Current Version (v2.x)
 
-**Current Engine Version**: 2.0.24  
+**Current Engine Version**: 2.0.26  
 
-### v2.x Notes (Codex MCP Default + Upgrade Auto-Setup)
+### v2.x Notes (Codex MCP Default + Consistency Guards)
 
 - **App Orchestrator rename**: `.github/agents/app-orchestrator.agent.md` is now the standard (replaces `meta-app-orchestrator.agent.md`)
 - **Sponsor interface**: App Orchestrator is the sole contact with the human Sponsor
@@ -26,6 +26,9 @@
 - **Codex config**: set `tool_timeout_sec` for each MCP server in `~/.codex/config.toml` to match `mcp_tool_timeout_seconds`
 - **Multi-app safety**: namespace MCP servers as `{app_slug}__{role}` and set `cwd` to the app root in `~/.codex/config.toml`
 - **MCP activation**: servers are disabled by default; start Codex with `-p <app_slug>` to enable only that app’s MCP servers
+- **Sources of Truth**: apps now include a canonical files map (intent, essence, tracker, orchestration state)
+- **Essence sync**: `.app/essence.md` is a generated mirror of `essence.md` (kept in sync on upgrade)
+- **Consistency audit**: `python scripts/consistency_audit.py` must pass before completion
 
 ---
 
@@ -58,7 +61,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.24
+# Should show: 2.0.26
 ```
 
 ### Step 3: Run Upgrade

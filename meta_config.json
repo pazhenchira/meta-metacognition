@@ -3,14 +3,12 @@
   "r_and_d_mode": "fast",
   "branching_policy": "auto",
   "branching_risk_threshold": "medium",
-  
   "_comment_phase1": "Phase 1: Session Isolation, Tool Agnosticism, Integration Tests",
   "agent_runtime": "codex-cli",
   "session_isolation": "full",
   "max_parallel_sessions": 3,
   "enable_integration_tests": true,
   "enable_system_tests": true,
-  
   "_comment_runtime": "Runtime selection and sub-agent delegation",
   "app_slug": "meta-metacognition",
   "preferred_runtime": "codex-cli-mcp",
@@ -22,20 +20,37 @@
   "mcp_fastfail_seconds": 60,
   "mcp_warmup_enabled": true,
   "mcp_retry_once": true,
-  "mcp_tool_timeout_seconds": 180,
   "runtime_profiles": {
-    "codex-cli-parallel": { "supports_subagents": true, "subagent_style": "parallel-exec", "notes": "Parallel codex exec sessions per role" },
-    "codex-cli-mcp": { "supports_subagents": true, "subagent_style": "mcp-worker", "notes": "Codex CLI acting as MCP server (tool-driven)" },
-    "codex-cli": { "supports_subagents": false, "subagent_style": "single-session" },
-    "github-copilot": { "supports_subagents": false, "subagent_style": "agent-profiles" },
-    "claude-code-subagents": { "supports_subagents": true, "subagent_style": "claude-subagents" },
-    "cursor-multi-agent": { "supports_subagents": true, "subagent_style": "cursor-multi-agent" }
+    "codex-cli-parallel": {
+      "supports_subagents": true,
+      "subagent_style": "parallel-exec",
+      "notes": "Parallel codex exec sessions per role"
+    },
+    "codex-cli-mcp": {
+      "supports_subagents": true,
+      "subagent_style": "mcp-worker",
+      "notes": "Codex CLI acting as MCP server (tool-driven)"
+    },
+    "codex-cli": {
+      "supports_subagents": false,
+      "subagent_style": "single-session"
+    },
+    "github-copilot": {
+      "supports_subagents": false,
+      "subagent_style": "agent-profiles"
+    },
+    "claude-code-subagents": {
+      "supports_subagents": true,
+      "subagent_style": "claude-subagents"
+    },
+    "cursor-multi-agent": {
+      "supports_subagents": true,
+      "subagent_style": "cursor-multi-agent"
+    }
   },
-
   "_comment_phase2": "Phase 2: Agent Tuning & Problem Evolution (future)",
   "enable_agent_tuning": false,
   "enable_problem_evolution": false,
-  
   "_comment_phase3": "Phase 3: Production Monitoring (future)",
   "enable_production_monitoring": false,
   "feedback_loop_interval_hours": 24

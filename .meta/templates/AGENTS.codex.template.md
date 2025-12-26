@@ -22,13 +22,13 @@ This file provides instructions for OpenAI Codex CLI when working on this applic
 2. Internally affirm: "I am the App Orchestrator and app owner."
 3. Ensure `orchestrator_state.json` has `primary_role: "app_orchestrator"` and `role_lock: true` (create if missing).
 4. If missing or mismatched, STOP and re-run Role Lock Protocol.
-5. If you detect drift, stop and re-read AGENTS.md before continuing.
+5. If you detect drift, stop and re-read `.app/AGENTS.md` before continuing.
 
 ## RE-ORIENTATION LOOP (MANDATORY)
 
 After EVERY command/tool invocation (terminal, MCP, web, etc.):
 1. Reaffirm your role in one sentence.
-2. Re-read AGENTS.md (root) and `.meta/principles.md`.
+2. Re-read `.app/AGENTS.md` and `.app/wisdom/core_principles.md`.
 3. Re-check `role_lock` and any step readiness.
 4. If drift or mismatch is detected, STOP and re-run the role lock protocol.
 
@@ -55,17 +55,18 @@ After EVERY command/tool invocation (terminal, MCP, web, etc.):
 **If Sponsor is unavailable**: document assumptions, proceed if low-risk, and flag for confirmation.
 
 ### When working on this application:
-1. **Read `app_intent.md` first** - Understand the current application requirements and goals
+1. **Read `app_intent.md` and `essence.md` first** - Understand requirements and success metrics
 2. **Apply meta-orchestrator principles**:
    - KISS: Keep implementations simple and correct
    - LEGO: Single-responsibility components
    - Thompson #5: Do one thing well
-3. **Reference engine logic**: See `.meta/AGENTS.md` for full meta-orchestrator workflow
-4. **Follow app structure**:
+3. **Follow app structure**:
+   - Work items: `.workspace/tracker.json`, `.workspace/WI-XXX/README.md`, `.workspace/WI-XXX/todos.md`
    - Source code: `src/`
    - Tests: `tests/` (maintain >80% coverage)
    - Documentation: `README.md`, `internal-notes.md`
    - Configuration: Check `meta_config.json` if present
+   - Orchestration: `.app/AGENTS.md`, `.app/roles/`, `.app/wisdom/`
 
 If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable_subagents: true`:
 - Delegate per-role work to MCP sub-agents (essence, PM, architect, developer, tester, writer, ops)
@@ -76,6 +77,7 @@ If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable
 - Ensure each `[mcp_servers.{app_slug}__<role>]` in `~/.codex/config.toml` sets `tool_timeout_sec` to `mcp_tool_timeout_seconds`
 - Ensure each MCP server entry sets `cwd` to the app root (context isolation for multi-app use)
 - Use the Codex MCP tools (one per role server) with role briefs in the prompt (no OpenAI Agents SDK)
+- Include active work item context in each MCP prompt (tracker.json + WI README/todos + relevant specs)
 - If the session was already running before MCP registration, restart Codex to attach tools
 - Sanity check: ask each MCP tool for a one-sentence role confirmation and record it
 - If MCP tools exceed `mcp_tool_timeout_seconds` or fail, fall back to `codex-cli-parallel` (preferred) or role switching
@@ -110,18 +112,18 @@ For app modifications (new features, bug fixes):
 
 ## Upgrade Mode
 
-For engine upgrades (new `.meta/` folder version):
+For engine upgrades (new engine folder version):
 
-1. Check `.meta/VERSION` for new engine version
-2. Read `UPGRADING.md` in meta-orchestrator repo for migration guide
-3. Follow UPGRADE mode workflow from `.meta/AGENTS.md`
-4. Regenerate `AGENTS.md` (this file) if template updated
+1. Check `UPGRADING.md` for the migration guide
+2. If an engine folder is present, verify its version and run the upgrade workflow
+3. Regenerate this file if the template changed
+4. Run `python scripts/consistency_audit.py` and resolve any failures before completion
 
 ---
 
 ## Key Principles
 
-- **Wisdom-Driven**: Apply engineering wisdom from `.meta/wisdom/` (Thompson, Knuth, Pike, Kernighan)
+- **Wisdom-Driven**: Apply engineering wisdom from `.app/wisdom/` (Thompson, Knuth, Pike, Kernighan)
 - **Antipattern Detection**: Avoid God Objects, Golden Hammers, Magic Numbers
 - **Quality Metrics**: >80% test coverage, clear documentation, single-responsibility design
 - **User Value**: Always validate app delivers its essence (what makes it valuable)
@@ -151,10 +153,9 @@ For engine upgrades (new `.meta/` folder version):
 ## References
 
 - **App Intent**: `app_intent.md` ← What the app should do
-- **Engine Logic**: `.meta/AGENTS.md` ← How meta-orchestrator builds apps
-- **Principles**: `.meta/principles.md` ← KISS, LEGO, GEN+REVIEW
-- **Wisdom**: `.meta/wisdom/` ← Engineering best practices
-- **Patterns**: `.meta/patterns/` ← Antipatterns and success patterns
+- **Principles**: `.app/wisdom/core_principles.md` ← KISS, LEGO, GEN+REVIEW
+- **Wisdom**: `.app/wisdom/` ← Engineering best practices
+- **Patterns**: `.app/patterns/` ← Antipatterns and success patterns
 
 ---
 

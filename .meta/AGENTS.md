@@ -600,7 +600,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
    - All wisdom must be INLINED, not referenced
 
 5. **Generate Supporting Files**:
-   - `.app/essence.md`: Copy from discovery output
+   - `.app/essence.md`: Mirror of `essence.md` (sync from root; add header that it is generated)
    - `.app/roles/`: Adapted role files (only selected roles)
    - `.app/workflows/`: Adapted workflow files
    - `.app/wisdom/core_principles.md`: Inlined relevant principles
@@ -1596,10 +1596,9 @@ When all LEGOs are `done` AND experience validation passes:
       - **Development Guidelines**: Domain-specific constraints, coding standards, testing requirements
       - **Common Tasks**: "To add feature X, modify LEGO Y because..." (guide for future changes)
       - **Project Structure**: Where things live and why (src/, tests/, config/)
-      - **Meta-Orchestrator Reference**: "For orchestration details, see `.meta/AGENTS.md`"
-      - **Principles Reference**: "For global design principles, see `.meta/principles.md`"
-      - **Wisdom Resources**: "For engineering wisdom, see `.meta/wisdom/` directory"
-      - **Patterns Resources**: "For patterns and antipatterns, see `.meta/patterns/` directory"
+      - **Principles Reference**: "For core principles, see `.app/wisdom/core_principles.md`"
+      - **Wisdom Resources**: "For engineering wisdom, see `.app/wisdom/` directory"
+      - **Patterns Resources**: "For patterns and antipatterns, see `.app/patterns/` directory"
     - This file should be **comprehensive and self-contained** - include all architectural decisions, wisdom applied, and development guidelines
     - Future developers (human or AI) should understand the app's design philosophy from this file alone, with `.meta/` as reference for deeper orchestration details
     - **The template ensures the app orchestrator has the same Pre-flight Checklist** to avoid amnesia during maintenance
@@ -1609,9 +1608,9 @@ When all LEGOs are `done` AND experience validation passes:
     - Agent name: "App Orchestrator" (consistent across all apps)
     - Agent description: "Build and maintain {APP_NAME}"
     - This enables custom agent mode in VS Code Copilot dropdown
-    - **CRITICAL**: Agent references `AGENTS.md` (root) for complete instructions (NOT `.meta/AGENTS.md`)
-    - **VALIDATION**: Verify generated file contains "You read `AGENTS.md` (root)" on line 16
-    - **VALIDATION**: Verify file does NOT say "read `.meta/AGENTS.md`" anywhere
+    - **CRITICAL**: Agent references `.app/AGENTS.md` for complete instructions (NOT engine files)
+    - **VALIDATION**: Verify generated file contains "You read `.app/AGENTS.md`" early in the file
+    - **VALIDATION**: Verify file does NOT reference `.meta/` anywhere
     - Provides quick activation: select "App Orchestrator" from dropdown in Copilot Chat
     - Makes app orchestrator discoverable without remembering activation phrases
   - `README.md` – user-focused documentation of the app.
@@ -1634,6 +1633,11 @@ When all LEGOs are `done` AND experience validation passes:
     - Ready for deployment assessment.
   - Mark status as [COMPLETE].
   - This file serves as the **permanent record** of app-specific orchestration decisions.
+
+- **Run Consistency Audit (REQUIRED)**:
+  - Execute: `python scripts/consistency_audit.py`
+  - If the audit fails: fix issues, rerun, and document remediation in `APP_ORCHESTRATION.md`.
+  - Do not proceed to completion gate until the audit passes.
 
 - **If NEW APP MODE** (`.meta-version` did not exist at start):
   - Write `.meta-version` file (copy from `templates/.meta-version.template`, update dates to current date).

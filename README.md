@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 2.0.24** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.26** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -77,6 +77,21 @@ meta-metacognition/
 ```
 
 **Key point**: Everything in `.meta/` is the engine. Everything outside is your app.
+
+---
+
+## ✅ Sources of Truth (Canonical Files)
+
+To avoid drift, these are the canonical sources at runtime:
+
+- **Intent**: `app_intent.md`
+- **Essence**: `essence.md` (mirrored to `.app/essence.md` for self-contained orchestration)
+- **Work items**: `.workspace/tracker.json` + `.workspace/WI-XXX/README.md` + `.workspace/WI-XXX/todos.md`
+- **Pipeline state**: `orchestrator_state.json` (role lock + phase guard)
+- **Architecture**: `lego_plan.json`
+- **Runtime config**: `meta_config.json`
+- **Role instructions**: `.app/AGENTS.md` + `.app/roles/`
+- **Versioning**: `APP_VERSION` + `CHANGELOG.md`
 
 ---
 
@@ -615,7 +630,7 @@ Role lock is enforced via `orchestrator_state.json` (`primary_role: "app_orchest
 
 Example (Codex CLI):
 ```bash
-codex exec -f AGENTS.md "You are the App Orchestrator. Begin pre-flight."
+codex exec -f .app/AGENTS.md "You are the App Orchestrator. Begin pre-flight."
 ```
 
 **You are the Sponsor**: the human owner who provides intent, constraints, and approvals.
@@ -786,7 +801,7 @@ This usually means the essence or requirements weren't clear enough.
 
 ```json
 {
-  "version": "2.0.24",
+  "version": "2.0.26",
   "generated_date": "2025-11-25",
   "files": {
     "src/signal_generator.py": {
@@ -932,7 +947,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Current Version**: 2.0.24 (December 26, 2025)  
+**Current Version**: 2.0.26 (December 26, 2025)  
 **Built with meta-cognitive AI orchestration principles.**
 
 ---
@@ -955,7 +970,7 @@ MIT License - See [LICENSE](LICENSE) file
 # === UPGRADE META-ORCHESTRATOR ===
 # 1. Copy new .meta/ files from latest version (if you have them in .meta/)
 # 2. Run:
-@workspace Act as meta-orchestrator. Upgrade this app to v2.0.24 (ENGINE UPGRADE MODE)
+@workspace Act as meta-orchestrator. Upgrade this app to v2.0.26 (ENGINE UPGRADE MODE)
 
 # === PROTECT YOUR CUSTOM CODE ===
 # Edit .meta-manifest.json:
@@ -963,7 +978,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 # === CHECK VERSION ===
 cat .meta-version  # Shows which meta-orchestrator version built your app (if it exists)
-cat VERSION        # Shows current meta-orchestrator version (2.0.24)
+cat VERSION        # Shows current meta-orchestrator version (2.0.26)
 ```
 
 **Pro Tip (v1.7.1+)**: Use the VS Code Copilot agent picker dropdown for quickest activation. No activation phrases to remember!

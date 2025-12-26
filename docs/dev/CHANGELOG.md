@@ -6,6 +6,31 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.26] - 2025-12-26 (Automated Consistency Audit)
+
+### Added
+
+- **Automated consistency audit** (`scripts/consistency_audit.py`) executed before completion
+- **Upgrade gate** requiring audit pass before completion
+
+### Changed
+
+- **Upgrade instructions** now include the consistency audit step
+
+## [2.0.25] - 2025-12-26 (Consistency + Source of Truth)
+
+### Added
+
+- **Sources of Truth map** in README and app orchestrator templates for canonical runtime state
+- **Work item context requirement** in role handoffs (tracker.json + WI README/todos)
+- **Essence mirror sync rule**: keep `.app/essence.md` aligned with `essence.md`
+
+### Changed
+
+- **App orchestrator templates** now self-contained (no `.meta/` references) and default to `codex-cli-mcp` when runtime is missing
+- **Runtime timeout config** de-duplicated in `meta_config.json` (single `mcp_tool_timeout_seconds`)
+- **Changelog wording** clarified: work item state moved to `.workspace/tracker.json`, while `orchestrator_state.json` remains for pipeline/role lock
+
 ## [2.0.24] - 2025-12-26 (Completion + Re-Orientation)
 
 ### Added
@@ -378,7 +403,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 ### Removed
 
 **Deprecated Features** (BREAKING):
-- No more `orchestrator_state.json` in root (now `.workspace/tracker.json`)
+- Work item state moved to `.workspace/tracker.json` (orchestrator_state.json remains for pipeline/role lock state)
 - No more implicit approval (now explicit multi-role review gates)
 - No more mutable specs (now immutable in `specs/`)
 - No more single `docs/` folder (now separated by audience)

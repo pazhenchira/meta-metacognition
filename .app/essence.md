@@ -1,5 +1,8 @@
 # Meta-Orchestrator: Essence & Value Proposition
 
+**NOTE**: This file is a generated mirror of `essence.md`. Edit `essence.md` and regenerate to update.
+
+
 **Generated**: November 25, 2025  
 **Purpose**: Capture WHY the meta-orchestrator exists and what makes it uniquely valuable
 

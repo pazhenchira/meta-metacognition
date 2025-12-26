@@ -130,6 +130,14 @@ The generated `.app/AGENTS.md` must:
 - ✅ Include all context inline
 - ✅ Be fully functional if `.meta/` is deleted
 
+### Step 6.5: Sync Essence Mirror
+
+`essence.md` (root) is the canonical value proposition. `.app/essence.md` is a generated mirror
+used for self-contained orchestration. Keep them in sync:
+
+- If `essence.md` exists and differs from `.app/essence.md`, overwrite `.app/essence.md` from `essence.md`.
+- Add a short header in `.app/essence.md` stating it is a generated mirror and should not be edited directly.
+
 ### Step 7: Generate MCP Profile Wrapper Script (App Root)
 
 Codex CLI currently does **not** apply profile-scoped MCP enablement to `mcp list`,

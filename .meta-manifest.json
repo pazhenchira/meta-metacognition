@@ -1,5 +1,5 @@
 {
-  "meta_orchestrator_version": "2.0.24",
+  "meta_orchestrator_version": "2.0.26",
   "generated_date": "2025-12-26",
   "files": {
     ".meta/AGENTS.md": {
@@ -76,19 +76,19 @@
     },
     "README.md": {
       "user_modified": true,
-      "generated_date": "2024-01-15",
+      "generated_date": "2025-12-26",
       "last_modified": "2025-12-26",
       "description": "User-facing documentation"
     },
     "CHANGELOG.md": {
       "user_modified": true,
-      "generated_date": "2024-01-15",
+      "generated_date": "2025-12-26",
       "last_modified": "2025-12-26",
       "description": "Version history"
     },
     "UPGRADING.md": {
       "user_modified": true,
-      "generated_date": "2024-01-15",
+      "generated_date": "2025-12-26",
       "last_modified": "2025-12-26",
       "description": "Version upgrade guide"
     },
@@ -136,8 +136,8 @@
     },
     "meta_config.json": {
       "user_modified": true,
-      "generated_date": "2024-01-15",
-      "last_modified": "2025-11-25",
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
       "description": "Configuration flags"
     },
     ".meta/templates/codex_mcp_profile_wrapper.template.sh": {
@@ -161,7 +161,8 @@
       "user_modified": false,
       "regenerate_on_upgrade": true,
       "description": "Updated during engine upgrade",
-      "phase": "engine"
+      "phase": "engine",
+      "generated_date": "2025-12-26"
     },
     ".meta-version": {
       "generated": "2025-12-26",
@@ -169,7 +170,8 @@
       "user_modified": false,
       "regenerate_on_upgrade": true,
       "description": "Updated during engine upgrade",
-      "phase": "engine"
+      "phase": "engine",
+      "generated_date": "2025-12-26"
     },
     ".app/.engine-version": {
       "generated": "2025-12-26",
@@ -177,7 +179,8 @@
       "user_modified": false,
       "regenerate_on_upgrade": true,
       "description": "Updated during engine upgrade",
-      "phase": "engine"
+      "phase": "engine",
+      "generated_date": "2025-12-26"
     },
     ".app/AGENTS.md": {
       "generated": "2025-12-26",
@@ -185,7 +188,8 @@
       "user_modified": false,
       "regenerate_on_upgrade": true,
       "description": "Updated during engine upgrade",
-      "phase": "engine"
+      "phase": "engine",
+      "generated_date": "2025-12-26"
     },
     ".app/runtime/codex_mcp_servers.toml": {
       "generated": "2025-12-26",
@@ -225,7 +229,8 @@
       "user_modified": false,
       "regenerate_on_upgrade": true,
       "description": "VS Code agent template",
-      "phase": "engine"
+      "phase": "engine",
+      "generated_date": "2025-12-26"
     },
     ".app/roles/_manifest.md": {
       "generated": "2025-12-26",
@@ -274,6 +279,84 @@
       "regenerate_on_upgrade": true,
       "description": "Inlined core principles for app brain",
       "phase": "engine"
+    },
+    ".meta/generators/app_folder_generation.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    "docs/user/UPGRADE_QUICKSTART.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    ".meta/templates/AGENTS.codex.template.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    "docs/user/UPGRADING.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    "APP_ORCHESTRATION.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    "docs/user/README.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    ".app/essence.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    ".meta/generators/app_agents.template.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    "docs/dev/README.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    "docs/dev/CHANGELOG.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    "APP_VERSION": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    "scripts/consistency_audit.py": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
+    },
+    "essence.md": {
+      "user_modified": true,
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "description": "Consistency audit support"
     }
   },
   "generated_by": "meta-orchestrator/2.0.24",

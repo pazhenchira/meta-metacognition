@@ -2,12 +2,12 @@
   "preflight_run": true,
   "manifest_updated": true,
   "current_phase": "ENGINE_UPGRADE_COMPLETE",
-  "primary_role": "meta_orchestrator",
+  "primary_role": "app_orchestrator",
   "role_lock": true,
   "mode": "UPGRADE",
   "engine_version_before": "2.0.23",
-  "engine_version_after": "2.0.24",
-  "timestamp": "2025-12-26T03:09:37Z",
+  "engine_version_after": "2.0.26",
+  "timestamp": "2025-12-26T22:08:53Z",
   "status": "COMPLETE",
   "files_created": [
     ".app/roles/operations.md"
