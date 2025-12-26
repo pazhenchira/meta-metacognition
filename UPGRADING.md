@@ -1,13 +1,13 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: December 24, 2025  
+**Date**: December 26, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
 
 ## Current Version (v2.x)
 
-**Current Engine Version**: 2.0.21  
+**Current Engine Version**: 2.0.24  
 
 ### v2.x Notes (Codex MCP Default + Upgrade Auto-Setup)
 
@@ -17,7 +17,7 @@
 - **Strategy Gate 0**: Decision-critical apps require STR-XXX approval before PM creates FR-XXX
 - **Role lock state guard**: `orchestrator_state.json` now includes `primary_role` and `role_lock` (HALT if missing/mismatched)
 - **Default runtime**: `codex-cli-mcp` (MCP tools inside the Codex session)
-- **Auto-setup on upgrade**: registers MCP servers for each active role (`codex mcp add`)
+- **Auto-setup on upgrade**: generates `.app/runtime/codex_mcp_servers.toml` with profile-scoped MCP enablement
 - **Verification**: upgrade checks `codex mcp list` and requires a **Codex restart** if tools were added after session start
 - **Sanity check**: each MCP tool is asked for a one-sentence role confirmation and recorded in `APP_ORCHESTRATION.md`
 - **Fallback**: if MCP setup fails, fallback to `codex-cli-parallel` or single-session per `subagent_fallback`
@@ -25,6 +25,7 @@
 - **Fast-fail**: MCP warm-up pings require a response within `mcp_fastfail_seconds` (default 60s)
 - **Codex config**: set `tool_timeout_sec` for each MCP server in `~/.codex/config.toml` to match `mcp_tool_timeout_seconds`
 - **Multi-app safety**: namespace MCP servers as `{app_slug}__{role}` and set `cwd` to the app root in `~/.codex/config.toml`
+- **MCP activation**: servers are disabled by default; start Codex with `-p <app_slug>` to enable only that app’s MCP servers
 
 ---
 
@@ -57,7 +58,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.21
+# Should show: 2.0.24
 ```
 
 ### Step 3: Run Upgrade

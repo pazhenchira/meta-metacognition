@@ -204,9 +204,9 @@ Identify blocking issues, assign to responsible role, iterate.
 
 ---
 
-### Gate 6: Operations Review (If Applicable)
+### Gate 6: Operations Review (Required)
 
-**For production services only.**
+**For all deliverables.** If the app is not deployable (e.g., library/CLI), define and document the release equivalent with Sponsor approval.
 
 **Artifact**: Release candidate
 
@@ -226,6 +226,7 @@ Identify blocking issues, assign to responsible role, iterate.
 - [ ] Runbooks updated
 - [ ] Load testing completed (if needed)
 - [ ] No SLO impact expected
+- [ ] Production deploy completed OR release equivalent documented
 
 ---
 

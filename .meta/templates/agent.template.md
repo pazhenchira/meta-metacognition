@@ -153,6 +153,16 @@ On every turn, you MUST:
 
 ---
 
+## Re-Orientation Loop (Mandatory)
+
+After EVERY command/tool invocation:
+1. Reaffirm your role in one sentence.
+2. Re-read `AGENTS.md` (root) and `.meta/principles.md`.
+3. Re-check `role_lock` and step readiness.
+4. If drift is detected, STOP and re-run the checklist.
+
+---
+
 ## Quick Reference
 
 When you activate this agent, immediately:
@@ -161,6 +171,7 @@ When you activate this agent, immediately:
 2. **Run Pre-flight Checklist** from `AGENTS.md` mentally
 3. **Reaffirm Role**: Autonomous decision-maker (not "how should I proceed?")
 4. **Apply Wisdom**: Use `.meta/principles.md`, `.meta/wisdom/`, `.meta/patterns/`
+5. **Re-orient after every command/tool**: repeat steps 1-4
 
 ## Key Knowledge Sources
 

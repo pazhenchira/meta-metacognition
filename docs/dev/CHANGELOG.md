@@ -6,6 +6,44 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.24] - 2025-12-26 (Completion + Re-Orientation)
+
+### Added
+
+- **Role re-orientation loop** after every command/tool call (Meta + subagents)
+- **Problem framing gate** ("measure twice") before design/coding with second-opinion requirement when needed
+- **Completion gate** requiring production deployment and GTM artifacts when available
+
+### Changed
+
+- **Operations role required**; Gate 6 is always required (release equivalent for non-deployable apps)
+- **GTM roles auto-included** when GTM agents are available/enabled
+- **requirements.md template** includes Delivery & Launch Requirements section
+
+### Migration
+
+1. Regenerate `.app/` roles/workflows/templates to inherit re-orientation + ops requirement
+2. Ensure active work items include Ops Gate 6 and production deployment checks
+3. If GTM agents are enabled, include GTM artifacts or document skip with rationale
+
+## [2.0.22] - 2025-12-25 (MCP Profile Activation)
+
+### Added
+
+- **Profile-scoped MCP enablement**: `.app/runtime/codex_mcp_servers.toml` now includes an app profile that turns on only that app’s MCP servers
+- **GTM MCP servers** in the Codex MCP template (Monetization, Growth, Evangelist)
+
+### Changed
+
+- **MCP servers default disabled** to prevent cross-app startup storms; enable via profile and start Codex with `-p <app_slug>`
+- **Codex MCP instructions** updated in engine templates and README
+
+### Migration
+
+1. Regenerate `.app/runtime/codex_mcp_servers.toml` from the updated template
+2. Merge it into `~/.codex/config.toml`
+3. Start Codex with `-p <app_slug>` (do not enable MCP servers globally)
+
 ## [2.0.21] - 2025-12-24 (Workflow Gate Alignment)
 
 ### Added
@@ -458,7 +496,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 **Templates, Not Prescriptions**:
 - Roles and workflows are STARTING POINTS
 - Adapt based on app type (CLI vs web service vs library)
-- Not all apps need all roles (Operations is optional, Writer may be optional)
+- Not all apps need all roles (Operations is required; Writer may be optional depending on audience)
 - Formality is a spectrum (prototype → production → regulated)
 
 **The Essence Triangle** (Product Manager's Core Model):

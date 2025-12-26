@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 2.0.21** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.24** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -130,6 +130,7 @@ Set your preferred runtime in `meta_config.json`:
 **Tip**: `codex-cli-parallel` is the most reliable Codex CLI mode (one `codex exec` per role).
 Default is `codex-cli-mcp` (MCP tools inside the Codex session). If MCP tools don’t appear,
 merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` and restart Codex.
+MCP servers are **disabled by default**; start Codex with `-p <app_slug>` to enable only this app’s servers.
 If MCP tools exceed `mcp_tool_timeout_seconds` (default 7200s), the orchestrator falls back to `codex-cli-parallel`.
 If MCP warm-up fails within `mcp_fastfail_seconds` (default 60s), the orchestrator falls back immediately.
 Ensure each `[mcp_servers.<role>]` in `~/.codex/config.toml` sets `tool_timeout_sec` to `mcp_tool_timeout_seconds`.
@@ -785,7 +786,7 @@ This usually means the essence or requirements weren't clear enough.
 
 ```json
 {
-  "version": "2.0.21",
+  "version": "2.0.24",
   "generated_date": "2025-11-25",
   "files": {
     "src/signal_generator.py": {
@@ -931,7 +932,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Current Version**: 2.0.21 (December 24, 2025)  
+**Current Version**: 2.0.24 (December 26, 2025)  
 **Built with meta-cognitive AI orchestration principles.**
 
 ---
@@ -954,7 +955,7 @@ MIT License - See [LICENSE](LICENSE) file
 # === UPGRADE META-ORCHESTRATOR ===
 # 1. Copy new .meta/ files from latest version (if you have them in .meta/)
 # 2. Run:
-@workspace Act as meta-orchestrator. Upgrade this app to v2.0.21 (ENGINE UPGRADE MODE)
+@workspace Act as meta-orchestrator. Upgrade this app to v2.0.24 (ENGINE UPGRADE MODE)
 
 # === PROTECT YOUR CUSTOM CODE ===
 # Edit .meta-manifest.json:
@@ -962,7 +963,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 # === CHECK VERSION ===
 cat .meta-version  # Shows which meta-orchestrator version built your app (if it exists)
-cat VERSION        # Shows current meta-orchestrator version (2.0.21)
+cat VERSION        # Shows current meta-orchestrator version (2.0.24)
 ```
 
 **Pro Tip (v1.7.1+)**: Use the VS Code Copilot agent picker dropdown for quickest activation. No activation phrases to remember!

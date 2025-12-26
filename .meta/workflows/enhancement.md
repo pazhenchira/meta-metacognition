@@ -12,14 +12,14 @@ This workflow covers modifying or extending an existing feature that was deliver
 
 ---
 
-## Optional Role Insertions (When Applicable)
+## Role Insertions (Conditional + Required)
 
 - **Strategy Owner**: Insert after Essence when the enhancement changes decision logic.
 - **Designer**: Insert between PM and Architect for UX changes.
-- **Operations**: Insert after Documentation and before PM Final Acceptance for deploy readiness (Gate 6). Optional early consult after Architect if reliability implications are significant.
-- **Monetization Strategist**: Insert after Essence and before PM spec if pricing impact changes.
-- **Growth Marketer**: Insert after Essence and before PM spec if growth loops change.
-- **Evangelist**: Insert after Writer and before Release if new demo/launch assets are needed.
+- **Operations (REQUIRED)**: Insert after Documentation and before PM Final Acceptance for deploy readiness (Gate 6). Early consult after Architect if reliability implications are significant.
+- **Monetization Strategist**: Insert after Essence and before PM spec if pricing impact changes, OR when GTM agents are available/enabled.
+- **Growth Marketer**: Insert after Essence and before PM spec if growth loops change, OR when GTM agents are available/enabled.
+- **Evangelist**: Insert after Writer and before Release if new demo/launch assets are needed, OR when GTM agents are available/enabled.
 
 ## Decision-Critical Guardrail
 
@@ -119,7 +119,7 @@ Do NOT use this workflow for:
 │  Deployability → Monitoring → Runbooks                                       │
 └─────────────────────────────────────────────────────────────────────────────┘
         │
-        │ Ops signoff (if applicable)
+        │ Ops signoff (required)
         ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                     PM FINAL ACCEPTANCE                                      │
@@ -473,15 +473,15 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
 - [ ] Developer: Code is maintainable
 - [ ] Tester: Confident it works
 - [ ] Writer: Users can understand it
-- [ ] Operations: Operational readiness (if applicable)
+- [ ] Operations: Operational readiness (required)
 
 **Gate Outcome**: Approve / Reject
 
 ---
 
-## Phase 5b: Go-To-Market (Optional Roles)
+## Phase 5b: Go-To-Market (GTM Roles)
 
-**Trigger**: App intent explicitly requests monetization, growth, or evangelism.
+**Trigger**: App intent requests monetization/growth/evangelism OR GTM agents are available/enabled.
 
 **Roles**: Monetization Strategist, Growth Marketer, Evangelist (as applicable)
 
@@ -496,13 +496,14 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
 - `docs/user/evangelism.md` (if applicable)
 
 **Exit Criteria**:
-- GTM artifacts complete (if requested)
+- GTM artifacts complete (if available/enabled)
+- If GTM roles unavailable, record explicit skip with rationale
 
 ---
 
-## Phase 5c: Operations Review (If Applicable)
+## Phase 5c: Operations Review (Required)
 
-**Trigger**: Production deployment or reliability/SLO impact.
+**Trigger**: Always (production deployment required). If app is not deployable, define release equivalent with Sponsor approval.
 
 **Activities**:
 - Review deployment plan and rollback
@@ -522,7 +523,7 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
 - **To**: PM (Final Acceptance)
 - **Artifact**: Release candidate + ops readiness confirmation
 
-### ⮕ REVIEW GATE 6: Operations Review (If Applicable)
+### ⮕ REVIEW GATE 6: Operations Review (Required)
 See `REVIEW_GATES.md` for full criteria. Operations reviews:
 - [ ] Deployment plan exists with rollback
 - [ ] Monitoring and alerting configured
@@ -535,7 +536,7 @@ See `REVIEW_GATES.md` for full criteria. Operations reviews:
 
 ## Phase 6: Release (Enhancement)
 
-**Prerequisite**: Gate 6 completed (if applicable).
+**Prerequisite**: Gate 6 completed (required).
 
 ### ⮕ REVIEW GATE 7: PM Final Acceptance (Enhancement)
 PM confirms enhancement meets EN-XXX spec AND preserves original FR-XXX value:

@@ -67,7 +67,7 @@ my-awesome-app/                    # Git-enabled repository root
 │   │   ├── developer.md           # Developer sees ONLY Developer wisdom
 │   │   ├── tester.md              # Tester sees ONLY Tester wisdom
 │   │   ├── writer.md              # Writer sees ONLY Writer wisdom
-│   │   └── operations.md          # Operations sees ONLY Ops wisdom (optional)
+│   │   └── operations.md          # Operations sees ONLY Ops wisdom (required)
 │   ├── workflows/                 # Workflow definitions (adapted from .meta/workflows/)
 │   │   ├── new_feature.md
 │   │   ├── enhancement.md

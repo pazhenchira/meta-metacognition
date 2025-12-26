@@ -1,6 +1,6 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: December 24, 2025  
+**Date**: December 25, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
@@ -16,6 +16,7 @@
 ### v2.x Notes (Current)
 - **Strategy Gate 0**: Decision-critical apps require STR-XXX approval before PM creates FR-XXX
 - **Role lock state guard**: `orchestrator_state.json` includes `primary_role` and `role_lock` (HALT if missing/mismatched)
+- **MCP activation**: servers are disabled by default; start Codex with `-p <app_slug>` to enable only this app’s MCP servers
 
 ---
 
@@ -40,7 +41,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.21
+# Should show: 2.0.24
 ```
 
 ### Step 3: Run Upgrade

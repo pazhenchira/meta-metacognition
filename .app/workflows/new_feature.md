@@ -12,14 +12,14 @@ This workflow covers the complete lifecycle of a new feature from idea to produc
 
 ---
 
-## Optional Role Insertions (When Applicable)
+## Role Insertions (Conditional + Required)
 
 - **Strategy Owner**: Insert between Essence and PM when the app is decision-critical.
 - **Designer**: Insert between PM and Architect when UX/UI is non-trivial; produces UX artifacts that shape design.
-- **Operations**: Insert after Documentation and before PM Final Acceptance for deploy readiness (Gate 6). Optional early consult after Architect if reliability requirements are non-trivial.
-- **Monetization Strategist**: Insert after Essence and before PM spec when pricing/value capture is in scope.
-- **Growth Marketer**: Insert after Essence and before PM spec when acquisition/retention loops are required.
-- **Evangelist**: Insert after Writer and before Release when demos/launch assets are needed.
+- **Operations (REQUIRED)**: Insert after Documentation and before PM Final Acceptance for deploy readiness (Gate 6). Early consult after Architect if reliability requirements are non-trivial.
+- **Monetization Strategist**: Insert after Essence and before PM spec when pricing/value capture is in scope, OR when GTM agents are available/enabled.
+- **Growth Marketer**: Insert after Essence and before PM spec when acquisition/retention loops are required, OR when GTM agents are available/enabled.
+- **Evangelist**: Insert after Writer and before Release when demos/launch assets are needed, OR when GTM agents are available/enabled.
 
 ## Decision-Critical Guardrail
 
@@ -151,7 +151,7 @@ If the app is **decision-critical**:
 
 2. **Create Feature Specification**:
    - File: `specs/features/FR-{NNN}-{short-name}.md`
-   - Follows template from `.meta/artifacts/templates/feature_spec.template.md`
+   - Follows the feature spec format described in this workflow
    - Immutable once approved
 
 3. **Define Acceptance Criteria**:
@@ -407,15 +407,15 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
 - [ ] Developer: Code is maintainable
 - [ ] Tester: Confident it works
 - [ ] Writer: Users can understand it
-- [ ] Operations: Operational readiness (if applicable)
+- [ ] Operations: Operational readiness (required)
 
 **Gate Outcome**: Approve / Reject
 
 ---
 
-## Phase 5b: Go-To-Market (Optional Roles)
+## Phase 5b: Go-To-Market (GTM Roles)
 
-**Trigger**: App intent explicitly requests monetization, growth, or evangelism.
+**Trigger**: App intent requests monetization/growth/evangelism OR GTM agents are available/enabled.
 
 **Roles**: Monetization Strategist, Growth Marketer, Evangelist (as applicable)
 
@@ -430,13 +430,14 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
 - `docs/user/evangelism.md` (if applicable)
 
 **Exit Criteria**:
-- GTM artifacts complete (if requested)
+- GTM artifacts complete (if available/enabled)
+- If GTM roles unavailable, record explicit skip with rationale
 
 ---
 
-## Phase 5c: Operations Review (If Applicable)
+## Phase 5c: Operations Review (Required)
 
-**Trigger**: Production deployment or reliability/SLO impact.
+**Trigger**: Always (production deployment required). If app is not deployable, define release equivalent with Sponsor approval.
 
 **Activities**:
 - Review deployment plan and rollback
@@ -456,7 +457,7 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
 - **To**: PM (Final Acceptance)
 - **Artifact**: Release candidate + ops readiness confirmation
 
-### ⮕ REVIEW GATE 6: Operations Review (If Applicable)
+### ⮕ REVIEW GATE 6: Operations Review (Required)
 See `REVIEW_GATES.md` for full criteria. Operations reviews:
 - [ ] Deployment plan exists with rollback
 - [ ] Monitoring and alerting configured
@@ -471,7 +472,7 @@ See `REVIEW_GATES.md` for full criteria. Operations reviews:
 
 ### Trigger
 - Documentation complete
- - Gate 6 complete (if applicable)
+ - Gate 6 complete (required)
 
 ### Activities
 
@@ -486,7 +487,7 @@ See `REVIEW_GATES.md` for full criteria. Operations reviews:
    - Developer: No known technical debt
    - Tester: All tests pass
    - Writer: Docs accurate and complete
-   - Operations: Gate 6 signoff recorded (if applicable)
+   - Operations: Gate 6 signoff recorded (required)
 
 3. **Release Preparation**:
    - Version bump (`APP_VERSION`) per P-VERSIONING (patch/minor/major)

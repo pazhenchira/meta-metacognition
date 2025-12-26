@@ -12,12 +12,12 @@ This workflow covers fixing a defect where implementation deviates from specific
 
 ---
 
-## Optional Role Insertions (When Applicable)
+## Role Insertions (Conditional + Required)
 
 - **Strategy Owner**: Insert if bug impacts decision framework or benchmarks.
 - **Essence Analyst**: Only if the bug undermines the core value proposition or success metrics.
 - **Designer**: If fix affects UX, accessibility, or interaction flows.
-- **Operations**: If bug involves reliability, uptime, monitoring, or deployment (Gate 6 before production deploy).
+- **Operations (REQUIRED)**: Gate 6 before production deploy (or explicit release equivalent).
 - **Writer**: If bug fix changes user-facing behavior or documentation.
 
 ## Decision-Critical Guardrail
@@ -126,7 +126,7 @@ A bug is NOT:
 │  Deployability → Monitoring → Runbooks                                       │
 └─────────────────────────────────────────────────────────────────────────────┘
         │
-        │ Ops signoff (if applicable)
+        │ Ops signoff (required)
         ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                     PM FINAL ACCEPTANCE                                      │
@@ -487,9 +487,9 @@ Tester reviews before verifying:
 
 ---
 
-## Phase 6.5: Operations Review (If Applicable)
+## Phase 6.5: Operations Review (Required)
 
-**Trigger**: Production bug fix or reliability/deploy impact.
+**Trigger**: Always (production deployment required). If app is not deployable, define release equivalent with Sponsor approval.
 
 **Activities**:
 - Review deployment plan and rollback
@@ -505,7 +505,7 @@ Tester reviews before verifying:
 - **To**: PM (Final Acceptance)
 - **Artifact**: Release candidate + ops readiness confirmation
 
-### ⮕ REVIEW GATE 6: Operations Review (If Applicable)
+### ⮕ REVIEW GATE 6: Operations Review (Required)
 See `REVIEW_GATES.md` for full criteria. Operations reviews:
 - [ ] Deployment plan exists with rollback
 - [ ] Monitoring and alerting configured

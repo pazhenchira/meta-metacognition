@@ -1,7 +1,7 @@
 {
-  "meta_orchestrator_version": "2.0.21",
+  "meta_orchestrator_version": "2.0.24",
   "created_date": "2024-01-15",
-  "last_updated": "2025-12-24",
+  "last_updated": "2025-12-26",
   "features": [
     "lego_architecture",
     "unit_tests",
@@ -27,8 +27,7 @@
     "dual_runtime_agent_discovery",
     "web_documentation_guidance",
     "workflow_enforcement_guards",
-    "agent_reference_fix"
-    ,
+    "agent_reference_fix",
     "runtime_capability_matrix",
     "subagent_delegation",
     "lifecycle_roles",
@@ -53,6 +52,14 @@
     "ops_gate_enforcement",
     "bug_fix_pm_acceptance",
     "decision_critical_guardrails",
-    "role_selection_inputs"
+    "role_selection_inputs",
+    "mcp_profile_activation",
+    "mcp_default_disabled",
+    "mcp_profile_wrapper",
+    "reorientation_loop",
+    "problem_framing_gate",
+    "completion_gate",
+    "production_deployment_required",
+    "gtm_auto_use"
   ]
 }

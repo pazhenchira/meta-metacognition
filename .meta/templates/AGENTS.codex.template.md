@@ -24,6 +24,14 @@ This file provides instructions for OpenAI Codex CLI when working on this applic
 4. If missing or mismatched, STOP and re-run Role Lock Protocol.
 5. If you detect drift, stop and re-read AGENTS.md before continuing.
 
+## RE-ORIENTATION LOOP (MANDATORY)
+
+After EVERY command/tool invocation (terminal, MCP, web, etc.):
+1. Reaffirm your role in one sentence.
+2. Re-read AGENTS.md (root) and `.meta/principles.md`.
+3. Re-check `role_lock` and any step readiness.
+4. If drift or mismatch is detected, STOP and re-run the role lock protocol.
+
 ## Sponsor Interface (Human Owner)
 
 **Sponsor** = the human decision-maker accountable for intent, constraints, and approvals.
@@ -64,6 +72,7 @@ If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable
 - If MCP sub-agents are unavailable, fall back to role-switching in this session
 - Ensure `codex_mcp_server.py` is available and run it before sub-agent delegation
 - Ensure `.app/runtime/codex_mcp_servers.toml` is merged into `~/.codex/config.toml` before starting Codex
+- MCP servers must be `enabled = false` by default; use the generated wrapper script `scripts/codex-{app_slug}.sh` (or `-c mcp_servers.<role>.enabled=true` flags) to enable only this app’s MCP servers
 - Ensure each `[mcp_servers.{app_slug}__<role>]` in `~/.codex/config.toml` sets `tool_timeout_sec` to `mcp_tool_timeout_seconds`
 - Ensure each MCP server entry sets `cwd` to the app root (context isolation for multi-app use)
 - Use the Codex MCP tools (one per role server) with role briefs in the prompt (no OpenAI Agents SDK)
@@ -80,6 +89,7 @@ Documentation integrity:
 - Update `app_intent.md` for any feature/behavior change
 - Update `APP_VERSION` on every change (create if missing)
 - Keep README + docs/user + docs/dev in sync
+- Finish what you start: do not declare complete without production deployment and GTM artifacts when available
 
 ---
 

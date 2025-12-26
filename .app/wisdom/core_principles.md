@@ -100,7 +100,7 @@ A system can have:
 - **When debugging**: Trace both flows to find root cause
 - **When adding features**: Ensure new code doesn't pollute existing flows
 
-See `.meta/wisdom/engineering_wisdom.md` #18 for detailed guidance.
+See the engineering wisdom guidance in this file for detailed guidance.
 
 ---
 
@@ -112,6 +112,19 @@ See `.meta/wisdom/engineering_wisdom.md` #18 for detailed guidance.
   - End the session intentionally.
   - Expect the next `codex exec` or `codex exec resume` to resume from state.
 - All relevant facts and state must be stored in files, not only in conversation context.
+
+---
+
+## [P-REORIENT] Role Re-Orientation Loop
+
+After EVERY command or tool invocation:
+
+- Reaffirm your current role in one sentence.
+- Re-read the role instructions and this principles file.
+- Re-check any required state guards (e.g., `role_lock`, `primary_role`, step readiness).
+- If any drift or mismatch is detected, STOP and re-run the pre-flight checklist before continuing.
+
+This applies to Meta-Orchestrator sessions and ALL sub-agents/MCP role sessions.
 
 ---
 
@@ -144,6 +157,21 @@ For every major artifact (requirements, design, tests, docs, implementation):
     - any TODOs.
 
 This pattern enforces basic self-critique and metacognition.
+
+---
+
+## [P-MEASURE] Measure Twice, Cut Once (Problem Framing)
+
+Before DESIGN or CODING decisions:
+
+- Restate the problem and desired outcome in plain language.
+- List constraints (performance, cost, security, privacy, UX).
+- Define acceptance criteria and success metrics for the change.
+- List assumptions and unknowns.
+- Decide if a second opinion is required.
+
+If ambiguity or risk is high, OR if `r_and_d_mode = "thorough"` for a non-trivial change,
+get a second-opinion review (sub-agent or independent review pass) BEFORE implementing.
 
 ---
 
@@ -452,6 +480,21 @@ Every application MUST have E2E tests for:
   - simple health checks,
   - basic metrics if justified.
 - Ensure error messages are understandable and suggest next actions.
+
+---
+
+## [P-DONE] Finish What You Start (Quality & Completion)
+
+If we accept scope, we finish to a complete, production-ready state.
+`r_and_d_mode = "fast"` reduces cycles, NOT quality or completeness.
+
+Definition of Done includes (as applicable):
+- Functional implementation + tests + docs
+- Operations readiness and production deployment (or explicit release equivalent)
+- GTM artifacts when GTM roles are available/enabled
+- Acceptance criteria and success metrics validated
+
+If any element is not applicable, record the exception and Sponsor approval in APP_ORCHESTRATION.md.
 
 ---
 

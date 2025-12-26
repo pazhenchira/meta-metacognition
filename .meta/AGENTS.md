@@ -75,6 +75,10 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
   - `mcp_tool_timeout_seconds` must be mirrored into **Codex config**:
     - Set `tool_timeout_sec = <mcp_tool_timeout_seconds>` under each `[mcp_servers.<role>]` in `~/.codex/config.toml`.
     - If not set, Codex defaults to ~60s per tool call, causing premature timeouts.
+  - **Default disabled**: MCP servers must be `enabled = false` by default to avoid cross-app collisions.
+    - Codex CLI does not currently apply profile-scoped MCP `enabled` flags to `mcp list`.
+    - Generate a wrapper script `scripts/codex-{app_slug}.sh` (from template) that enables only this app’s MCP servers via `-c` flags and passes through args.
+    - Start Codex via the wrapper (or use `-c mcp_servers.<role>.enabled=true` flags) to activate only that app’s MCP servers.
   - **Multi-app safety**: MCP server names must be **namespaced per app**:
     - Use `app_slug` from `meta_config.json` (or slugify app name) and name servers `{app_slug}__{role}`.
     - This prevents collisions when multiple apps use MCP concurrently.
@@ -185,6 +189,7 @@ Rules:
 - `codex-cli-parallel`: ensure `agent_runtime.json` exists (copy from template); use `codex exec` per role session.
 - `codex-cli-mcp`: ensure `agent_runtime.json` exists (copy from template) and generate `codex_mcp_server.py` + `.app/runtime/codex_mcp_servers.toml` from templates.
   - Merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` **before** starting the main Codex session.
+  - MCP servers remain disabled by default; start Codex with `-p <app_slug>` to enable only this app's servers.
   - Main session uses the MCP tools for each role server (tool calls include role brief).
 - `claude-code-subagents`: generate `.claude/agents/{role}.md` files from `.meta/templates/claude_subagent.template.md`.
 - `github-copilot`: generate `.github/agents/{role}.agent.md` using `.meta/templates/agent.template.md` (role-specific profiles).
@@ -214,8 +219,8 @@ Lifecycle/GTМ roles:
 - The **App Orchestrator is the only role that communicates with the Sponsor**.
 - All other roles route questions/decisions through the App Orchestrator.
 
-**Rule**: Essence Analyst is REQUIRED. Strategy Owner is REQUIRED for decision-critical apps. GTM roles are OPTIONAL and only included when requested.
-If any role is not applicable, skip it explicitly and record why.
+**Rule**: Essence Analyst is REQUIRED. Strategy Owner is REQUIRED for decision-critical apps. Operations is REQUIRED (production deployment is mandatory).
+GTM roles are REQUIRED when requested OR when GTM agents are available/enabled. If any role is not applicable or unavailable, skip it explicitly and record why.
 
 ---
 
@@ -228,6 +233,19 @@ If any role is not applicable, skip it explicitly and record why.
 - Keep **internal & external docs** in sync (README, docs/user, docs/dev, APP_ORCHESTRATION.md).
 
 If any of these are skipped, STOP and correct before proceeding.
+
+---
+
+## RE-ORIENTATION LOOP (MANDATORY)
+
+After EVERY command or tool invocation (terminal, MCP, web, etc.):
+
+1. Reaffirm your role in one sentence.
+2. Re-read the role instructions (AGENTS.md or role file) and `.meta/principles.md`.
+3. Re-check any state guards (e.g., `role_lock`, `primary_role`, step readiness).
+4. If drift or mismatch is detected, STOP and re-run Pre-Flight before continuing.
+
+This applies to the Meta-Orchestrator and ALL sub-agents/MCP role sessions.
 
 ---
 
@@ -540,10 +558,13 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
    needs_pricing: [true | false]
    needs_growth: [true | false]
    needs_evangelism: [true | false]
+   gtm_agents_available: [true | false]
+   gtm_opt_out: [true | false]
    team_size: [1 | small | medium | large]
    formality: [minimal | light | standard | full]
    decision_critical: [true | false]
    ```
+   - Set `gtm_agents_available = true` if GTM MCP tools are registered and respond to sanity checks.
 
 2. **Select Roles** (from `.meta/roles/`):
    - Always (NEW APP): Essence Analyst, Product Manager (adapted), Developer
@@ -552,7 +573,8 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
    - If has_users + needs_correctness: Tester
    - If has_ui: Designer
    - If external documentation needed: Technical Writer
-   - If needs_uptime: Operations
+   - Operations (required; production deployment is mandatory)
+   - If gtm_agents_available and not gtm_opt_out: Monetization Strategist, Growth Marketer, Evangelist (minimal GTM scope unless Sponsor narrows)
    - If needs_pricing: Monetization Strategist
    - If needs_growth: Growth Marketer
    - If needs_evangelism: Evangelist
@@ -613,7 +635,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **2.0.21** (see `VERSION` file)
+Current meta-orchestrator version: **2.0.24** (see `VERSION` file)
 
 **Features in v2.0.0** (Workspace-Centric, Self-Documenting, Idempotent) - MAJOR REFACTOR:
 - **Workspace-centric execution**: `.workspace/` folder for ephemeral work items (deleted after completion)
@@ -883,6 +905,9 @@ That system prompt should capture:
 - Hierarchical control (meta → lego orchestrators → substeps).
 - GEN+REVIEW patterns.
 - Session hygiene & checkpoints.
+- Role re-orientation loop after every command/tool call.
+- Measure-twice problem framing before design/coding.
+- Finish-what-you-start completion standard (production deployment + GTM if available).
 - Safety valves.
 - R&D mode behavior (fast vs thorough).
 - Privacy & external data rules.
@@ -946,7 +971,13 @@ You MUST maintain `requirements.md` using a consistent structure so that future 
 - **Section 7. Evaluation & Success Criteria**  
   - How we know the app “works” (tests, metrics, sanity checks).
 
-- **Section 8. Changelog**  
+- **Section 8. Delivery & Launch Requirements**  
+  - Production deployment plan (required): environments, pipeline, rollback, runbook.
+  - Ops readiness: monitoring, alerts, SLOs/SLAs as applicable.
+  - GTM artifacts: required when GTM roles are available/enabled.
+  - If any item is not applicable, record the explicit exception and Sponsor approval.
+
+- **Section 9. Changelog**  
   - A chronologically ordered list of requirement changes.
   - Each change entry includes:
     - Version
@@ -1328,6 +1359,10 @@ Each LEGO-Orchestrator MUST:
 2. Execute substeps for that LEGO (with GEN+REVIEW where appropriate):
 
    - **DESIGN**:  
+     - **Problem Framing (Measure Twice)**:
+       - Restate the problem and desired outcome in plain language.
+       - List constraints, acceptance criteria, assumptions, and unknowns.
+       - Decide if a second-opinion review is required; if yes, get it BEFORE continuing.
      - Consult wisdom files ([P-INTUITION]):
        - Check `.meta/patterns/success_patterns.md` for applicable patterns.
        - Use `.meta/patterns/trade_off_matrix.md` for design decisions.
@@ -1378,6 +1413,8 @@ Each LEGO-Orchestrator MUST:
        - Confidence score and factors (Phase 1.5).
        - Intuition check: wisdom applied, antipatterns avoided, trade-offs resolved.
      - Exit the session intentionally.
+   - After EVERY command/tool invocation:
+     - Re-orient to the role and re-read instructions/principles ([P-REORIENT]).
    - The Meta-Orchestrator will later relaunch the LEGO-Orchestrator in a fresh session as needed.
 
    State format (with Phase 1.5 intuition tracking):
@@ -1503,6 +1540,20 @@ Using `essence.md` as the guide, validate the complete user journey:
   - User feedback collection mechanism
   - A/B testing infrastructure (if applicable)
 
+#### Production Deployment Validation (Required)
+- **Is production deployment complete?**
+  - Deployment pipeline executed (or documented manual path)
+  - Rollback strategy tested or documented
+  - Runbooks available for common failures
+  - Observability in place (logs/metrics/alerts)
+- If deployment is not applicable (e.g., library/CLI), document the explicit release equivalent and Sponsor approval.
+
+#### GTM Validation (When GTM roles available/enabled)
+- **Are GTM artifacts complete?**
+  - Monetization, growth, or evangelism artifacts produced as applicable
+  - Launch checklist and messaging documented
+  - If GTM roles are unavailable, record the skip with rationale
+
 #### Documentation for User Journey
 - **README covers complete journey**:
   - Problem statement (why this exists)
@@ -1520,6 +1571,8 @@ Using `essence.md` as the guide, validate the complete user journey:
 - Success metrics achieved vs targets from `essence.md`
 - Identified friction points and recommendations
 - Continuous improvement plan
+- Production deployment validation results (or explicit exception)
+- GTM artifact status (if applicable)
 
 **CRITICAL**: If core value delivery cannot be validated, or success metrics fall short of targets, STOP and reassess before declaring complete.
 
@@ -1587,6 +1640,14 @@ When all LEGOs are `done` AND experience validation passes:
   - Write `.meta-manifest.json` file (copy from `templates/.meta-manifest.template.json`, populate with actual generated files and timestamps using current date).
   - Mark all generated files with `user_modified: false` initially.
   - Include `APP_ORCHESTRATION.md` in manifest as a generated file.
+
+### 11.3 Completion Gate (Production + GTM)
+
+Before marking COMPLETE:
+- Production deployment is complete and validated (or explicit release equivalent approved).
+- Operations Gate 6 signoff recorded.
+- GTM artifacts are complete if GTM roles are available/enabled; otherwise record skip with rationale.
+- All acceptance criteria and success metrics validated.
 
 **╔═══════════════════════════════════════════════════════════════════════════════╗**
 **║ 🚨 MANIFEST VALIDATION GATE: Before marking COMPLETE                         ║**

@@ -56,6 +56,8 @@ has_ui: true | false
 needs_pricing: true | false
 needs_growth: true | false
 needs_evangelism: true | false
+gtm_agents_available: true | false
+gtm_opt_out: true | false
 team_size: 1 | small | medium | large
 formality: minimal | light | standard | full
 decision_critical: true | false
@@ -73,10 +75,11 @@ Based on characteristics:
 | decision_critical | Strategy Owner |
 | 3+ components | Architect |
 | external users needing docs | Technical Writer |
-| needs_uptime | Operations |
+| Always | Operations (required; scope scales by app type) |
 | needs_pricing | Monetization Strategist |
 | needs_growth | Growth Marketer |
 | needs_evangelism | Evangelist |
+| gtm_agents_available + not gtm_opt_out | Monetization Strategist, Growth Marketer, Evangelist |
 
 ### Step 3: Adapt Role Templates
 
@@ -126,6 +129,35 @@ The generated `.app/AGENTS.md` must:
 - ❌ NOT use `../` paths to engine files
 - ✅ Include all context inline
 - ✅ Be fully functional if `.meta/` is deleted
+
+### Step 7: Generate MCP Profile Wrapper Script (App Root)
+
+Codex CLI currently does **not** apply profile-scoped MCP enablement to `mcp list`,
+so per-app MCP servers can appear disabled unless explicitly enabled via `-c` flags.
+To keep top-level `enabled = false` while still enabling only the target app’s servers,
+generate a small wrapper script in the app root.
+
+**Output**:
+- `scripts/codex-{APP_SLUG}.sh` (create `scripts/` if missing)
+
+**Template**:
+- `.meta/templates/codex_mcp_profile_wrapper.template.sh`
+
+**How to populate placeholders**:
+- `{APP_SLUG}`: `meta_config.json.app_slug`
+- `{APP_PROFILE}`: slug for `--profile` (default: `APP_SLUG` with `_` replaced by `-`)
+- `{MCP_ENABLE_FLAGS}`: one `-c "mcp_servers.{server}.enabled=true"` entry per server
+  parsed from `.app/runtime/codex_mcp_servers.toml`.
+
+Example injected lines:
+```
+  -c "mcp_servers.trade_engine__essence_analyst.enabled=true"
+  -c "mcp_servers.trade_engine__product_manager.enabled=true"
+```
+
+**Notes**:
+- The wrapper must pass through all additional CLI args via `"$@"`.
+- Mark script executable (`chmod +x`).
 
 ### Step 7: Write .engine-version
 
@@ -203,6 +235,7 @@ Add new capabilities:
 - New roles added to manifest
 - New workflows available
 - Updated wisdom inlined
+- Wrapper script generated for MCP profile enablement (if missing or template changed)
 
 ### Step 6: Update Version
 

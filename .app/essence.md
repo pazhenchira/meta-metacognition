@@ -147,7 +147,7 @@ But they struggle with:
 1. Clone meta-metacognition repo
 2. Read app_intent.md (meta-orchestrator's own intent as reference)
 3. Replace app_intent.md with their own app idea
-4. Run: `@workspace Act as meta-orchestrator in .meta/AGENTS.md and build this app`
+4. Run the meta-orchestrator in ENGINE CREATE mode (see README.md for the exact activation command)
 
 **Experience**:
 - Meta-orchestrator asks 2-3 clarifying questions
@@ -183,7 +183,7 @@ But they struggle with:
 5. Get updated app with tests
 
 **Tertiary Workflow**: Upgrade engine
-1. Update .meta/ directory to new version
+1. Update the engine folder to the new version (see UPGRADING.md)
 2. Run meta-orchestrator in ENGINE UPGRADE mode
 3. Review upgrade plan (which files benefit from new features)
 4. Approve changes
@@ -327,8 +327,8 @@ But they struggle with:
 **Action loop**:
 1. Collect feedback
 2. Identify patterns (common failures, requests)
-3. Update wisdom files (.meta/wisdom/)
-4. Update templates (.meta/templates/)
+3. Update wisdom files in the engine folder
+4. Update templates in the engine folder
 5. Release new version
 6. Document in CHANGELOG.md
 

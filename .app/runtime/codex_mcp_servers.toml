@@ -1,57 +1,90 @@
 # Codex MCP server entries for role sub-agents
 # Merge these into ~/.codex/config.toml under [mcp_servers.*]
+# Default is disabled; enable via the wrapper script (scripts/codex-meta-metacognition.sh) or explicit -c flags to avoid cross-app collisions.
 # One server per role is recommended for clearer tool routing.
 
 [mcp_servers.meta-metacognition__essence_analyst]
+enabled = false
 command = "codex"
 args = ["mcp-server"]
 cwd = "/mnt/c/dev/meta-metacognition"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__product_manager]
+enabled = false
 command = "codex"
 args = ["mcp-server"]
 cwd = "/mnt/c/dev/meta-metacognition"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__architect]
+enabled = false
 command = "codex"
 args = ["mcp-server"]
 cwd = "/mnt/c/dev/meta-metacognition"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__developer]
+enabled = false
 command = "codex"
 args = ["mcp-server"]
 cwd = "/mnt/c/dev/meta-metacognition"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__tester]
+enabled = false
 command = "codex"
 args = ["mcp-server"]
 cwd = "/mnt/c/dev/meta-metacognition"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__tech_writer]
+enabled = false
+command = "codex"
+args = ["mcp-server"]
+cwd = "/mnt/c/dev/meta-metacognition"
+tool_timeout_sec = 7200
+
+[mcp_servers.meta-metacognition__operations]
+enabled = false
 command = "codex"
 args = ["mcp-server"]
 cwd = "/mnt/c/dev/meta-metacognition"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__monetization_strategist]
+enabled = false
 command = "codex"
 args = ["mcp-server"]
 cwd = "/mnt/c/dev/meta-metacognition"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__growth_marketer]
+enabled = false
 command = "codex"
 args = ["mcp-server"]
 cwd = "/mnt/c/dev/meta-metacognition"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__evangelist]
+enabled = false
 command = "codex"
 args = ["mcp-server"]
 cwd = "/mnt/c/dev/meta-metacognition"
 tool_timeout_sec = 7200
+
+# App profile: enables only this app's MCP servers when selected.
+[profiles.meta-metacognition]
+preferred_runtime = "codex-cli-mcp"
+enable_subagents = true
+subagent_strategy = "mcp"
+mcp_servers.meta-metacognition__essence_analyst.enabled = true
+mcp_servers.meta-metacognition__product_manager.enabled = true
+mcp_servers.meta-metacognition__architect.enabled = true
+mcp_servers.meta-metacognition__developer.enabled = true
+mcp_servers.meta-metacognition__tester.enabled = true
+mcp_servers.meta-metacognition__tech_writer.enabled = true
+mcp_servers.meta-metacognition__operations.enabled = true
+mcp_servers.meta-metacognition__monetization_strategist.enabled = true
+mcp_servers.meta-metacognition__growth_marketer.enabled = true
+mcp_servers.meta-metacognition__evangelist.enabled = true

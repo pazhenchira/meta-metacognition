@@ -1,17 +1,17 @@
 {
-  "meta_orchestrator_version": "2.0.15",
-  "generated_date": "2025-11-25",
+  "meta_orchestrator_version": "2.0.24",
+  "generated_date": "2025-12-26",
   "files": {
     ".meta/AGENTS.md": {
       "user_modified": true,
-      "generated_date": "2024-01-15",
-      "last_modified": "2025-11-25",
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
       "description": "Meta-orchestrator core logic (v1.7.0: conversational MAINTENANCE)"
     },
     ".meta/principles.md": {
       "user_modified": true,
-      "generated_date": "2024-01-15",
-      "last_modified": "2025-11-25",
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
       "description": "Global engineering principles"
     },
     ".meta/intent.md": {
@@ -64,8 +64,8 @@
     },
     ".meta/templates/AGENTS.template.md": {
       "user_modified": false,
-      "generated_date": "2025-11-25",
-      "last_modified": "2025-11-25",
+      "generated_date": "2025-12-26",
+      "last_modified": "2025-12-26",
       "description": "App-specific AGENTS.md template (v1.7.0: conversational MAINTENANCE)"
     },
     "agents.md": {
@@ -77,19 +77,19 @@
     "README.md": {
       "user_modified": true,
       "generated_date": "2024-01-15",
-      "last_modified": "2025-11-25",
+      "last_modified": "2025-12-26",
       "description": "User-facing documentation"
     },
     "CHANGELOG.md": {
       "user_modified": true,
       "generated_date": "2024-01-15",
-      "last_modified": "2025-11-25",
+      "last_modified": "2025-12-26",
       "description": "Version history"
     },
     "UPGRADING.md": {
       "user_modified": true,
       "generated_date": "2024-01-15",
-      "last_modified": "2025-11-25",
+      "last_modified": "2025-12-26",
       "description": "Version upgrade guide"
     },
     "DEPLOYMENT_GUIDE.md": {
@@ -139,6 +139,221 @@
       "generated_date": "2024-01-15",
       "last_modified": "2025-11-25",
       "description": "Configuration flags"
+    },
+    ".meta/templates/codex_mcp_profile_wrapper.template.sh": {
+      "generated": "2025-12-25",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Wrapper script template for per-app MCP enablement",
+      "phase": "engine"
+    },
+    "scripts/codex-meta-metacognition.sh": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Wrapper script to enable MCP servers for meta-metacognition profile"
+    },
+    ".meta/VERSION": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Updated during engine upgrade",
+      "phase": "engine"
+    },
+    ".meta-version": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Updated during engine upgrade",
+      "phase": "engine"
+    },
+    ".app/.engine-version": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Updated during engine upgrade",
+      "phase": "engine"
+    },
+    ".app/AGENTS.md": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Updated during engine upgrade",
+      "phase": "engine"
+    },
+    ".app/runtime/codex_mcp_servers.toml": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Updated during engine upgrade",
+      "phase": "engine"
+    },
+    "orchestrator_state.json": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Updated during engine upgrade",
+      "phase": "engine"
+    },
+    ".app/roles/operations.md": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Operations role (required) for app brain",
+      "phase": "engine"
+    },
+    ".meta/templates/codex_mcp_servers.template.toml": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP servers template (role sub-agents)",
+      "phase": "engine"
+    },
+    ".meta/templates/agent.template.md": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "VS Code agent template",
+      "phase": "engine"
+    },
+    ".app/roles/_manifest.md": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Active roles manifest",
+      "phase": "engine"
+    },
+    ".app/workflows/new_feature.md": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "App workflow: new feature",
+      "phase": "engine"
+    },
+    ".app/workflows/enhancement.md": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "App workflow: enhancement",
+      "phase": "engine"
+    },
+    ".app/workflows/bug_fix.md": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "App workflow: bug fix",
+      "phase": "engine"
+    },
+    ".app/workflows/REVIEW_GATES.md": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "App workflow: review gates",
+      "phase": "engine"
+    },
+    ".app/wisdom/core_principles.md": {
+      "generated": "2025-12-26",
+      "last_modified": "2025-12-26",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Inlined core principles for app brain",
+      "phase": "engine"
+    }
+  },
+  "generated_by": "meta-orchestrator/2.0.24",
+  "timestamp": "2025-12-26T03:09:37Z",
+  "engine_upgrade_date": "2025-12-26T03:09:37Z",
+  "engine_upgrade_notes": "v2.0.24: re-orientation loop, problem-framing gate, completion gate; operations required; GTM auto when available; production deployment required",
+  "app_version": "2.0.24",
+  "sprints_completed": [
+    "Engine Upgrade: v2.0.22 -> v2.0.23",
+    "Engine Upgrade: v2.0.23 -> v2.0.24"
+  ],
+  "sprint_notes": {
+    "Engine Upgrade v2.0.23": {
+      "date": "2025-12-25",
+      "focus": "Engine upgrade to v2.0.23 (MCP profile wrapper script generation)",
+      "key_insight": "Codex CLI does not apply profile-scoped MCP enable flags to `mcp list`; wrapper script enables per-app MCP servers via -c flags.",
+      "changes": [
+        "Added wrapper script template for per-app MCP enablement",
+        "Updated AGENTS guidance to use wrapper script or -c flags",
+        "Updated codex_mcp_servers template note",
+        "Updated app_agents template to reference wrapper"
+      ],
+      "files_modified": [
+        ".meta/templates/codex_mcp_profile_wrapper.template.sh",
+        ".meta/templates/AGENTS.codex.template.md",
+        ".meta/templates/AGENTS.template.md",
+        ".meta/templates/codex_mcp_servers.template.toml",
+        ".meta/generators/app_agents.template.md",
+        ".meta/generators/app_folder_generation.md",
+        ".meta/AGENTS.md",
+        ".meta/VERSION",
+        ".meta-version",
+        ".meta-manifest.json"
+      ],
+      "tests_added": 0,
+      "metrics": {
+        "engine_version_before": "2.0.22",
+        "engine_version_after": "2.0.23"
+      }
+    },
+    "Engine Upgrade v2.0.24": {
+      "date": "2025-12-26",
+      "focus": "Engine upgrade to v2.0.24 (re-orientation, completion gate, ops required)",
+      "key_insight": "Role drift and incomplete delivery require explicit re-orientation and completion gates.",
+      "changes": [
+        "Added re-orientation loop after every command/tool call (meta + subagents)",
+        "Added problem-framing gate with second-opinion rule",
+        "Made operations required and production deployment mandatory",
+        "Enabled GTM roles when GTM agents are available",
+        "Updated workflows, templates, and app brain (.app/) accordingly"
+      ],
+      "files_modified": [
+        ".meta/AGENTS.md",
+        ".meta/principles.md",
+        ".meta/roles/*.md",
+        ".meta/workflows/*.md",
+        ".meta/generators/app_agents.template.md",
+        ".meta/generators/app_folder_generation.md",
+        ".meta/templates/AGENTS.template.md",
+        ".meta/templates/AGENTS.codex.template.md",
+        ".meta/templates/agent.template.md",
+        ".meta/templates/codex_mcp_servers.template.toml",
+        ".app/AGENTS.md",
+        ".app/.engine-version",
+        ".app/roles/*",
+        ".app/workflows/*",
+        ".app/wisdom/core_principles.md",
+        ".app/runtime/codex_mcp_servers.toml",
+        "scripts/codex-meta-metacognition.sh",
+        ".meta/VERSION",
+        ".meta-version",
+        "CHANGELOG.md",
+        "UPGRADING.md",
+        "README.md"
+      ],
+      "tests_added": 0,
+      "metrics": {
+        "engine_version_before": "2.0.23",
+        "engine_version_after": "2.0.24"
+      }
     }
   }
 }
