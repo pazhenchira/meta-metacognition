@@ -23,6 +23,7 @@
 - **Triage model**: bug/feature/incident classification determines which roles/subagents are used
 - **GTM Strategy Owner gate**: GTM roles run only after a unified GTM strategy is approved
 - **Orchestrator discipline**: docs-first ops guidance + subagent enforcement when MCP is available
+- **Identity confirmation + doc index**: app orchestrator and subagents must restate role each turn and consult the Documentation Index for ops guidance
 
 ---
 
@@ -47,7 +48,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.29
+# Should show: 2.0.30
 ```
 
 ### Step 3: Run Upgrade

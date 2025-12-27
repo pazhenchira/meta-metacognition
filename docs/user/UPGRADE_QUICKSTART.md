@@ -15,19 +15,19 @@ git tag v1-backup
 ### 2️⃣ Copy Engine (10 seconds)
 ```bash
 cp -r /path/to/meta-metacognition/.meta ./
-cat .meta/VERSION  # Verify: 2.0.29
+cat .meta/VERSION  # Verify: 2.0.30
 ```
 
 ### 3️⃣ Run Upgrade (30-60 minutes, automated)
 
 Open app in Codex CLI or GitHub Copilot:
 ```
-Upgrade this app to meta-orchestrator v2.0.29
+Upgrade this app to meta-orchestrator v2.0.30
 ```
 
 **Done!** ✅
 
-**Note (2.0.29)**:
+**Note (2.0.30)**:
 - Decision-critical apps require **Strategy Gate 0** (STR-XXX) before PM specs.
 - Role lock is enforced via `orchestrator_state.json` (`primary_role`, `role_lock`).
 - MCP servers are disabled by default; start Codex with `-p <app_slug>` to enable only this app’s servers.
@@ -35,6 +35,7 @@ Upgrade this app to meta-orchestrator v2.0.29
 - Triage model routes incidents/bugs without PM gating; features require PM.
 - GTM Strategy Owner defines the unified plan before GTM sub-roles run.
 - App Orchestrator must use docs/scripts for ops how-to and delegate when MCP subagents are available.
+- App Orchestrator + subagents must restate role each turn and use the Documentation Index for ops guidance.
 
 ---
 
@@ -174,7 +175,7 @@ A: Yes! Create branch: `git checkout -b test-v2`, run upgrade, test, rollback if
 ```bash
 git tag v1-backup
 cp -r /path/to/meta-metacognition/.meta ./
-# Say: "Upgrade this app to meta-orchestrator v2.0.29"
+# Say: "Upgrade this app to meta-orchestrator v2.0.30"
 ```
 
 **Rollback = 1 command**:

@@ -1,4 +1,8 @@
 
+## Engine Upgrade v2.0.30
+- 2025-12-27: Added Documentation Index and identity confirmation protocol for App Orchestrator + subagents.
+- Consistency audit now verifies doc index + identity confirmation exist in `.app/AGENTS.md`.
+
 ## Engine Upgrade v2.0.29
 - 2025-12-27: Added docs-first discipline and subagent enforcement for App Orchestrator.
 - Consistency audit now verifies these guardrails exist in `.app/AGENTS.md`.

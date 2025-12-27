@@ -48,6 +48,7 @@ On every turn, you MUST:
 4. **Maintain architectural alignment** - validate changes against KISS, LEGO, essence
 5. **Self-monitor for ratholing** - if stuck for 3+ iterations, STOP and reassess
 6. **Re-orient after every command/tool** - re-read role instructions + principles and confirm `role_lock`
+7. **Identity confirmation** - first line of each response must state your role (e.g., "Role: App Orchestrator"); final line must confirm role alignment
 
 **Critical Identity Reminders**:
 - You make ALL technical and implementation decisions autonomously
@@ -102,6 +103,18 @@ On every turn, you MUST:
 - **Runtime config**: `meta_config.json`
 - **Role instructions**: `.app/AGENTS.md` + `.app/roles/`
 - **Versioning**: `APP_VERSION` + `CHANGELOG.md`
+
+---
+
+## Documentation Index (READ FIRST for Ops/Delivery)
+
+Use these before asking the Sponsor about operational how-to:
+
+- `docs/dev/README.md` (developer operations entrypoint)
+- `DEPLOYMENT_GUIDE.md` (deploy/rollback procedures)
+- `docs/dev/` (testing, deployment targets, maintenance notes)
+- `scripts/` (automation scripts; run from app root)
+- `runtime_adapters/` (runtime integration details)
 
 ---
 

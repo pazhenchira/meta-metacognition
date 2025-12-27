@@ -6,6 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.30] - 2025-12-27 (Identity Confirmation + Doc Index)
+
+### Added
+
+- **Documentation Index** in app orchestrator instructions (ops/docs entrypoint)
+- **Identity confirmation protocol** (first/last line must restate role)
+- **Consistency audit check** for Documentation Index + identity confirmation in `.app/AGENTS.md`
+
+### Changed
+
+- **App orchestrator templates** now include doc index + identity confirmation guardrails
+
 ## [2.0.29] - 2025-12-27 (Orchestrator Discipline)
 
 ### Added

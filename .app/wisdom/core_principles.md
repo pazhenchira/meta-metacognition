@@ -193,6 +193,17 @@ Rationale: KISS + Thompson #5 — avoid unnecessary role gates and keep response
 
 ---
 
+## [P-IDENTITY] Role Identity Confirmation
+
+To prevent drift, every role must explicitly confirm identity:
+
+- **First line** of each response states the role (e.g., "Role: App Orchestrator").
+- **Final line** confirms alignment (e.g., "Role confirmed.").
+
+Rationale: Reinforces role lock and prevents silent role drift.
+
+---
+
 ## [P-DOCS-FIRST] Orchestrator Docs-First Discipline
 
 The App Orchestrator must **consult app documentation and scripts before asking the Sponsor for operational instructions**.

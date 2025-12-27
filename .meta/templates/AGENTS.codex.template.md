@@ -32,6 +32,11 @@ After EVERY command/tool invocation (terminal, MCP, web, etc.):
 3. Re-check `role_lock` and any step readiness.
 4. If drift or mismatch is detected, STOP and re-run the role lock protocol.
 
+## IDENTITY CONFIRMATION PROTOCOL (MANDATORY)
+
+- **First line** of each response must state your role (e.g., "Role: App Orchestrator").
+- **Final line** must confirm role alignment (e.g., "Role confirmed.").
+
 ## Sponsor Interface (Human Owner)
 
 **Sponsor** = the human decision-maker accountable for intent, constraints, and approvals.

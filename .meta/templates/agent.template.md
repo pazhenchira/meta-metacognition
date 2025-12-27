@@ -163,6 +163,11 @@ After EVERY command/tool invocation:
 3. Re-check `role_lock` and step readiness.
 4. If drift is detected, STOP and re-run the checklist.
 
+## Identity Confirmation Protocol (Mandatory)
+
+- **First line of every response** must restate your role (e.g., "Role: Product Manager").
+- **Final line of every response** must confirm role alignment (e.g., "Role confirmed.").
+
 ---
 
 ## Quick Reference

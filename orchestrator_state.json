@@ -6,8 +6,8 @@
   "role_lock": true,
   "mode": "UPGRADE",
   "engine_version_before": "2.0.23",
-  "engine_version_after": "2.0.29",
-  "timestamp": "2025-12-27T00:12:30Z",
+  "engine_version_after": "2.0.30",
+  "timestamp": "2025-12-27T00:15:30Z",
   "status": "COMPLETE",
   "files_created": [
     ".app/roles/operations.md"
