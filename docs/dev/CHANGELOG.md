@@ -6,6 +6,19 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.31] - 2025-12-27 (Regression + Oversight Preservation)
+
+### Added
+
+- **Developer regression requirements** (must prevent regressions + add tests for changes)
+- **Tester E2E regression requirement** (baseline + new behavior must pass)
+- **App Orchestrator oversight** for catching subagent omissions and updating overrides
+- **App Orchestrator overrides preservation** during upgrades (APP_OVERRIDES in `.app/AGENTS.md`)
+
+### Changed
+
+- **Role files** now explicitly call out regression responsibilities
+
 ## [2.0.30] - 2025-12-27 (Identity Confirmation + Doc Index)
 
 ### Added

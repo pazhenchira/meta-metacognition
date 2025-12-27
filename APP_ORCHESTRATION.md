@@ -1,4 +1,8 @@
 
+## Engine Upgrade v2.0.31
+- 2025-12-27: Added regression + E2E requirements for Developer/Tester roles.
+- App Orchestrator oversight strengthened; APP_OVERRIDES in `.app/AGENTS.md` preserved on upgrade.
+
 ## Engine Upgrade v2.0.30
 - 2025-12-27: Added Documentation Index and identity confirmation protocol for App Orchestrator + subagents.
 - Consistency audit now verifies doc index + identity confirmation exist in `.app/AGENTS.md`.

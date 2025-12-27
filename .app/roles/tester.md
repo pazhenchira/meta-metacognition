@@ -200,6 +200,14 @@ Does it degrade gracefully?           Would a user be satisfied?
 
 ### E2E Testing (User Reality Focus)
 
+**E2E Regression (Mandatory)**
+- Verify **previously working user journeys** still pass (baseline regression).
+- Verify **new or changed journeys** pass end-to-end (new behavior).
+- If any E2E fails, classify as bug/incident and block release until resolved.
+- Document E2E results in the test report (TP-XXX).
+
+
+
 From `[P-E2E]` in principles.md:
 
 **Minimal Mock Input**:

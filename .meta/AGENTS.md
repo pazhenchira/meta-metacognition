@@ -516,6 +516,8 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
          - Before regenerating `.app/roles/*.md`, extract the `APP_OVERRIDES` block from each role.
          - After regeneration, reinsert the preserved block into the corresponding role file.
          - If a role is removed, archive its overrides in `.app/roles/_overrides_archive.md`.
+         - Before regenerating `.app/AGENTS.md`, extract the `APP_OVERRIDES` block from `.app/AGENTS.md`.
+         - After regeneration, reinsert the preserved block into `.app/AGENTS.md` at the same location.
        - Update `.meta-version` and `.meta-manifest.json`.
        - **MANDATORY: Generate agent configuration for BOTH runtimes**:
          

@@ -181,6 +181,24 @@ Does it follow patterns?              Can we refactor safely?
 
 ## Test Coverage (Proving It Works)
 
+### Regression Safety (Mandatory)
+
+1. **Protect existing behavior**:
+   - Run relevant existing tests before and after changes
+   - Add regression tests when fixing bugs or touching fragile paths
+
+2. **Prove new additions work**:
+   - Add unit tests for new logic
+   - Add integration tests where components interact
+   - Ensure tests cover both happy path and edge cases
+
+3. **Regression checklist**:
+   - [ ] Existing tests pass (no regressions)
+   - [ ] New tests cover additions
+   - [ ] Bug fixes include a regression test
+
+
+
 ### Core Questions
 
 1. **Do tests prove behavior?**

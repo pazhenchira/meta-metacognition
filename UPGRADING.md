@@ -7,7 +7,7 @@
 
 ## Current Version (v2.x)
 
-**Current Engine Version**: 2.0.30  
+**Current Engine Version**: 2.0.31  
 
 ### v2.x Notes (Codex MCP Default + Consistency Guards)
 
@@ -33,6 +33,8 @@
 - **GTM Strategy Owner gate**: GTM roles run only after a unified GTM strategy is approved
 - **Orchestrator discipline**: docs-first ops guidance + subagent enforcement when MCP is available
 - **Identity confirmation + doc index**: app orchestrator and subagents must restate role each turn and consult the Documentation Index for ops guidance
+- **Regression discipline**: Developer prevents regressions; Tester validates E2E baseline + new behavior
+- **App Orchestrator overrides**: APP_OVERRIDES block in `.app/AGENTS.md` preserved on upgrade
 
 ---
 
@@ -65,7 +67,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.30
+# Should show: 2.0.31
 ```
 
 ### Step 3: Run Upgrade

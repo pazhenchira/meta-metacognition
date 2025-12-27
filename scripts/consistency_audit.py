@@ -155,6 +155,7 @@ def audit_app_agents(audit: Audit) -> None:
         "Docs-first rule",
         "Subagent enforcement",
         "Identity confirmation",
+        "APP_OVERRIDES_START",
     ]
     missing = [req for req in required if req not in text]
     if missing:
