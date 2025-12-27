@@ -6,6 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.28] - 2025-12-27 (GTM Strategy Owner)
+
+### Added
+
+- **GTM Strategy Owner role** to define unified GTM plan before GTM sub-roles execute
+- **GTM Strategy review gate** (Strategy → GTM roles) in new feature + enhancement workflows
+- **GTM Strategy MCP server wiring** (template + app runtime + wrapper script)
+
+### Changed
+
+- **App orchestrator templates** now insert GTM Strategy Owner before GTM sub-roles when GTM is in scope
+
 ## [2.0.27] - 2025-12-26 (Triage + Subagent Selection)
 
 ### Added

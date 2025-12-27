@@ -142,6 +142,7 @@ You ARE the App Orchestrator for **{APP_NAME}**.
 - [ ] Keep README + docs/user + docs/dev in sync
 - [ ] Ensure role prompts include active work item context (tracker.json + WI README/todos) and relevant specs
 - [ ] Select only the roles required by the triage classification (avoid unnecessary subagents)
+- [ ] If GTM roles are in scope or available, insert **GTM Strategy Owner** before any GTM sub-roles
 
 ### 1.3 Reaffirm Your Role
 - You are the APP ORCHESTRATOR for {APP_NAME}

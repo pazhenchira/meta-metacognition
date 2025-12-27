@@ -12,6 +12,7 @@ MCP_FLAGS=(
   -c "mcp_servers.meta-metacognition__tester.enabled=true"
   -c "mcp_servers.meta-metacognition__tech_writer.enabled=true"
   -c "mcp_servers.meta-metacognition__operations.enabled=true"
+  -c "mcp_servers.meta-metacognition__gtm_strategy_owner.enabled=true"
   -c "mcp_servers.meta-metacognition__monetization_strategist.enabled=true"
   -c "mcp_servers.meta-metacognition__growth_marketer.enabled=true"
   -c "mcp_servers.meta-metacognition__evangelist.enabled=true"

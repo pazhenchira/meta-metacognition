@@ -1,4 +1,8 @@
 
+## Engine Upgrade v2.0.28
+- 2025-12-27: Added GTM Strategy Owner role and GTM Strategy review gate before GTM sub-roles.
+- Wired GTM Strategy Owner into MCP server templates/runtime + app orchestrator templates.
+
 ## Engine Upgrade v2.0.27
 - 2025-12-26: Added triage model (bug vs feature vs incident) and role selection matrix.
 - Bug/incident workflows now route Ops/Dev first; PM is optional for impact/priority.

@@ -52,6 +52,13 @@ args = ["mcp-server"]
 cwd = "{APP_ROOT}"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
+[mcp_servers.{APP_SLUG}__gtm_strategy_owner]
+enabled = false
+command = "codex"
+args = ["mcp-server"]
+cwd = "{APP_ROOT}"
+tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
+
 [mcp_servers.{APP_SLUG}__monetization_strategist]
 enabled = false
 command = "codex"
@@ -85,6 +92,7 @@ mcp_servers.{APP_SLUG}__developer.enabled = true
 mcp_servers.{APP_SLUG}__tester.enabled = true
 mcp_servers.{APP_SLUG}__tech_writer.enabled = true
 mcp_servers.{APP_SLUG}__operations.enabled = true
+mcp_servers.{APP_SLUG}__gtm_strategy_owner.enabled = true
 mcp_servers.{APP_SLUG}__monetization_strategist.enabled = true
 mcp_servers.{APP_SLUG}__growth_marketer.enabled = true
 mcp_servers.{APP_SLUG}__evangelist.enabled = true

@@ -1,6 +1,6 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: December 26, 2025  
+**Date**: December 27, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
@@ -21,6 +21,7 @@
 - **Essence sync**: `.app/essence.md` is a generated mirror of `essence.md` (kept in sync on upgrade)
 - **Consistency audit**: `python scripts/consistency_audit.py` must pass before completion
 - **Triage model**: bug/feature/incident classification determines which roles/subagents are used
+- **GTM Strategy Owner gate**: GTM roles run only after a unified GTM strategy is approved
 
 ---
 
@@ -45,7 +46,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.27
+# Should show: 2.0.28
 ```
 
 ### Step 3: Run Upgrade

@@ -25,7 +25,7 @@ These are not peer roles to PM/Architect/Developer; they sit **above** the role 
 ## Sub-Agent Mapping (MCP / Parallel Runtimes)
 
 - **Primary session**: App Orchestrator (coordinates, integrates, gates)
-- **Sub-agents**: Every active role in the role pool (Essence Analyst, PM, Architect, Designer, Developer, Tester, Writer, Operations, and any active GTM roles)
+- **Sub-agents**: Every active role in the role pool (Essence Analyst, PM, Architect, Designer, Developer, Tester, Writer, Operations, GTM Strategy Owner, and any active GTM roles)
 - **Sponsor**: Human owner (never a sub-agent)
 
 **Tool-Agnostic Rule**: Role definitions are tool-agnostic. Any tools mentioned are optional examples, not requirements.
@@ -78,6 +78,7 @@ These are not peer roles to PM/Architect/Developer; they sit **above** the role 
 These roles are used **only when the app requires them**:
 
 - **Essence Analyst**: Defines and protects the core value proposition (REQUIRED)
+- **GTM Strategy Owner**: Defines the unified go-to-market plan before GTM sub-roles execute
 - **Strategy Owner (Domain Expert)**: Defines the decision framework and benchmarks (REQUIRED for decision-critical apps)
 - **Monetization Strategist**: Pricing and value capture
 - **Growth Marketer**: Acquisition, activation, retention

@@ -17,6 +17,7 @@ This workflow covers modifying or extending an existing feature that was deliver
 - **Strategy Owner**: Insert after Essence when the enhancement changes decision logic.
 - **Designer**: Insert between PM and Architect for UX changes.
 - **Operations (REQUIRED)**: Insert after Documentation and before PM Final Acceptance for deploy readiness (Gate 6). Early consult after Architect if reliability implications are significant.
+- **GTM Strategy Owner**: Insert after Essence and before any GTM roles when GTM is in scope (pricing/growth/evangelism) or GTM agents are available/enabled.
 - **Monetization Strategist**: Insert after Essence and before PM spec if pricing impact changes, OR when GTM agents are available/enabled.
 - **Growth Marketer**: Insert after Essence and before PM spec if growth loops change, OR when GTM agents are available/enabled.
 - **Evangelist**: Insert after Writer and before Release if new demo/launch assets are needed, OR when GTM agents are available/enabled.
@@ -477,6 +478,31 @@ See `REVIEW_GATES.md` for full criteria. All roles review:
 - [ ] Operations: Operational readiness (required)
 
 **Gate Outcome**: Approve / Reject
+
+---
+
+## Phase 5a: GTM Strategy (GTM Strategy Owner)
+
+**Trigger**: GTM is in scope (pricing/growth/evangelism) OR GTM agents are available/enabled.
+
+### Activities
+1. Define positioning, audience, and core message
+2. Select channels and launch sequence
+3. Define success metrics and initial targets
+4. Produce unified GTM strategy document
+
+### Artifacts Produced
+- `specs/gtm/GTM-XXX.md` (preferred) or a GTM section in docs
+
+### Exit Criteria
+- GTM strategy approved
+- Clear directives for Monetization/Growth/Evangelist
+
+### Handoff
+- **To**: Monetization Strategist, Growth Marketer, Evangelist (via App Orchestrator)
+
+### ⮕ REVIEW GATE: GTM Strategy → GTM Roles
+See `REVIEW_GATES.md` for criteria.
 
 ---
 

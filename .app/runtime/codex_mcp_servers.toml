@@ -52,6 +52,13 @@ args = ["mcp-server"]
 cwd = "/mnt/c/dev/meta-metacognition"
 tool_timeout_sec = 7200
 
+[mcp_servers.meta-metacognition__gtm_strategy_owner]
+enabled = false
+command = "codex"
+args = ["mcp-server"]
+cwd = "/mnt/c/dev/meta-metacognition"
+tool_timeout_sec = 7200
+
 [mcp_servers.meta-metacognition__monetization_strategist]
 enabled = false
 command = "codex"
@@ -85,6 +92,7 @@ mcp_servers.meta-metacognition__developer.enabled = true
 mcp_servers.meta-metacognition__tester.enabled = true
 mcp_servers.meta-metacognition__tech_writer.enabled = true
 mcp_servers.meta-metacognition__operations.enabled = true
+mcp_servers.meta-metacognition__gtm_strategy_owner.enabled = true
 mcp_servers.meta-metacognition__monetization_strategist.enabled = true
 mcp_servers.meta-metacognition__growth_marketer.enabled = true
 mcp_servers.meta-metacognition__evangelist.enabled = true

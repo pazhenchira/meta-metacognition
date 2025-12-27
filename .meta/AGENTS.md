@@ -210,6 +210,7 @@ Core build roles:
 - Operations
 
 Lifecycle/GTМ roles:
+- GTM Strategy Owner
 - Monetization Strategist
 - Growth Marketer
 - Evangelist
@@ -220,12 +221,12 @@ Lifecycle/GTМ roles:
 - All other roles route questions/decisions through the App Orchestrator.
 
 **Rule**: Essence Analyst is REQUIRED. Strategy Owner is REQUIRED for decision-critical apps. Operations is REQUIRED (production deployment is mandatory).
-GTM roles are REQUIRED when requested OR when GTM agents are available/enabled. If any role is not applicable or unavailable, skip it explicitly and record why.
+GTM Strategy Owner is REQUIRED whenever any GTM role is in scope. GTM roles are REQUIRED when requested OR when GTM agents are available/enabled. If any role is not applicable or unavailable, skip it explicitly and record why.
 
 **Work Item Role Matrix (Use to select sub-agents)**:
 - **Incident** (operational failure): Ops + Dev first; Tester as needed; Writer if user-facing docs change; PM only for comms/priority.
 - **Bug** (spec deviation): Dev + Tester + Ops; PM only for impact/priority/acceptance; Designer/Writer only if UX/docs affected.
-- **Feature/Enhancement** (new behavior): PM required; Architect/Dev/Tester/Writer/Operations as standard; Strategy Owner if decision-critical; GTM roles if applicable.
+- **Feature/Enhancement** (new behavior): PM required; Architect/Dev/Tester/Writer/Operations as standard; Strategy Owner if decision-critical; GTM Strategy Owner + GTM roles if applicable.
 
 Select and spawn only the roles required by the classification. Avoid unnecessary sub-agents.
 
@@ -590,7 +591,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
    - If has_ui: Designer
    - If external documentation needed: Technical Writer
    - Operations (required; production deployment is mandatory)
-   - If gtm_agents_available and not gtm_opt_out: Monetization Strategist, Growth Marketer, Evangelist (minimal GTM scope unless Sponsor narrows)
+   - If gtm_agents_available and not gtm_opt_out: GTM Strategy Owner + Monetization Strategist, Growth Marketer, Evangelist (minimal GTM scope unless Sponsor narrows)
    - If needs_pricing: Monetization Strategist
    - If needs_growth: Growth Marketer
    - If needs_evangelism: Evangelist

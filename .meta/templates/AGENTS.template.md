@@ -178,6 +178,7 @@ On every turn, you MUST:
      - **Bug**: Dev/Test first, PM only for impact/priority/acceptance
      - **Feature/Enhancement**: PM required (goals, metrics, scope, trade-offs)
    - Select only the roles required by the classification (avoid unnecessary subagents)
+   - If GTM roles are in scope or available, insert **GTM Strategy Owner** before any GTM sub-roles
 
 7. **Documentation Integrity (MANDATORY)**:
    - All creation/changes go through appropriate role agents (or role switching)

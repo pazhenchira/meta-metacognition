@@ -1,6 +1,6 @@
 {
-  "meta_orchestrator_version": "2.0.27",
-  "generated_date": "2025-12-26",
+  "meta_orchestrator_version": "2.0.28",
+  "generated_date": "2025-12-27",
   "files": {
     ".meta/AGENTS.md": {
       "user_modified": true,

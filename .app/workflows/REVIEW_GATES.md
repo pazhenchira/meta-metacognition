@@ -62,6 +62,35 @@ Return to Strategy Owner with specific concerns:
 
 ---
 
+### Gate GTM: GTM Strategy Owner → GTM Roles (When GTM is in scope)
+
+**Artifact**: GTM Strategy (GTM-XXX)
+
+**GTM Roles Review For**:
+
+| Criterion | Question | Red Flags |
+|-----------|----------|-----------|
+| **Positioning** | Is the positioning clear and differentiated? | Generic, unclear, or conflicting messaging |
+| **Audience** | Is the target audience explicit and plausible? | “Everyone” or undefined segments |
+| **Channels** | Are channels aligned to the audience? | Mismatched channels, no acquisition plan |
+| **Metrics** | Are success metrics defined and measurable? | Vanity metrics, no targets |
+| **Directives** | Are GTM sub-roles given clear instructions? | No guidance for Monetization/Growth/Evangelist |
+
+**Approval Criteria**:
+- [ ] Positioning is clear and differentiated
+- [ ] Target audience is explicit
+- [ ] Channels match audience and constraints
+- [ ] Success metrics and targets are defined
+- [ ] GTM sub-roles have clear directives
+
+**Rejection Response**:
+Return to GTM Strategy Owner with specific concerns:
+- "Audience definition is too broad—narrow to primary segment"
+- "Channel choice doesn’t match audience behavior—adjust"
+- "Metrics lack targets—add thresholds"
+
+---
+
 ### Gate 1: PM → Architect
 
 **Artifact**: Feature Specification (FR-XXX)
