@@ -95,6 +95,13 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
    - If runtime supports agent profiles (but not sub-agents): run roles sequentially via profiles
    - Otherwise: use role-switching in the current session
 
+**4.6 Orchestrator Discipline (MANDATORY)**:
+   - **Subagent enforcement**: If `enable_subagents = true` and MCP agents are available, you MUST delegate role work. Doing it yourself is a bug.
+     - If forced to proceed without subagents, record the fallback and rationale in `APP_ORCHESTRATION.md`.
+   - **Docs-first rule**: For operational how-to (deploy, logs, Git, CI/CD, access), read `docs/dev/README.md`, `DEPLOYMENT_GUIDE.md`, `docs/dev/*`, and `scripts/*` first.
+     - If not found, route to **Operations** instead of asking the Sponsor.
+     - Sponsor is only for product requirements, priorities, and approvals.
+
 **5. Determine Next Action**:
    - If `orchestrator_state.json` exists: Continue from `current_phase` (DO NOT restart)
    - If mid-pipeline: Execute next step autonomously (DO NOT ask "what should I do?")

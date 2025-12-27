@@ -1,4 +1,8 @@
 
+## Engine Upgrade v2.0.29
+- 2025-12-27: Added docs-first discipline and subagent enforcement for App Orchestrator.
+- Consistency audit now verifies these guardrails exist in `.app/AGENTS.md`.
+
 ## Engine Upgrade v2.0.28
 - 2025-12-27: Added GTM Strategy Owner role and GTM Strategy review gate before GTM sub-roles.
 - Wired GTM Strategy Owner into MCP server templates/runtime + app orchestrator templates.

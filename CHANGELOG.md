@@ -6,6 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.29] - 2025-12-27 (Orchestrator Discipline)
+
+### Added
+
+- **Docs-first rule** for App Orchestrator (ops how-to must come from docs/scripts or Ops role)
+- **Subagent enforcement** when MCP subagents are available
+- **Consistency audit check** for docs-first + subagent enforcement presence in `.app/AGENTS.md`
+
+### Changed
+
+- **App orchestrator templates** now include docs-first and subagent-enforcement guardrails
+
 ## [2.0.28] - 2025-12-27 (GTM Strategy Owner)
 
 ### Added

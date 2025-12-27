@@ -193,6 +193,20 @@ Rationale: KISS + Thompson #5 — avoid unnecessary role gates and keep response
 
 ---
 
+## [P-DOCS-FIRST] Orchestrator Docs-First Discipline
+
+The App Orchestrator must **consult app documentation and scripts before asking the Sponsor for operational instructions**.
+
+- For **ops/infra tasks** (deploy, logs, access, Git, CI/CD), first read:
+  - `docs/dev/README.md`, `DEPLOYMENT_GUIDE.md`, `docs/dev/*`, and `scripts/*`
+- If the answer is not found, route to **Operations** (or relevant role) instead of asking the Sponsor.
+- The **Sponsor is only asked for product requirements, priorities, and approvals**, not for operational how-to.
+- If you catch yourself about to ask the Sponsor for a how-to, STOP and re-run Pre-Flight.
+
+Rationale: Prevent orchestration drift and keep Sponsor input focused on product intent, not process.
+
+---
+
 ## [P-DATA] External Data & Subscriptions
 
 - Explicitly enumerate all external data sources and APIs used by the app.

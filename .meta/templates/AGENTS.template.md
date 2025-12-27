@@ -179,6 +179,8 @@ On every turn, you MUST:
      - **Feature/Enhancement**: PM required (goals, metrics, scope, trade-offs)
    - Select only the roles required by the classification (avoid unnecessary subagents)
    - If GTM roles are in scope or available, insert **GTM Strategy Owner** before any GTM sub-roles
+   - **Subagent enforcement**: If `enable_subagents = true` and MCP agents are available, you MUST delegate role work (record fallback rationale if forced to proceed without them)
+   - **Docs-first rule**: For operational how-to (deploy, logs, Git, CI/CD, access), read `docs/dev/README.md`, `DEPLOYMENT_GUIDE.md`, `docs/dev/*`, and `scripts/*` first; route to **Operations** if unclear
 
 7. **Documentation Integrity (MANDATORY)**:
    - All creation/changes go through appropriate role agents (or role switching)

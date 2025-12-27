@@ -151,6 +151,8 @@ def audit_app_agents(audit: Audit) -> None:
         "essence.md",
         "meta_config.json",
         ".app/roles/",
+        "Docs-first rule",
+        "Subagent enforcement",
     ]
     missing = [req for req in required if req not in text]
     if missing:
