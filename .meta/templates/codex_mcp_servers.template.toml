@@ -2,82 +2,84 @@
 # Merge these into ~/.codex/config.toml under [mcp_servers.*]
 # Default is disabled; enable via the per-app wrapper script (or explicit -c flags) to avoid cross-app collisions.
 # One server per role is recommended for clearer tool routing.
+# IMPORTANT: Each role server must start in its own role workspace so Codex
+# auto-loads the correct role-specific AGENTS.md (prevents App Orchestrator bleed).
 
 [mcp_servers.{APP_SLUG}__essence_analyst]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "{APP_ROOT}"
+cwd = "{APP_ROOT}/.app/runtime/mcp/essence_analyst"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__product_manager]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "{APP_ROOT}"
+cwd = "{APP_ROOT}/.app/runtime/mcp/product_manager"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__architect]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "{APP_ROOT}"
+cwd = "{APP_ROOT}/.app/runtime/mcp/architect"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__developer]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "{APP_ROOT}"
+cwd = "{APP_ROOT}/.app/runtime/mcp/developer"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__tester]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "{APP_ROOT}"
+cwd = "{APP_ROOT}/.app/runtime/mcp/tester"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__tech_writer]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "{APP_ROOT}"
+cwd = "{APP_ROOT}/.app/runtime/mcp/tech_writer"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__operations]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "{APP_ROOT}"
+cwd = "{APP_ROOT}/.app/runtime/mcp/operations"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__gtm_strategy_owner]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "{APP_ROOT}"
+cwd = "{APP_ROOT}/.app/runtime/mcp/gtm_strategy_owner"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__monetization_strategist]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "{APP_ROOT}"
+cwd = "{APP_ROOT}/.app/runtime/mcp/monetization_strategist"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__growth_marketer]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "{APP_ROOT}"
+cwd = "{APP_ROOT}/.app/runtime/mcp/growth_marketer"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 [mcp_servers.{APP_SLUG}__evangelist]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "{APP_ROOT}"
+cwd = "{APP_ROOT}/.app/runtime/mcp/evangelist"
 tool_timeout_sec = {MCP_TOOL_TIMEOUT_SECONDS}
 
 # App profile: enables only this app's MCP servers when selected.

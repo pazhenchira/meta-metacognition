@@ -138,6 +138,32 @@ used for self-contained orchestration. Keep them in sync:
 - If `essence.md` exists and differs from `.app/essence.md`, overwrite `.app/essence.md` from `essence.md`.
 - Add a short header in `.app/essence.md` stating it is a generated mirror and should not be edited directly.
 
+### Step 6.6: Generate MCP Role Workspaces (Codex MCP)
+
+To prevent role drift, each MCP role server must start in a role-specific workspace that
+contains its own `AGENTS.md`.
+
+**Outputs** (one per role server):
+- `.app/runtime/mcp/<role>/AGENTS.md`
+
+**Template**:
+- `.meta/templates/mcp_role_agent.template.md`
+
+**Notes**:
+- Each role workspace must be inside the app root (so all files remain accessible).
+- `codex_mcp_servers.toml` must set each server `cwd` to the matching role workspace.
+
+### Step 6.7: Generate MCP Config Merge Helper (App Root)
+
+Create a helper script so upgrades can merge MCP blocks into `~/.codex/config.toml`
+without overwriting unrelated settings.
+
+**Output**:
+- `scripts/merge_codex_mcp_config.py` (create `scripts/` if missing)
+
+**Template**:
+- `.meta/templates/merge_codex_mcp_config.template.py`
+
 ### Step 7: Generate MCP Profile Wrapper Script (App Root)
 
 Codex CLI currently does **not** apply profile-scoped MCP enablement to `mcp list`,

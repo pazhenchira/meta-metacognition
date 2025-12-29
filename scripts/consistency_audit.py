@@ -126,6 +126,34 @@ def audit_mcp_timeouts(audit: Audit, config: dict) -> None:
         )
 
 
+def audit_mcp_role_workspaces(audit: Audit) -> None:
+    toml_path = ROOT / ".app/runtime/codex_mcp_servers.toml"
+    if not toml_path.exists():
+        return
+
+    text = read_text(toml_path, audit)
+    cwd_values = [m.group(1) for m in re.finditer(r'^\s*cwd\s*=\s*["\\\']([^"\\\']+)["\\\']', text, re.M)]
+    if not cwd_values:
+        audit.warn("No cwd entries found in .app/runtime/codex_mcp_servers.toml")
+        return
+
+    for raw in cwd_values:
+        normalized = raw.replace("\\\\", "/")
+        if "/.app/runtime/mcp/" not in normalized:
+            audit.error(
+                "MCP server cwd must point to role workspace under .app/runtime/mcp/: "
+                f"{raw}"
+            )
+            continue
+
+        path = Path(raw)
+        if not path.is_absolute():
+            path = (ROOT / path).resolve()
+        agents_path = path / "AGENTS.md"
+        if not agents_path.exists():
+            audit.error(f"Missing MCP role AGENTS.md: {agents_path.as_posix()}")
+
+
 def audit_app_self_contained(audit: Audit) -> None:
     app_dir = ROOT / ".app"
     if not app_dir.exists():
@@ -213,6 +241,7 @@ def main() -> int:
     config = audit_meta_config(audit)
     if config:
         audit_mcp_timeouts(audit, config)
+    audit_mcp_role_workspaces(audit)
 
     audit_app_self_contained(audit)
     audit_app_agents(audit)

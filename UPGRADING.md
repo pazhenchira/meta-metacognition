@@ -1,13 +1,13 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: December 27, 2025  
+**Date**: December 29, 2025  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
 
 ## Current Version (v2.x)
 
-**Current Engine Version**: 2.0.31  
+**Current Engine Version**: 2.0.32  
 
 ### v2.x Notes (Codex MCP Default + Consistency Guards)
 
@@ -24,7 +24,9 @@
 - **Timeouts**: MCP tool calls use `mcp_tool_timeout_seconds` (default 7200s) before fallback
 - **Fast-fail**: MCP warm-up pings require a response within `mcp_fastfail_seconds` (default 60s)
 - **Codex config**: set `tool_timeout_sec` for each MCP server in `~/.codex/config.toml` to match `mcp_tool_timeout_seconds`
-- **Multi-app safety**: namespace MCP servers as `{app_slug}__{role}` and set `cwd` to the app root in `~/.codex/config.toml`
+- **Multi-app safety**: namespace MCP servers as `{app_slug}__{role}` and set `cwd` to `.app/runtime/mcp/<role>` in `~/.codex/config.toml`
+- **MCP role workspaces**: each MCP role server starts in `.app/runtime/mcp/<role>` with a role-specific `AGENTS.md`
+- **MCP config merge**: upgrade merges only app-specific MCP blocks into `~/.codex/config.toml` (no global overrides) via `scripts/merge_codex_mcp_config.py` when shell access is available
 - **MCP activation**: servers are disabled by default; start Codex with `-p <app_slug>` to enable only that app’s MCP servers
 - **Sources of Truth**: apps now include a canonical files map (intent, essence, tracker, orchestration state)
 - **Essence sync**: `.app/essence.md` is a generated mirror of `essence.md` (kept in sync on upgrade)
@@ -67,7 +69,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.31
+# Should show: 2.0.32
 ```
 
 ### Step 3: Run Upgrade

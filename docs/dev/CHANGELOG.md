@@ -6,6 +6,19 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.32] - 2025-12-29 (MCP Role Isolation + Safe Config Merge)
+
+### Added
+
+- **Role-specific MCP workspaces** (`.app/runtime/mcp/<role>/AGENTS.md`) to prevent App Orchestrator bleed
+- **Safe merge helper**: `scripts/merge_codex_mcp_config.py` updates `~/.codex/config.toml` without overriding non-app settings
+- **Consistency audit checks** for MCP role workspaces and role-specific `cwd` entries
+
+### Changed
+
+- **Codex MCP server template** now points `cwd` to role workspaces (not app root)
+- **Upgrade flow** now generates MCP role workspaces and merges MCP config non-destructively
+
 ## [2.0.31] - 2025-12-27 (Regression + Oversight Preservation)
 
 ### Added

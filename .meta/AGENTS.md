@@ -86,6 +86,10 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
   - **Multi-app safety**: MCP server names must be **namespaced per app**:
     - Use `app_slug` from `meta_config.json` (or slugify app name) and name servers `{app_slug}__{role}`.
     - This prevents collisions when multiple apps use MCP concurrently.
+  - **Role isolation (MCP)**: Each MCP server must start in a **role-specific workspace**
+    under `.app/runtime/mcp/<role>` with a role-specific `AGENTS.md`.
+    - Generate role workspaces from `.meta/templates/mcp_role_agent.template.md`.
+    - This prevents App Orchestrator instructions from leaking into role servers.
 - If `preferred_runtime` missing or invalid:
     - Default to **codex-cli-mcp**.
     - If MCP setup is incomplete, **request the user to apply the required setup** (restart Codex).
@@ -547,13 +551,19 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
          - Read `meta_config.json`:
            - If `preferred_runtime` is `codex-cli-mcp` and `enable_subagents: true`:
               - Generate `.app/runtime/codex_mcp_servers.toml` from template if missing.
+              - Generate role MCP workspaces: `.app/runtime/mcp/<role>/AGENTS.md` from `.meta/templates/mcp_role_agent.template.md`.
+              - Generate MCP config merge helper: `scripts/merge_codex_mcp_config.py` from `.meta/templates/merge_codex_mcp_config.template.py`.
               - Auto-register MCP servers (one per active role):
                 - `codex mcp add <app_slug>__<role> -- codex mcp-server`
                 - If already present, skip and continue.
               - Validate with `codex mcp list` that role servers are registered.
               - **IMPORTANT**: If the Codex session is already running, instruct the user to restart it so MCP servers are attached.
+              - **IMPORTANT**: Merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` without overwriting unrelated settings.
+                - Only add/update `[mcp_servers.{app_slug}__*]` and `[profiles.{app_slug}]` blocks.
+                - Use `scripts/merge_codex_mcp_config.py` when shell access is available; otherwise provide manual merge steps.
+                - Manual merge: copy those blocks from `.app/runtime/codex_mcp_servers.toml`, replace same-named blocks in `~/.codex/config.toml`, and leave all other sections untouched.
               - **IMPORTANT**: Ensure `tool_timeout_sec` is set in `~/.codex/config.toml` for each role server to match `mcp_tool_timeout_seconds`.
-              - **IMPORTANT**: Ensure each MCP server has `cwd` set to the app root so tools operate within the correct app context.
+              - **IMPORTANT**: Ensure each MCP server `cwd` points to its role workspace: `.app/runtime/mcp/<role>` (not app root).
               - **Sanity check**: Call each role MCP tool once and record a one-sentence role confirmation in `APP_ORCHESTRATION.md`.
              - If any sanity-check tool call exceeds `mcp_tool_timeout_seconds`, **switch to fallback** for this work item.
              - Log MCP warm-up failures/timeouts in `APP_ORCHESTRATION.md` with fallback decision.
@@ -665,7 +675,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **2.0.24** (see `VERSION` file)
+Current meta-orchestrator version: **2.0.32** (see `VERSION` file)
 
 **Features in v2.0.0** (Workspace-Centric, Self-Documenting, Idempotent) - MAJOR REFACTOR:
 - **Workspace-centric execution**: `.workspace/` folder for ephemeral work items (deleted after completion)

@@ -15,14 +15,14 @@ git tag v1-backup
 ### 2️⃣ Copy Engine (10 seconds)
 ```bash
 cp -r /path/to/meta-metacognition/.meta ./
-cat .meta/VERSION  # Verify: 2.0.0
+cat .meta/VERSION  # Verify: 2.0.32
 ```
 
 ### 3️⃣ Run Upgrade (30-60 minutes, automated)
 
 Open app in Codex CLI or GitHub Copilot:
 ```
-Upgrade this app to meta-orchestrator v2.0
+Upgrade this app to meta-orchestrator v2.0.32
 ```
 
 **Done!** ✅

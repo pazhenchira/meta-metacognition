@@ -418,7 +418,7 @@ User prefers to write changes themselves, or has complex requirements.
 **Remember**: This file is self-contained for app maintenance. Re-run pre-flight if anything is unclear.
 - **Multi-app MCP Safety**:
   - MCP server names must be namespaced per app: `{app_slug}__{role}`.
-  - Ensure each MCP server entry sets `cwd` to the app root for correct context.
+  - Ensure each MCP server entry sets `cwd` to its role workspace: `.app/runtime/mcp/<role>`.
   - Default MCP servers to `enabled = false`; enable only via the per-app wrapper script (or explicit `-c` flags) to prevent cross-app startup storms.
 - **Branching Policy (Git)**:
   - Read `meta_config.json`:
