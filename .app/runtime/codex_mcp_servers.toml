@@ -1,83 +1,85 @@
 # Codex MCP server entries for role sub-agents
 # Merge these into ~/.codex/config.toml under [mcp_servers.*]
-# Default is disabled; enable via the wrapper script (scripts/codex-meta-metacognition.sh) or explicit -c flags to avoid cross-app collisions.
+# Default is disabled; enable via the per-app wrapper script (or explicit -c flags) to avoid cross-app collisions.
 # One server per role is recommended for clearer tool routing.
+# IMPORTANT: Each role server must start in its own role workspace so Codex
+# auto-loads the correct role-specific AGENTS.md (prevents App Orchestrator bleed).
 
 [mcp_servers.meta-metacognition__essence_analyst]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "/mnt/c/dev/meta-metacognition"
+cwd = "/mnt/c/dev/meta-metacognition/.app/runtime/mcp/essence_analyst"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__product_manager]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "/mnt/c/dev/meta-metacognition"
+cwd = "/mnt/c/dev/meta-metacognition/.app/runtime/mcp/product_manager"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__architect]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "/mnt/c/dev/meta-metacognition"
+cwd = "/mnt/c/dev/meta-metacognition/.app/runtime/mcp/architect"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__developer]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "/mnt/c/dev/meta-metacognition"
+cwd = "/mnt/c/dev/meta-metacognition/.app/runtime/mcp/developer"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__tester]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "/mnt/c/dev/meta-metacognition"
+cwd = "/mnt/c/dev/meta-metacognition/.app/runtime/mcp/tester"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__tech_writer]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "/mnt/c/dev/meta-metacognition"
+cwd = "/mnt/c/dev/meta-metacognition/.app/runtime/mcp/tech_writer"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__operations]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "/mnt/c/dev/meta-metacognition"
+cwd = "/mnt/c/dev/meta-metacognition/.app/runtime/mcp/operations"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__gtm_strategy_owner]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "/mnt/c/dev/meta-metacognition"
+cwd = "/mnt/c/dev/meta-metacognition/.app/runtime/mcp/gtm_strategy_owner"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__monetization_strategist]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "/mnt/c/dev/meta-metacognition"
+cwd = "/mnt/c/dev/meta-metacognition/.app/runtime/mcp/monetization_strategist"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__growth_marketer]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "/mnt/c/dev/meta-metacognition"
+cwd = "/mnt/c/dev/meta-metacognition/.app/runtime/mcp/growth_marketer"
 tool_timeout_sec = 7200
 
 [mcp_servers.meta-metacognition__evangelist]
 enabled = false
 command = "codex"
 args = ["mcp-server"]
-cwd = "/mnt/c/dev/meta-metacognition"
+cwd = "/mnt/c/dev/meta-metacognition/.app/runtime/mcp/evangelist"
 tool_timeout_sec = 7200
 
 # App profile: enables only this app's MCP servers when selected.

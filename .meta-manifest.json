@@ -1,6 +1,6 @@
 {
-  "meta_orchestrator_version": "2.0.31",
-  "generated_date": "2025-12-27",
+  "meta_orchestrator_version": "2.0.32",
+  "generated_date": "2025-12-29",
   "files": {
     ".meta/AGENTS.md": {
       "user_modified": true,
@@ -193,7 +193,7 @@
     },
     ".app/runtime/codex_mcp_servers.toml": {
       "generated": "2025-12-26",
-      "last_modified": "2025-12-26",
+      "last_modified": "2025-12-29",
       "user_modified": false,
       "regenerate_on_upgrade": true,
       "description": "Updated during engine upgrade",
@@ -398,6 +398,118 @@
       "generated_date": "2025-12-26",
       "last_modified": "2025-12-26",
       "description": "Triage model updates"
+    },
+    ".meta/templates/mcp_role_agent.template.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace AGENTS template",
+      "phase": "engine"
+    },
+    ".meta/templates/merge_codex_mcp_config.template.py": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Merge helper template for Codex MCP config",
+      "phase": "engine"
+    },
+    "scripts/merge_codex_mcp_config.py": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "Safe merge helper for Codex MCP config",
+      "phase": "engine"
+    },
+    ".app/runtime/mcp/essence_analyst/AGENTS.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace instructions (role isolation)",
+      "phase": "engine"
+    },
+    ".app/runtime/mcp/product_manager/AGENTS.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace instructions (role isolation)",
+      "phase": "engine"
+    },
+    ".app/runtime/mcp/architect/AGENTS.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace instructions (role isolation)",
+      "phase": "engine"
+    },
+    ".app/runtime/mcp/developer/AGENTS.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace instructions (role isolation)",
+      "phase": "engine"
+    },
+    ".app/runtime/mcp/tester/AGENTS.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace instructions (role isolation)",
+      "phase": "engine"
+    },
+    ".app/runtime/mcp/tech_writer/AGENTS.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace instructions (role isolation)",
+      "phase": "engine"
+    },
+    ".app/runtime/mcp/operations/AGENTS.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace instructions (role isolation)",
+      "phase": "engine"
+    },
+    ".app/runtime/mcp/gtm_strategy_owner/AGENTS.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace instructions (role isolation)",
+      "phase": "engine"
+    },
+    ".app/runtime/mcp/monetization_strategist/AGENTS.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace instructions (role isolation)",
+      "phase": "engine"
+    },
+    ".app/runtime/mcp/growth_marketer/AGENTS.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace instructions (role isolation)",
+      "phase": "engine"
+    },
+    ".app/runtime/mcp/evangelist/AGENTS.md": {
+      "generated": "2025-12-29",
+      "last_modified": "2025-12-29",
+      "user_modified": false,
+      "regenerate_on_upgrade": true,
+      "description": "MCP role workspace instructions (role isolation)",
+      "phase": "engine"
     }
   },
   "generated_by": "meta-orchestrator/2.0.24",
