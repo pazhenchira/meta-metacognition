@@ -1,0 +1,866 @@
+# Getting Started with the Meta-Orchestrator
+
+This document contains the implementation and usage details. For the identity and intent behind the project, see [README.md](../README.md).
+
+---
+
+## Sources of Truth (Canonical Files)
+
+To avoid drift, these are the canonical sources at runtime:
+
+- **Intent**: `app_intent.md`
+- **Essence**: `essence.md` (mirrored to `.app/essence.md` for self-contained orchestration)
+- **Work items**: `.workspace/tracker.json` + `.workspace/WI-XXX/README.md` + `.workspace/WI-XXX/todos.md`
+- **Pipeline state**: `orchestrator_state.json` (role lock + phase guard)
+- **Architecture**: `lego_plan.json`
+- **Runtime config**: `meta_config.json`
+- **Role instructions**: `.app/AGENTS.md` + `.app/roles/`
+- **Versioning**: `APP_VERSION` + `CHANGELOG.md`
+
+---
+
+## Quick Start (5 Minutes)
+
+### For Your First App
+
+**1. Get Set Up** (one-time)
+
+```bash
+# Clone this repository
+git clone https://github.com/pazhenchira/meta-metacognition.git
+cd meta-metacognition
+
+# Prerequisites: GitHub Copilot Chat (VS Code) OR OpenAI Codex CLI (terminal)
+# Both runtimes supported - use whichever you prefer.
+# That's it! The meta-orchestrator will guide you through the rest.
+```
+
+**2. Describe What You Want**
+
+Open `app_intent.md` in the root and fill it in. Example:
+
+```markdown
+# My Trading Signal Generator
+
+I want an app that analyzes stock options and identifies profitable trades.
+
+## What it should do:
+- Fetch real-time options data
+- Calculate Greeks (delta, gamma, theta, vega)
+- Generate buy/sell signals using technical indicators
+- Show me signals with >1.5 Sharpe ratio
+
+## Constraints:
+- I have a free API key for market data
+- Must work on my laptop (no cloud required)
+- Keep it simple - I'm not a quant expert
+```
+
+**3. Choose Your Runtime (Tool Optimization)**
+
+Set your preferred runtime in `meta_config.json`:
+```json
+{
+  "preferred_runtime": "codex-cli-parallel",
+  "enable_subagents": true
+}
+```
+
+**Tip**: `codex-cli-parallel` is the most reliable Codex CLI mode (one `codex exec` per role).
+Default is `codex-cli-mcp` (MCP tools inside the Codex session). If MCP tools do not appear,
+merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` non-destructively
+(only app-specific MCP blocks). Use `scripts/merge_codex_mcp_config.py` when shell access is available,
+then restart Codex.
+MCP servers are disabled by default; start Codex with `-p <app_slug>` to enable only this app's servers.
+If MCP tools exceed `mcp_tool_timeout_seconds` (default 7200s), the orchestrator falls back to `codex-cli-parallel`.
+If MCP warm-up fails within `mcp_fastfail_seconds` (default 60s), the orchestrator falls back immediately.
+Ensure each `[mcp_servers.<role>]` in `~/.codex/config.toml` sets `tool_timeout_sec` to `mcp_tool_timeout_seconds`.
+When using multiple apps, namespace MCP servers by app: `{app_slug}__{role}`, and set each server `cwd` to its role workspace: `.app/runtime/mcp/<role>`.
+
+**Branching policy**: The orchestrator follows `branching_policy` in `meta_config.json` (default `auto`).
+If you cannot decide, the orchestrator will default to single-session role switching.
+
+Supported runtimes (tool-optimized):
+- `codex-cli-mcp` (default)
+- `codex-cli-parallel`
+- `claude-code-subagents`
+- `github-copilot`
+- `cursor-multi-agent`
+
+Note: Sub-agent support depends on the runtime; MCP is one mechanism, not the only one.
+
+**4. Run the Meta-Orchestrator**
+
+```bash
+# === OPTION 1: VS Code GitHub Copilot Chat Agent Picker (Easiest - v1.7.1+) ===
+# 1. Open Copilot Chat (Ctrl+Alt+I), click agent picker dropdown
+# 2. Select "Meta-Orchestrator"
+# 3. Say: "Build the app from app_intent.md"
+# OK: No activation phrases. Agent maintains identity across turns.
+
+# === OPTION 2: OpenAI Codex CLI (Terminal - v1.7.5+) ===
+# 1. In repository directory, run: codex
+# 2. Codex automatically reads AGENTS.md for instructions
+# 3. Say: "Build the app from app_intent.md"
+# OK: Engine logic from .meta/AGENTS.md applied automatically
+
+# === OPTION 3: Manual Activation (Any Runtime, Any Version) ===
+@workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
+
+# The system will:
+# - Ask you 2-3 clarifying questions
+# - Figure out what makes your app unique (the "essence")
+# - Break it into components (we call them "LEGOs")
+# - Build everything in parallel
+# - Test that it actually works
+# - Give you a complete, working app
+```
+
+**5. Get Your App**
+
+In ~10-30 minutes (depending on complexity), you will have:
+- `src/` - All your source code
+- `tests/` - Comprehensive test suite
+- `README.md` - How to use it
+- `essence.md` - What problem it solves and how
+- `AGENTS.md` - Guide for future AI-assisted development
+
+---
+
+## How This Actually Works
+
+Let me walk you through what happens behind the scenes.
+
+### Step 1: Understanding Your Idea (Requirements Discovery)
+
+The meta-orchestrator reads your `app_intent.md` and asks smart questions:
+
+- "What's most important: speed, simplicity, or feature richness?"
+- "Do you have API keys for [service], or should I use free alternatives?"
+- "Who will use this: just you, your team, or public users?"
+
+**Why this matters**: It's figuring out your actual needs, not just building what you said literally.
+
+### Step 2: Finding the "Essence" (What Makes Your App Special)
+
+This is new in v1.5.0 and it's powerful. The meta-orchestrator discovers and validates three things:
+
+**Problem & Unique Value**:
+- **Problem**: What pain point are you solving?
+- **Unique Value**: Why would someone use your app vs alternatives?
+- **Success Metrics**: How do we know if it's working? (e.g., "Sharpe ratio >1.5")
+
+Creates an `essence.md` file documenting this. **Critical**: If your idea does not have a clear value proposition, it will stop and ask you to refine it.
+
+**Architecture Alignment**:
+- Identifies which LEGOs deliver the core value (e.g., `signal_generator` IS the alpha)
+- Separates supporting LEGOs (e.g., `market_data_fetcher` enables the core)
+- Prioritizes building the essence first
+
+**End-to-End Validation** (Step 6):
+- Before saying "done," validates the app actually delivers on its promise
+- Tests the complete user journey (getting started -> core workflow -> success)
+- If it does not work as promised, fixes it before giving you the app
+
+**Result**: You get apps that solve real problems and actually deliver their unique value, not just "code that runs."
+
+### Step 3: Architecture (Breaking Into "LEGOs")
+
+The system decomposes your app into single-responsibility components:
+
+**Example** (for the trading signal generator above):
+- **Core Value LEGOs** (the unique stuff):
+  - `signal_generator` - This is where the magic happens (your alpha)
+- **Supporting LEGOs** (needed infrastructure):
+  - `market_data_fetcher` - Gets real-time data
+  - `greeks_calculator` - Computes option Greeks
+  - `config_validator` - Makes sure your API keys work
+- **Test LEGOs**:
+  - Integration and end-to-end tests
+
+**Why LEGOs?** Each one does ONE thing well (Thompson's Unix Philosophy #5). Easy to build, test, and replace.
+
+### Step 4: Parallel Building (The Smart Part)
+
+For each LEGO, the meta-orchestrator spawns an independent AI agent:
+
+```
+Meta-Orchestrator (You: the "CTO")
+    |
+    |-> Agent 1: Build config_validator (starts first)
+    |-> Agent 2: Build market_data_fetcher (parallel)
+    |-> Agent 3: Build greeks_calculator (parallel)
+    |-> Agent 4: Build signal_generator (waits for 2 & 3)
+```
+
+Each agent:
+1. **Designs** the LEGO (consults 50+ engineering wisdom principles)
+2. **Writes tests** (before coding)
+3. **Implements** the code
+4. **Validates** it works (runs the tests)
+
+**Key insight**: Each agent sees only its job, not the whole codebase. No context overload.
+
+### Step 5: Wisdom and Quality Checks
+
+As each LEGO is built, the system applies:
+- **50+ engineering principles** (Kernighan, Knuth, Thompson, etc.)
+- **15 antipattern detectors** (God Object, Magic Numbers, etc.)
+- **15 success patterns** (Circuit Breaker, Config Validator, etc.)
+
+Think of this as an experienced engineer reviewing every piece of code.
+
+### Step 6: Experience Validation (The "Does It Actually Work?" Test)
+
+Before declaring "done," the meta-orchestrator validates the complete user journey:
+
+- **Getting Started**: Can someone actually install and run this? How long does it take?
+- **Core Value**: Does the signal generator produce signals with Sharpe >1.5?
+- **Failure Modes**: What happens when the API is down? Does it fail gracefully?
+
+If it does not deliver on its promise, it stops and fixes it before giving you the app.
+
+---
+
+## Key Concepts (In Plain English)
+
+### What's a "LEGO"?
+
+A LEGO is a single-responsibility component. Like actual LEGO bricks:
+- Does ONE thing well
+- Has clear inputs and outputs
+- Can be tested independently
+- Easy to replace without breaking other parts
+
+**Bad LEGO**: `authentication_database_email_handler` (does 3 things)
+**Good LEGOs**: `authenticator`, `database_client`, `email_sender` (each does 1 thing)
+
+### What's "Session Isolation"?
+
+When you build a big app in a single AI conversation, the context gets overwhelming (like trying to remember 50 things at once). The AI makes mistakes or forgets things.
+
+Session isolation means each LEGO gets its own independent AI agent with a focused brief. Like having a team of specialists instead of one person doing everything.
+
+### What's "Essence Discovery"?
+
+This is the foundation that ensures your app actually delivers value.
+
+**The Reality**: Most apps fail not because of bad code, but because they either solve the wrong problem OR fail to deliver their unique value proposition.
+
+Essence discovery is a three-part validation:
+
+**1. Problem Worth Solving**: Forces the meta-orchestrator to ask:
+- WHY does this app need to exist?
+- What makes it better than alternatives?
+- What's the unique value proposition (UVP)?
+
+**2. Solution Delivery**: Ensures the architecture actually delivers the UVP:
+- Which components are "core value" LEGOs (deliver the essence)?
+- Which are "supporting" LEGOs (enable the core)?
+- Are we prioritizing the right things?
+
+**3. End-to-End Validation**: Before declaring "done," validates it actually works:
+- Does the app deliver on its promise? (e.g., Sharpe ratio >1.5)
+- Can users actually get value from it? (time-to-first-value)
+- Does it handle failure gracefully?
+
+If the essence is not clear, or the solution does not deliver it, or validation fails, the meta-orchestrator stops and fixes it before giving you the app.
+
+**Why this matters**: You get apps that solve real problems and actually work, not just code that compiles.
+
+### What's the "Wisdom System"?
+
+The meta-orchestrator has access to ~24,000 lines of engineering wisdom from legends:
+- **Engineering**: Kernighan, Knuth, Dijkstra, Thompson
+- **Strategy**: Sun Tzu, Taleb, Boyd (OODA Loop)
+- **Design**: Dieter Rams, Christopher Alexander
+- **Security**: Schneier, Saltzer and Schroeder
+
+When making decisions, it consults these principles. It's like pair programming with the masters.
+
+---
+
+## Real-World Example: Building an Options Trader
+
+Let's walk through a concrete example to show you how this works in practice.
+
+### Your Idea
+
+```markdown
+# OptionsTrader
+
+I want an app that generates profitable options trading signals.
+
+Must:
+- Analyze real-time options chains
+- Use Greeks and technical indicators
+- Only show signals with Sharpe ratio >1.5
+- Work with free/cheap data sources
+```
+
+### What the Meta-Orchestrator Does
+
+**Phase 1: Essence Discovery**
+
+Meta-Orchestrator: "I need to understand WHY this app matters..."
+
+Creates `essence.md`:
+```markdown
+## Problem
+Retail traders lack sophisticated options analysis tools.
+Most free tools just show prices, not actionable signals.
+
+## Unique Value Proposition
+Generate alpha through superior options trading signals,
+validated with risk-adjusted returns (Sharpe ratio).
+
+## Success Metrics
+- Primary: Sharpe ratio >1.5 (risk-adjusted returns)
+- Secondary: Win rate >60%, max drawdown <15%
+- Benchmark: Consistently outperform S&P 500 by 20%+
+
+## Competitive Landscape
+- TradingView: Great charts, weak options analysis
+- OptionsProfit: Good calculators, no signals
+- Our edge: Automated signal generation with validated alpha
+```
+
+**Phase 2: LEGO Architecture**
+
+Meta-Orchestrator: "I'll break this into LEGOs, prioritized by essence delivery..."
+
+```json
+{
+  "legos": [
+    {
+      "name": "config_validator",
+      "priority_tier": "config_validation",
+      "responsibility": "Validate API keys and guide setup",
+      "why_first": "Dependency for everything else"
+    },
+    {
+      "name": "signal_generator",
+      "priority_tier": "core_value",
+      "responsibility": "Generate profitable trading signals",
+      "essence_metric": "Sharpe ratio",
+      "why_prioritized": "This IS the app - delivers the alpha"
+    },
+    {
+      "name": "market_data_fetcher",
+      "priority_tier": "supporting",
+      "responsibility": "Fetch real-time options chains",
+      "why_supporting": "Enables signal_generator"
+    },
+    {
+      "name": "greeks_calculator",
+      "priority_tier": "supporting",
+      "responsibility": "Compute delta, gamma, theta, vega",
+      "why_supporting": "Enables signal_generator"
+    }
+  ]
+}
+```
+
+**Phase 3: Parallel Building**
+
+```
+[10:00] Spawning agent for config_validator...
+[10:01] Config validator: DESIGN complete (confidence: 0.92)
+[10:02] Config validator: TESTS written (16 test cases)
+[10:03] Config validator: CODE complete
+[10:04] Config validator: VALIDATED OK
+
+[10:04] Spawning 2 agents in parallel...
+[10:04] Agent 1: market_data_fetcher
+[10:04] Agent 2: greeks_calculator
+
+[10:15] Both agents: VALIDATED OK
+
+[10:15] Spawning agent for signal_generator...
+[10:16] Signal generator: Consulting wisdom...
+         - Applying: Taleb's Barbell Strategy (aggressive + conservative)
+         - Avoiding: Premature optimization (profile first)
+         - Pattern: Circuit Breaker (for API failures)
+[10:25] Signal generator: VALIDATED OK (Sharpe: 1.62 in backtest)
+```
+
+**Phase 4: Experience Validation**
+
+Meta-Orchestrator: "Does this actually deliver the promised value?"
+
+Tests:
+- **Getting Started**: User installs and sees first signal in <5 minutes
+- **Core Workflow**: Signal generator produces signals with Sharpe >1.5
+- **Success Metrics**: Backtest shows 22% outperformance vs S&P 500
+- **Failure Modes**: API down -> circuit breaker -> cached data -> graceful degradation
+
+**Phase 5: Documentation**
+
+Creates app-specific `AGENTS.md` for future AI-assisted development:
+```markdown
+# OptionsTrader Agent Instructions
+
+## Essence
+This app generates alpha through superior options trading signals.
+Core value: Sharpe ratio >1.5, outperform S&P 500 by 20%+.
+
+## Core Value LEGO
+**signal_generator** - This is the soul of the app.
+Modify this LEGO to improve trading performance.
+
+## Supporting LEGOs
+- market_data_fetcher: Enables signal generation
+- greeks_calculator: Enables signal generation
+
+## Wisdom Applied
+- Taleb's Barbell Strategy: Conservative base + aggressive signals
+- Thompson #5: Each LEGO does one thing well
+- Avoided: God Object (split signal logic from data fetching)
+
+## To Add Features
+- New indicator? -> Modify signal_generator only
+- New data source? -> Modify market_data_fetcher only
+- New Greek? -> Modify greeks_calculator only
+```
+
+### What You Get
+
+```
+OptionsTrader/
+|- src/
+|  |- config_validator.py
+|  |- market_data_fetcher.py
+|  |- greeks_calculator.py
+|  `- signal_generator.py
+|- tests/ (89% coverage)
+|- essence.md (why this app exists)
+|- AGENTS.md (guide for future AI development)
+|- README.md (how to use it)
+`- .meta/ (meta-orchestrator engine files)
+```
+
+**Result**: A working options trading signal generator, validated to produce Sharpe >1.5, ready to use.
+
+---
+
+## For Existing Apps (Upgrades and Maintenance)
+
+Already have an app built with an older version? The meta-orchestrator intelligently handles upgrades.
+
+### How It Works
+
+1. **Detects version**: Reads `.meta-version` to see what version built your app
+2. **Reads your changes**: Checks `.meta-manifest.json` to see which files you've customized
+3. **Decides mode automatically**:
+
+| Your Situation | Mode | What Happens |
+|---------------|------|--------------|
+| Same version, no changes to `app_intent.md` | **NO-OP** | "App is current, nothing to do" |
+| Same version, you edited `app_intent.md` | **MAINTENANCE** | Evaluates each file: KEEP/REFACTOR/REGENERATE |
+| New version available, no changes to `app_intent.md` | **ENGINE UPGRADE** | Adds new meta-orchestrator features |
+| New version + you edited `app_intent.md` | **HYBRID** | Both upgrade and maintenance |
+
+### Intelligent Maintenance Example
+
+You decide to add a new feature to OptionsTrader: "Add sentiment analysis from Twitter."
+
+1. Edit `app_intent.md` to describe the new feature
+2. Run meta-orchestrator
+3. It evaluates each existing file:
+
+```
+File: signal_generator.py
+|-- User modified? NO
+|-- Antipatterns? None detected
+|-- Test coverage? 94%
+|-- Confidence score: 0.89
+`-- DECISION: KEEP (well-structured, just needs new integration point)
+
+File: market_data_fetcher.py
+|-- User modified? NO
+|-- Antipatterns? Magic numbers detected (API timeout hardcoded)
+|-- Test coverage? 78%
+|-- Confidence score: 0.72
+`-- DECISION: REFACTOR (extract constants, add tests)
+
+File: your_custom_backtest.py
+|-- User modified? YES
+`-- DECISION: PROTECTED (never touch)
+```
+
+4. Shows you the plan, asks for approval
+5. Adds new `sentiment_analyzer` LEGO without breaking existing code
+
+**Key point**: It does not blindly regenerate everything. It evaluates what to keep, what to improve, and what to rebuild.
+
+### Quick Upgrade Command
+
+```bash
+# Protect your custom files (one-time)
+# Edit .meta-manifest.json and mark user_modified: true
+
+# Copy new meta-orchestrator files
+cp -r /path/to/new-version/.meta/ ./
+
+# Run upgrade
+@workspace Act as meta-orchestrator. Upgrade this app to v1.5.0.
+
+# It will show you a plan before making changes
+```
+
+See [UPGRADING.md](../UPGRADING.md) for detailed upgrade workflows.
+
+---
+
+## What's In This Repository
+
+### Files YOU Edit
+
+| File | Purpose | When You Edit It |
+|------|---------|------------------|
+| `app_intent.md` | Describe what you want to build | Every new app |
+| `meta_config.json` | Configuration (fast vs thorough mode, etc.) | Rarely |
+
+### Files That Define The Engine (Don't Edit Unless You're Improving The Engine Itself)
+
+| File | Purpose |
+|------|---------|
+| `.meta/AGENTS.md` | Meta-orchestrator behavior (the "brain") |
+| `.meta/principles.md` | Engineering principles (KISS, LEGO, etc.) |
+| `.meta/intent.md` | Meta-cognitive philosophy |
+| `.meta/wisdom/` | 24,000 lines of engineering wisdom |
+| `.meta/patterns/` | Antipatterns, success patterns, trade-off matrices |
+
+### Files The System Generates (In Your App Directory)
+
+| File | What It Is |
+|------|------------|
+| `requirements.md` | Your app's requirements (versioned with changelog) |
+| `essence.md` | Why your app exists, what makes it unique |
+| `lego_plan.json` | Architecture blueprint (machine-readable) |
+| `APP_ORCHESTRATION.md` | Orchestration plan for THIS app (human-readable) |
+| `src/` | All your source code |
+| `tests/` | Comprehensive test suite |
+| `AGENTS.md` (root) | Guide for future AI-assisted development of YOUR app |
+
+---
+
+## Sponsor and App Orchestrator
+
+**Role Lock (App Orchestrator)**: Start Codex CLI with the App Orchestrator instructions so the role is assumed from the first turn.
+Role lock is enforced via `orchestrator_state.json` (`primary_role: "app_orchestrator"`, `role_lock: true`).
+
+Example (Codex CLI):
+```bash
+codex exec -f .app/AGENTS.md "You are the App Orchestrator. Begin pre-flight."
+```
+
+**You are the Sponsor**: the human owner who provides intent, constraints, and approvals.
+**The App Orchestrator** is the app-level owner that coordinates roles and is the only agent that communicates with the Sponsor.
+
+If you need something, tell the App Orchestrator; it will route work to the right role and bring back decisions.
+
+**App/Sponsor guardrails**: Add them in the App/Sponsor Overrides block inside each role file so they survive upgrades.
+
+---
+
+## Advanced: Understanding the Wisdom System
+
+The meta-orchestrator does not just generate code -- it applies 50+ principles from legendary engineers.
+
+### When Building `signal_generator` LEGO
+
+**Design Phase - Consults Strategic Wisdom:**
+```
+Applying: Taleb's Barbell Strategy
+- 90% conservative (proven indicators: SMA, RSI)
+- 10% aggressive (experimental signals)
+- Avoid the middle (mediocre indicators that do not work)
+
+Rationale: Options trading needs edge.
+All-aggressive is reckless. All-conservative misses alpha.
+Barbell maximizes upside while limiting downside.
+```
+
+**Coding Phase - Consults Engineering Wisdom:**
+```
+Trigger: Function complexity >50 lines
+Applying: Kernighan's Principle #1
+"Debugging is twice as hard as writing code.
+ If you write code as cleverly as possible, you are,
+ by definition, not smart enough to debug it."
+
+Action: Split signal_generator into:
+- calculate_technical_signals()
+- calculate_greek_signals()
+- combine_signals()
+
+Result: Each function <20 lines, easy to test and debug.
+```
+
+**Validation Phase - Consults Security Wisdom:**
+```
+Detected: LEGO handles API keys
+Applying: Saltzer and Schroeder Principle #3 (Least Privilege)
+
+Action:
+- API keys loaded only when needed
+- Keys not logged or printed
+- Keys cleared from memory after use
+
+Result: Reduced attack surface.
+```
+
+This is why the generated code feels like it was written by an experienced engineer -- because it's applying their principles.
+
+See [INTUITION.md](../INTUITION.md) for the complete wisdom system.
+
+---
+
+## Configuration Guide
+
+### `meta_config.json` Explained
+
+```json
+{
+  // === Core Settings ===
+  "require_lego_plan_approval": false,
+  // true = Pauses to show you architecture before building
+  // false = Builds automatically
+  // Recommendation: false for iteration, true for production
+
+  "r_and_d_mode": "fast"
+  // "fast" = Quicker iteration, lighter testing
+  // "thorough" = Production-ready, comprehensive testing
+  // Recommendation: Start with "fast", switch to "thorough" when stable
+}
+```
+
+### When To Use "Thorough" Mode
+
+Use `"r_and_d_mode": "thorough"` when:
+- Building production systems (handling real user data)
+- Financial/healthcare/security-critical apps
+- You want comprehensive security review (red-team testing)
+- Final validation before deployment
+
+Stick with `"fast"` when:
+- Prototyping and experimenting
+- Learning how the system works
+- Iterating on architecture
+- Internal tools (not production)
+
+---
+
+## Troubleshooting
+
+### "The meta-orchestrator keeps asking too many questions"
+
+**Fix**: Be more specific in `app_intent.md`. Instead of:
+
+```markdown
+Bad:
+Build a trading app.
+```
+
+Do this:
+
+```markdown
+Good:
+Build an options trading signal generator.
+
+Features:
+- Fetch data from Alpha Vantage (free tier)
+- Calculate Greeks using Black-Scholes
+- Show signals with >60% win rate
+- Budget: Free data only
+
+Context:
+- I'm a retail trader (not institutional)
+- I know basic Python
+- Want something I can run daily before market open
+```
+
+### "It's asking if I want to use a paid service, but I can't afford it"
+
+**Fix**: Be explicit in `app_intent.md`:
+
+```markdown
+Budget Constraints:
+- Must use free-tier APIs only (Alpha Vantage free, not paid)
+- No cloud costs (runs on my laptop)
+- If free option doesn't exist for X, make it optional or skip it
+```
+
+The meta-orchestrator respects budget constraints and will suggest free alternatives.
+
+### "A LEGO keeps failing to build"
+
+1. Check `lego_state_<name>.json` to see failure details
+2. Common issues:
+   - **Too many responsibilities**: Split the LEGO into smaller ones
+   - **Missing dependency**: Update `lego_plan.json` to add dependency
+   - **Ambiguous spec**: Clarify requirements in `requirements.md`
+3. After fixing, delete `lego_state_<name>.json` to restart that LEGO
+
+### "The generated code doesn't match what I asked for"
+
+This usually means the essence or requirements were not clear enough.
+
+**Fix**:
+1. Check `essence.md` - Does it capture your actual goal?
+2. Check `requirements.md` - Are the functional requirements accurate?
+3. If not, edit these files and re-run
+4. The meta-orchestrator will re-evaluate and adjust
+
+### "I want to customize the generated code"
+
+**After generation**:
+1. Edit the files you want (e.g., `src/signal_generator.py`)
+2. Update `.meta-manifest.json` to mark as `user_modified: true`:
+
+```json
+{
+  "version": "2.0.32",
+  "generated_date": "2025-11-25",
+  "files": {
+    "src/signal_generator.py": {
+      "generated_date": "2025-11-25T10:25:00Z",
+      "lego_name": "signal_generator",
+      "user_modified": true
+    }
+  }
+}
+```
+
+Now this file is protected. Future runs will not touch it.
+
+### "How do I add a new feature later?"
+
+1. Edit `app_intent.md` to describe the new feature
+2. Run the meta-orchestrator again
+3. It will run in **MAINTENANCE MODE**:
+   - Evaluates existing files (KEEP/REFACTOR/REGENERATE)
+   - Adds new LEGOs for the feature
+   - Protects your `user_modified: true` files
+   - Shows you the plan before executing
+
+See [UPGRADING.md](../UPGRADING.md) for detailed maintenance workflows.
+
+---
+
+## Additional Resources
+
+### Core Documentation
+
+- **[CHANGELOG.md](../CHANGELOG.md)** - Complete version history, upgrade paths, feature timeline
+- **[.meta/AGENTS.md](../.meta/AGENTS.md)** - The meta-orchestrator's brain (how it makes decisions)
+- **[INTUITION.md](../INTUITION.md)** - Complete wisdom system (principles, antipatterns, success patterns)
+- **[.meta/principles.md](../.meta/principles.md)** - Global design principles (KISS, LEGO, testing, privacy)
+
+### Workflows and Guides
+
+- **[UPGRADING.md](../UPGRADING.md)** - How to upgrade existing apps (version management, intelligent maintenance)
+- **[DEPLOYMENT_GUIDE.md](../DEPLOYMENT_GUIDE.md)** - How to deploy generated apps (Docker, cloud, local)
+- **[CONFIG_VALIDATION.md](../CONFIG_VALIDATION.md)** - How the config_validator LEGO works
+- **[TESTING_STRATEGY.md](../TESTING_STRATEGY.md)** - Testing philosophy (unit/integration/system)
+- **[SESSION_ISOLATION.md](../SESSION_ISOLATION.md)** - How multi-agent sessions work under the hood
+
+### Deep Dives
+
+- **[.meta/intent.md](../.meta/intent.md)** - Meta-orchestrator's operational philosophy
+- **[.meta/wisdom/](../.meta/wisdom/)** - Engineering wisdom from legendary figures
+- **[.meta/patterns/](../.meta/patterns/)** - Antipatterns to avoid, success patterns to follow, trade-off matrices
+- **[runtime_adapters/](../runtime_adapters/)** - How to add support for new AI tools (future feature)
+
+---
+
+## Success Stories
+
+### Example: OptionsTrader (Options Trading Signal Generator)
+
+**What the user wanted**:
+"Build an app that generates profitable options trading signals using Greeks and technical indicators."
+
+**What the meta-orchestrator built**:
+- **4 core LEGOs**: config_validator, market_data_fetcher, greeks_calculator, signal_generator
+- **89% test coverage**: 47 unit tests, 12 integration tests, 5 end-to-end tests
+- **Validated Sharpe ratio**: Backtesting showed 1.62 (target was >1.5)
+- **Complete documentation**: essence.md, README.md, AGENTS.md (for future development)
+- **Time**: ~28 minutes from start to working app
+
+**User quote**: "I described it in plain English and got a working trading system with better code quality than I could write myself."
+
+### Example: CLI Task Manager
+
+**What the user wanted**:
+"Simple to-do list app that works offline and syncs to Google Calendar when online."
+
+**What the meta-orchestrator built**:
+- **5 LEGOs**: config_validator, task_storage, calendar_sync, cli_interface, conflict_resolver
+- **Graceful degradation**: Works offline, queues sync for when online
+- **Clear UX**: Time-to-first-value <2 minutes (add task, mark done, see list)
+- **Time**: ~18 minutes
+
+**User quote**: "I was shocked that it understood 'graceful degradation' and actually implemented circuit breakers for API failures."
+
+---
+
+## Contributing
+
+Want to improve the meta-orchestrator itself? Here is how.
+
+### Improving the Engine
+
+Edit these files if you want to make the meta-orchestrator smarter:
+
+- `.meta/AGENTS.md` - Core orchestration logic
+- `.meta/principles.md` - Design principles
+- `.meta/wisdom/` - Add new engineering wisdom or principles
+- `.meta/patterns/` - Add new antipatterns or success patterns
+
+Submit a PR with:
+1. Clear description of what you are improving
+2. Example showing the before/after behavior
+3. Updated tests (if applicable)
+
+### Sharing Your Generated Apps
+
+Built something cool with the meta-orchestrator? Share it.
+
+- Tag it with `#meta-orchestrator` on GitHub
+- Include your `essence.md` and `AGENTS.md` so others can learn from your architecture
+- Consider contributing domain-specific wisdom to `wisdom/domain_specific/`
+
+---
+
+## Quick Commands Cheat Sheet
+
+```bash
+# === NEW APP ===
+# 1. Fill in app_intent.md with your idea
+# 2. Run:
+# OPTION A (v1.7.1+): Click agent picker -> "Meta-Orchestrator" -> "Build the app"
+# OPTION B (any version): @workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
+
+# === ADD FEATURE TO EXISTING APP ===
+# 1. Edit app_intent.md to add the feature
+# 2. Run:
+# OPTION A (v1.7.1+): Click agent picker -> "App Orchestrator" -> "Add feature from app_intent.md"
+# OPTION B (any version): @workspace Act as meta-orchestrator (.meta/AGENTS.md). Add feature from app_intent.md (MAINTENANCE MODE)
+
+# === UPGRADE META-ORCHESTRATOR ===
+# 1. Copy new .meta/ files from latest version (if you have them in .meta/)
+# 2. Run:
+@workspace Act as meta-orchestrator. Upgrade this app to v2.0.32 (ENGINE UPGRADE MODE)
+
+# === PROTECT YOUR CUSTOM CODE ===
+# Edit .meta-manifest.json:
+"src/my_file.py": {"user_modified": true}
+
+# === CHECK VERSION ===
+cat .meta-version  # Shows which meta-orchestrator version built your app (if it exists)
+cat VERSION        # Shows current meta-orchestrator version (2.0.32)
+```
+
+Pro tip (v1.7.1+): Use the VS Code Copilot agent picker dropdown for quickest activation. No activation phrases to remember.
