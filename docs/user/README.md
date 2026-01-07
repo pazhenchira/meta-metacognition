@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 2.0.32** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.33** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -641,6 +641,25 @@ See [UPGRADING.md](UPGRADING.md) for detailed upgrade workflows.
 | `src/` | All your source code |
 | `tests/` | Comprehensive test suite |
 | `AGENTS.md` (root) | Guide for future AI-assisted development of YOUR app |
+| `.app/agent_context.json` | Repo/cloud/permission context for agents |
+
+---
+
+### Agent Permissions (Operational Context)
+
+` .app/agent_context.json` records whether agents may push, open PRs, deploy, or change cloud resources.
+If `permissions.git_push` is true, agents will push without asking. Otherwise, they will request approval and update the file.
+
+## 🔗 System-of-Systems (Multi-Repo)
+
+If your app grows into multiple repos (apps + shared components), use a **system repo** to coordinate:
+- `standalone` → no cross-repo coordination
+- `federated` → contracts + compatibility tests
+- `tracked` → light ledger + repo graph
+- `governed` → request ledger + cross-repo validation
+
+The system repo owns the **full dependency graph** and compatibility matrix. App repos keep only their local slice.
+For system repos, the engine defaults to `tracked` unless the Sponsor specifies otherwise.
 
 ---
 
@@ -713,6 +732,13 @@ See [INTUITION.md](INTUITION.md) for the complete wisdom system.
   // "fast" = Quicker iteration, lighter testing
   // "thorough" = Production-ready, comprehensive testing
   // Recommendation: Start with "fast", switch to "thorough" when stable
+
+  "coordination_mode": "standalone"
+  // "standalone" = single repo, no cross-repo coordination
+  // "federated" = contracts + compatibility tests
+  // "tracked" = light ledger + repo graph
+  // "governed" = full request ledger + cross-repo validation
+  // Recommendation: lowest mode that preserves correctness
 }
 ```
 
@@ -803,7 +829,7 @@ This usually means the essence or requirements weren't clear enough.
 
 ```json
 {
-  "version": "2.0.32",
+  "version": "2.0.33",
   "generated_date": "2025-11-25",
   "files": {
     "src/signal_generator.py": {
@@ -949,7 +975,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Current Version**: 2.0.32 (December 29, 2025)  
+**Current Version**: 2.0.33 (January 7, 2026)  
 **Built with meta-cognitive AI orchestration principles.**
 
 ---
@@ -972,7 +998,7 @@ MIT License - See [LICENSE](LICENSE) file
 # === UPGRADE META-ORCHESTRATOR ===
 # 1. Copy new .meta/ files from latest version (if you have them in .meta/)
 # 2. Run:
-@workspace Act as meta-orchestrator. Upgrade this app to v2.0.32 (ENGINE UPGRADE MODE)
+@workspace Act as meta-orchestrator. Upgrade this app to v2.0.33 (ENGINE UPGRADE MODE)
 
 # === PROTECT YOUR CUSTOM CODE ===
 # Edit .meta-manifest.json:
@@ -980,7 +1006,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 # === CHECK VERSION ===
 cat .meta-version  # Shows which meta-orchestrator version built your app (if it exists)
-cat VERSION        # Shows current meta-orchestrator version (2.0.32)
+cat VERSION        # Shows current meta-orchestrator version (2.0.33)
 ```
 
 **Pro Tip (v1.7.1+)**: Use the VS Code Copilot agent picker dropdown for quickest activation. No activation phrases to remember!

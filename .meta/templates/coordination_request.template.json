@@ -1,0 +1,33 @@
+{
+  "request_id": "REQ-YYYYMMDD-0001",
+  "created_at": "{TIMESTAMP}",
+  "origin_repo_id": "{ORIGIN_REPO_ID}",
+  "target_repo_ids": [
+    "{TARGET_REPO_ID}"
+  ],
+  "request_type": "feature",
+  "title": "{REQUEST_TITLE}",
+  "description": "{REQUEST_DESCRIPTION}",
+  "success_criteria": [
+    "{SUCCESS_CRITERIA}"
+  ],
+  "required_artifacts": [
+    "{REQUIRED_ARTIFACT}"
+  ],
+  "contracts": [
+    "{CONTRACT_REFERENCE}"
+  ],
+  "compatibility_constraints": [
+    "{COMPATIBILITY_CONSTRAINT}"
+  ],
+  "dependencies": [
+    "{DEPENDENCY_REQUEST_ID}"
+  ],
+  "priority": "P1",
+  "sponsor_approval_required": true,
+  "coordination_mode": "{COORDINATION_MODE}",
+  "routing": {
+    "via_system_repo": true,
+    "transport": "git"
+  }
+}

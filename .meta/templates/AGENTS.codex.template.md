@@ -59,6 +59,15 @@ After EVERY command/tool invocation (terminal, MCP, web, etc.):
 
 **If Sponsor is unavailable**: document assumptions, proceed if low-risk, and flag for confirmation.
 
+## System-of-Systems Coordination (If Applicable)
+
+If `coordination/repo_graph.json` exists:
+- Read `coordination_mode` from `meta_config.json`.
+- Respect the system repo as source of truth for contracts and compatibility.
+- **tracked/governed**: process `inbox/` requests, create a local work item linked to the request ID, and respond in `outbox/`.
+- **federated**: enforce contracts + compatibility tests before merging changes.
+- **Local-only changes** are allowed only if they do not alter shared contracts or dependencies.
+
 ### When working on this application:
 1. **Read `app_intent.md` and `essence.md` first** - Understand requirements and success metrics
 2. **Apply meta-orchestrator principles**:
@@ -77,6 +86,12 @@ After EVERY command/tool invocation (terminal, MCP, web, etc.):
    - **Bug** → Dev/Test first
    - **Feature/Enhancement** → PM required
    - Spawn only the roles required by the classification
+
+## Operational Context
+
+Read `.app/agent_context.json` for repo/cloud/permission context before making changes that require access.
+If `permissions.git_push` or `permissions.git_create_pr` is true, you may push or open PRs without asking.
+If permissions are missing or false, ask the Sponsor and record the update in `.app/agent_context.json`.
 
 If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable_subagents: true`:
 - Delegate per-role work to MCP sub-agents (essence, PM, architect, developer, tester, writer, ops)

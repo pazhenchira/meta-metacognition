@@ -1,7 +1,7 @@
 {
-  "meta_orchestrator_version": "2.0.32",
+  "meta_orchestrator_version": "2.0.33",
   "created_date": "2024-01-15",
-  "last_updated": "2025-12-29",
+  "last_updated": "2026-01-07",
   "features": [
     "lego_architecture",
     "unit_tests",
@@ -81,6 +81,13 @@
     "e2e_regression",
     "app_orchestrator_oversight",
     "mcp_role_workspace_isolation",
-    "mcp_config_merge_safe"
+    "mcp_config_merge_safe",
+    "coordination_mode",
+    "system_orchestrator_role",
+    "system_coordination_workflow",
+    "coordination_ledger",
+    "repo_graph",
+    "compatibility_matrix",
+    "agent_context_capture"
   ]
 }

@@ -3,6 +3,7 @@
   "r_and_d_mode": "fast",
   "branching_policy": "auto",
   "branching_risk_threshold": "medium",
+  "coordination_mode": "standalone",
   "_comment_phase1": "Phase 1: Session Isolation, Tool Agnosticism, Integration Tests",
   "agent_runtime": "codex-cli",
   "session_isolation": "full",

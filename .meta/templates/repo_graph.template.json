@@ -1,0 +1,22 @@
+{
+  "graph_scope": "{GRAPH_SCOPE}",
+  "coordination_mode": "{COORDINATION_MODE}",
+  "system_repo": {
+    "repo_id": "{SYSTEM_REPO_ID}",
+    "display_name": "{SYSTEM_REPO_NAME}",
+    "location": "{SYSTEM_REPO_LOCATION}"
+  },
+  "repos": [
+    {
+      "repo_id": "{REPO_ID}",
+      "display_name": "{REPO_NAME}",
+      "repo_role": "app",
+      "location": "{REPO_LOCATION}",
+      "dependencies": [
+        "{DEPENDENCY_REPO_ID}"
+      ]
+    }
+  ],
+  "last_updated": "{DATE}",
+  "source": "system_orchestrator"
+}

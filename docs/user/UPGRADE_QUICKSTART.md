@@ -15,19 +15,21 @@ git tag v1-backup
 ### 2️⃣ Copy Engine (10 seconds)
 ```bash
 cp -r /path/to/meta-metacognition/.meta ./
-cat .meta/VERSION  # Verify: 2.0.32
+cat .meta/VERSION  # Verify: 2.0.33
 ```
 
 ### 3️⃣ Run Upgrade (30-60 minutes, automated)
 
 Open app in Codex CLI or GitHub Copilot:
 ```
-Upgrade this app to meta-orchestrator v2.0.32
+Upgrade this app to meta-orchestrator v2.0.33
 ```
 
 **Done!** ✅
 
-**Note (2.0.32)**:
+**Note (2.0.33)**:
+- System-of-systems coordination modes: `standalone | federated | tracked | governed`
+- Upgrade now captures repo/cloud/permission context into `.app/agent_context.json`
 - Decision-critical apps require **Strategy Gate 0** (STR-XXX) before PM specs.
 - Role lock is enforced via `orchestrator_state.json` (`primary_role`, `role_lock`).
 - MCP servers are disabled by default; start Codex with `-p <app_slug>` to enable only this app’s servers.
@@ -178,7 +180,7 @@ A: Yes! Create branch: `git checkout -b test-v2`, run upgrade, test, rollback if
 ```bash
 git tag v1-backup
 cp -r /path/to/meta-metacognition/.meta ./
-# Say: "Upgrade this app to meta-orchestrator v2.0.32"
+# Say: "Upgrade this app to meta-orchestrator v2.0.33"
 ```
 
 **Rollback = 1 command**:

@@ -1,0 +1,15 @@
+{
+  "request_id": "REQ-YYYYMMDD-0001",
+  "repo_id": "{REPO_ID}",
+  "status": "DELIVERED",
+  "summary": "{SUMMARY}",
+  "artifacts": [
+    "{ARTIFACT_PATH}"
+  ],
+  "tests": [
+    "{TEST_PATH}"
+  ],
+  "compatibility_notes": "{COMPATIBILITY_NOTES}",
+  "branch": "{BRANCH_NAME}",
+  "delivered_at": "{TIMESTAMP}"
+}

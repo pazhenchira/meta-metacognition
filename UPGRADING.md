@@ -1,17 +1,18 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: December 29, 2025  
+**Date**: January 7, 2026  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
 
 ## Current Version (v2.x)
 
-**Current Engine Version**: 2.0.32  
+**Current Engine Version**: 2.0.33  
 
 ### v2.x Notes (Codex MCP Default + Consistency Guards)
 
 - **App Orchestrator rename**: `.github/agents/app-orchestrator.agent.md` is now the standard (replaces `meta-app-orchestrator.agent.md`)
+- **System-of-systems coordination**: new `coordination_mode` (standalone/federated/tracked/governed) and system repo scaffolding
 - **Sponsor interface**: App Orchestrator is the sole contact with the human Sponsor
 - **App/Sponsor Overrides**: Role-specific guardrails in `APP_OVERRIDES` blocks are preserved across upgrades
 - **Strategy Gate 0**: Decision-critical apps require STR-XXX approval before PM creates FR-XXX
@@ -39,6 +40,19 @@
 - **App Orchestrator overrides**: APP_OVERRIDES block in `.app/AGENTS.md` preserved on upgrade
 
 ---
+
+## System-of-Systems Upgrade Notes (v2.0.33+)
+
+During upgrade, the orchestrator will ask:
+- Is this repo part of a system-of-systems?
+- Is this the **system repo** or an **app/component repo**?
+- Where is the system repo?
+ - Repo host/provider, cloud provider, and permissions (push/PR/deploy/cloud)
+
+Based on answers, it will scaffold coordination files:
+- **System repo** → full repo graph + ledger + compatibility matrix
+- **App/component repo** → local graph slice + inbox/outbox (tracked/governed)
+ - **All repos** → `.app/agent_context.json` with operational context
 
 ## ⚠️ v1.x → v2.0.0 MAJOR UPGRADE
 
@@ -69,7 +83,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.32
+# Should show: 2.0.33
 ```
 
 ### Step 3: Run Upgrade

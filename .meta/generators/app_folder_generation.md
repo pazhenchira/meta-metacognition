@@ -61,6 +61,9 @@ gtm_opt_out: true | false
 team_size: 1 | small | medium | large
 formality: minimal | light | standard | full
 decision_critical: true | false
+system_of_systems: true | false
+repo_role: system | app | shared
+coordination_mode: standalone | federated | tracked | governed
 ```
 
 ### Step 2: Select Roles
@@ -101,6 +104,8 @@ Based on formality level:
 | standard | All three workflows |
 | full | All workflows with formal specs |
 
+If `repo_role = system` and `coordination_mode` is `tracked` or `governed`, include `system_coordination`.
+
 ### Step 5: Inline Wisdom
 
 Extract and inline ONLY the wisdom relevant to this app:
@@ -129,6 +134,18 @@ The generated `.app/AGENTS.md` must:
 - ❌ NOT use `../` paths to engine files
 - ✅ Include all context inline
 - ✅ Be fully functional if `.meta/` is deleted
+
+If `repo_role = system`, generate `.app/AGENTS.md` from `.meta/generators/system_agents.template.md`.
+
+### Step 6.2: Generate Agent Context
+
+Create `.app/agent_context.json` from `.meta/templates/agent_context.template.json` and fill:
+- repo host/provider
+- repo type (system/app/component/monorepo/multi-repo)
+- cloud provider (if any)
+- permissions (git push/PR, deploy, cloud changes)
+
+This file is the canonical operational context for all agents.
 
 ### Step 6.5: Sync Essence Mirror
 

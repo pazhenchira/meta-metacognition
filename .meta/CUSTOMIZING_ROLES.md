@@ -28,8 +28,10 @@ Different apps have different needs:
 
 The **Sponsor** is the human decision-maker for app intent, constraints, and approvals. This is not a sub-agent role and is **always present**.
 
-- The **App Orchestrator is the only role that communicates with the Sponsor**.
-- All other roles route questions/decisions through the App Orchestrator.
+- The **relevant Orchestrator** is the only role that communicates with the Sponsor:
+  - **System repo** → System Orchestrator
+  - **App repo** → App Orchestrator
+- All other roles route questions/decisions through the relevant Orchestrator.
 
 ### Always Required
 - **Essence Analyst**: Defines and protects the core value proposition (REQUIRED for all apps)
@@ -175,6 +177,12 @@ Based on `.meta/roles/developer.md` with these changes:
 - Skip formal DD-XXX reference (we use issue descriptions)
 - Lighter test coverage target (60% for this prototype)
 ```
+
+---
+
+## System-of-Systems Note
+
+If the repo is a **system repo** (coordinating multiple apps/components), the primary role is the **System Orchestrator**, not the App Orchestrator. The System Orchestrator uses the same role pool for execution but owns cross-repo contracts, compatibility, and sequencing.
 
 **Option C**: Create app-specific role doc
 ```markdown

@@ -1,6 +1,6 @@
 # Meta-Metacognition
 
-**Version 2.0.32** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 2.0.33** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -40,6 +40,32 @@ meta-metacognition/
 
 ---
 
+## System-of-Systems Coordination
+
+The engine can coordinate **multiple repos** as a system-of-systems. A single **system repo** provides:
+- the repo dependency graph,
+- compatibility contracts,
+- and cross-repo validation.
+
+Coordination scales by need (KISS):
+- `standalone` → no cross-repo coordination
+- `federated` → contracts + compatibility tests
+- `tracked` → light ledger + repo graph
+- `governed` → full request ledger + cross-repo validation
+
+For system repos, the engine defaults to `tracked` unless you choose otherwise.
+
+---
+
+## Sources of Truth
+
+- `app_intent.md` → app intent
+- `essence.md` → essence + success metrics
+- `APP_ORCHESTRATION.md` → orchestration decisions
+- `meta_config.json` → engine configuration
+
+---
+
 ## Where to go next
 
 - **Getting started**: [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)
@@ -64,4 +90,4 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Current Version**: 2.0.32 (December 29, 2025)
+**Current Version**: 2.0.33 (January 7, 2026)

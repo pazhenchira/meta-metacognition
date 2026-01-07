@@ -15,10 +15,25 @@ These are not peer roles to PM/Architect/Developer; they sit **above** the role 
 | Role | Purpose | Interaction Rule |
 |------|---------|------------------|
 | **Meta-Orchestrator (engine)** | Builds/upgrades apps by running the engine pipeline | Interacts with the **Sponsor** during engine operations |
-| **App Orchestrator (app owner)** | Owns delivery of a specific app by sequencing roles and integrating outputs | **Only role that communicates with the Sponsor** |
-| **Sponsor (human owner)** | Provides app intent, constraints, and approvals | Communicates **only** with the App Orchestrator |
+| **System Orchestrator (system owner)** | Coordinates system-of-systems work (contracts, compatibility, sequencing) | **Only role that communicates with the Sponsor** for system repos |
+| **App Orchestrator (app owner)** | Owns delivery of a specific app by sequencing roles and integrating outputs | **Only role that communicates with the Sponsor** for app repos |
+| **Sponsor (human owner)** | Provides intent, constraints, and approvals | Communicates **only** with the relevant Orchestrator |
 
-**Key Principle**: The App Orchestrator is accountable for essence alignment and integration quality. Roles produce artifacts; the App Orchestrator integrates and enforces gates.
+**Key Principle**: The System Orchestrator is accountable for system-of-systems alignment and cross-repo integration quality. The App Orchestrator is accountable for app essence alignment and delivery. Roles produce artifacts; orchestrators integrate and enforce gates.
+
+### System Orchestrator Scopes (Single Role, Two Modes)
+
+The System Orchestrator operates in two explicit scopes:
+- **System Coordination**: contracts, compatibility, dependency graph, cross-repo tests
+- **Portfolio/GTM**: priorities, sequencing, risk posture, and portfolio-level goals
+
+This is one role with two modes (KISS). Split only when governance ownership must be separated.
+
+### System-of-Systems Chain (Conceptual)
+
+```
+Sponsor → System Orchestrator → App Orchestrators → Role Pool
+```
 
 ---
 

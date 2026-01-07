@@ -142,7 +142,56 @@ class APIGateway:
 
 ---
 
-## 5. Adapter Pattern (External Services)
+## 6. Contract Registry + Compatibility Gates
+
+**Problem**: Cross-repo changes cause breakages because interfaces drift.
+
+**Solution**: Maintain explicit contracts (schemas/APIs) and enforce compatibility with automated tests.
+
+**When to Use**: Any system-of-systems or shared component environment.
+
+**Structure**:
+```
+contracts/
+  onboarding_v2.json
+tests/
+  contract_compatibility.test.ts
+```
+
+**Benefits**:
+- Prevents silent breakages
+- Enables parallel development with clear boundaries
+- Makes compatibility expectations explicit
+
+**Wisdom**: Thompson (#5 Engineering), Parnas (#10 Engineering - Information Hiding)
+
+---
+
+## 7. Append-Only Coordination Ledger
+
+**Problem**: Cross-repo requests get lost or overwritten, breaking restartability.
+
+**Solution**: Immutable request packets + append-only event logs + explicit state transitions.
+
+**When to Use**: Tracked or governed coordination modes.
+
+**Structure**:
+```
+coordination/requests/REQ-YYYYMMDD-0001.json
+coordination/events/REQ-YYYYMMDD-0001.jsonl
+coordination/index.json
+```
+
+**Benefits**:
+- Full audit trail
+- Safe restartability
+- No stomping or silent edits
+
+**Wisdom**: KISS + Thompson #5 (single responsibility), Kernighan (debugging simplicity)
+
+---
+
+## 8. Adapter Pattern (External Services)
 
 **Problem**: External APIs have different interfaces; hard to swap providers.
 

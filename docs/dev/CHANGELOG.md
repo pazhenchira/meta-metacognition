@@ -6,6 +6,23 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.33] - 2026-01-07 (System-of-Systems Coordination)
+
+### Added
+
+- **Coordination maturity ladder** (`standalone | federated | tracked | governed`)
+- **System Orchestrator** scope (system coordination + portfolio/GTM) with dedicated templates
+- **Coordination templates** (repo graph, request/response, event log, index, compatibility matrix, cross-repo test plan)
+- **System coordination workflow** for cross-repo requests and validation
+- **Operational context capture** (`.app/agent_context.json`) for repo/cloud/permission settings
+
+### Changed
+
+- **Meta-orchestrator Phase 0** now detects system-of-systems and scaffolds coordination files
+- **System repos default to `tracked`** when system-of-systems is true
+- **App/Self-contained templates** include system-of-systems coordination guardrails
+- **Consistency audit** now requires `coordination_mode` in `meta_config.json`
+
 ## [2.0.32] - 2025-12-29 (MCP Role Isolation + Safe Config Merge)
 
 ### Added

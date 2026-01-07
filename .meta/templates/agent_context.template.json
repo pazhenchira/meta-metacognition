@@ -1,0 +1,29 @@
+{
+  "repo": {
+    "repo_id": "{REPO_ID}",
+    "repo_role": "{REPO_ROLE}",
+    "repo_type": "{REPO_TYPE}",
+    "vcs": "git",
+    "host": "{REPO_HOST}",
+    "remote_url": "{REPO_REMOTE_URL}"
+  },
+  "system": {
+    "system_repo_id": "{SYSTEM_REPO_ID}",
+    "coordination_mode": "{COORDINATION_MODE}",
+    "transport": "{COORDINATION_TRANSPORT}"
+  },
+  "infrastructure": {
+    "cloud_provider": "{CLOUD_PROVIDER}",
+    "account_owner": "{CLOUD_ACCOUNT_OWNER}",
+    "deployment_target": "{DEPLOYMENT_TARGET}",
+    "infra_as_code": "{INFRA_AS_CODE}"
+  },
+  "permissions": {
+    "git_push": false,
+    "git_create_pr": false,
+    "deploy": false,
+    "cloud_changes": false
+  },
+  "notes": "{NOTES}",
+  "last_updated": "{TIMESTAMP}"
+}

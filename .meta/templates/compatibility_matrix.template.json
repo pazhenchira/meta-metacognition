@@ -1,0 +1,13 @@
+{
+  "updated_at": "{TIMESTAMP}",
+  "entries": [
+    {
+      "provider_repo_id": "{PROVIDER_REPO_ID}",
+      "consumer_repo_id": "{CONSUMER_REPO_ID}",
+      "contract_id": "{CONTRACT_ID}",
+      "min_version": "{MIN_VERSION}",
+      "max_version": "{MAX_VERSION}",
+      "compatibility": "backward"
+    }
+  ]
+}

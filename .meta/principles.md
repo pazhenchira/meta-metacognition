@@ -38,6 +38,20 @@ They are meant to be stable across projects. For each new app, you mainly change
 
 ---
 
+## [P-COORD] Coordination Maturity Ladder (System-of-Systems)
+
+- Default to the **lowest coordination** that still preserves correctness and safety.
+- Modes (in increasing coordination):
+  - **standalone**: single repo, no cross-repo contracts
+  - **federated**: explicit contracts + compatibility tests, no ledger
+  - **tracked**: light change ledger + dependency graph
+  - **governed**: request ledger + handoff packets + cross-repo validation
+- Move up **only** when coupling, breakage risk, or organizational complexity requires it.
+- **Single source of truth**: system repo holds the full dependency graph; app repos keep only their local slice.
+- Prefer **automated compatibility gates** over manual coordination.
+
+---
+
 ## [P-FLOW] Hierarchical Flow
 
 - Use a hierarchical control flow:

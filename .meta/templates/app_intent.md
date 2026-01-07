@@ -75,6 +75,16 @@ Describe how you intend to run this app in v1:
 
 ---
 
+## 7. System-of-Systems (Optional)
+
+If this repo is a **system repo** coordinating multiple apps/components, include:
+
+- List of repos and their roles (app/component)
+- Key dependencies between repos
+- Preferred coordination mode: `standalone | federated | tracked | governed`
+
+---
+
 ## How This File Is Used
 
 The Meta-Orchestrator will:

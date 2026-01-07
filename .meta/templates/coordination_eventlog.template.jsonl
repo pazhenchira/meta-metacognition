@@ -1,0 +1,2 @@
+{"timestamp":"{TIMESTAMP}","actor":"system_orchestrator","action":"REQUEST_CREATED","request_id":"REQ-YYYYMMDD-0001","details":"{SUMMARY}"}
+{"timestamp":"{TIMESTAMP}","actor":"app_orchestrator","action":"DELIVERED","request_id":"REQ-YYYYMMDD-0001","details":"{SUMMARY}"}

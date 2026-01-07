@@ -1,6 +1,6 @@
 {
-  "meta_orchestrator_version": "2.0.32",
-  "generated_date": "2025-12-29",
+  "meta_orchestrator_version": "2.0.33",
+  "generated_date": "2026-01-07",
   "files": {
     ".meta/AGENTS.md": {
       "user_modified": true,
@@ -510,6 +510,90 @@
       "regenerate_on_upgrade": true,
       "description": "MCP role workspace instructions (role isolation)",
       "phase": "engine"
+    },
+    ".meta/templates/agent_context.template.json": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "Agent operational context template"
+    },
+    ".meta/templates/repo_graph.template.json": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "System repo graph template"
+    },
+    ".meta/templates/coordination_request.template.json": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "Coordination request template"
+    },
+    ".meta/templates/coordination_response.template.json": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "Coordination response template"
+    },
+    ".meta/templates/coordination_eventlog.template.jsonl": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "Coordination event log template"
+    },
+    ".meta/templates/coordination_index.template.json": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "Coordination index template"
+    },
+    ".meta/templates/compatibility_matrix.template.json": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "Compatibility matrix template"
+    },
+    ".meta/templates/cross_repo_test_plan.template.md": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "Cross-repo test plan template"
+    },
+    ".meta/templates/SYSTEM_AGENTS.template.md": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "System orchestrator template"
+    },
+    ".meta/templates/SYSTEM_AGENTS.codex.template.md": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "System orchestrator codex template"
+    },
+    ".meta/templates/system_agent.template.md": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "System orchestrator copilot agent template"
+    },
+    ".meta/generators/system_agents.template.md": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "System orchestrator self-contained generator template"
+    },
+    ".meta/workflows/system_coordination.md": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "System coordination workflow"
+    },
+    ".app/agent_context.json": {
+      "user_modified": false,
+      "generated_date": "2026-01-07",
+      "last_modified": "2026-01-07",
+      "description": "Agent operational context (generated)"
     }
   },
   "generated_by": "meta-orchestrator/2.0.24",

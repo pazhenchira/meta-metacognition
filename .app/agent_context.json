@@ -1,0 +1,29 @@
+{
+  "repo": {
+    "repo_id": "meta-metacognition",
+    "repo_role": "app",
+    "repo_type": "single-repo",
+    "vcs": "git",
+    "host": "github",
+    "remote_url": "https://github.com/pazhenchira/meta-metacognition.git"
+  },
+  "system": {
+    "system_repo_id": "",
+    "coordination_mode": "standalone",
+    "transport": "none"
+  },
+  "infrastructure": {
+    "cloud_provider": "none",
+    "account_owner": "",
+    "deployment_target": "",
+    "infra_as_code": ""
+  },
+  "permissions": {
+    "git_push": true,
+    "git_create_pr": true,
+    "deploy": false,
+    "cloud_changes": false
+  },
+  "notes": "Standalone repo; sponsor has git login and permits pushes.",
+  "last_updated": "2026-01-07"
+}

@@ -1,0 +1,12 @@
+{
+  "updated_at": "{TIMESTAMP}",
+  "requests": {
+    "proposed": [],
+    "accepted": [],
+    "in_progress": [],
+    "delivered": [],
+    "verified": [],
+    "closed": [],
+    "blocked": []
+  }
+}

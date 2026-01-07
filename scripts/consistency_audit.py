@@ -98,6 +98,8 @@ def audit_meta_config(audit: Audit) -> dict | None:
 
     if "mcp_tool_timeout_seconds" not in data:
         audit.error("meta_config.json missing mcp_tool_timeout_seconds")
+    if "coordination_mode" not in data:
+        audit.error("meta_config.json missing coordination_mode")
 
     return data
 
@@ -173,21 +175,53 @@ def audit_app_self_contained(audit: Audit) -> None:
 def audit_app_agents(audit: Audit) -> None:
     agents_path = ROOT / ".app/AGENTS.md"
     text = read_text(agents_path, audit)
-    required = [
-        "tracker.json",
-        "orchestrator_state.json",
-        "essence.md",
-        "meta_config.json",
-        ".app/roles/",
-        "Documentation Index",
-        "Docs-first rule",
-        "Subagent enforcement",
-        "Identity confirmation",
-        "APP_OVERRIDES_START",
-    ]
+    is_system = "System Orchestrator" in text
+    if is_system:
+        required = [
+            "coordination/repo_graph.json",
+            "coordination/requests/",
+            "coordination/events/",
+            "coordination/index.json",
+            "compatibility_matrix.json",
+            "cross_repo_test_plan.md",
+            "agent_context.json",
+            "orchestrator_state.json",
+            "meta_config.json",
+            "Documentation Index",
+            "Docs-first rule",
+            "Subagent enforcement",
+            "Identity confirmation",
+            "SYSTEM_OVERRIDES_START",
+        ]
+    else:
+        required = [
+            "tracker.json",
+            "orchestrator_state.json",
+            "essence.md",
+            "agent_context.json",
+            "meta_config.json",
+            ".app/roles/",
+            "Documentation Index",
+            "Docs-first rule",
+            "Subagent enforcement",
+            "Identity confirmation",
+            "APP_OVERRIDES_START",
+        ]
     missing = [req for req in required if req not in text]
     if missing:
         audit.error(".app/AGENTS.md missing required references: " + ", ".join(missing))
+
+
+def audit_agent_context(audit: Audit) -> None:
+    path = ROOT / ".app/agent_context.json"
+    if not path.exists():
+        audit.error(".app/agent_context.json missing")
+        return
+    text = read_text(path, audit)
+    try:
+        json.loads(text)
+    except Exception as exc:  # pylint: disable=broad-except
+        audit.error(f".app/agent_context.json invalid JSON: {exc}")
 
 
 def audit_essence_mirror(audit: Audit) -> None:
@@ -245,6 +279,7 @@ def main() -> int:
 
     audit_app_self_contained(audit)
     audit_app_agents(audit)
+    audit_agent_context(audit)
     audit_essence_mirror(audit)
     audit_sources_of_truth_docs(audit)
     audit_workspace_tracker(audit)

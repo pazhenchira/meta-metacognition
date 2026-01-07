@@ -516,24 +516,32 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
          - Which files are protected (user_modified: true)
        - Show plan to user with recommendations, get approval.
        - Apply upgrade: add new LEGOs, enhance or regenerate files as decided.
-       - **Preserve App/Sponsor Overrides**:
-         - Before regenerating `.app/roles/*.md`, extract the `APP_OVERRIDES` block from each role.
-         - After regeneration, reinsert the preserved block into the corresponding role file.
-         - If a role is removed, archive its overrides in `.app/roles/_overrides_archive.md`.
-         - Before regenerating `.app/AGENTS.md`, extract the `APP_OVERRIDES` block from `.app/AGENTS.md`.
-         - After regeneration, reinsert the preserved block into `.app/AGENTS.md` at the same location.
-       - Update `.meta-version` and `.meta-manifest.json`.
+      - **Preserve App/Sponsor Overrides**:
+        - Before regenerating `.app/roles/*.md`, extract the `APP_OVERRIDES` block from each role.
+        - After regeneration, reinsert the preserved block into the corresponding role file.
+        - If a role is removed, archive its overrides in `.app/roles/_overrides_archive.md`.
+        - Before regenerating `.app/AGENTS.md`, extract the `APP_OVERRIDES` block from `.app/AGENTS.md`.
+        - After regeneration, reinsert the preserved block into `.app/AGENTS.md` at the same location.
+      - **Preserve System/Sponsor Overrides** (system repos):
+        - If `.app/AGENTS.md` contains `SYSTEM_OVERRIDES`, extract and reinsert it on regeneration.
+      - Update `.meta-version` and `.meta-manifest.json`.
        - **MANDATORY: Generate agent configuration for BOTH runtimes**:
          
-         **A. GitHub Copilot Chat (VS Code)** - Uses `.github/agents/` files:
-         - **ALWAYS generate `.github/agents/app-orchestrator.agent.md`**
+        **A. GitHub Copilot Chat (VS Code)** - Uses `.github/agents/` files:
+         - If `repo_role = system`:
+           - Generate `.github/agents/system-orchestrator.agent.md`
+           - Template: `.meta/templates/system_agent.template.md`
+           - Replace `{SYSTEM_NAME}` with system name from `app_intent.md`
+           - Agent name: "System Orchestrator"
+         - Otherwise:
+           - Generate `.github/agents/app-orchestrator.agent.md`
+           - Template: `.meta/templates/agent.template.md`
+           - Replace `{APP_NAME}` with actual app name from `app_intent.md`
+           - Agent name: "App Orchestrator"
          - Create `.github/agents/` directory if missing
-         - If file doesn't exist: Generate from `.meta/templates/agent.template.md`
          - If file exists and outdated: Update with latest template
-         - Replace `{APP_NAME}` with actual app name from `app_intent.md`
-         - Agent name: "App Orchestrator" (consistent across all apps)
         - **CRITICAL**: File must say "You read `.app/AGENTS.md`" and must not reference engine files
-        - **VALIDATION**: Verify file exists and contains "App Orchestrator"
+        - **VALIDATION**: Verify file exists and contains correct orchestrator role
         - **VALIDATION**: Verify file says "You read `.app/AGENTS.md`"
         - **VALIDATION**: Grep file to ensure no `.meta/` references for primary instructions
          
@@ -580,6 +588,69 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
        - Update `.meta-version` and `.meta-manifest.json`.
        - **Regenerate `.app/` folder** with new engine features
 
+### System-of-Systems Detection (MANDATORY)
+
+Before proceeding to Phase 1, determine whether this repo is part of a system-of-systems:
+
+1. **Check for** `coordination/repo_graph.json`:
+   - If present: read it to determine `graph_scope`, `repo_role`, and `coordination_mode`.
+   - If missing: ask the Sponsor:
+     - Is this repo part of a system-of-systems?
+     - If yes: is this the **system repo** or an **app/component repo**?
+     - What is the system repo location/ID?
+
+2. **Set coordination mode** (write to `meta_config.json` if missing):
+   - If this is a **system repo** and system-of-systems is **true**, default to `tracked`.
+   - Otherwise default to `standalone`.
+   - If this is an **app/component repo** and a system repo exists, inherit coordination mode from the system repo.
+   - Available modes:
+     - `standalone` → no cross-repo coordination
+     - `federated` → explicit contracts + compatibility tests
+     - `tracked` → light ledger + repo graph
+     - `governed` → full request ledger + handoff packets + cross-repo validation
+
+3. **Generate coordination scaffolding** (if system-of-systems):
+   - **System repo**:
+     - `coordination/repo_graph.json` (full graph)
+     - `coordination/requests/` (empty)
+     - `coordination/events/` (empty)
+     - `coordination/index.json`
+     - `compatibility_matrix.json`
+     - `cross_repo_test_plan.md`
+   - **App/component repo**:
+     - `coordination/repo_graph.json` (local slice: self + direct dependencies)
+     - `inbox/` and `outbox/` (if `tracked` or `governed`)
+
+   Use templates from `.meta/templates/`:
+   - `repo_graph.template.json`
+   - `coordination_index.template.json`
+   - `compatibility_matrix.template.json`
+   - `cross_repo_test_plan.template.md`
+
+4. **Select coordination transport** (document in `APP_ORCHESTRATION.md`):
+   - **local**: repos co-located on disk (direct inbox/outbox writes)
+   - **git/ci**: requests and responses travel via PRs/commits (recommended for distributed repos)
+
+5. **If transport is git/ci and agent_context permits push/PRs**, the System Orchestrator must dispatch automatically.
+
+6. **Log** coordination mode, repo role, and transport in `APP_ORCHESTRATION.md`.
+
+### Operational Context Capture (MANDATORY)
+
+Before Phase 1, capture and persist **repo/cloud/permission context** so agents do not guess.
+
+Ask the Sponsor:
+- Repo host/provider (GitHub/GitLab/Bitbucket/local)
+- Repo type (system/app/component/monorepo/multi-repo)
+- Cloud provider (AWS/GCP/Azure/None)
+- Permissions: git push, PR creation, deployments, cloud changes
+
+Write the answers to `.app/agent_context.json` using:
+- `.meta/templates/agent_context.template.json`
+
+Include a summary in `APP_ORCHESTRATION.md`.
+If `.app/agent_context.json` already exists and is complete, do not re-ask; update only when Sponsor changes permissions.
+
 ### Generating .app/ Folder
 
 **When**: After discovery phases complete, before building src/
@@ -603,6 +674,9 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
    team_size: [1 | small | medium | large]
    formality: [minimal | light | standard | full]
    decision_critical: [true | false]
+   system_of_systems: [true | false]
+   repo_role: [system | app | shared]
+   coordination_mode: [standalone | federated | tracked | governed]
    ```
    - Set `gtm_agents_available = true` if GTM MCP tools are registered and respond to sanity checks.
 
@@ -625,11 +699,13 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
    - minimal/light: Simplified new_feature only
    - standard: new_feature, enhancement, bug_fix
    - full: All workflows with formal specs
+   - If `repo_role = system` and `coordination_mode` is `tracked` or `governed`: include `system_coordination`
 
 4. **Generate `.app/AGENTS.md`**:
-   - Use template: `.meta/generators/app_agents.template.md`
+   - If `repo_role = system`: use `.meta/generators/system_agents.template.md`
+   - Otherwise: use `.meta/generators/app_agents.template.md`
    - Fill in all placeholders:
-     - {APP_NAME}: From app_intent.md
+     - {APP_NAME} or {SYSTEM_NAME}: From app_intent.md
      - {ENGINE_VERSION}: From `.meta/VERSION`
      - {GENERATION_DATE}: Current timestamp
      - {APP_OVERVIEW}: From discovery
@@ -641,6 +717,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 5. **Generate Supporting Files**:
    - `.app/essence.md`: Mirror of `essence.md` (sync from root; add header that it is generated)
+   - `.app/agent_context.json`: Operational context (repo/cloud/permissions)
    - `.app/roles/`: Adapted role files (only selected roles)
    - `.app/workflows/`: Adapted workflow files
    - `.app/wisdom/core_principles.md`: Inlined relevant principles
@@ -1148,6 +1225,12 @@ If no viable data source or dependency set can satisfy the requirements:
 
 After finalizing `requirements.md` and `dependencies.md`, explicitly discover and document the app's **essence** and **value proposition**.
 
+**System-of-Systems Note**:
+If this repo is a **system repo**, `essence.md` must describe the **system-of-systems essence**:
+- The value that only exists when multiple apps/components cooperate
+- Cross-repo user journey and success metrics
+- Portfolio-level risks and constraints (compatibility, sequencing, governance)
+
 You MUST create `essence.md` with the following structure:
 
 #### Problem Statement
@@ -1251,6 +1334,15 @@ Using `requirements.md` and **`essence.md`** (NOT `intent.md`):
 
 - Identify LEGO blocks following KISS and single-responsibility principles.
 - **Prioritize LEGOs based on essence delivery**:
+
+**System Repo Special Case**:
+If this is a **system repo**, treat each **repo** as a LEGO and add coordination-only LEGOs:
+- `repo_graph` (dependency graph + ownership)
+- `compatibility_matrix` (contract/version expectations)
+- `coordination_ledger` (requests + event log)
+- `cross_repo_validation` (contract + system tests)
+
+These LEGOs **must not implement app features**. They only coordinate.
   
   1. **Core Value LEGOs** (implement the essence FIRST):
      - These deliver the unique value proposition directly
@@ -1323,6 +1415,7 @@ After generating `lego_plan.json`:
      - Testing strategy (unit, integration, system)
      - Documentation plan
      - Success criteria
+     - **If system repo**: include coordination mode, repo graph summary, and cross-repo validation plan
    - This file becomes the **human-readable orchestration plan** specific to THIS app.
    - Mark as [IN_PROGRESS] initially.
 
@@ -1561,6 +1654,14 @@ Using `essence.md` as the guide, validate the complete user journey:
   - Instrumentation in place to collect metrics
   - Dashboard or reporting for tracking over time
   - Comparison against benchmarks from `essence.md`
+
+#### System-of-Systems Validation (If System Repo)
+- **Are contracts compatible across repos?**
+  - Run contract tests for provider/consumer pairs
+  - Verify compatibility matrix is updated and honored
+- **Does the cross-repo user journey work end-to-end?**
+  - Execute system flow tests from `cross_repo_test_plan.md`
+  - Validate against system-level success metrics in `essence.md`
 
 #### Failure Mode Validation
 - **What happens when things go wrong?**
