@@ -122,6 +122,15 @@ Documentation integrity:
 - Keep README + docs/user + docs/dev in sync
 - Finish what you start: do not declare complete without production deployment and GTM artifacts when available
 
+Document ownership rules:
+- `app_intent.md`: Sponsor is primary author; App Orchestrator maintains it with Sponsor approval
+- `essence.md`: Essence Analyst authors; Orchestrator enforces alignment
+- Core decision workflow: Strategy Owner documents in STR-XXX when decision-critical
+- Feature specs (FR/EN): Product Manager authors
+- Architecture/design (DD/architecture.md): Architect authors
+- Tests/TP/BUG: Tester authors
+- Documentation (`docs/`, README): Technical Writer authors only
+
 ---
 
 ## Maintenance Mode

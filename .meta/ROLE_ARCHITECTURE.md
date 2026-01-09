@@ -88,6 +88,32 @@ Sponsor → System Orchestrator → App Orchestrators → Role Pool
 
 ---
 
+## Document Ownership & Authorship Rules
+
+**Rule of record**: Each artifact is authored and maintained by its primary role owner. Other roles may review and request changes, but they do not author another role’s artifact.
+
+**Orchestrator scope**: The App Orchestrator integrates and enforces gates. It does **not** author role artifacts directly, except for maintaining `app_intent.md` with Sponsor approval.
+
+**Writer boundary**: The Technical Writer owns user/developer/operator documentation. They do **not** author product specs, strategy specs, architecture, or essence.
+
+| Document | Primary Owner | Inputs/Reviewers | Notes |
+|----------|---------------|------------------|-------|
+| `app_intent.md` | **Sponsor** (primary author) + **App Orchestrator** (maintainer) | PM, Essence Analyst, Strategy Owner | Updated only with Sponsor approval; living source of requirements |
+| `essence.md` | **Essence Analyst** | Sponsor (via Orchestrator), PM | Single-sentence value + success metrics; canonical "why" |
+| Core decision workflow | **Strategy Owner** | PM, Architect, Tester | Captured in STR-XXX for decision-critical apps; system/user flows are separately owned |
+| Feature specs (FR/EN) | **Product Manager** | Essence Analyst, Strategy Owner, Architect | Immutable specs that define scope + acceptance criteria |
+| Architecture/design | **Architect** | PM, Strategy Owner, Developer | DD-XXX and `architecture.md` |
+| Test plans | **Tester** | PM, Strategy Owner, Architect | TP-XXX and validation strategy |
+| User/dev/ops docs | **Technical Writer** | PM, Architect, Developer, Tester | Docs explain usage and maintenance, not product decisions |
+
+**Core workflow clarification**:
+- **Decision logic** (what makes the app *correct*): Strategy Owner → STR-XXX
+- **User journey** (what makes the app *valuable*): Essence Analyst + PM → essence + FR
+- **System flow** (how it works): Architect → DD/architecture
+- **User-facing guidance**: Technical Writer → docs
+
+---
+
 ## Extended Role Pool (Optional)
 
 These roles are used **only when the app requires them**:
@@ -151,6 +177,8 @@ These evolve with the system:
 
 | Artifact | Location | Owner | Purpose |
 |----------|----------|-------|---------|
+| App Intent | `app_intent.md` | Sponsor + App Orchestrator | Current requirements and constraints |
+| Essence | `essence.md` | Essence Analyst | Value proposition + success metrics |
 | Source Code | `src/` | Developer | Implementation |
 | Tests | `tests/` | Developer/Tester | Verification |
 | Documentation | `docs/` | Writer | User guidance |

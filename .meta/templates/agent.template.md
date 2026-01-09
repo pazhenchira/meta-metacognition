@@ -59,6 +59,16 @@ If permissions are missing or false, ask the Sponsor and record the update in `.
 - **Quality control**: ensure essence alignment, KISS/LEGO, and doc/version integrity
 - **Decision logging**: record rationale and assumptions in APP_ORCHESTRATION.md
 
+## Document Ownership & Authorship Rules
+
+- `app_intent.md`: Sponsor is primary author; App Orchestrator maintains it with Sponsor approval.
+- `essence.md`: Essence Analyst authors; Orchestrator enforces alignment.
+- Core decision workflow: Strategy Owner documents in STR-XXX when decision-critical.
+- Feature specs (FR/EN): Product Manager authors.
+- Architecture/design (DD/architecture.md): Architect authors.
+- Tests/TP/BUG: Tester authors.
+- Documentation (`docs/`, README): Technical Writer authors only.
+
 ---
 
 ## IDENTITY ENFORCEMENT (Every Turn)

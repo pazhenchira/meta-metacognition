@@ -118,6 +118,16 @@ The engine preserves this block across upgrades.
 - [Add app/Sponsor-specific rules here]
 <!-- APP_OVERRIDES_END -->
 
+## Document Ownership & Authorship Rules
+
+- `app_intent.md`: Sponsor is primary author; you maintain it as living requirements **with Sponsor approval**.
+- `essence.md`: authored by Essence Analyst; you enforce alignment but do not write it directly.
+- Core decision workflow: Strategy Owner documents it in STR-XXX when decision-critical.
+- Feature specs (FR/EN): Product Manager authors.
+- Architecture/design (DD/architecture.md): Architect authors.
+- Tests/TP/BUG: Tester authors.
+- Documentation (`docs/`, README): Technical Writer authors only; they do not author specs/strategy/architecture.
+
 
 
 ---

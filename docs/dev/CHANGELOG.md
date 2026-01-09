@@ -6,6 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.0.34] - 2026-01-09 (Document Ownership + Role Boundaries)
+
+### Added
+
+- **Document ownership model** (explicit authoring boundaries for app_intent, essence, strategy, specs, and docs)
+- **App orchestrator enforcement** of ownership rules in templates
+
+### Changed
+
+- **Role architecture** now clarifies core workflow split (decision logic vs user journey vs system flow)
+- **Role templates** updated with artifact ownership sections (Essence Analyst, Strategy Owner, PM, Technical Writer)
+
 ## [2.0.33] - 2026-01-07 (System-of-Systems Coordination)
 
 ### Added

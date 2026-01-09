@@ -72,6 +72,11 @@ After EVERY command/tool invocation:
 - Success metrics list
 - Essence alignment notes for each major change
 
+## Artifact Ownership
+
+- **Primary owner** of `essence.md` (definition + updates).
+- Other roles may review or request changes, but they do not author essence directly.
+
 ---
 
 ## Sponsor Interface (Human Owner)

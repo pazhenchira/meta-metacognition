@@ -235,6 +235,13 @@ Lifecycle/GTМ roles:
 - The **App Orchestrator is the only role that communicates with the Sponsor**.
 - All other roles route questions/decisions through the App Orchestrator.
 
+**Artifact ownership rules**:
+- `app_intent.md`: Sponsor is primary author; App Orchestrator maintains as living requirements **with Sponsor approval**.
+- `essence.md`: Essence Analyst is the sole author; others review via handoffs.
+- Core decision workflow: Strategy Owner captures it in STR-XXX for decision-critical apps; system/user workflows remain owned by Architect/PM respectively.
+- Feature specs (FR/EN): Product Manager authors; other roles review and request changes.
+- Documentation (`docs/`, README): Technical Writer authors; does not author specs, strategy, or architecture.
+
 **Rule**: Essence Analyst is REQUIRED. Strategy Owner is REQUIRED for decision-critical apps. Operations is REQUIRED (production deployment is mandatory).
 GTM Strategy Owner is REQUIRED whenever any GTM role is in scope. GTM roles are REQUIRED when requested OR when GTM agents are available/enabled. If any role is not applicable or unavailable, skip it explicitly and record why.
 
@@ -752,7 +759,7 @@ If `.app/agent_context.json` already exists and is complete, do not re-ask; upda
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **2.0.32** (see `VERSION` file)
+Current meta-orchestrator version: **2.0.34** (see `VERSION` file)
 
 **Features in v2.0.0** (Workspace-Centric, Self-Documenting, Idempotent) - MAJOR REFACTOR:
 - **Workspace-centric execution**: `.workspace/` folder for ephemeral work items (deleted after completion)

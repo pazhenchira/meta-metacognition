@@ -47,6 +47,7 @@ After EVERY command/tool invocation:
 1. **Strategy Definition**
    - Define the decision framework that solves the core problem
    - Specify inputs, constraints, and decision rules
+   - Document the core decision workflow (inputs → decisions → outputs)
    - Declare measurable benchmarks (what “best-in-class” means)
 
 2. **Strategy Validation**
@@ -72,6 +73,11 @@ After EVERY command/tool invocation:
 - `specs/strategy/STR-XXX-{name}.md` (immutable once approved)
 - Strategy benchmarks and evaluation criteria
 - Notes on edge cases and risk controls
+
+## Artifact Ownership
+
+- **Primary owner** of the STR-XXX strategy spec, including the core decision workflow.
+- If the app is not decision-critical, defer workflow ownership to PM (feature scope) and Architect (system flow).
 
 ---
 

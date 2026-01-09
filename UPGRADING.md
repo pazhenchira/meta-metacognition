@@ -1,13 +1,13 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: January 7, 2026  
+**Date**: January 9, 2026  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
 
 ## Current Version (v2.x)
 
-**Current Engine Version**: 2.0.33  
+**Current Engine Version**: 2.0.34  
 
 ### v2.x Notes (Codex MCP Default + Consistency Guards)
 
@@ -38,6 +38,7 @@
 - **Identity confirmation + doc index**: app orchestrator and subagents must restate role each turn and consult the Documentation Index for ops guidance
 - **Regression discipline**: Developer prevents regressions; Tester validates E2E baseline + new behavior
 - **App Orchestrator overrides**: APP_OVERRIDES block in `.app/AGENTS.md` preserved on upgrade
+- **Document ownership rules**: app_intent/essence/specs/docs have explicit role owners and authoring boundaries
 
 ---
 
@@ -83,7 +84,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.33
+# Should show: 2.0.34
 ```
 
 ### Step 3: Run Upgrade
