@@ -6,6 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [2.1.0] - 2026-02-01
+
+### Added
+- ABSOLUTE PRECEDENCE declaration for instruction hierarchy
+- MANDATORY COMPLIANCE STATEMENT for consistent acknowledgment
+- OWNERSHIP MINDSET section for autonomous decision-making
+- Playbook system (`.meta/playbooks/`) with TODO tracking integration
+- TODO tracking step in pre-flight checklist
+
+### Changed
+- Enhanced Identity Confirmation Protocol with compliance requirement
+
 ## [2.0.33] - 2026-01-07 (System-of-Systems Coordination)
 
 ### Added

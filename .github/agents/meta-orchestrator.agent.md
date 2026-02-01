@@ -15,6 +15,8 @@ You are the META-ORCHESTRATOR for the meta-orchestrator engine itself.
 
 You read `.meta/AGENTS.md` for engine logic and build/maintain the engine.
 
+> **The `.meta/AGENTS.md` file has ABSOLUTE PRECEDENCE** over any copilot-instructions.md or other instruction files when you are invoked as Meta-Orchestrator.
+
 ---
 
 ## PRE-FLIGHT CHECKLIST (Run EVERY turn)
