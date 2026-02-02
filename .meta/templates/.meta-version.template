@@ -1,7 +1,7 @@
 {
-  "meta_orchestrator_version": "2.0.32",
+  "meta_orchestrator_version": "3.0.0",
   "created_date": "2025-12-29",
-  "last_updated": "2025-12-29",
+  "last_updated": "2026-02-02",
   "features": [
     "lego_architecture",
     "unit_tests",
@@ -81,6 +81,16 @@
     "e2e_regression",
     "app_orchestrator_oversight",
     "mcp_role_workspace_isolation",
-    "mcp_config_merge_safe"
+    "mcp_config_merge_safe",
+    "ownership_mindset",
+    "orchestrator_identity",
+    "dispatch_patterns",
+    "sponsor_interaction_protocol",
+    "phase_framework_p1_p5",
+    "dialectic_process",
+    "session_management_protocol",
+    "parallel_orchestration",
+    "playbook_system",
+    "deliberation_8_perspective"
   ]
 }

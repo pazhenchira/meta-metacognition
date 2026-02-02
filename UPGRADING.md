@@ -1,13 +1,81 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: January 9, 2026  
+**Date**: February 2, 2026  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
 
 ---
 
-## Current Version (v2.x)
+## Current Version (v3.x)
 
-**Current Engine Version**: 2.0.34  
+**Current Engine Version**: 3.0.0  
+
+### v3.0.0 Notes (Brain-Framework Integration)
+
+**New Orchestration Protocols** (all additive, no breaking changes):
+
+- **OWNERSHIP MINDSET**: Orchestrators are owners/decision-makers, not assistants. Ask about WHAT (requirements), decide HOW (implementation). No frivolous questions.
+- **ORCHESTRATOR IDENTITY**: Named orchestrators (e.g., `Atlas`, `Nexus`, `Forge`) with identity statements for session continuity
+- **DISPATCH PATTERNS**: Clear routing for request types (simple → complex → decision → blocked)
+- **SPONSOR INTERACTION PROTOCOL**: When to ask vs decide, One Question Rule, multiple choice format
+- **PHASE FRAMEWORK (P.1-P.5)**: High-level abstraction (Understand → Design → Build → Verify → Complete)
+  - Complements existing Phase 0-12 detailed pipeline
+  - Mapping: P.1=Phase 1-4, P.2=Phase 5-6, P.3=Phase 7-9, P.4=Phase 10-11, P.5=Phase 12
+- **DIALECTIC PROCESS**: Thesis-antithesis-synthesis for important decisions
+- **SESSION MANAGEMENT**: State persistence protocol with handoff documentation
+- **PARALLEL ORCHESTRATION**: Workstream spawning for independent components
+- **PLAYBOOK SYSTEM**: Structured checklists in `.meta/playbooks/` with TODO tracking
+- **8-PERSPECTIVE DELIBERATION**: Multi-perspective decision protocol (Skeptic, Pragmatist, Systems Thinker, Operator, Economist, Adversary, Visionary, Customer Advocate)
+
+**New State Fields** (optional, backward compatible):
+```json
+{
+  "orchestrator_name": "[Name]",
+  "active_workstream": "...",
+  "next_action": "..."
+}
+```
+
+**New Files**:
+- `.meta/playbooks/README.md` - Playbook usage guide
+- `.meta/playbooks/new-feature.md` - Feature development checklist
+- `.meta/playbooks/bug-fix.md` - Bug fix checklist
+- `.meta/playbooks/enhancement.md` - Enhancement checklist
+- `.meta/playbooks/deliberation.md` - 8-perspective decision checklist
+
+---
+
+## v2.x → v3.0.0 Upgrade
+
+**Type**: Non-breaking (all changes additive)  
+**Effort**: Minimal (copy new `.meta/` folder)
+
+### Upgrade Steps
+
+1. **Copy new engine**:
+   ```bash
+   cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
+   ```
+
+2. **Verify version**:
+   ```bash
+   cat .meta/VERSION
+   # Should show: 3.0.0
+   ```
+
+3. **(Optional) Update state file** with new fields:
+   ```json
+   {
+     "orchestrator_name": "YourApp-Orchestrator",
+     "active_workstream": null,
+     "next_action": null
+   }
+   ```
+
+**That's it!** All v2.x apps work with v3.0.0 engine immediately.
+
+---
+
+## Previous Version (v2.x)
 
 ### v2.x Notes (Codex MCP Default + Consistency Guards)
 

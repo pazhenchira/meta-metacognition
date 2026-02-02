@@ -6,6 +6,33 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [3.0.0] - 2026-02-02 (Brain-Framework Integration)
+
+### Added
+- **ABSOLUTE PRECEDENCE** declaration for instruction hierarchy
+- **OWNERSHIP MINDSET** section for autonomous decision-making (ask WHAT, decide HOW)
+- **ORCHESTRATOR IDENTITY** naming convention and identity protocol
+- **DISPATCH PATTERNS** (simple, complex, decision, blocked request handling)
+- **SPONSOR INTERACTION PROTOCOL** (when to ask vs decide, One Question Rule)
+- **PHASE FRAMEWORK** (P.1-P.5 high-level progression, complements Phase 0-12)
+- **DIALECTIC PROCESS** (thesis-antithesis-synthesis for decisions)
+- **SESSION MANAGEMENT** protocol (state persistence, session handoff)
+- **PARALLEL ORCHESTRATION** protocol (workstream spawning for independent components)
+- **Playbook system** (`.meta/playbooks/`) with TODO tracking integration
+- **8-perspective deliberation** protocol for significant decisions
+- Playbooks: `deliberation.md`, `new-feature.md`, `bug-fix.md`, `enhancement.md`
+
+### Changed
+- Enhanced Identity Confirmation Protocol with compliance requirement
+- VERSION: 2.0.34 → 3.0.0 (major release for orchestration evolution)
+
+### Upgrade Notes
+- All changes additive (zero breaking changes)
+- New `orchestrator_state.json` optional fields: `orchestrator_name`, `active_workstream`, `next_action`
+- P.1-P.5 is high-level abstraction; Phase 0-12 remains detailed pipeline
+
+---
+
 ## [2.0.34] - 2026-01-09 (Document Ownership + Role Boundaries)
 
 ### Added
