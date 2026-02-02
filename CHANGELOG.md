@@ -6,6 +6,27 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [3.0.1] - 2026-02-02 (Architect Reorganization Workflow)
+
+### Added
+- **REORGANIZATION REQUEST** dispatch pattern for orchestrator-architect collaboration
+- **Reorganization playbook** (`.meta/playbooks/reorganization.md`) with:
+  - Symptom detection table (God Object, tangled deps, unclear ownership)
+  - Architect proposal template (split/merge/extract/relocate)
+  - Deliberation integration for significant reorganizations
+  - Before-parallelization checklist
+- **Architect reorganization workflow** in `architect.md`:
+  - Evaluate current state against LEGO principles
+  - Analyze dependency graph
+  - Propose minimal reorganization
+  - Decision framework (symptom count → confidence → recommendation)
+
+### Changed
+- Updated playbooks README with reorganization.md and deliberation.md
+- Fixed playbook path reference (`_self/` → `.meta/`)
+
+---
+
 ## [3.0.0] - 2026-02-02 (Brain-Framework Integration)
 
 ### Added

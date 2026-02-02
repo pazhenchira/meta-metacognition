@@ -372,6 +372,61 @@ How does this affect data flow?
    - Reference original DD-XXX
    - Document minimal change
 
+### For Reorganization Requests (Orchestrator-Initiated)
+
+When the orchestrator detects structural issues or prepares for parallelization:
+
+1. **Receive Trigger**:
+   - Orchestrator identifies symptoms (God Object, tangled deps, unclear ownership)
+   - Review the symptoms and affected components
+
+2. **Evaluate Current State**:
+   - Map each affected component's responsibilities
+   - Check against LEGO principles (single responsibility, explicit interfaces)
+   - Identify violations and their severity
+
+3. **Analyze Dependency Graph**:
+   - Who depends on whom?
+   - Are there cycles?
+   - What's the coupling level?
+
+4. **Propose Reorganization**:
+   Use the Reorganization Proposal Template (see `.meta/playbooks/reorganization.md`):
+   - **Split**: Component doing >1 thing → multiple focused components
+   - **Merge**: Over-decomposed components → unified component
+   - **Extract**: Shared logic → new shared LEGO
+   - **Relocate**: Misplaced feature → correct component
+
+5. **Assess Impact**:
+   - Breaking changes to interfaces?
+   - Test coverage gaps?
+   - Rollback plan?
+
+6. **Return Proposal to Orchestrator**:
+   - Clear recommendation with rationale
+   - Cite LEGO principles and wisdom
+   - If significant (>3 components): Flag for deliberation
+
+7. **Support Execution**:
+   - Available for clarification during implementation
+   - Review resulting structure
+   - Verify LEGO compliance post-reorganization
+
+### Reorganization Decision Framework
+
+| Symptom Count | Confidence | Recommendation |
+|---------------|------------|----------------|
+| 1 symptom | Low | Document, watch for recurrence |
+| 2-3 symptoms | Medium | Propose targeted reorganization |
+| 4+ symptoms | High | Propose comprehensive reorganization + deliberation |
+
+### Reorganization Principles
+
+- **Minimal Change**: Smallest reorganization that addresses symptoms
+- **Incremental**: Prefer multiple small changes over one big refactor
+- **Testable**: Every reorganization must maintain or improve test coverage
+- **Reversible**: Have a rollback plan for significant changes
+
 ---
 
 ## Architect Principles

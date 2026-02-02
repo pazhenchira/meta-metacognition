@@ -1927,6 +1927,32 @@ User asks "should we X or Y?" or faces a tradeoff.
 4. Present with tradeoffs
 ```
 
+### Reorganization Request
+Complexity growing, boundaries unclear, or preparing for parallelization.
+```
+1. Orchestrator: Identify symptoms (God Object, tangled dependencies, unclear ownership)
+2. Architect: Evaluate current structure against LEGO principles
+3. Architect: Propose reorganization (splits, merges, extractions)
+4. Deliberation: Run 8-perspective review if significant (>3 components affected)
+5. Orchestrator: Approve/modify proposal
+6. Developer: Execute reorganization (with tests)
+7. Tester: Validate no regressions
+```
+
+**When to Trigger**:
+- Before parallelization (ensure clean boundaries)
+- After antipattern detection (God Object, Feature Envy)
+- When adding features reveals unclear ownership
+- Periodic health check (every 5-10 features)
+
+**Reorganization Types**:
+| Type | When | Example |
+|------|------|---------|
+| **Split** | Component doing >1 thing | `UserService` → `AuthService` + `ProfileService` |
+| **Merge** | Over-decomposition, excessive coordination | `ValidationA` + `ValidationB` → `Validator` |
+| **Extract** | Shared logic duplicated | Common code → `SharedUtils` LEGO |
+| **Relocate** | Feature in wrong component | Move `calculateTax` from `Order` to `Pricing` |
+
 ### Blocked/Unclear
 Request is ambiguous or you're stuck.
 ```
