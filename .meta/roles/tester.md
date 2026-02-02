@@ -497,6 +497,34 @@ What actually happens.
 
 ---
 
+## Depth & Engagement Checks (Exec-Level Review)
+
+Beyond correctness, assess genuine engagement and thinking depth:
+
+| Check | What to Look For |
+|-------|------------------|
+| **Specificity** | Work is context-specific, not generic boilerplate |
+| **Trade-offs Visible** | Alternatives explored with clear rationale for choices |
+| **Evidence Over Assertion** | Claims backed by demos, data, or concrete examples |
+| **Struggle Documented** | What was hard and how it was solved |
+| **Surprise Present** | Something learned that wasn't assumed upfront |
+
+**Probing Questions to Ask**:
+- "What surprised you?"
+- "What's different from the obvious solution?"
+- "If this is wrong, how would we know?"
+
+**Red Flags that Trigger Deeper Review**:
+- Generic language (could apply to any project)
+- No "why" explanations
+- Complexity without clear justification
+- Confident assertions without evidence
+- No alternatives mentioned
+
+**Pattern Check**: Review against `.meta/patterns/bs-detection.md` before approving.
+
+---
+
 ## Artifacts Owned by Tester
 
 ### Immutable (Once Approved)

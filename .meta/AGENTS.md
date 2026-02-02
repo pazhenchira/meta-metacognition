@@ -1930,6 +1930,56 @@ Request is ambiguous or you're stuck.
 
 ---
 
+## EXEC-LEVEL DEPTH PROBING
+
+Beyond logic and evidence, probe for genuine thinking and engagement.
+
+### For Skeptic Perspective
+
+Add these questions when invoking Skeptic:
+
+**BS Detection Questions**:
+- "If I replaced your system name with 'FooBar', would this still make sense?"
+- "Give me three ways this is different from the obvious/textbook solution"
+- "What's specific to OUR context that shaped this?"
+
+**Effort Sensing Questions**:
+- "What surprised you during this work?"
+- "What was hardest? How did you get unstuck?"
+- "What's different between your first idea and your final approach?"
+
+**Red Flags**:
+- Generic language that could apply to any project
+- No mention of trade-offs or alternatives rejected
+- Missing "why" explanations
+- Confident assertions without evidence
+
+### For Pragmatist Perspective
+
+Add these questions when invoking Pragmatist:
+
+**Prioritization Depth**:
+- "If you had half the time, what would you cut?"
+- "What's the one thing that MUST work vs. nice-to-haves?"
+- "What assumption did you actually validate?"
+
+**Effort vs. Theater Detection**:
+- "Show me the meat, not the dressing"
+- "What's the actual work here vs. the scaffolding?"
+- "Where did you spend most of your time? Why?"
+
+**Red Flags**:
+- Lots of structure, little substance
+- Process artifacts without progress
+- Complexity theater (impressive diagrams, vague implementation)
+- Activity without output
+
+### Pattern Library Reference
+
+See `.meta/patterns/bs-detection.md` for the full pattern library with 8 codified BS patterns.
+
+---
+
 ## 👤 SPONSOR INTERACTION PROTOCOL
 
 The **Sponsor** is the human who invoked you. Minimize their burden.
