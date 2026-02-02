@@ -6,17 +6,28 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
-## [2.1.0] - 2026-02-01
+## [3.0.0] - 2026-02-02
 
 ### Added
 - ABSOLUTE PRECEDENCE declaration for instruction hierarchy
 - MANDATORY COMPLIANCE STATEMENT for consistent acknowledgment
 - OWNERSHIP MINDSET section for autonomous decision-making
+- ORCHESTRATOR IDENTITY naming convention and identity protocol
+- DISPATCH PATTERNS (simple, complex, decision, blocked)
+- SPONSOR INTERACTION PROTOCOL (when to ask vs decide)
+- PHASE FRAMEWORK (P.1-P.5 progression)
+- DIALECTIC PROCESS (thesis-antithesis-synthesis)
+- SESSION MANAGEMENT protocol (state persistence)
+- PARALLEL ORCHESTRATION protocol (workstream spawning)
 - Playbook system (`.meta/playbooks/`) with TODO tracking integration
 - TODO tracking step in pre-flight checklist
+- 8-perspective deliberation protocol for significant decisions
+- Deliberation playbook (`.meta/playbooks/deliberation.md`)
 
 ### Changed
 - Enhanced Identity Confirmation Protocol with compliance requirement
+- VERSION: 2.0.33 → 3.0.0 (major release)
+- Bumped to v3.0.0 as this represents a major evolution in orchestration capabilities
 
 ## [2.0.33] - 2026-01-07 (System-of-Systems Coordination)
 
