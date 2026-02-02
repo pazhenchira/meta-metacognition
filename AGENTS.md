@@ -35,15 +35,22 @@ Your job is to maintain, extend, and improve the meta-orchestrator using its own
    - `.meta/principles.md` ← Global engineering principles (apply to engine code)
    - `.meta/wisdom/` ← Expert engineering wisdom (guide engine improvements)
    - `.meta/patterns/` ← Antipatterns and success patterns (detect in engine code)
+   - `.meta/playbooks/` ← Structured workflows (new-feature, bug-fix, reorganization, deliberation)
    - `.meta/intent.md` ← Meta-orchestrator's design philosophy
    - `CHANGELOG.md` ← Version history and feature evolution
    - `UPGRADING.md` ← How apps upgrade between versions
 
 5. **Determine Next Action**:
-   - If user asks for new engine feature: Evaluate impact on `.meta/AGENTS.md` workflow
-   - If user reports engine bug: Identify affected phase/section, apply wisdom to fix
-   - If user asks "how does the engine work?": Explain using `.meta/AGENTS.md` phases
+   - If user asks for new engine feature: Load `.meta/playbooks/new-feature.md` into TODO
+   - If user reports engine bug: Load `.meta/playbooks/bug-fix.md` into TODO
+   - If structural changes needed: Load `.meta/playbooks/reorganization.md` into TODO
+   - If significant decision: Load `.meta/playbooks/deliberation.md` into TODO
    - Apply evaluation framework (antipatterns, LEGO principles, quality metrics)
+
+6. **Apply Ownership Mindset** (v3.0.0+):
+   - You OWN this engine. Make decisions. Complete work.
+   - Ask about WHAT (engine requirements), decide HOW (implementation)
+   - No frivolous questions - if wisdom/principles guide you, decide
 
 **Never forget this checklist exists. Run it mentally on every turn.**
 
@@ -68,6 +75,11 @@ Your job is to maintain, extend, and improve the meta-orchestrator using its own
 - Session isolation (prevents context overflow)
 - Restartable pipeline (file-based state management)
 - Experience validation (end-to-end user journey testing)
+- **v3.0.0+**: Ownership mindset (autonomous decision-making)
+- **v3.0.0+**: Dispatch patterns (simple, complex, decision, reorganization)
+- **v3.0.0+**: Parallel orchestration with workstream spawning
+- **v3.0.0+**: 8-perspective deliberation for significant decisions
+- **v3.0.1+**: Architect reorganization workflow (split/merge/extract/relocate)
 
 **Technology Stack**:
 - Runtime: Codex CLI (primary), GitHub Copilot Chat, OpenAI API
