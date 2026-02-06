@@ -6,6 +6,30 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## v3.1.0 - Quality Enforcement & Behavioral Economics (2026-02-06)
+
+### Anti-Fabrication
+- **Evidence Manifest requirement**: All roles must provide structured evidence (FILES_CREATED, FILES_MODIFIED, COMMANDS_RUN, TESTS_PASSED)
+- **Fabrication Antipattern**: New antipattern documented with symptoms, root cause, prevention
+- **Verification posture**: "An assertion without evidence is not completion. It is a claim."
+
+### System Prompt Override
+- **All agent files** now include system prompt override to counter brevity-optimization
+- **All role files** include override block
+- **All templates** propagate override to generated apps
+- **Root cause addressed**: Host system prompts that instruct "be concise" cause agents to fabricate and skip protocol
+
+### Behavioral Economics Wisdom
+- **New wisdom source**: `behavioral_economics_wisdom.md` 
+- Sources: Levitt (Freakonomics), Ariely (Predictably Irrational), Thaler (Nudge), Meadows (Thinking in Systems), Goodhart
+- Key principles: Goodhart's Law, Revealed Preferences, Unintended Consequences, Incentive-Compatible Design, Moral Hazard
+- 7 key questions for incentive analysis
+
+### Source
+Improvements adopted from brain-framework v0.7.1 quality enforcement cycle.
+
+---
+
 ## [3.0.1] - 2026-02-02 (Architect Reorganization Workflow)
 
 ### Added

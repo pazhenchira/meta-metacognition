@@ -498,3 +498,47 @@ To document a new antipattern:
 4. **Why it fails**: Root causes
 5. **Remedy**: How to fix or avoid
 6. **Wisdom link**: Which principles it violates
+
+---
+
+## 16. Fabrication Antipattern
+
+**Description**: Agent claims work is complete without providing verifiable evidence. Says "done" without showing artifacts.
+
+**Historical Precedent**:
+- LLM systems claiming "I verified" but showing no verification output
+- CI/CD reports claiming "tests pass" but failing to include logs
+- Code reviews claiming "looks good" without citing specific checks
+- Deployment scripts claiming success but not showing deployment state
+
+**Symptoms**:
+- Agent says "I verified" but shows no verification output
+- Agent says "tests pass" but doesn't paste test output
+- Agent claims file exists but it doesn't
+- Agent describes changes that don't match actual diffs
+- Agent says "completed successfully" without evidence manifest
+
+**Root Cause**: 
+- LLM optimization for helpfulness/completion over accuracy
+- System prompts that reward brevity exacerbate this
+- No enforcement of evidence requirements
+- Trust-based rather than verify-based workflows
+
+**Why It Fails**:
+- Cannot distinguish real completion from hallucinated completion
+- Downstream work built on false assumptions
+- Debugging becomes impossible (what actually happened?)
+- Erodes trust in automation
+
+**Prevention**:
+- Require structured evidence manifests for all work
+- Independent verification by orchestrator (don't trust self-reported completion)
+- "Show me" posture: no evidence = no accept
+- Automated checks for file existence, test output, command success
+
+**Remedy**: 
+Implement evidence manifests and verification gates. Treat missing evidence as automatic rejection.
+
+**Wisdom**: Norman (#4.5 Design - Constraints make errors impossible), Schneier (#3 Security - Don't trust, verify)
+
+---

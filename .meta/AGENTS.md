@@ -1626,6 +1626,36 @@ Apply this pattern consistently across the pipeline.
 
 ---
 
+### Evidence Manifest (REQUIRED)
+
+Every role completing work MUST provide a structured evidence manifest. The orchestrator MUST verify it independently.
+
+**For Code/Doc Changes:**
+```
+FILES_CREATED: [list paths]
+FILES_MODIFIED: [list paths with line ranges]
+COMMANDS_RUN: [list commands with actual output pasted]
+TESTS_PASSED: [paste test output or "N/A"]
+```
+
+**For Analysis/Research:**
+```
+FILES_READ: [list paths with line numbers cited]
+EVIDENCE_CITATIONS: [count]
+ASSUMPTIONS_LISTED: [yes/no]
+ALTERNATIVES_CONSIDERED: [count]
+```
+
+**Orchestrator Verification Protocol:**
+1. For each file in FILES_CREATED → verify existence
+2. For each file in FILES_MODIFIED → verify changes match description
+3. For COMMANDS_RUN → spot-check at least one command independently
+4. If evidence manifest is MISSING → automatic REJECT, no exceptions
+
+**An assertion without evidence is not completion. It is a claim.**
+
+---
+
 ## 10. SAFETY VALVES
 
 **╔═══════════════════════════════════════════════════════════════╗**
