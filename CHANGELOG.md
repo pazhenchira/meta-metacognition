@@ -6,6 +6,43 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [3.1.0] - 2026-02-15 (Quality Enforcement & Depth Probing)
+
+### Added
+- **Command Verification Pattern** (`.meta/patterns/command_verification.md`):
+  - Three-layer verification: Developer evidence → Reviewer re-run → Auto-REJECT rules
+  - Exit code + verbatim output required for ALL commands
+  - Self-reported "Pass" without proof = automatic REJECT
+  - Wisdom applied: Thompson #5, Kernighan (debugging), KISS
+- **BS Detection Pattern Library** (`.meta/patterns/bs-detection.md`):
+  - 8 codified patterns: Generic Boilerplate, Complexity Theater, Cargo Cult Design, Activity Without Output, Missing "Why", Shallow Iteration, Premature Certainty, Process Over Progress
+  - Detection heuristics and probing questions for each
+- **Behavioral Economics Wisdom** (`.meta/wisdom/behavioral_economics_wisdom.md`):
+  - Sources: Levitt (Freakonomics), Ariely (Predictably Irrational), Thaler (Nudge), Meadows (Thinking in Systems), Goodhart
+  - Key principles: Goodhart's Law, Revealed Preferences, Unintended Consequences, Incentive-Compatible Design, Moral Hazard
+  - 7 key questions for incentive analysis
+- **Fabrication Antipattern** (#16 in antipatterns.md):
+  - Symptoms, root cause, prevention, and remedy for agent fabrication
+  - Wisdom: Norman (constraints), Schneier (don't trust, verify)
+- **Evidence Manifest requirement** in `.meta/AGENTS.md`:
+  - Structured evidence format for code/doc changes and analysis/research
+  - Orchestrator verification protocol (file existence, change matching, command spot-checks)
+  - "An assertion without evidence is not completion. It is a claim."
+- **Exec-Level Depth Probing** in `.meta/AGENTS.md`:
+  - Skeptic perspective: BS detection questions, effort sensing questions
+  - Pragmatist perspective: prioritization depth, effort vs theater detection
+  - Red flags and pattern library reference
+- **Tester Depth & Engagement Checks** in `tester.md`:
+  - Specificity, trade-offs, evidence, struggle, surprise checks
+  - Probing questions and red flags for deeper review
+- **Command Verification** step in agent pre-flight checklists
+
+### Source
+Content adopted from three feature branches (`feat/command-verification-protocol`, `feat/v3.1-quality-enforcement`, `v3-improvements`).
+System prompt override blocks and destructive deletions were rejected as misaligned with engine principles.
+
+---
+
 ## [3.0.1] - 2026-02-02 (Architect Reorganization Workflow)
 
 ### Added

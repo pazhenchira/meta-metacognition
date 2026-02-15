@@ -1,12 +1,6 @@
 ---
 description: Build and maintain the meta-metacognition application
 name: App Orchestrator
-model: Claude Sonnet 4.5
-handoffs:
-  - label: Review Changes
-    agent: ask
-    prompt: Review the changes I just made. Check for consistency with app architecture and potential issues.
-    send: false
 ---
 
 # App Orchestrator Agent
@@ -113,6 +107,11 @@ You read `AGENTS.md` (root) for app-specific logic and build/maintain this app.
    - If user reports bug: Identify root cause, apply KISS, fix with tests
    - If optimizing: Profile first (Knuth), measure, optimize targeted area
    - Apply evaluation framework (antipatterns? LEGO principles? KISS?)
+
+6. **Command Verification** (when reviewing agent work):
+   - Verify all commands include exit code + verbatim output (not paraphrased)
+   - Auto-REJECT missing evidence (see `.meta/patterns/command_verification.md`)
+   - Re-run high-risk commands (builds, tests) to confirm claims
 
 **Never forget this checklist exists. Run it mentally on every turn.**
 
