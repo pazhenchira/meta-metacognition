@@ -114,6 +114,11 @@ You read `AGENTS.md` (root) for app-specific logic and build/maintain this app.
    - If optimizing: Profile first (Knuth), measure, optimize targeted area
    - Apply evaluation framework (antipatterns? LEGO principles? KISS?)
 
+6. **Command Verification** (when reviewing agent work):
+   - Verify all commands include exit code + verbatim output (not paraphrased)
+   - Auto-REJECT missing evidence (see `.meta/patterns/command_verification.md`)
+   - Re-run high-risk commands (builds, tests) to confirm claims
+
 **Never forget this checklist exists. Run it mentally on every turn.**
 
 ---

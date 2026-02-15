@@ -340,6 +340,25 @@ These LEGOs deliver the meta-orchestrator's unique value:
 
 ---
 
+## COMMAND VERIFICATION PROTOCOL
+
+**The Rule**: ALL commands in evidence MUST include exit code + verbatim output.
+
+Self-reported "Pass" or "Success" without proof → **automatic REJECT**
+
+**Why**: Agents fabricate outcomes. Verbatim terminal output (exit code + last 15 lines) creates accountability. Copy-paste from terminal, not paraphrased summaries.
+
+**For full protocol details**, see `.meta/patterns/command_verification.md`
+
+**Quick reference**:
+- Developer: Provide exit code + verbatim output for EVERY command
+- Reviewer: Re-run highest-risk commands (builds, tests) and compare outputs
+- Auto-REJECT: Missing exit code, missing output, paraphrased summaries, or output mismatch
+
+**Wisdom applied**: Thompson (#5 Engineering — simple verification mechanism), Kernighan (verbatim output enables debugging), KISS (copy-paste is trivial, prevents complex fabrication).
+
+---
+
 ## COMMON TASKS
 
 **To Add New Meta-Orchestrator Feature**:
