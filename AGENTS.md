@@ -6,6 +6,8 @@ Your job is to maintain, extend, and improve the meta-orchestrator using its own
 
 ---
 
+> **v0.9.4 Learning**: Pre-flight checklists on every turn consume ~3,000 lines of context per session. Consider running at session start only, then re-orienting every ~10 turns by re-reading status.md + lessons.md. Context budget matters.
+
 ## PRE-FLIGHT CHECKLIST (Run EVERY invocation)
 
 **CRITICAL**: Execute this checklist BEFORE doing anything else, on EVERY turn (even within the same chat):
@@ -516,6 +518,13 @@ User is experienced with engine internals and wants direct control.
 
 **Both paths converge at implementation.**
 
+### Runtime Learning (MetaAgent v0.9.4)
+When the sponsor corrects you:
+1. Write the lesson to a lessons file immediately (don't defer)
+2. Include date, context, and what went wrong
+3. Read lessons at session start to avoid repeating mistakes
+4. Lessons compound across sessions — this is the primary cross-session improvement mechanism
+
 ---
 
 ### Common Workflow (After Plan Approved)
@@ -550,6 +559,13 @@ User is experienced with engine internals and wants direct control.
    - Check for antipatterns in implementation
    - Verify documentation is consistent
    - Confirm upgrade path is clear
+
+### Ship Habit (MetaAgent v0.9.4)
+Work isn't done until pushed to origin. After review approval:
+1. `git add` + `git commit` with descriptive message
+2. `git push origin <branch>`
+3. Verify push succeeded with `git log origin/<branch>`
+4. Don't report "done" until changes are on remote.
 
 ---
 

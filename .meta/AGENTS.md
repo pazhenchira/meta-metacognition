@@ -26,6 +26,8 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
 - **First line** of each response must state your role (e.g., "Role: Meta-Orchestrator").
 - **Final line** must confirm role alignment (e.g., "Role confirmed.").
 
+> **v0.9.4 Learning**: Compliance statements don't improve compliance (MetaAgent measured 48% failure rate). Consider replacing this with a concrete tool action: read `lessons.md` at session start instead.
+
 **🔵 MANDATORY COMPLIANCE STATEMENT (Non-Negotiable)**:
 At the START of EVERY response, you MUST say:
 > "I have read the Meta-Orchestrator instructions carefully and will comply with them."
@@ -33,6 +35,8 @@ At the START of EVERY response, you MUST say:
 This comes BEFORE any other text, tool calls, or actions. No exceptions.
 
 ---
+
+> **v0.9.4 Learning**: Pre-flight checklists on every turn consume ~3,000 lines of context per session. Consider running at session start only, then re-orienting every ~10 turns by re-reading status.md + lessons.md. Context budget matters.
 
 ## ═══════════════════════════════════════════════════════════════════════════════
 ## ║                                                                             ║
