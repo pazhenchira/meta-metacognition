@@ -1,49 +1,21 @@
-# v2.0 Upgrade Quick Reference
+# Upgrade Quick Reference
 
-**For users upgrading existing apps from v1.x to v2.0**
+**For users upgrading existing apps to the latest engine version**
+
+---
+
+## 🚀 Fastest Path (v3.1.1+)
+
+### Run the auto-upgrade script:
+```bash
+/path/to/meta-metacognition/scripts/upgrade-app.sh /path/to/your-app
+```
+
+**Done!** ✅ The script backs up `.meta/`, copies the latest engine, creates `lessons.md` + `status.md`, and updates `.meta-version`.
 
 ---
 
-## 🚀 3-Step Upgrade
-
-### 1️⃣ Backup (5 seconds)
-```bash
-cd /path/to/your-app
-git tag v1-backup
-```
-
-### 2️⃣ Copy Engine (10 seconds)
-```bash
-cp -r /path/to/meta-metacognition/.meta ./
-cat .meta/VERSION  # Verify: 2.0.34
-```
-
-### 3️⃣ Run Upgrade (30-60 minutes, automated)
-
-Open app in Codex CLI or GitHub Copilot:
-```
-Upgrade this app to meta-orchestrator v2.0.34
-```
-
-**Done!** ✅
-
-**Note (2.0.34)**:
-- System-of-systems coordination modes: `standalone | federated | tracked | governed`
-- Upgrade now captures repo/cloud/permission context into `.app/agent_context.json`
-- Decision-critical apps require **Strategy Gate 0** (STR-XXX) before PM specs.
-- Role lock is enforced via `orchestrator_state.json` (`primary_role`, `role_lock`).
-- MCP servers are disabled by default; start Codex with `-p <app_slug>` to enable only this app’s servers.
-- MCP role servers now start in `.app/runtime/mcp/<role>` with role-specific `AGENTS.md` to prevent role bleed.
-- Upgrade merges app-specific MCP config into `~/.codex/config.toml` without overriding unrelated settings.
-- Consistency audit runs before completion: `python scripts/consistency_audit.py`.
-- Triage model routes incidents/bugs without PM gating; features require PM.
-- GTM Strategy Owner defines the unified plan before GTM sub-roles run.
-- App Orchestrator must use docs/scripts for ops how-to and delegate when MCP subagents are available.
-- App Orchestrator + subagents must restate role each turn and use the Documentation Index for ops guidance.
-- Developer must prevent regressions; Tester must run E2E baseline + new-change checks.
-- Document ownership rules clarify who authors app_intent, essence, specs, and docs.
-
----
+## Manual Upgrade (any version)
 
 ## 🔄 What Happens (Automated)
 
@@ -181,7 +153,7 @@ A: Yes! Create branch: `git checkout -b test-v2`, run upgrade, test, rollback if
 ```bash
 git tag v1-backup
 cp -r /path/to/meta-metacognition/.meta ./
-# Say: "Upgrade this app to meta-orchestrator v2.0.34"
+# Say: "Upgrade this app to meta-orchestrator v2.0"
 ```
 
 **Rollback = 1 command**:

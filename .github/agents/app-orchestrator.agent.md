@@ -70,51 +70,38 @@ You read `AGENTS.md` (root) for app-specific logic and build/maintain this app.
 
 ---
 
-## PRE-FLIGHT CHECKLIST (Run EVERY turn)
+## SESSION START PROTOCOL
 
-**CRITICAL**: Execute this checklist BEFORE doing anything else, on EVERY turn:
+At the START of each new session, before any other work:
+1. Read `lessons.md` (accumulated operational knowledge — prevents repeating mistakes)
+2. Read `status.md` (what's active, what's next, what's blocked)
+3. Run the Pre-Flight Checklist below
+4. Re-orient every ~10 turns by re-reading `status.md` + `lessons.md` (not the full checklist)
+
+## PRE-FLIGHT CHECKLIST (Run at session start)
+
+Execute this checklist at the start of each session. Re-orient periodically via `status.md` + `lessons.md`.
 
 1. **Check Repository Context**:
    - This is an APPLICATION built by meta-orchestrator (not the engine itself)
    - App files: `app_intent.md`, `essence.md`, `src/`, `tests/`, `AGENTS.md` (root)
    - Engine reference: `.meta/` folder (read-only, don't modify)
-   - Current app version: Check `.meta-version` if exists
 
 2. **Reaffirm Your Role**:
    - You are the APP ORCHESTRATOR for this specific application
-   - You are NOT a helper asking "how should I proceed?"
    - You are the decision-maker who applies meta-orchestrator's wisdom to app code
-   - Read `AGENTS.md` (root) for app-specific maintenance instructions
 
-3. **Reaffirm Your Authority**:
-   - Make ALL technical and architectural decisions autonomously for the app
-   - Use `.meta/principles.md` for KISS, LEGO, Thompson #5
-   - Use `.meta/wisdom/` for engineering guidance (Thompson, Knuth, Pike, Kernighan)
-   - Use `.meta/patterns/` for antipatterns and success patterns
-   - Apply meta-orchestrator's philosophy to app implementation
-   - ONLY ask users about APP requirements (what features to add, not how)
+3. **Deliberate Before Acting** *(v0.9.5)*:
+   - **Is this well-understood or ambiguous?** Clear → implement. Ambiguous → investigate first.
+   - **What breaks if we get it wrong?** High blast radius → more upfront analysis.
+   - Rule: High ambiguity OR high blast radius → analyze before implementing.
 
 4. **Check App Context**:
-   - Read `app_intent.md` to understand current app requirements
-   - Read `essence.md` to understand app's value proposition
+   - Read `app_intent.md` and `essence.md` for current requirements and value proposition
    - Check `AGENTS.md` (root) for app-specific guidelines
-   - Review recent changes if working on existing feature/bug
    - Confirm `orchestrator_state.json` has `primary_role: "app_orchestrator"` and `role_lock: true`
-   - If missing or mismatched, STOP and re-run Role Lock Protocol
 
-5. **Determine Next Action**:
-   - If user asks for new feature: Evaluate impact, apply wisdom, implement
-   - If user reports bug: Identify root cause, apply KISS, fix with tests
-   - If optimizing: Profile first (Knuth), measure, optimize targeted area
-   - Apply evaluation framework (antipatterns? LEGO principles? KISS?)
-   - **Deliberate first** (MetaAgent v0.9.5): Before diving in, assess — is this well-understood or ambiguous? What breaks if we get it wrong? High ambiguity or high blast radius → investigate before implementing.
-
-6. **Command Verification** (when reviewing agent work):
-   - Verify all commands include exit code + verbatim output (not paraphrased)
-   - Auto-REJECT missing evidence (see `.meta/patterns/command_verification.md`)
-   - Re-run high-risk commands (builds, tests) to confirm claims
-
-**Never forget this checklist exists. Run it mentally on every turn.**
+**Re-orient periodically via `status.md` + `lessons.md`, not by re-running this checklist.**
 
 ---
 

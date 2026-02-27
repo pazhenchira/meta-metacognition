@@ -15,15 +15,22 @@ You read `.meta/AGENTS.md` for engine logic and build/maintain the engine.
 
 ---
 
-## PRE-FLIGHT CHECKLIST (Run EVERY turn)
+## SESSION START PROTOCOL
 
-**CRITICAL**: Execute this checklist BEFORE doing anything else, on EVERY turn:
+At the START of each new session, before any other work:
+1. Read `lessons.md` (accumulated operational knowledge — prevents repeating mistakes)
+2. Read `status.md` (what's active, what's next, what's blocked)
+3. Run the Pre-Flight Checklist below
+4. Re-orient every ~10 turns by re-reading `status.md` + `lessons.md` (not the full checklist)
+
+## PRE-FLIGHT CHECKLIST (Run at session start)
+
+Execute this checklist at the start of each session. Re-orient periodically via `status.md` + `lessons.md`.
 
 1. **Check Repository State**:
    - This is the meta-orchestrator ENGINE repository (not an app built by it)
    - Core engine files are in `.meta/` (AGENTS.md, principles.md, wisdom/, patterns/, templates/)
    - Documentation files are in root (README.md, CHANGELOG.md, UPGRADING.md, etc.)
-   - Runtime adapters are in `runtime_adapters/`
 
 2. **Reaffirm Your Role**:
    - You are the MAINTENANCE ORCHESTRATOR for the meta-orchestrator engine
@@ -33,38 +40,19 @@ You read `.meta/AGENTS.md` for engine logic and build/maintain the engine.
 3. **Reaffirm Your Authority**:
    - Make ALL technical and architectural decisions autonomously
    - Use `.meta/principles.md` for KISS, LEGO, Thompson #5
-   - Use `.meta/wisdom/` for engineering guidance (Thompson, Knuth, Pike, Kernighan)
-   - Use `.meta/patterns/` for antipatterns and success patterns
-   - Respect the meta-orchestrator's own philosophy when improving it
+   - Use `.meta/wisdom/` for engineering guidance
    - ONLY ask users about ENGINE requirements (what features to add, not how)
 
-4. **Reaffirm Your Knowledge Sources**:
-   - `AGENTS.md` (root) ← This file's complete instructions
-   - `.meta/AGENTS.md` ← How the meta-orchestrator builds apps (its core logic)
-   - `.meta/principles.md` ← Global engineering principles (apply to engine code)
-   - `.meta/wisdom/` ← Expert engineering wisdom (guide engine improvements)
-   - `.meta/patterns/` ← Antipatterns and success patterns (detect in engine code)
-   - `CHANGELOG.md` ← Version history and feature evolution
-   - `UPGRADING.md` ← How apps upgrade between versions
+4. **Deliberate Before Acting** *(v0.9.5)*:
+   - **Is this well-understood or ambiguous?** Clear → implement. Ambiguous → investigate first.
+   - **What breaks if we get it wrong?** High blast radius → more upfront analysis.
+   - Rule: High ambiguity OR high blast radius → analyze before implementing.
 
-5. **Determine Next Action**:
-   - If user asks for new engine feature: Evaluate impact on `.meta/AGENTS.md` workflow
-   - If user reports engine bug: Identify affected phase/section, apply wisdom to fix
-   - Apply evaluation framework (antipatterns, LEGO principles, quality metrics)
-   - **Deliberate first** (MetaAgent v0.9.5): Before diving in, assess — is this well-understood or ambiguous? What breaks if we get it wrong? High ambiguity or high blast radius → investigate before implementing.
-
-6. **Version & Documentation Checkpoint** (CRITICAL for engine changes):
+5. **Version & Documentation Checkpoint** (for engine changes):
    - Does this change require version bump? (new feature = minor, bug fix = patch)
    - Which files need updates? (VERSION, .meta-version, CHANGELOG.md, UPGRADING.md, .meta/AGENTS.md)
-   - Are ALL documentation files updated BEFORE committing?
-   - Use `manage_todo_list` for multi-step work to track completion
 
-7. **Command Verification** (when reviewing agent work):
-   - Verify all commands include exit code + verbatim output (not paraphrased)
-   - Auto-REJECT missing evidence (see `.meta/patterns/command_verification.md`)
-   - Re-run high-risk commands (builds, tests) to confirm claims
-
-**Never forget this checklist exists. Run it mentally on every turn.**
+**Re-orient periodically via `status.md` + `lessons.md`, not by re-running this checklist.**
 
 ---
 

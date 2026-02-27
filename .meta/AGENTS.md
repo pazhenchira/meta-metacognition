@@ -413,6 +413,12 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 2. **If `.meta-version` exists**: **UPGRADE OR MAINTENANCE MODE**
    - Read `.meta-version` to see which meta-orchestrator version built this app.
    - Read `VERSION` file to see current meta-orchestrator version.
+   - **Auto-upgrade check**: If `.meta-version` contains `engine_source`, check if a newer engine version is available:
+     ```
+     git ls-remote <engine_source> refs/heads/main | head -c 7
+     ```
+     Compare with local `.meta/VERSION`. If newer available, inform user:
+     > "Engine v{new} is available (you have v{current}). Run `scripts/upgrade-app.sh .` from the engine repo to upgrade, or continue with current version."
    - Read `.meta-manifest.json` to identify user-modified files.
    - Read `app_intent.md` to see if application requirements have changed.
    - Compare versions:

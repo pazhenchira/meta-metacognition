@@ -1,7 +1,17 @@
 # Meta-Orchestrator Version Management & App Upgrading
 
-**Date**: December 29, 2025  
+**Date**: February 27, 2026  
 **Purpose**: Enable safe upgrading of apps built with older meta-orchestrator versions
+
+---
+
+## v3.1.1 Auto-Upgrade (Recommended)
+
+```bash
+/path/to/meta-metacognition/scripts/upgrade-app.sh /path/to/your-app
+```
+
+See root `UPGRADING.md` for full v3.x upgrade details.
 
 ---
 

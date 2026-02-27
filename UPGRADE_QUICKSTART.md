@@ -1,33 +1,21 @@
-# v2.0 Upgrade Quick Reference
+# Upgrade Quick Reference
 
-**For users upgrading existing apps from v1.x to v2.0**
+**For users upgrading existing apps to the latest engine version**
+
+---
+
+## 🚀 Fastest Path (v3.1.1+)
+
+### Run the auto-upgrade script:
+```bash
+/path/to/meta-metacognition/scripts/upgrade-app.sh /path/to/your-app
+```
+
+**Done!** ✅ The script backs up `.meta/`, copies the latest engine, creates `lessons.md` + `status.md`, and updates `.meta-version`.
 
 ---
 
-## 🚀 3-Step Upgrade
-
-### 1️⃣ Backup (5 seconds)
-```bash
-cd /path/to/your-app
-git tag v1-backup
-```
-
-### 2️⃣ Copy Engine (10 seconds)
-```bash
-cp -r /path/to/meta-metacognition/.meta ./
-cat .meta/VERSION  # Verify: 2.0.34
-```
-
-### 3️⃣ Run Upgrade (30-60 minutes, automated)
-
-Open app in Codex CLI or GitHub Copilot:
-```
-Upgrade this app to meta-orchestrator v2.0.34
-```
-
-**Done!** ✅
-
----
+## Manual Upgrade (any version)
 
 ## 🔄 What Happens (Automated)
 

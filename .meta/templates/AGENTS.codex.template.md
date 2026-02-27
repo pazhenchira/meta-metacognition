@@ -24,18 +24,19 @@ This file provides instructions for OpenAI Codex CLI when working on this applic
 4. If missing or mismatched, STOP and re-run Role Lock Protocol.
 5. If you detect drift, stop and re-read `.app/AGENTS.md` before continuing.
 
-## RE-ORIENTATION LOOP (MANDATORY)
+## SESSION START PROTOCOL
 
-After EVERY command/tool invocation (terminal, MCP, web, etc.):
-1. Reaffirm your role in one sentence.
-2. Re-read `.app/AGENTS.md` and `.app/wisdom/core_principles.md`.
-3. Re-check `role_lock` and any step readiness.
-4. If drift or mismatch is detected, STOP and re-run the role lock protocol.
+At the START of each new session, before any other work:
+1. Read `lessons.md` (accumulated operational knowledge — prevents repeating mistakes)
+2. Read `status.md` (what's active, what's next, what's blocked)
+3. Re-orient every ~10 turns by re-reading `status.md` + `lessons.md`
 
-## IDENTITY CONFIRMATION PROTOCOL (MANDATORY)
+## DELIBERATION PROTOCOL *(v0.9.5)*
 
-- **First line** of each response must state your role (e.g., "Role: App Orchestrator").
-- **Final line** must confirm role alignment (e.g., "Role confirmed.").
+Before implementing any change, assess:
+- **Is this well-understood or ambiguous?** Clear → implement. Ambiguous → investigate first.
+- **What breaks if we get it wrong?** High blast radius → more upfront analysis.
+- Rule: High ambiguity OR high blast radius → analyze before implementing.
 
 ## Sponsor Interface (Human Owner)
 
