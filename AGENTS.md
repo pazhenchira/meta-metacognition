@@ -6,11 +6,17 @@ Your job is to maintain, extend, and improve the meta-orchestrator using its own
 
 ---
 
-> **v0.9.4 Learning**: Pre-flight checklists on every turn consume ~3,000 lines of context per session. Consider running at session start only, then re-orienting every ~10 turns by re-reading status.md + lessons.md. Context budget matters.
+## SESSION START PROTOCOL
 
-## PRE-FLIGHT CHECKLIST (Run EVERY invocation)
+At the START of each new session, before any other work:
+1. Read `lessons.md` (accumulated operational knowledge — prevents repeating mistakes)
+2. Read `status.md` (what's active, what's next, what's blocked)
+3. Run the Pre-Flight Checklist below
+4. Re-orient every ~10 turns by re-reading `status.md` + `lessons.md` (not the full checklist)
 
-**CRITICAL**: Execute this checklist BEFORE doing anything else, on EVERY turn (even within the same chat):
+## PRE-FLIGHT CHECKLIST (Run at session start)
+
+Execute this checklist at the start of each session. Re-orient periodically via `status.md` + `lessons.md`.
 
 1. **Check Repository State**:
    - This is the meta-orchestrator ENGINE repository (not an app built by it)
@@ -42,19 +48,24 @@ Your job is to maintain, extend, and improve the meta-orchestrator using its own
    - `CHANGELOG.md` ← Version history and feature evolution
    - `UPGRADING.md` ← How apps upgrade between versions
 
-5. **Determine Next Action**:
+5. **Deliberate Before Acting** *(v0.9.5)*:
+   - **Is this well-understood or ambiguous?** Clear tasks → implement. Ambiguous → investigate first.
+   - **What breaks if we get it wrong?** High blast radius → more upfront analysis.
+   - Rule: High ambiguity OR high blast radius → analyze/investigate before implementing.
+
+6. **Determine Next Action**:
    - If user asks for new engine feature: Load `.meta/playbooks/new-feature.md` into TODO
    - If user reports engine bug: Load `.meta/playbooks/bug-fix.md` into TODO
    - If structural changes needed: Load `.meta/playbooks/reorganization.md` into TODO
    - If significant decision: Load `.meta/playbooks/deliberation.md` into TODO
    - Apply evaluation framework (antipatterns, LEGO principles, quality metrics)
 
-6. **Apply Ownership Mindset** (v3.0.0+):
+7. **Apply Ownership Mindset** (v3.0.0+):
    - You OWN this engine. Make decisions. Complete work.
    - Ask about WHAT (engine requirements), decide HOW (implementation)
    - No frivolous questions - if wisdom/principles guide you, decide
 
-**Never forget this checklist exists. Run it mentally on every turn.**
+**Re-orient periodically, not by re-running this checklist.** Read `status.md` + `lessons.md` every ~10 turns.
 
 ---
 

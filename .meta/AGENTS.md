@@ -22,31 +22,26 @@ You must use multiple short-lived sessions, GEN+REVIEW patterns, safety valves, 
 - Your job is to **sequence, validate, and integrate** role outputs so the work is complete and correct.
 - If you catch yourself doing role work directly, **stop** and delegate.
 
-**Identity Confirmation Protocol (Mandatory)**:
-- **First line** of each response must state your role (e.g., "Role: Meta-Orchestrator").
-- **Final line** must confirm role alignment (e.g., "Role confirmed.").
+**Session Start Protocol (Mandatory)**:
+At the START of each new session, before any other work:
+1. Read `lessons.md` (accumulated operational knowledge — prevents repeating mistakes)
+2. Read `status.md` (what's active, what's next, what's blocked)
+3. Run the Pre-Flight Checklist below
+4. Re-orient every ~10 turns by re-reading `status.md` + `lessons.md`
 
-> **v0.9.4 Learning**: Compliance statements don't improve compliance (MetaAgent measured 48% failure rate). Consider replacing this with a concrete tool action: read `lessons.md` at session start instead.
-
-**🔵 MANDATORY COMPLIANCE STATEMENT (Non-Negotiable)**:
-At the START of EVERY response, you MUST say:
-> "I have read the Meta-Orchestrator instructions carefully and will comply with them."
-
-This comes BEFORE any other text, tool calls, or actions. No exceptions.
+> *Replaces compliance statements (v0.9.4: measured 48% failure rate — concrete actions beat ritual declarations).*
 
 ---
 
-> **v0.9.4 Learning**: Pre-flight checklists on every turn consume ~3,000 lines of context per session. Consider running at session start only, then re-orienting every ~10 turns by re-reading status.md + lessons.md. Context budget matters.
-
 ## ═══════════════════════════════════════════════════════════════════════════════
 ## ║                                                                             ║
-## ║  🚨 PRE-FLIGHT CHECKLIST (Run EVERY invocation) 🚨                         ║
+## ║  🚨 PRE-FLIGHT CHECKLIST (Run at SESSION START) 🚨                         ║
 ## ║                                                                             ║
-## ║  ⚠️  DO NOT SKIP THIS - Execute BEFORE doing anything else, EVERY turn ⚠️   ║
+## ║  Run once at session start. Re-orient every ~10 turns via status + lessons. ║
 ## ║                                                                             ║
 ## ═══════════════════════════════════════════════════════════════════════════════
 
-**GitHub Copilot agents**: You are stateless. Re-read this checklist on EVERY turn to avoid amnesia.
+**GitHub Copilot agents**: You are stateless. Run this checklist at session start. Re-orient periodically via `status.md` + `lessons.md` (not by re-running the full checklist — context budget matters).
 
 **STATE GUARDS**: After completing this checklist, set `orchestrator_state.json` flag:
 ```json
@@ -136,17 +131,23 @@ This comes BEFORE any other text, tool calls, or actions. No exceptions.
    - Track progress by checking off items
    - **Never report done until all TODO items are checked**
 
-**5. Determine Next Action**:
+**5. Deliberate Before Acting** *(v0.9.5)*:
+   - **Is this well-understood or ambiguous?** Clear tasks → implement. Ambiguous → investigate first.
+   - **What breaks if we get it wrong?** High blast radius → more upfront analysis.
+   - **Do we need analysis first, or can we go straight to implementation?** Not every task needs a full evaluation pass.
+   - Rule: High ambiguity OR high blast radius → analyze/investigate before implementing. Always.
+
+**6. Determine Next Action**:
    - If `orchestrator_state.json` exists: Continue from `current_phase` (DO NOT restart)
    - If mid-pipeline: Execute next step autonomously (DO NOT ask "what should I do?")
    - If new app: Start Phase 0 (Version Check & Upgrade Mode)
 
-**6. Critical Files Reminder** (for end-of-pipeline):
+**7. Critical Files Reminder** (for end-of-pipeline):
    - ⚠️ **REMEMBER**: At Phase 11.2, you MUST update `.meta-manifest.json`
    - ⚠️ **REMEMBER**: Set `manifest_updated: true` in `orchestrator_state.json`
    - ⚠️ **VALIDATION**: Before marking COMPLETE, verify manifest exists
 
-**Never forget this checklist exists. Run it mentally on every turn.**
+**Re-orient periodically, not by re-running this checklist.** Read `status.md` + `lessons.md` every ~10 turns.
 
 **Defense-in-depth**: This checklist appears at:
 - Top of this file (here)

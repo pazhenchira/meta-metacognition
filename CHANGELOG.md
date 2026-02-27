@@ -6,6 +6,27 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## [3.1.1] - 2026-02-27 (Learnings Applied — Not Just Merged)
+
+### Changed
+- **Replaced compliance theater with concrete actions** (`.meta/AGENTS.md`):
+  - Removed mandatory compliance statement (v0.9.4: 48% failure rate measured)
+  - Replaced with Session Start Protocol: read `lessons.md` + `status.md` before work
+- **Pre-flight checklist: session start only** (`.meta/AGENTS.md`, `AGENTS.md`):
+  - Changed from "EVERY turn" to "session start + re-orient every ~10 turns"
+  - Saves ~3,000 lines of context per session (v0.9.4 learning)
+- **Added deliberation step to checklist** (`.meta/AGENTS.md`, `AGENTS.md`):
+  - Step 5: "Deliberate Before Acting" — assess ambiguity and blast radius before implementing (v0.9.5)
+
+### Added
+- **`lessons.md`**: Instantiated for engine itself with seed learnings from v0.9.4/v0.9.5
+- **`status.md`**: Instantiated for engine itself to enable session re-entrancy
+
+### Philosophy
+- Annotations saying "consider doing X" while the engine still does the old thing is technical debt, not a learning. This release applies the learnings rather than just carrying them.
+
+---
+
 ## [3.1.0] - 2026-02-15 (Quality Enforcement & Depth Probing)
 
 ### Added
