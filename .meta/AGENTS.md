@@ -412,13 +412,21 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
 
 2. **If `.meta-version` exists**: **UPGRADE OR MAINTENANCE MODE**
    - Read `.meta-version` to see which meta-orchestrator version built this app.
-   - Read `VERSION` file to see current meta-orchestrator version.
-   - **Auto-upgrade check**: If `.meta-version` contains `engine_source`, check if a newer engine version is available:
-     ```
-     git ls-remote <engine_source> refs/heads/main | head -c 7
-     ```
-     Compare with local `.meta/VERSION`. If newer available, inform user:
-     > "Engine v{new} is available (you have v{current}). Run `scripts/upgrade-app.sh .` from the engine repo to upgrade, or continue with current version."
+   - Read `.meta/VERSION` to see current local engine version.
+   - **Self-Upgrade Protocol**: If `.meta-version` contains `engine_source`:
+     1. Clone the engine repo (shallow): `git clone --depth 1 <engine_source> /tmp/meta-engine-upgrade`
+     2. Compare versions: `cat /tmp/meta-engine-upgrade/.meta/VERSION` vs local `.meta/VERSION`
+     3. If remote is newer:
+        - Back up `.meta/` → `.meta.bak/`
+        - Copy `/tmp/meta-engine-upgrade/.meta/` → `.meta/`
+        - Update `.meta-version` with new version + today's date
+        - Create `lessons.md` from template if missing
+        - Create `status.md` from template if missing
+        - Clean up temp clone
+        - Report: "Engine upgraded from v{old} to v{new}. Proceeding with upgrade evaluation."
+        - Continue to **UPGRADE MODE** (different version path below)
+     4. If same version: skip, proceed to version comparison below
+     5. If clone fails (network, permissions): log warning, continue with current engine
    - Read `.meta-manifest.json` to identify user-modified files.
    - Read `app_intent.md` to see if application requirements have changed.
    - Compare versions:

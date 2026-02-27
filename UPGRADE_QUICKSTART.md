@@ -6,13 +6,17 @@
 
 ## 🚀 Fastest Path (v3.1.1+)
 
-### From your app directory:
-```bash
-# Specify the engine repo:
-upgrade-app.sh . https://github.com/pazhenchira/meta-metacognition.git
+Just tell your app orchestrator:
 
-# Or if .meta-version has engine_source set (after first upgrade):
-upgrade-app.sh .
+```
+Upgrade the meta-orchestrator engine to the latest version
+```
+
+That's it. The orchestrator pulls the latest engine, compares versions, backs up, upgrades, and continues.
+
+**First time?** If `engine_source` isn't set yet:
+```
+Upgrade the engine from https://github.com/pazhenchira/meta-metacognition.git
 ```
 
 **Done!** ✅ The script backs up `.meta/`, copies the latest engine, creates `lessons.md` + `status.md`, and updates `.meta-version`.
@@ -153,16 +157,14 @@ A: Yes! Create branch: `git checkout -b test-v2`, run upgrade, test, rollback if
 
 ## 📝 Summary
 
-**Upgrade = 3 commands**:
-```bash
-git tag v1-backup
-cp -r /path/to/meta-metacognition/.meta ./
-# Say: "Upgrade this app to meta-orchestrator v2.0"
+**Upgrade = 1 sentence**:
+```
+Upgrade the meta-orchestrator engine to the latest version
 ```
 
 **Rollback = 1 command**:
 ```bash
-git reset --hard v1-backup
+git reset --hard pre-upgrade-backup
 ```
 
 **Result**: Workspace-centric, self-documenting, idempotent app! 🚀

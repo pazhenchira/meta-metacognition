@@ -32,21 +32,33 @@
 
 ## Upgrading Apps
 
-### Option A: Auto-Upgrade Script (Recommended)
+### Primary: Just Tell Your Orchestrator
 
-From your app directory:
+Open your app in Codex CLI or GitHub Copilot and say:
+
+```
+Upgrade the meta-orchestrator engine to the latest version
+```
+
+The orchestrator reads `engine_source` from your `.meta-version`, clones the latest engine, compares versions, and applies the upgrade automatically. No scripts, no manual copying.
+
+**First time?** If your `.meta-version` doesn't have `engine_source` yet, tell the orchestrator:
+
+```
+Upgrade the engine from https://github.com/pazhenchira/meta-metacognition.git
+```
+
+It will set `engine_source` so future upgrades are just "upgrade the engine."
+
+### Fallback: Shell Script
+
+If you prefer doing it outside the orchestrator:
 ```bash
-# Specify the engine repo URL directly:
-upgrade-app.sh . https://github.com/pazhenchira/meta-metacognition.git
+# From your app directory:
+./scripts/upgrade-app.sh . https://github.com/pazhenchira/meta-metacognition.git
 
-# Or use a local engine clone:
-upgrade-app.sh . /path/to/meta-metacognition
-
-# Or if your .meta-version already has engine_source, just:
-upgrade-app.sh .
-
-# Or run from the engine repo:
-/path/to/meta-metacognition/scripts/upgrade-app.sh /path/to/your-app
+# Or if engine_source is already set:
+./scripts/upgrade-app.sh .
 ```
 
 This will:
