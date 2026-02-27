@@ -32,76 +32,32 @@
 
 ## Upgrading Apps
 
-### Primary: Just Tell Your Orchestrator
-
-Open your app in Codex CLI or GitHub Copilot and say:
+Tell your app orchestrator:
 
 ```
 Upgrade the meta-orchestrator engine to the latest version
 ```
 
-The orchestrator reads `engine_source` from your `.meta-version`, clones the latest engine, compares versions, and applies the upgrade automatically. No scripts, no manual copying.
-
-**First time?** If your `.meta-version` doesn't have `engine_source` yet, tell the orchestrator:
-
+**First time?** If `engine_source` isn't set yet:
 ```
 Upgrade the engine from https://github.com/pazhenchira/meta-metacognition.git
 ```
 
-It will set `engine_source` so future upgrades are just "upgrade the engine."
-
-### Fallback: Shell Script
-
-If you prefer doing it outside the orchestrator:
-```bash
-# From your app directory:
-./scripts/upgrade-app.sh . https://github.com/pazhenchira/meta-metacognition.git
-
-# Or if engine_source is already set:
-./scripts/upgrade-app.sh .
-```
-
-This will:
-1. Back up your existing `.meta/` to `.meta.bak/`
-2. Copy the latest `.meta/` from the engine
-3. Update `.meta-version` with new version and `engine_source`
-4. Create `lessons.md` and `status.md` if they don't exist
-5. Print next steps
-
-### Option B: Manual Copy
-
-```bash
-# From your app directory:
-cp -r /path/to/meta-metacognition/.meta ./
-cat .meta/VERSION  # Verify version
-```
-
-Then manually:
-- Create `lessons.md` from `.meta/templates/lessons.template.md` if missing
-- Create `status.md` from `.meta/templates/status.template.md` if missing
-- Update `.meta-version` with new version number
+**Manual fallback**: `cp -r /path/to/meta-metacognition/.meta ./`
 
 ---
 
 ## v3.0.x → v3.1.1 Upgrade
 
-**Type**: Non-breaking (all changes additive + removals of ineffective patterns)  
-**Effort**: Minimal (run upgrade script or copy `.meta/`)
+**Type**: Non-breaking  
+**Effort**: One sentence to your orchestrator
 
-### What Changes for Your App
+### What Changes
 
-1. **Templates updated**: New apps get session-start protocol instead of per-turn checklist
-2. **Compliance statements removed**: No more "I have read the instructions" boilerplate
-3. **`lessons.md` + `status.md`**: New files for cross-session learning
-4. **Deliberation step**: Pre-flight checklist now includes ambiguity/blast-radius assessment
-
-### Upgrade Steps
-
-1. Run `scripts/upgrade-app.sh /path/to/your-app` (or manual copy)
-2. Create `lessons.md` and `status.md` if the script didn't (check your app root)
-3. Commit: `git add .meta/ .meta-version lessons.md status.md && git commit -m 'chore: upgrade to meta-orchestrator v3.1.1'`
-
-**That's it!** All v3.0.x apps work with v3.1.1 engine immediately.
+- Session-start protocol replaces per-turn compliance statements + pre-flight checklists
+- Deliberation step added (assess ambiguity/blast-radius before acting)
+- `lessons.md` + `status.md` for cross-session learning
+- Self-upgrade protocol (orchestrator pulls engine updates itself)
 
 ---
 

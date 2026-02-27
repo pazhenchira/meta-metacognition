@@ -217,11 +217,8 @@ When you activate this agent, immediately:
 4. Run tests
 
 ### Upgrade Engine
-1. User says "upgrade the engine" or "upgrade meta-orchestrator"
-2. Read `engine_source` from `.meta-version`
-3. Clone latest engine, compare versions
-4. Back up `.meta/`, copy new engine, update `.meta-version`
-5. Proceed to upgrade evaluation (see `.app/AGENTS.md`)
+1. User says "upgrade the engine"
+2. Follow Self-Upgrade Protocol in `.meta/AGENTS.md` Phase 0
 
 ### Optimize Performance
 1. Profile to identify bottleneck

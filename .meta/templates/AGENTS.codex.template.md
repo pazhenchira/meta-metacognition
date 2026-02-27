@@ -151,21 +151,7 @@ For app modifications (new features, bug fixes):
 
 ## Engine Self-Upgrade
 
-When the user asks to upgrade the meta-orchestrator engine:
-
-1. Read `.meta-version` — find `engine_source` (git URL of the engine repo)
-   - If missing, ask the user for the engine repo URL
-2. Clone the engine repo (shallow): `git clone --depth 1 <engine_source> /tmp/meta-engine-upgrade`
-3. Compare versions: remote `.meta/VERSION` vs local `.meta/VERSION`
-4. If remote is newer:
-   - Back up `.meta/` → `.meta.bak/`
-   - Copy the new `.meta/` into the app
-   - Update `.meta-version` with new version + today's date
-   - Create `lessons.md` and `status.md` from templates if missing
-   - Clean up temp clone
-   - Proceed to upgrade evaluation (see `.meta/AGENTS.md` Phase 0)
-5. If same version: "Engine is already up to date."
-6. If clone fails: log warning, continue with current engine
+When the user asks to upgrade the engine, follow the Self-Upgrade Protocol in `.meta/AGENTS.md` Phase 0.
 
 ---
 
