@@ -34,9 +34,19 @@
 
 ### Option A: Auto-Upgrade Script (Recommended)
 
-From the engine repo, run:
+From your app directory:
 ```bash
-./scripts/upgrade-app.sh /path/to/your-app
+# Specify the engine repo URL directly:
+upgrade-app.sh . https://github.com/pazhenchira/meta-metacognition.git
+
+# Or use a local engine clone:
+upgrade-app.sh . /path/to/meta-metacognition
+
+# Or if your .meta-version already has engine_source, just:
+upgrade-app.sh .
+
+# Or run from the engine repo:
+/path/to/meta-metacognition/scripts/upgrade-app.sh /path/to/your-app
 ```
 
 This will:

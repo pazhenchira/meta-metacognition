@@ -6,9 +6,13 @@
 
 ## 🚀 Fastest Path (v3.1.1+)
 
-### Run the auto-upgrade script:
+### From your app directory:
 ```bash
-/path/to/meta-metacognition/scripts/upgrade-app.sh /path/to/your-app
+# Specify the engine repo:
+upgrade-app.sh . https://github.com/pazhenchira/meta-metacognition.git
+
+# Or if .meta-version has engine_source set (after first upgrade):
+upgrade-app.sh .
 ```
 
 **Done!** ✅ The script backs up `.meta/`, copies the latest engine, creates `lessons.md` + `status.md`, and updates `.meta-version`.
