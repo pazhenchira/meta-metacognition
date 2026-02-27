@@ -216,6 +216,13 @@ When you activate this agent, immediately:
 3. Fix with KISS principle
 4. Run tests
 
+### Upgrade Engine
+1. User says "upgrade the engine" or "upgrade meta-orchestrator"
+2. Read `engine_source` from `.meta-version`
+3. Clone latest engine, compare versions
+4. Back up `.meta/`, copy new engine, update `.meta-version`
+5. Proceed to upgrade evaluation (see `.app/AGENTS.md`)
+
 ### Optimize Performance
 1. Profile to identify bottleneck
 2. Apply relevant wisdom

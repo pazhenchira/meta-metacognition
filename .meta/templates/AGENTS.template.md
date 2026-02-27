@@ -263,6 +263,27 @@ Execute this checklist at the start of each session. Re-orient periodically via 
 
 ---
 
+## ENGINE SELF-UPGRADE
+
+When the user asks to upgrade the meta-orchestrator engine:
+
+1. Read `.meta-version` — find `engine_source` (git URL of the engine repo)
+   - If missing, ask the user for the engine repo URL and save it to `.meta-version`
+2. Clone the engine repo (shallow): `git clone --depth 1 <engine_source> /tmp/meta-engine-upgrade`
+3. Compare versions: remote `.meta/VERSION` vs local `.meta/VERSION`
+4. If remote is newer:
+   - Back up `.meta/` → `.meta.bak/`
+   - Copy the new `.meta/` into the app
+   - Update `.meta-version` with new version + today's date
+   - Create `lessons.md` from `.meta/templates/lessons.template.md` if missing
+   - Create `status.md` from `.meta/templates/status.template.md` if missing
+   - Clean up temp clone
+   - Report what changed and proceed to upgrade evaluation (see `.meta/AGENTS.md` Phase 0)
+5. If same version: "Engine is already up to date."
+6. If clone fails: log warning, continue with current engine
+
+---
+
 ## APPLICATION CONTEXT
 
 {APPLICATION_CONTEXT}
