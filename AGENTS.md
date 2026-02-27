@@ -567,6 +567,16 @@ Work isn't done until pushed to origin. After review approval:
 3. Verify push succeeded with `git log origin/<branch>`
 4. Don't report "done" until changes are on remote.
 
+### Deliberate Before Dispatching (MetaAgent v0.9.5)
+Before choosing which role to dispatch or how to approach work, assess:
+1. **Is this well-understood or ambiguous?** — Clear tasks go straight to implementation. Ambiguous ones need analysis first.
+2. **What breaks if we get it wrong?** — High blast radius demands more upfront thinking.
+3. **Do we need analysis first, or can we go straight to implementation?** — Not every task needs a full evaluation pass.
+
+**Rule**: High ambiguity or high blast radius → analyze/investigate before implementing. Always.
+
+This makes the "how much thinking is needed?" decision explicit rather than implicit. The orchestrator's highest-leverage decision is calibrating depth of analysis to the problem — routing without thinking is just dispatching; routing with calibrated thinking is orchestration.
+
 ---
 
 ## REFERENCES

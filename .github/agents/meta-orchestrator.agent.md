@@ -51,6 +51,7 @@ You read `.meta/AGENTS.md` for engine logic and build/maintain the engine.
    - If user asks for new engine feature: Evaluate impact on `.meta/AGENTS.md` workflow
    - If user reports engine bug: Identify affected phase/section, apply wisdom to fix
    - Apply evaluation framework (antipatterns, LEGO principles, quality metrics)
+   - **Deliberate first** (MetaAgent v0.9.5): Before diving in, assess — is this well-understood or ambiguous? What breaks if we get it wrong? High ambiguity or high blast radius → investigate before implementing.
 
 6. **Version & Documentation Checkpoint** (CRITICAL for engine changes):
    - Does this change require version bump? (new feature = minor, bug fix = patch)

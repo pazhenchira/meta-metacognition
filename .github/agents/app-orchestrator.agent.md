@@ -107,6 +107,7 @@ You read `AGENTS.md` (root) for app-specific logic and build/maintain this app.
    - If user reports bug: Identify root cause, apply KISS, fix with tests
    - If optimizing: Profile first (Knuth), measure, optimize targeted area
    - Apply evaluation framework (antipatterns? LEGO principles? KISS?)
+   - **Deliberate first** (MetaAgent v0.9.5): Before diving in, assess — is this well-understood or ambiguous? What breaks if we get it wrong? High ambiguity or high blast radius → investigate before implementing.
 
 6. **Command Verification** (when reviewing agent work):
    - Verify all commands include exit code + verbatim output (not paraphrased)
