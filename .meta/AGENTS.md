@@ -800,7 +800,7 @@ If `.app/agent_context.json` already exists and is complete, do not re-ask; upda
 
 ### Version Compatibility
 
-Current meta-orchestrator version: **2.0.34** (see `VERSION` file)
+Current meta-orchestrator version: **3.1.1** (see `VERSION` file)
 
 **Features in v2.0.0** (Workspace-Centric, Self-Documenting, Idempotent) - MAJOR REFACTOR:
 - **Workspace-centric execution**: `.workspace/` folder for ephemeral work items (deleted after completion)

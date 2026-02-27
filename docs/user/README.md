@@ -1,6 +1,6 @@
 # Meta-Orchestrator: AI That Builds Complete Apps
 
-**Version 2.0.34** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 3.1.1** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -829,7 +829,7 @@ This usually means the essence or requirements weren't clear enough.
 
 ```json
 {
-  "version": "2.0.34",
+  "version": "3.1.1",
   "generated_date": "2025-11-25",
   "files": {
     "src/signal_generator.py": {
@@ -975,7 +975,7 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Current Version**: 2.0.34 (January 9, 2026)  
+**Current Version**: 3.1.1 (February 27, 2026)  
 **Built with meta-cognitive AI orchestration principles.**
 
 ---
@@ -996,17 +996,15 @@ MIT License - See [LICENSE](LICENSE) file
 # OPTION B (any version): @workspace Act as meta-orchestrator (.meta/AGENTS.md). Add feature from app_intent.md (MAINTENANCE MODE)
 
 # === UPGRADE META-ORCHESTRATOR ===
-# 1. Copy new .meta/ files from latest version (if you have them in .meta/)
-# 2. Run:
-@workspace Act as meta-orchestrator. Upgrade this app to v2.0.34 (ENGINE UPGRADE MODE)
+# Just tell your orchestrator:
+# "Upgrade the meta-orchestrator engine to the latest version"
 
 # === PROTECT YOUR CUSTOM CODE ===
 # Edit .meta-manifest.json:
 "src/my_file.py": {"user_modified": true}
 
 # === CHECK VERSION ===
-cat .meta-version  # Shows which meta-orchestrator version built your app (if it exists)
-cat VERSION        # Shows current meta-orchestrator version (2.0.34)
+cat .meta/VERSION   # Shows current meta-orchestrator engine version (3.1.1)
 ```
 
 **Pro Tip (v1.7.1+)**: Use the VS Code Copilot agent picker dropdown for quickest activation. No activation phrases to remember!

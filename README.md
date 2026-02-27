@@ -1,6 +1,6 @@
 # Meta-Metacognition
 
-**Version 2.0.34** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
+**Version 3.1.1** | [Changelog](CHANGELOG.md) | [Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -90,4 +90,4 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Current Version**: 2.0.34 (January 9, 2026)
+**Current Version**: 3.1.1 (February 27, 2026)

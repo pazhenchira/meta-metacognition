@@ -204,7 +204,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 # Verify new version
 cd /path/to/your-app
 cat .meta/VERSION
-# Should show: 2.0.34
+# Should show: 3.1.1
 ```
 
 ### Step 3: Run Upgrade
