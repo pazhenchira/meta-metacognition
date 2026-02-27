@@ -3,14 +3,14 @@
 > Lightweight session re-entrancy. Updated at session end. Read at session start.
 
 ## Active
-- Embracing v0.9.4 + v0.9.5 learnings: replacing compliance theater with concrete actions in engine
+- None
 
 ## Next
-- Validate all CRITICAL CHECKPOINT reminders in `.meta/AGENTS.md` phases reflect new session-start-only approach
+- Test auto-upgrade by running `scripts/upgrade-app.sh` against a downstream app
 
 ## Blockers
 - None
 
 ## Last Session
 - Date: 2026-02-27
-- Outcome: Merged v0.9.4/v0.9.5 branches, then applied learnings to engine (replaced compliance statements, changed pre-flight to session-start, instantiated lessons.md + status.md, added deliberation to workflow)
+- Outcome: v3.1.1 complete — learnings propagated to all layers (agent defs, templates, upgrade docs), auto-upgrade script created, Phase 0 updated with engine_source awareness
