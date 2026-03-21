@@ -19,3 +19,6 @@
 
 ## Domain
 - The meta-orchestrator's highest-leverage decision is calibrating depth of analysis to the problem. Routing without thinking is dispatching; routing with calibrated thinking is orchestration (v0.9.5).
+- Skills are procedural protocols attached to work stages, not roles. They fill the gap between habits (too high-level) and role specs (role-focused). Any role can invoke any skill. (v0.9.9+ concept from MetaAgent/TA)
+- Turn Report is structural enforcement of verification — can't fill in Evidence fields without having actually verified. More reliable than behavioral "you should verify" instructions. (MetaAgent v0.9.8)
+- Two-Strike Rule: if the same approach fails twice, switch approaches. Don't iterate on a failing method more than twice. (MetaAgent v0.9.9)

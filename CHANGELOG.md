@@ -6,6 +6,23 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
+## v3.2.0 — MetaAgent v0.9.9 Patterns + Skills System
+
+### Added
+- **Turn Report** (Non-Negotiable) — Structural enforcement of verification on every output turn. Every claim must trace to a specific artifact.
+- **Self-Challenge Gate** — Before presenting recommendations: name assumptions, counter-indicators, and stress-test high-blast-radius work.
+- **Two-Strike Rule** — Same approach fails twice → STOP → switch approaches.
+- **Skills System** — Procedural protocols attached to work stages (`.meta/skills/`):
+  - `investigation-framing.skill.md` — Validate the question before executing analysis
+  - `pre-ship-review.skill.md` — Chain-of-Verification before presenting completed work
+  - `structured-challenge.skill.md` — Steel-man + failure modes + pre-mortem for high-stakes decisions
+  - `selector.md` — Routes work stages to appropriate skills
+
+### Source
+Patterns generalized from MetaAgent v0.9.7-v0.9.9 and TA (Technical Advisor) child project's production-proven skills system.
+
+---
+
 ## [3.1.1] - 2026-02-27 (Learnings Applied — Not Just Merged)
 
 ### Changed
