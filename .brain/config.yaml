@@ -1,0 +1,19 @@
+version: "0.10.0"
+
+framework:
+  source: "github:mathewj_microsoft/metaagent"
+  version: "0.10.0"
+  local_copy: "../metaagent"
+
+orchestrator:
+  name: "Atlas"
+  mode: "self-building"
+
+project:
+  name: "meta-metacognition"
+  version: "3.2.0"
+
+settings:
+  defaultDecisionTier: 2
+  requireIntentForChanges: true
+  requirePerspectiveReview: true
