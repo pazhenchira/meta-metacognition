@@ -12,5 +12,5 @@
 - None
 
 ## Last Session
-- Date: 2026-02-27
-- Outcome: v3.1.1 complete — learnings propagated to all layers (agent defs, templates, upgrade docs), auto-upgrade script created, Phase 0 updated with engine_source awareness
+- Date: 2026-03-22
+- Outcome: v3.2.0 complete — merged MetaAgent v0.9.9 patterns + skills system (Turn Report, Self-Challenge Gate, Two-Strike Rule, skills system). Applied to engine's own AGENTS.md (dogfooding). Updated UPGRADING.md with v3.1.1→v3.2.0 path.

@@ -7,7 +7,57 @@
 
 ## Current Version (v3.x)
 
-**Current Engine Version**: 3.1.1  
+**Current Engine Version**: 3.2.0  
+
+### v3.2.0 Notes (MetaAgent v0.9.9 Patterns + Skills)
+
+**Changes** (non-breaking):
+
+- **Turn Report** (Non-Negotiable): Structural enforcement of verification on every output turn. Every claim must trace to a specific artifact (file paths, commands, task IDs).
+- **Self-Challenge Gate**: Before presenting recommendations, name key assumptions, counter-indicators, and stress-test high-blast-radius work.
+- **Two-Strike Rule**: If the same approach fails twice in the same session, STOP and switch approaches. Don't iterate on a failing method more than twice.
+- **Skills System** (`.meta/skills/`): Procedural protocols attached to work stages:
+  - `investigation-framing.skill.md` — Validate the question before executing analysis
+  - `pre-ship-review.skill.md` — Chain-of-Verification before presenting completed work
+  - `structured-challenge.skill.md` — Steel-man + failure modes + pre-mortem for high-stakes decisions
+  - `selector.md` — Routes work stages to appropriate skills
+
+**New Files**:
+- `.meta/skills/README.md` — Skills system overview
+- `.meta/skills/selector.md` — Skill routing by work stage
+- `.meta/skills/investigation-framing.skill.md`
+- `.meta/skills/pre-ship-review.skill.md`
+- `.meta/skills/structured-challenge.skill.md`
+
+**Source**: Patterns generalized from MetaAgent v0.9.7-v0.9.9 and TA (Technical Advisor) child project's production-proven skills system.
+
+---
+
+## v3.1.1 → v3.2.0 Upgrade
+
+**Type**: Non-breaking  
+**Effort**: One sentence to your orchestrator
+
+### What Changes
+
+- Turn Report enforces verification on every output turn (structural, not behavioral)
+- Self-Challenge Gate catches optimism bias before presenting recommendations
+- Two-Strike Rule prevents rabbit-holing on failing approaches
+- Skills system adds reusable quality protocols (investigation framing, pre-ship review, structured challenge)
+
+### For Existing Apps
+
+Tell your app orchestrator:
+```
+Upgrade the meta-orchestrator engine to the latest version
+```
+
+Or manually:
+1. Copy `.meta/skills/` directory from engine repo
+2. Updated `.github/agents/` files include Turn Report, Self-Challenge Gate, Two-Strike Rule
+3. No state file changes needed
+
+---
 
 ### v3.1.1 Notes (Learnings Applied)
 

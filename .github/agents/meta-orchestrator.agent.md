@@ -49,7 +49,7 @@ Execute this checklist at the start of each session. Re-orient periodically via 
    - Rule: High ambiguity OR high blast radius → analyze before implementing.
    - **Two-Strike Rule**: If the same approach fails twice in the same session, STOP. Switch approaches before trying a third time. Don't iterate on a failing approach more than twice.
 
-5. **Version & Documentation Checkpoint**(for engine changes):
+5. **Version & Documentation Checkpoint** (for engine changes):
    - Does this change require version bump? (new feature = minor, bug fix = patch)
    - Which files need updates? (VERSION, .meta-version, CHANGELOG.md, UPGRADING.md, .meta/AGENTS.md)
 

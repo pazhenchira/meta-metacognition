@@ -52,6 +52,7 @@ Execute this checklist at the start of each session. Re-orient periodically via 
    - **Is this well-understood or ambiguous?** Clear tasks → implement. Ambiguous → investigate first.
    - **What breaks if we get it wrong?** High blast radius → more upfront analysis.
    - Rule: High ambiguity OR high blast radius → analyze/investigate before implementing.
+   - **Two-Strike Rule**: If the same approach fails twice in the same session, STOP. Switch approaches before trying a third time. Don't iterate on a failing approach more than twice.
 
 6. **Determine Next Action**:
    - If user asks for new engine feature: Load `.meta/playbooks/new-feature.md` into TODO
@@ -66,6 +67,54 @@ Execute this checklist at the start of each session. Re-orient periodically via 
    - No frivolous questions - if wisdom/principles guide you, decide
 
 **Re-orient periodically, not by re-running this checklist.** Read `status.md` + `lessons.md` every ~10 turns.
+
+---
+
+## TURN REPORT (Non-Negotiable)
+
+Before presenting ANY output to the user, include a Turn Report block. This fires every turn where you present output — including answers to questions.
+
+**Format**:
+```
+<!-- TURN REPORT -->
+**Grounded**: [tool calls that sourced this response — file paths viewed, commands run, task IDs]
+**Completeness**: [each user ask → response section addressing it]
+**Verified**: [independent check — re-read output, ran command, or "N/A, question-only turn"]
+**Unverified claims**: [honest list — "none" OR specific claims not confirmed]
+**Next**: [what happens now]
+```
+
+**Rules**:
+- Every field requires specific artifacts (file paths, command outputs), not prose summaries
+- "Unverified claims" is mandatory even when empty — writing "none" forces reflection
+- If you cannot fill Grounded or Verified with specific artifacts, STOP and gather evidence first
+- Minimal turns get minimal reports. Simple Q&A: "Grounded: viewed status.md, Completeness: 1 ask answered, Verified: N/A, Unverified: none, Next: awaiting direction"
+
+---
+
+## SELF-CHALLENGE GATE
+
+Before presenting recommendations or deliverables the user will act on:
+
+1. **Name key assumptions** — what must be true for this to be correct? What would disprove it?
+2. **Name one counter-indicator** — what signal would suggest the opposite conclusion?
+3. **High blast-radius** → pause and stress-test before presenting
+
+This catches optimism bias — the tendency to declare "done" before genuinely verifying.
+
+---
+
+## SKILLS SYSTEM
+
+Procedural protocols attached to work stages, not roles. Located in `.meta/skills/`.
+
+| Stage | Skill | Trigger |
+|-------|-------|---------|
+| Before investigation/analysis | `investigation-framing.skill.md` | "Why is X?", "Analyze Y", root cause, comparison |
+| Before presenting completed work | `pre-ship-review.skill.md` | Work item completion, deliverable ready |
+| Before high-stakes recommendations | `structured-challenge.skill.md` | Irreversible decisions, cross-org proposals |
+
+When a trigger condition is met, read the skill file and follow its protocol before proceeding.
 
 ---
 
@@ -431,6 +480,12 @@ meta-metacognition/
 │   │   ├── antipatterns.md         # God Object, Golden Hammer, etc.
 │   │   ├── success_patterns.md     # Circuit Breaker, Config Validator, etc.
 │   │   └── trade_off_matrix.md     # Decision frameworks
+│   ├── skills/                     # Procedural quality protocols
+│   │   ├── README.md               # Skills system overview
+│   │   ├── selector.md             # Routes work stages to skills
+│   │   ├── investigation-framing.skill.md
+│   │   ├── pre-ship-review.skill.md
+│   │   └── structured-challenge.skill.md
 │   └── templates/                  # Templates for generated artifacts
 │       ├── AGENTS.template.md      # App-specific orchestrator template
 │       ├── .meta-version.template

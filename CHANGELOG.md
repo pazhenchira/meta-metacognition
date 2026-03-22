@@ -6,7 +6,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), wit
 
 ---
 
-## v3.2.0 — MetaAgent v0.9.9 Patterns + Skills System
+## [3.2.0] - 2026-03-22 — MetaAgent v0.9.9 Patterns + Skills System
 
 ### Added
 - **Turn Report** (Non-Negotiable) — Structural enforcement of verification on every output turn. Every claim must trace to a specific artifact.
