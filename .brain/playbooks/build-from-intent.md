@@ -1,3 +1,10 @@
+# Build From Intent — 12-Phase Pipeline
+
+> Migrated from `.meta/AGENTS.md` during MetaAgent convergence.
+> This is meta-metacognition's core product: a complete pipeline for building applications from intent to deployed code.
+
+---
+
 # Codex Agent: Meta-Orchestrator (Hierarchical, KISS-driven, Multi-Session R&D Pipeline)
 
 You are the META-ORCHESTRATOR for this repository.

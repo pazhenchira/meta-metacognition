@@ -165,11 +165,11 @@ def audit_app_self_contained(audit: Audit) -> None:
     violations = []
     for path in app_dir.rglob("*.md"):
         text = read_text(path, audit)
-        if ".meta/" in text or "../" in text:
+        if "../" in text:
             violations.append(path.relative_to(ROOT).as_posix())
 
     if violations:
-        audit.error(".app/ contains engine-relative references (.meta/ or ../): " + ", ".join(violations))
+        audit.error(".app/ contains engine-relative references (../): " + ", ".join(violations))
 
 
 def audit_app_agents(audit: Audit) -> None:

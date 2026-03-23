@@ -25,10 +25,10 @@ IF asked a QUESTION:
 → Answer from context (read `.brain/context/domain.md`, `.brain/lessons.md` if needed)
 
 ELSE IF given WORK (engine maintenance, engine feature, engine bug):
-→ **Engine mode**: Read `.meta/AGENTS.md`, `.meta/principles.md`, `.meta/wisdom/`. Apply habits below. You are maintaining the engine itself.
+→ **Engine mode**: Read `.brain/playbooks/build-from-intent.md`, `.brain/principles.md`, `.brain/wisdom/`. Apply habits below. You are maintaining the engine itself.
 
 ELSE IF given WORK (app building, app feature, app bug):
-→ **App mode**: Read `.meta/AGENTS.md` for the 12-phase build pipeline. Read `app_intent.md` + `essence.md` for app context. Apply habits below. You are building/maintaining an application.
+→ **App mode**: Read `.brain/playbooks/build-from-intent.md` for the 12-phase build pipeline. Read `app_intent.md` + `essence.md` for app context. Apply habits below. You are building/maintaining an application.
 
 ELSE IF sponsor reports PRODUCT ISSUE (error, unexpected behavior):
 → **Feedback mode**: Diagnose → Fix → Return to backlog
@@ -157,7 +157,7 @@ Apply this rubric to every turn before presenting output to the sponsor. The Tur
 | Cost/resource | Planner | **Economist** | **Auto**: any cost-impacting decision |
 | User-facing | Developer/PM | **Customer Advocate** | **Auto**: any change visible to end users |
 | Implementation | Developer | (match context) | |
-| Engine pipeline | `.meta/AGENTS.md` | (12-phase build) | **Auto**: app-building work — read pipeline phases |
+| Engine pipeline | `.brain/playbooks/build-from-intent.md` | (12-phase build) | **Auto**: app-building work — read pipeline phases |
 | Problem reframing | **Pathfinder** | | **Auto**: Analyst inconclusive, problem stuck, or pre-escalation |
 | Validation | Reviewer | (always independent) | |
 
@@ -211,18 +211,19 @@ Skills are procedures, not agents. Follow the protocol, fill the output format, 
 ```
 meta-metacognition/
 ├── .github/agents/        # Atlas orchestrator
-├── .brain/                # Project brain (MetaAgent convention)
+├── .brain/                # Project brain
 │   ├── config.yaml
 │   ├── lessons.md
 │   ├── status.md
+│   ├── playbooks/         # Including build-from-intent.md (12-phase pipeline)
+│   ├── roles/             # Role reference (archived)
+│   ├── wisdom/            # Engineering wisdom (archived)
+│   ├── principles.md      # Engineering principles
 │   └── work-items/
-├── .meta/                 # Engine core (READ-ONLY reference)
-│   ├── AGENTS.md          # 12-phase build pipeline
-│   ├── principles.md
-│   ├── wisdom/
-│   ├── patterns/
-│   └── templates/
 ├── skills/                # Quality protocols
+├── patterns/              # Antipatterns, BS detection, success patterns
+├── templates/             # App generation templates (engine product)
+├── generators/            # Code generation logic (engine product)
 ├── essence.md
 └── [app code]
 ```
@@ -231,10 +232,10 @@ meta-metacognition/
 
 - `.brain/lessons.md` ← Accumulated operational knowledge (read at session start!)
 - `.brain/status.md` ← What's active, what's next, what's blocked
-- `.meta/AGENTS.md` ← 12-phase build pipeline (how the engine builds apps)
-- `.meta/principles.md` ← KISS, LEGO, Thompson #5
-- `.meta/wisdom/` ← Engineering wisdom (Thompson, Knuth, Pike, Kernighan)
-- `.meta/patterns/` ← Antipatterns, success patterns, trade-offs
+- `.brain/playbooks/build-from-intent.md` ← 12-phase build pipeline (how the engine builds apps)
+- `.brain/principles.md` ← KISS, LEGO, Thompson #5
+- `.brain/wisdom/` ← Engineering wisdom (Thompson, Knuth, Pike, Kernighan)
+- `patterns/` ← Antipatterns, success patterns, trade-offs
 - `app_intent.md` ← Application requirements
 - `essence.md` ← What makes this project valuable
 - `CHANGELOG.md` ← Version history

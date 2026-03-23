@@ -27,7 +27,7 @@ This file provides lightweight context for day-to-day work. For full orchestrato
 
 **Atlas** (the orchestrator) routes work to specialist agents. It uses 8 habits: Orient, Deliberate, Delegate, Verify, Learn, Ship, Document, Report.
 
-The engine's 12-phase build pipeline lives in `.meta/AGENTS.md` — Atlas references it when building applications.
+The engine's 12-phase build pipeline lives in `.brain/playbooks/build-from-intent.md` — Atlas references it when building applications.
 
 ---
 
@@ -38,7 +38,7 @@ The engine's 12-phase build pipeline lives in `.meta/AGENTS.md` — Atlas refere
 3. **GEN+REVIEW** — Every generated artifact gets independent review
 4. **Essence-First** — Discover what makes the app valuable before building
 
-See: `.meta/principles.md`, `.meta/wisdom/`
+See: `.brain/principles.md`, `.brain/wisdom/`
 
 ---
 
@@ -47,20 +47,19 @@ See: `.meta/principles.md`, `.meta/wisdom/`
 ```
 meta-metacognition/
 ├── .github/agents/        # Atlas orchestrator
-├── .brain/                # Project brain (MetaAgent convention)
+├── .brain/                # Project brain
 │   ├── config.yaml        # Framework config
 │   ├── lessons.md         # Accumulated knowledge
 │   ├── status.md          # Current state
+│   ├── playbooks/         # Including build-from-intent.md (12-phase pipeline)
+│   ├── roles/             # Role reference (archived)
+│   ├── wisdom/            # Engineering wisdom (archived)
+│   ├── principles.md      # Engineering principles
 │   └── work-items/        # Work tracking
-├── .meta/                 # Engine core (READ-ONLY)
-│   ├── AGENTS.md          # 12-phase build pipeline
-│   ├── principles.md      # KISS, LEGO, etc.
-│   ├── wisdom/            # Engineering wisdom
-│   ├── patterns/          # Antipatterns, BS detection
-│   ├── roles/             # Role specs
-│   ├── playbooks/         # Structured workflows
-│   └── templates/         # App generation templates
 ├── skills/                # Quality protocols
+├── patterns/              # Antipatterns, BS detection, success patterns
+├── templates/             # App generation templates (engine product)
+├── generators/            # Code generation logic (engine product)
 ├── essence.md             # What makes this engine valuable
 └── [app code]             # codex_mcp_server.py, runtime_adapters/, etc.
 ```
