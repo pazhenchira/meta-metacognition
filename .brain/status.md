@@ -6,11 +6,12 @@
 - None
 
 ## Next
+- Update both MetaAgent and meta-metacognition projects to reflect converged structure
 - Test auto-upgrade by running `scripts/upgrade-app.sh` against a downstream app
 
 ## Blockers
 - None
 
 ## Last Session
-- Date: 2026-03-22
-- Outcome: v3.2.0 complete — merged MetaAgent v0.9.9 patterns + skills system (Turn Report, Self-Challenge Gate, Two-Strike Rule, skills system). Applied to engine's own AGENTS.md (dogfooding). Updated UPGRADING.md with v3.1.1→v3.2.0 path.
+- Date: 2026-03-23
+- Outcome: Merged MetaAgent convergence branch (`feature/metaagent-convergence`). Complete restructure: `.meta/` collapsed into `.brain/` + root `patterns/`, `templates/`, `skills/`. Atlas is now the single orchestrator. MetaAgent v0.10.0 conventions applied. Pushed to origin/main.
