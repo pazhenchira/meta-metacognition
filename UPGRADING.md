@@ -5,9 +5,9 @@
 
 ---
 
-## Current Version (v3.x)
+## Current Version (v4.x)
 
-**Current Engine Version**: 3.2.0  
+**Current Engine Version**: 4.0.0  
 
 ### v3.2.0 Notes (MetaAgent v0.9.9 Patterns + Skills)
 
@@ -30,6 +30,181 @@
 - `skills/structured-challenge.skill.md`
 
 **Source**: Patterns generalized from MetaAgent v0.9.7-v0.9.9 and TA (Technical Advisor) child project's production-proven skills system.
+
+### v4.0.0 Notes (MetaAgent v0.10.0 Convergence)
+
+**Changes** (BREAKING — directory restructure):
+
+- **`.meta/` eliminated**: All engine content moved to `.brain/`, `patterns/`, `templates/`, `skills/`, `generators/` at project root
+- **Atlas orchestrator**: Single unified orchestrator replaces separate `meta-orchestrator.agent.md` + `app-orchestrator.agent.md`
+- **8 Habits system**: Orient, Deliberate, Delegate, Verify, Learn, Ship, Document, Report
+- **Skills system expanded**: 6 full quality protocol skills (was 3 stubs)
+- **`.brain/` project brain**: `config.yaml`, `lessons.md`, `status.md`, `reflections.md`, `playbooks/`, `wisdom/`, `principles.md`, `roles/`, `context/`
+- **`.github/copilot-instructions.md`**: Lightweight project identity for day-to-day work
+- **Turn Report**: Non-negotiable structural verification on every output turn
+
+**Path Migration Map**:
+
+| Old Path | New Path |
+|----------|----------|
+| `.meta/AGENTS.md` | `.brain/playbooks/build-from-intent.md` |
+| `.meta/principles.md` | `.brain/principles.md` |
+| `.meta/intent.md` | `.brain/context/intent.md` |
+| `.meta/VERSION` | `.brain/meta/engine-version.txt` |
+| `.meta/wisdom/` | `.brain/wisdom/` |
+| `.meta/patterns/` | `patterns/` (root) |
+| `.meta/templates/` | `templates/` (root) |
+| `.meta/generators/` | `generators/` (root) |
+| `.meta/skills/` | `skills/` (root) |
+| `.meta/playbooks/` | `.brain/playbooks/` |
+| `.meta/roles/` | `.brain/roles/` |
+| `.meta/workflows/` | `.brain/playbooks/` |
+| `.github/agents/meta-orchestrator.agent.md` | `.github/agents/atlas.agent.md` |
+| `.github/agents/app-orchestrator.agent.md` | `.github/agents/atlas.agent.md` |
+
+**New Files**:
+- `.brain/config.yaml` — Framework configuration
+- `.brain/lessons.md` — Accumulated operational knowledge
+- `.brain/status.md` — Session re-entrancy state
+- `.brain/reflections.md` — Periodic self-assessment template
+- `.brain/context/domain.md` — Project domain context
+- `.brain/meta/framework-version.txt` — MetaAgent framework version
+- `.github/agents/atlas.agent.md` — Unified orchestrator
+- `.github/copilot-instructions.md` — Project identity
+- `skills/problem-reframing.skill.md` — Break out of stuck patterns
+- `skills/stakeholder-lens.skill.md` — Match stakeholder quality bar
+- `skills/strategic-synthesis.skill.md` — Validate strategic recommendations
+
+---
+
+## v3.2.0 → v4.0.0 Upgrade
+
+**Type**: Breaking (directory restructure)  
+**Effort**: 15 minutes (scripted migration)
+
+### What Changes
+
+- `.meta/` directory eliminated — content distributed to `.brain/`, `patterns/`, `templates/`, `skills/`, `generators/`
+- Single Atlas orchestrator replaces dual meta-orchestrator + app-orchestrator
+- Skills system expanded from 3 stubs to 6 full protocols
+- `.brain/` becomes project brain with config, lessons, status, reflections
+
+### Upgrade Steps
+
+**Step 1: Backup**
+```bash
+cd /path/to/your-project
+git tag v3-backup
+```
+
+**Step 2: Restructure directories**
+```bash
+# Create new structure
+mkdir -p .brain/context .brain/meta .brain/playbooks .brain/wisdom .brain/roles .brain/outputs
+
+# Move engine core
+mv .meta/AGENTS.md .brain/playbooks/build-from-intent.md
+mv .meta/principles.md .brain/principles.md
+mv .meta/intent.md .brain/context/intent.md
+mv .meta/VERSION .brain/meta/engine-version.txt
+
+# Move wisdom and roles into .brain/
+mv .meta/wisdom/* .brain/wisdom/
+mv .meta/roles/* .brain/roles/
+mv .meta/playbooks/* .brain/playbooks/
+
+# Move patterns, templates, generators, skills to root
+mv .meta/patterns/* patterns/
+mv .meta/templates/* templates/
+mv .meta/generators/* generators/
+mv .meta/skills/* skills/
+
+# Move workflows into playbooks
+mv .meta/workflows/* .brain/playbooks/
+```
+
+**Step 3: Copy new files from engine repo**
+```bash
+ENGINE=/path/to/meta-metacognition
+
+# New brain files
+cp $ENGINE/.brain/config.yaml .brain/config.yaml
+cp $ENGINE/.brain/lessons.md .brain/lessons.md  # Or create your own
+cp $ENGINE/.brain/status.md .brain/status.md    # Or create your own
+cp $ENGINE/.brain/reflections.md .brain/reflections.md
+cp $ENGINE/.brain/context/domain.md .brain/context/domain.md
+cp $ENGINE/.brain/meta/framework-version.txt .brain/meta/framework-version.txt
+
+# New agent + instructions
+cp $ENGINE/.github/agents/atlas.agent.md .github/agents/atlas.agent.md
+cp $ENGINE/.github/copilot-instructions.md .github/copilot-instructions.md
+
+# New/expanded skills
+cp $ENGINE/skills/* skills/
+```
+
+**Step 4: Update references**
+```bash
+# Find and fix stale .meta/ references in your project files
+grep -r "\.meta/" --include="*.md" --include="*.json" --include="*.py" --include="*.sh" --include="*.yaml" .
+# Update each reference per the Path Migration Map above
+```
+
+**Step 5: Clean up old structure**
+```bash
+# Remove old agent files
+rm -f .github/agents/meta-orchestrator.agent.md
+rm -f .github/agents/app-orchestrator.agent.md
+
+# Delete the old .meta/ directory
+rm -rf .meta/
+
+# Update root redirects
+echo "# Lessons" > lessons.md
+echo "" >> lessons.md  
+echo "> This file has moved to \`.brain/lessons.md\`. See there for accumulated operational knowledge." >> lessons.md
+
+echo "# Status" > status.md
+echo "" >> status.md
+echo "> This file has moved to \`.brain/status.md\`. See there for current project state." >> status.md
+```
+
+**Step 6: Edit .brain/config.yaml**
+Update with your project's details:
+```yaml
+version: "0.10.0"
+framework:
+  source: "github:pazhenchira/meta-metacognition"
+  version: "0.10.0"
+orchestrator:
+  name: "Atlas"  # Or your project's orchestrator name
+  mode: "self-building"
+project:
+  name: "your-project-name"
+  version: "4.0.0"
+```
+
+**Step 7: Edit .brain/context/domain.md**
+Write a one-line description of your project.
+
+**Step 8: Verify and commit**
+```bash
+# Verify .meta/ is gone
+ls .meta/ 2>/dev/null && echo "ERROR: .meta/ still exists!" || echo "OK: .meta/ removed"
+
+# Verify new structure
+ls .brain/config.yaml .brain/playbooks/build-from-intent.md .brain/principles.md skills/selector.md patterns/antipatterns.md
+
+# Commit
+git add -A
+git commit -m "refactor: converge to MetaAgent v0.10.0 — .meta/ → .brain/ + root directories"
+git push
+```
+
+**Rollback if needed**:
+```bash
+git reset --hard v3-backup
+```
 
 ---
 
@@ -93,7 +268,7 @@ Upgrade the meta-orchestrator engine to the latest version
 Upgrade the engine from https://github.com/pazhenchira/meta-metacognition.git
 ```
 
-**Manual fallback**: `cp -r /path/to/meta-metacognition/.meta ./`
+**Manual fallback**: See "v3.2.0 → v4.0.0 Upgrade" section for full migration steps. The `.meta/` directory no longer exists in the engine — content is now in `.brain/`, `patterns/`, `templates/`, `skills/`, and `generators/`.
 
 ---
 
