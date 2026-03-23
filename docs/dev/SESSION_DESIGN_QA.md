@@ -284,10 +284,10 @@ docs/
 - [ ] Design migration path for existing apps
 
 ### Phase 2: Core Implementation
-- [ ] Refactor `.meta/AGENTS.md` for workspace-centric execution
-- [ ] Create `.meta/generators/` templates
-- [ ] Update `.meta/roles/` with v2.0 responsibilities
-- [ ] Update `.meta/workflows/` with review gates
+- [ ] Refactor `.brain/playbooks/build-from-intent.md` for workspace-centric execution
+- [ ] Create `generators/` templates
+- [ ] Update `.brain/roles/` with v2.0 responsibilities
+- [ ] Update `.brain/playbooks/` with review gates
 
 ### Phase 3: Testing
 - [ ] Build sample app (OptionsTrader) with v2.0
@@ -328,4 +328,4 @@ docs/
 
 **Approval**: User confirmed all design decisions
 
-**Next Action**: Implement in `.meta/AGENTS.md` and supporting files
+**Next Action**: Implement in `.brain/playbooks/build-from-intent.md` and supporting files

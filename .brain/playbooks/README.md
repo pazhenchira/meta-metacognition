@@ -15,7 +15,7 @@ Structured checklists for common workflows. Load playbooks into your TODO tracke
 ## Usage
 
 1. Identify task type
-2. Read playbook: `view('.meta/playbooks/<playbook>.md')`
+2. Read playbook: `view('.brain/playbooks/<playbook>.md')`
 3. Load checklist into `update_todo()`
 4. Check off items as you complete
 5. **Never report done until all items checked**

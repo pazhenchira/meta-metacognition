@@ -137,7 +137,7 @@ These docs help you understand the system without diving into code first.
 ## Related Documentation
 
 - **User Documentation**: See `docs/user/` for customer-facing docs
-- **Engine Documentation**: See root `.meta/` for meta-orchestrator engine
+- **Engine Documentation**: See `.brain/` for meta-orchestrator engine
 - **Specifications**: See `specs/` for immutable feature/design/test specs
 - **LEGO Documentation**: See `legos/*/README.md` for component docs
 

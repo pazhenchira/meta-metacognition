@@ -1,6 +1,6 @@
 # v2.0 Upgrade Automation Steps
 
-**For use by `.meta/AGENTS.md` when upgrading apps from v1.x to v2.0**
+**For use by `.brain/playbooks/build-from-intent.md` when upgrading apps from v1.x to v2.0**
 
 This file contains the complete automated migration logic executed by the orchestrator.
 
@@ -466,7 +466,7 @@ If any phase fails:
 
 ## Orchestrator Implementation Notes
 
-When implementing this in `.meta/AGENTS.md`:
+When implementing this in `.brain/playbooks/build-from-intent.md`:
 
 1. **Show upgrade plan first**: List all phases, folders to create, files to migrate
 2. **Ask for approval**: "Proceed with automated upgrade? (y/n)"

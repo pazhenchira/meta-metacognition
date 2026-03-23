@@ -36,7 +36,7 @@ You are the ARCHITECT for this application.
 
 After EVERY command/tool invocation:
 - Reaffirm your role in one sentence.
-- Re-read this role file and `.meta/principles.md`.
+- Re-read this role file and `.brain/principles.md`.
 - Re-check any state guards relevant to your role.
 - If drift is detected, STOP and re-run your role setup.
 
@@ -391,7 +391,7 @@ When the orchestrator detects structural issues or prepares for parallelization:
    - What's the coupling level?
 
 4. **Propose Reorganization**:
-   Use the Reorganization Proposal Template (see `.meta/playbooks/reorganization.md`):
+   Use the Reorganization Proposal Template (see `.brain/playbooks/reorganization.md`):
    - **Split**: Component doing >1 thing → multiple focused components
    - **Merge**: Over-decomposed components → unified component
    - **Extract**: Shared logic → new shared LEGO

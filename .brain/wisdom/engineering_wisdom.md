@@ -358,7 +358,7 @@ Distilled principles from legendary engineers and computer scientists. Each prin
 - Systematically check each principle
 - Document which wisdom was applied
 - **Check for outdated patterns**: If code references external APIs, packages, or frameworks:
-  - Trigger web research (see `[P-WEB]` in `.meta/principles.md`)
+  - Trigger web research (see `[P-WEB]` in `.brain/principles.md`)
   - Verify current versions, API signatures, security advisories
   - Flag deprecated patterns for update
 
@@ -402,7 +402,7 @@ Distilled principles from legendary engineers and computer scientists. Each prin
 4. If information conflicts with training data, prefer current documentation
 5. Flag if unable to verify currency (user should manually check)
 
-**Related**: See `[P-WEB]` in `.meta/principles.md` for detailed guidance on when/what/how to search.
+**Related**: See `[P-WEB]` in `.brain/principles.md` for detailed guidance on when/what/how to search.
 
 ---
 

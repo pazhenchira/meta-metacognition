@@ -75,12 +75,14 @@ When you clone or use this template, you get:
 
 ```
 meta-metacognition/
-├── .meta/                          ← The engine (don't edit unless improving the engine)
-│   ├── AGENTS.md                   ← How the meta-orchestrator works
-│   ├── principles.md               ← Engineering principles (KISS, LEGO, etc.)
+├── .brain/                         ← The engine brain (playbooks, roles, wisdom, principles)
+│   ├── playbooks/                  ← How the meta-orchestrator works
+│   ├── roles/                      ← Role definitions (architect, developer, etc.)
 │   ├── wisdom/                     ← 50+ principles from legendary engineers
-│   ├── patterns/                   ← Antipatterns, success patterns
-│   └── templates/                  ← Reference templates
+│   └── principles.md              ← Engineering principles (KISS, LEGO, etc.)
+│
+├── patterns/                       ← Antipatterns, success patterns
+├── templates/                      ← Reference templates
 │
 ├── app_intent.md                   ← 👉 YOU EDIT THIS: Describe your app
 ├── APP_VERSION                     ← App version (bump on every change)
@@ -95,7 +97,7 @@ meta-metacognition/
     └── AGENTS.md                   ← Guide for future AI development of YOUR app
 ```
 
-**Key point**: Everything in `.meta/` is the engine. Everything outside is your app.
+**Key point**: Everything in `.brain/`, `patterns/`, and `templates/` is the engine. Everything outside is your app.
 
 ---
 
@@ -197,10 +199,10 @@ Note: Sub-agent support depends on the runtime; MCP is one mechanism, not the on
 # 1. In repository directory, run: codex
 # 2. Codex automatically reads AGENTS.md for instructions
 # 3. Say: "Build the app from app_intent.md"
-# ✅ Engine logic from .meta/AGENTS.md applied automatically
+# ✅ Engine logic from .brain/playbooks/build-from-intent.md applied automatically
 
 # === OPTION 3: Manual Activation (Any Runtime, Any Version) ===
-@workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
+@workspace Act as the meta-orchestrator in .brain/playbooks/build-from-intent.md and build this app
 
 # The system will:
 # ✅ Ask you 2-3 clarifying questions
@@ -624,11 +626,11 @@ See [UPGRADING.md](UPGRADING.md) for detailed upgrade workflows.
 
 | File | Purpose |
 |------|---------||
-| `.meta/AGENTS.md` | Meta-orchestrator behavior (the "brain") |
-| `.meta/principles.md` | Engineering principles (KISS, LEGO, etc.) |
-| `.meta/intent.md` | Meta-cognitive philosophy |
-| `.meta/wisdom/` | 24,000 lines of engineering wisdom |
-| `.meta/patterns/` | Antipatterns, success patterns, trade-off matrices |
+| `.brain/playbooks/build-from-intent.md` | Meta-orchestrator behavior (the "brain") |
+| `.brain/principles.md` | Engineering principles (KISS, LEGO, etc.) |
+| `.brain/context/intent.md` | Meta-cognitive philosophy |
+| `.brain/wisdom/` | 24,000 lines of engineering wisdom |
+| `patterns/` | Antipatterns, success patterns, trade-off matrices |
 
 ### Files The System Generates (In Your App Directory)
 
@@ -862,9 +864,9 @@ See [UPGRADING.md](UPGRADING.md) for detailed maintenance workflows.
 ### Core Documentation
 
 - **[CHANGELOG.md](CHANGELOG.md)** - Complete version history (v1.0.0 → v1.5.0), upgrade paths, feature timeline
-- **[.meta/AGENTS.md](.meta/AGENTS.md)** - The meta-orchestrator's "brain" (how it makes decisions)
+- **[.brain/playbooks/build-from-intent.md](.brain/playbooks/build-from-intent.md)** - The meta-orchestrator's "brain" (how it makes decisions)
 - **[INTUITION.md](INTUITION.md)** - Complete wisdom system (50+ principles, antipatterns, success patterns)
-- **[.meta/principles.md](.meta/principles.md)** - Global design principles (KISS, LEGO, testing, privacy)
+- **[.brain/principles.md](.brain/principles.md)** - Global design principles (KISS, LEGO, testing, privacy)
 
 ### Workflows & Guides
 
@@ -876,9 +878,9 @@ See [UPGRADING.md](UPGRADING.md) for detailed maintenance workflows.
 
 ### Deep Dives
 
-- **[.meta/intent.md](.meta/intent.md)** - Meta-orchestrator's operational philosophy
-- **[.meta/wisdom/](.meta/wisdom/)** - Engineering wisdom from legendary figures (Kernighan, Knuth, Taleb, etc.)
-- **[.meta/patterns/](.meta/patterns/)** - Antipatterns to avoid, success patterns to follow, trade-off matrices
+- **[.brain/context/intent.md](.brain/context/intent.md)** - Meta-orchestrator's operational philosophy
+- **[.brain/wisdom/](.brain/wisdom/)** - Engineering wisdom from legendary figures (Kernighan, Knuth, Taleb, etc.)
+- **[patterns/](patterns/)** - Antipatterns to avoid, success patterns to follow, trade-off matrices
 - **[runtime_adapters/](runtime_adapters/)** - How to add support for new AI tools (future feature)
 
 ---
@@ -922,10 +924,10 @@ Want to improve the meta-orchestrator itself? Here's how:
 
 **You should edit these files** if you want to make the meta-orchestrator smarter:
 
-- **.meta/AGENTS.md** - Core orchestration logic
-- **.meta/principles.md** - Design principles
-- **.meta/wisdom/** - Add new engineering wisdom or principles
-- **.meta/patterns/** - Add new antipatterns or success patterns
+- **.brain/playbooks/build-from-intent.md** - Core orchestration logic
+- **.brain/principles.md** - Design principles
+- **.brain/wisdom/** - Add new engineering wisdom or principles
+- **patterns/** - Add new antipatterns or success patterns
 
 **Submit a PR with**:
 1. Clear description of what you're improving
@@ -987,13 +989,13 @@ MIT License - See [LICENSE](LICENSE) file
 # 1. Fill in app_intent.md with your idea
 # 2. Run:
 # OPTION A (v1.7.1+): Click agent picker → "Meta-Orchestrator" → "Build the app"
-# OPTION B (any version): @workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
+# OPTION B (any version): @workspace Act as the meta-orchestrator in .brain/playbooks/build-from-intent.md and build this app
 
 # === ADD FEATURE TO EXISTING APP ===
 # 1. Edit app_intent.md to add the feature
 # 2. Run:
 # OPTION A (v1.7.1+): Click agent picker → "App Orchestrator" → "Add feature from app_intent.md"
-# OPTION B (any version): @workspace Act as meta-orchestrator (.meta/AGENTS.md). Add feature from app_intent.md (MAINTENANCE MODE)
+# OPTION B (any version): @workspace Act as meta-orchestrator (.brain/playbooks/build-from-intent.md). Add feature from app_intent.md (MAINTENANCE MODE)
 
 # === UPGRADE META-ORCHESTRATOR ===
 # Just tell your orchestrator:
@@ -1004,11 +1006,11 @@ MIT License - See [LICENSE](LICENSE) file
 "src/my_file.py": {"user_modified": true}
 
 # === CHECK VERSION ===
-cat .meta/VERSION   # Shows current meta-orchestrator engine version (3.1.1)
+cat .brain/meta/engine-version.txt   # Shows current meta-orchestrator engine version (3.1.1)
 ```
 
 **Pro Tip (v1.7.1+)**: Use the VS Code Copilot agent picker dropdown for quickest activation. No activation phrases to remember!
 
 ---
 
-**Remember**: This README is for humans learning the system. The .meta/AGENTS.md is the detailed technical contract for the AI. 🙂
+**Remember**: This README is for humans learning the system. The .brain/playbooks/build-from-intent.md is the detailed technical contract for the AI. 🙂

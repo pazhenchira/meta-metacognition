@@ -61,21 +61,21 @@ my-awesome-app/                    # Git-enabled repository root
 ├── .app/                          # 🧠 READ-ONLY AGENT BRAIN (frozen except during upgrades)
 │   ├── AGENTS.md                  # App orchestrator (self-contained, no .meta/ refs)
 │   ├── essence.md                 # App's value proposition
-│   ├── roles/                     # ROLE-SPECIFIC INSTRUCTIONS (adapted from .meta/roles/)
+│   ├── roles/                     # ROLE-SPECIFIC INSTRUCTIONS (adapted from .brain/roles/)
 │   │   ├── product_manager.md     # PM sees ONLY PM wisdom/instructions
 │   │   ├── architect.md           # Architect sees ONLY Architect wisdom
 │   │   ├── developer.md           # Developer sees ONLY Developer wisdom
 │   │   ├── tester.md              # Tester sees ONLY Tester wisdom
 │   │   ├── writer.md              # Writer sees ONLY Writer wisdom
 │   │   └── operations.md          # Operations sees ONLY Ops wisdom (required)
-│   ├── workflows/                 # Workflow definitions (adapted from .meta/workflows/)
+│   ├── workflows/                 # Workflow definitions (adapted from .brain/playbooks/)
 │   │   ├── new_feature.md
 │   │   ├── enhancement.md
 │   │   ├── bug_fix.md
 │   │   └── REVIEW_GATES.md
 │   ├── wisdom/                    # Inlined principles (no external refs)
 │   │   └── core_principles.md
-│   └── .engine-version            # Which .meta/VERSION built this (e.g., "2.0.0")
+│   └── .engine-version            # Which .brain/meta/engine-version.txt built this (e.g., "2.0.0")
 │
 ├── .workspace/                    # ⚙️ ACTIVE WORK AREA (ephemeral per work item)
 │   ├── tracker.json               # 🎯 GLOBAL WORK ITEM LOG (survives workspace deletion)
@@ -541,10 +541,10 @@ For existing apps built with meta-orchestrator v1.x:
 
 ## Next Steps
 
-1. **Implement in `.meta/AGENTS.md`**: Refactor orchestration logic for v2.0
-2. **Create templates**: `.meta/generators/` for `.app/` folder generation
-3. **Update role files**: `.meta/roles/` with v2.0 responsibilities
-4. **Update workflows**: `.meta/workflows/` with workspace-centric execution
+1. **Implement in `.brain/playbooks/build-from-intent.md`**: Refactor orchestration logic for v2.0
+2. **Create templates**: `generators/` for `.app/` folder generation
+3. **Update role files**: `.brain/roles/` with v2.0 responsibilities
+4. **Update workflows**: `.brain/playbooks/` with workspace-centric execution
 5. **Test with sample app**: Build OptionsTrader with v2.0 architecture
 6. **Document**: Update README.md, CHANGELOG.md, UPGRADING.md
 

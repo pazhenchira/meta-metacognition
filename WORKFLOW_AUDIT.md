@@ -894,4 +894,4 @@ COMPLETE    .workspace/WI-XXX/ DELETED, artifacts promoted
 **For complete details, see**:
 - WORK_ITEM_TRACKER.md (tracker.json spec)
 - PROPOSED_WORKFLOWS.md (detailed workflows)
-- .meta/roles/*.md (role responsibilities)
+- .brain/roles/*.md (role responsibilities)

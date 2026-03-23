@@ -9,7 +9,7 @@
 
 ### 1. Document-Driven Orchestration (Not Code)
 
-**Decision**: Use Markdown files (.meta/AGENTS.md) for orchestration logic, not Python/JavaScript code.
+**Decision**: Use Markdown files (.brain/playbooks/build-from-intent.md) for orchestration logic, not Python/JavaScript code.
 
 **Rationale**:
 - **Portability**: Works with any LLM runtime (Codex CLI, GitHub Copilot, OpenAI API)
@@ -81,7 +81,7 @@
 
 ### 4. Wisdom as First-Class Citizen
 
-**Decision**: 24,000+ lines of curated engineering wisdom in .meta/wisdom/*.md files.
+**Decision**: 24,000+ lines of curated engineering wisdom in .brain/wisdom/*.md files.
 
 **Rationale**:
 - **Quality over speed**: Better to build right than rebuild later
@@ -199,13 +199,13 @@
 **Why**:
 - Portability: Same orchestration logic works across runtimes
 - KISS: Adapters hide complexity (spawn session, check status, get output)
-- Extensibility: Add new runtimes without changing .meta/AGENTS.md
+- Extensibility: Add new runtimes without changing .brain/playbooks/build-from-intent.md
 
 ---
 
 ## Component Breakdown
 
-### Core Engine (.meta/)
+### Core Engine (.brain/ + root directories)
 
 **AGENTS.md** (926 lines):
 - 12 phases (0-11) from version check to deployment
@@ -301,7 +301,7 @@
 
 ### Space Complexity
 
-**Engine size**: ~50MB (.meta/ directory with wisdom)
+**Engine size**: ~50MB (.brain/ directory with wisdom)
 **Generated app**: 1-10MB (depends on features)
 **State files**: <1MB (JSON state management)
 
@@ -313,13 +313,13 @@
 
 **Threats**:
 1. Malicious app_intent.md (code injection via prompt)
-2. Compromised .meta/ files (altered wisdom → bad advice)
+2. Compromised .brain/ files (altered wisdom → bad advice)
 3. State file tampering (orchestrator_state.json manipulation)
 4. Sensitive data in generated apps (API keys, passwords)
 
 **Mitigations**:
 1. App intent is data, not code (no eval() calls)
-2. .meta/ files tracked in git (tamper-evident)
+2. .brain/ files tracked in git (tamper-evident)
 3. State files validated (schema checks on load)
 4. Red-team review for sensitive apps (security audit)
 

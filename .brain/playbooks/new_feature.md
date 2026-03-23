@@ -159,7 +159,7 @@ Use this workflow only for **new capabilities or behavior changes**.
 
 2. **Create Feature Specification**:
    - File: `specs/features/FR-{NNN}-{short-name}.md`
-   - Follows template from `.meta/artifacts/templates/feature_spec.template.md`
+   - Follows template from `templates/feature_spec.template.md`
    - Immutable once approved
 
 3. **Define Acceptance Criteria**:

@@ -23,7 +23,7 @@ If you want to use the system to build an app, start here: [docs/GETTING_STARTED
 
 ## What this repository contains
 
-- The engine itself in `.meta/` (principles, wisdom, patterns, templates).
+- The engine itself in `.brain/` and root directories (principles, wisdom, patterns, templates).
 - Documentation on how the engine thinks and operates.
 - A minimal entry point (`app_intent.md`) for describing the app you want it to build.
 
@@ -31,7 +31,9 @@ If you want to use the system to build an app, start here: [docs/GETTING_STARTED
 
 ```
 meta-metacognition/
-|- .meta/             # Engine (edit only when improving the engine)
+|- .brain/            # Engine brain (playbooks, roles, wisdom, principles)
+|- patterns/          # Antipatterns and success patterns
+|- templates/         # Templates for generated artifacts
 |- app_intent.md      # You edit this to describe the app you want
 |- meta_config.json   # Optional behavior flags
 |- docs/              # Guides and deeper explanations
@@ -69,8 +71,8 @@ For system repos, the engine defaults to `tracked` unless you choose otherwise.
 ## Where to go next
 
 - **Getting started**: [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)
-- **Engine intent**: [.meta/intent.md](.meta/intent.md)
-- **Orchestration logic**: [.meta/AGENTS.md](.meta/AGENTS.md)
+- **Engine intent**: [.brain/context/intent.md](.brain/context/intent.md)
+- **Orchestration logic**: [.brain/playbooks/build-from-intent.md](.brain/playbooks/build-from-intent.md)
 - **Wisdom system**: [INTUITION.md](INTUITION.md)
 - **Upgrade guide**: [UPGRADING.md](UPGRADING.md)
 - **Testing philosophy**: [TESTING_STRATEGY.md](TESTING_STRATEGY.md)

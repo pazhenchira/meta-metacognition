@@ -12,7 +12,7 @@ Your job is to maintain, extend, and improve the meta-orchestrator using its own
 
 1. **Check Repository State**:
    - This is the meta-orchestrator ENGINE repository (not an app built by it)
-   - Core engine files are in `.meta/` (AGENTS.md, principles.md, wisdom/, patterns/, templates/)
+   - Core engine files are in `.brain/` and root directories (`patterns/`, `templates/`, `skills/`)
    - Documentation files are in root (README.md, CHANGELOG.md, UPGRADING.md, etc.)
    - Runtime adapters are in `runtime_adapters/`
 
@@ -23,26 +23,26 @@ Your job is to maintain, extend, and improve the meta-orchestrator using its own
 
 3. **Reaffirm Your Authority**:
    - Make ALL technical and architectural decisions autonomously
-   - Use `.meta/principles.md` for KISS, LEGO, Thompson #5
-   - Use `.meta/wisdom/` for engineering guidance (Thompson, Knuth, Pike, Kernighan)
-   - Use `.meta/patterns/` for antipatterns and success patterns
+   - Use `.brain/principles.md` for KISS, LEGO, Thompson #5
+   - Use `.brain/wisdom/` for engineering guidance (Thompson, Knuth, Pike, Kernighan)
+   - Use `patterns/` for antipatterns and success patterns
    - Respect the meta-orchestrator's own philosophy when improving it
    - ONLY ask users about ENGINE requirements (what features to add, not how)
 
 4. **Reaffirm Your Knowledge Sources**:
    - `AGENTS.md` (this file) ← Maintenance guidelines for the engine itself
-   - `.meta/AGENTS.md` ← How the meta-orchestrator builds apps (its core logic)
-   - `.meta/principles.md` ← Global engineering principles (apply to engine code)
-   - `.meta/wisdom/` ← Expert engineering wisdom (guide engine improvements)
-   - `.meta/patterns/` ← Antipatterns and success patterns (detect in engine code)
-   - `.meta/intent.md` ← Meta-orchestrator's design philosophy
+   - `.brain/playbooks/build-from-intent.md` ← How the meta-orchestrator builds apps (its core logic)
+   - `.brain/principles.md` ← Global engineering principles (apply to engine code)
+   - `.brain/wisdom/` ← Expert engineering wisdom (guide engine improvements)
+   - `patterns/` ← Antipatterns and success patterns (detect in engine code)
+   - `.brain/context/intent.md` ← Meta-orchestrator's design philosophy
    - `CHANGELOG.md` ← Version history and feature evolution
    - `UPGRADING.md` ← How apps upgrade between versions
 
 5. **Determine Next Action**:
-   - If user asks for new engine feature: Evaluate impact on `.meta/AGENTS.md` workflow
+   - If user asks for new engine feature: Evaluate impact on `.brain/playbooks/build-from-intent.md` workflow
    - If user reports engine bug: Identify affected phase/section, apply wisdom to fix
-   - If user asks "how does the engine work?": Explain using `.meta/AGENTS.md` phases
+   - If user asks "how does the engine work?": Explain using `.brain/playbooks/build-from-intent.md` phases
    - Apply evaluation framework (antipatterns, LEGO principles, quality metrics)
 
 **Never forget this checklist exists. Run it mentally on every turn.**
@@ -112,7 +112,7 @@ The meta-orchestrator is the only AI system that:
 1. User reads README.md (human-centric explanation)
 2. Understands the "virtual CTO" concept
 3. Edits `app_intent.md` with their idea
-4. Runs `@workspace Act as meta-orchestrator in .meta/AGENTS.md and build this app`
+4. Runs `@workspace Act as meta-orchestrator in .brain/playbooks/build-from-intent.md and build this app`
 
 **Build Phase**:
 1. Meta-orchestrator asks 2-3 clarifying questions
@@ -261,7 +261,7 @@ These LEGOs deliver the meta-orchestrator's unique value:
 - ✅ **Retry Logic Pattern**: LEGO-Orchestrators retry failed substeps up to 3 times
 - ✅ **Fail-Safe Defaults Pattern**: Sensible defaults (r_and_d_mode="fast", require_lego_plan_approval=true)
 - ✅ **State Machine Pattern**: orchestrator_state.json tracks pipeline phases
-- ✅ **Template Method Pattern**: .meta/templates/ for consistent artifact generation
+- ✅ **Template Method Pattern**: templates/ for consistent artifact generation
 
 **In Generated Apps**:
 - Engine recommends these patterns based on app requirements (sensitive data → Circuit Breaker, etc.)
@@ -281,7 +281,7 @@ These LEGOs deliver the meta-orchestrator's unique value:
 - Alternative considered: Always thorough (rejected: too slow for iteration)
 
 **Flexibility vs Consistency**:
-- Decision: Consistent structure (.meta/ engine files) + flexible app_intent.md
+- Decision: Consistent structure (.brain/ + root engine files) + flexible app_intent.md
 - Rationale: Users get reliable behavior, can express any app idea
 - Alternative considered: Free-form prompts (rejected: unpredictable results)
 
@@ -299,7 +299,7 @@ These LEGOs deliver the meta-orchestrator's unique value:
 
 ## DEVELOPMENT GUIDELINES
 
-**When Modifying `.meta/AGENTS.md`**:
+**When Modifying `.brain/playbooks/build-from-intent.md`**:
 - Each phase must have clear inputs, outputs, exit criteria
 - Maintain GEN+REVIEW pattern for all artifacts
 - Add wisdom citations when introducing new principles
@@ -313,10 +313,10 @@ These LEGOs deliver the meta-orchestrator's unique value:
 - Add to relevant file (engineering_wisdom.md, strategic_wisdom.md, design_wisdom.md, risk_wisdom.md)
 
 **When Adding Templates**:
-- Place in `.meta/templates/`
+- Place in `templates/`
 - Use placeholders: {APP_NAME}, {LEGO_NAME}, etc.
 - Include REVIEW NOTES section for generated artifacts
-- Update `.meta/AGENTS.md` to reference template
+- Update `.brain/playbooks/build-from-intent.md` to reference template
 
 **When Updating README.md**:
 - Maintain human-centric, approachable tone
@@ -329,25 +329,25 @@ These LEGOs deliver the meta-orchestrator's unique value:
 2. Add entry to `CHANGELOG.md` with date and features
 3. Update version in README.md
 4. Document upgrade path in `UPGRADING.md`
-5. Update compatibility matrix in `.meta/AGENTS.md` Section 0
+5. Update compatibility matrix in `.brain/playbooks/build-from-intent.md` Section 0
 
 ---
 
 ## COMMON TASKS
 
 **To Add New Meta-Orchestrator Feature**:
-1. Identify which phase it affects (0-12 in `.meta/AGENTS.md`)
+1. Identify which phase it affects (0-12 in `.brain/playbooks/build-from-intent.md`)
 2. Apply evaluation framework (antipatterns? LEGO principles? KISS?)
-3. Update `.meta/AGENTS.md` with new logic
+3. Update `.brain/playbooks/build-from-intent.md` with new logic
 4. Add wisdom citations if introducing new principle
-5. Create template in `.meta/templates/` if needed
+5. Create template in `templates/` if needed
 6. Update CHANGELOG.md with version bump
 7. Add upgrade guidance to UPGRADING.md
 8. Test by building sample app with new feature
 9. Update README.md if user-visible change
 
 **To Fix Bug in Orchestration Logic**:
-1. Identify affected phase in `.meta/AGENTS.md`
+1. Identify affected phase in `.brain/playbooks/build-from-intent.md`
 2. Review wisdom principles (is this violating KISS? Thompson #5?)
 3. Apply antipattern detection (God Object? Golden Hammer?)
 4. Fix with simplest correct solution
@@ -361,7 +361,7 @@ These LEGOs deliver the meta-orchestrator's unique value:
 3. Add to appropriate wisdom file (engineering, strategic, design, risk)
 4. Include proper citation (author, title, year, page/timestamp)
 5. Provide concrete examples and antipatterns
-6. Reference in `.meta/AGENTS.md` where applicable
+6. Reference in `.brain/playbooks/build-from-intent.md` where applicable
 7. Update wisdom file count in README.md
 
 **To Improve Documentation**:
@@ -378,25 +378,26 @@ These LEGOs deliver the meta-orchestrator's unique value:
 
 ```
 meta-metacognition/
-├── .meta/                          # ENGINE (don't touch unless upgrading engine)
-│   ├── AGENTS.md                   # Meta-orchestrator orchestration logic
-│   ├── principles.md               # Global engineering principles (KISS, LEGO, etc.)
-│   ├── intent.md                   # Meta-orchestrator design philosophy
-│   ├── VERSION                     # Current engine version
+├── .brain/                         # ENGINE brain (playbooks, roles, wisdom, principles)
+│   ├── playbooks/                  # Orchestration playbooks (build-from-intent, new-feature, etc.)
+│   ├── roles/                      # Role definitions (architect, developer, tester, etc.)
 │   ├── wisdom/                     # Expert engineering wisdom
 │   │   ├── engineering_wisdom.md   # Thompson, Knuth, Pike, Kernighan
 │   │   ├── strategic_wisdom.md     # Team dynamics, product decisions
 │   │   ├── design_wisdom.md        # UX principles, simplicity
 │   │   └── risk_wisdom.md          # Security (Schneier, Saltzer & Schroeder)
-│   ├── patterns/                   # Antipatterns and success patterns
-│   │   ├── antipatterns.md         # God Object, Golden Hammer, etc.
-│   │   ├── success_patterns.md     # Circuit Breaker, Config Validator, etc.
-│   │   └── trade_off_matrix.md     # Decision frameworks
-│   └── templates/                  # Templates for generated artifacts
-│       ├── AGENTS.template.md      # App-specific orchestrator template
-│       ├── .meta-version.template
-│       ├── .meta-manifest.template.json
-│       └── .app_orchestration.template.md
+│   ├── principles.md               # Global engineering principles (KISS, LEGO, etc.)
+│   ├── context/                    # Engine context (intent, domain)
+│   └── meta/                       # Engine metadata (version, etc.)
+├── patterns/                       # Antipatterns and success patterns
+│   ├── antipatterns.md             # God Object, Golden Hammer, etc.
+│   ├── success_patterns.md         # Circuit Breaker, Config Validator, etc.
+│   └── trade_off_matrix.md         # Decision frameworks
+├── templates/                      # Templates for generated artifacts
+│   ├── AGENTS.template.md          # App-specific orchestrator template
+│   ├── .meta-version.template
+│   ├── .meta-manifest.template.json
+│   └── .app_orchestration.template.md
 ├── runtime_adapters/               # Runtime abstraction layer
 │   ├── adapter_interface.md        # Adapter contract
 │   ├── codex_cli_adapter.sh        # Codex CLI implementation
@@ -416,8 +417,8 @@ meta-metacognition/
 ```
 
 **Key Insights**:
-- `.meta/` contains the engine (stable across apps)
-- Root contains engine documentation (helps users understand/upgrade)
+- `.brain/` contains the engine's brain (playbooks, roles, wisdom, principles)
+- Root directories (`patterns/`, `templates/`, `skills/`) contain reusable components
 - `app_intent.md` is example only (users replace with their app idea)
 - `AGENTS.md` (this file) applies engine's philosophy to itself (dogfooding)
 
@@ -439,11 +440,11 @@ This is the natural way to improve the engine. User simply asks, you clarify, pr
    - Specific requirements? (e.g., "What problem does this solve?")
    - Constraints? (e.g., "Backward compatible?")
    - Impact scope? (e.g., "Affects NEW APP mode only or all modes?")
-   - Breaking changes? (e.g., "Changes to .meta/AGENTS.md workflow?")
+   - Breaking changes? (e.g., "Changes to .brain/playbooks/build-from-intent.md workflow?")
 
 3. **Generate Proposed Update**:
    - Distill conversation into clear feature/fix description
-   - Identify affected files (.meta/AGENTS.md, templates/, wisdom/, etc.)
+   - Identify affected files (.brain/playbooks/build-from-intent.md, templates/, wisdom/, etc.)
    - Apply wisdom (KISS, LEGO, Thompson #5)
    - Estimate version bump (major/minor/patch)
 
@@ -453,8 +454,8 @@ This is the natural way to improve the engine. User simply asks, you clarify, pr
    
    --- PROPOSED CHANGES ---
    Files affected:
-   - .meta/AGENTS.md (add Phase X for feature Y)
-   - .meta/templates/AGENTS.template.md (propagate to apps)
+   - .brain/playbooks/build-from-intent.md (add Phase X for feature Y)
+   - templates/AGENTS.template.md (propagate to apps)
    - CHANGELOG.md (version bump to Z)
    
    Rationale: [cite wisdom principles]
@@ -467,7 +468,7 @@ This is the natural way to improve the engine. User simply asks, you clarify, pr
 
 5. **If Approved**:
    - Implement changes following KISS and LEGO principles
-   - Update version files (.meta/VERSION, .meta-version)
+   - Update version files (.brain/meta/engine-version.txt, .meta-version)
    - Update CHANGELOG.md with comprehensive entry
    - Update UPGRADING.md if needed
    - Update README.md if user-visible
@@ -495,19 +496,19 @@ User is experienced with engine internals and wants direct control.
 ### Common Workflow (After Plan Approved)
 
 1. **Evaluate Request**:
-   - Read `.meta/intent.md` to understand engine philosophy
+   - Read `.brain/context/intent.md` to understand engine philosophy
    - Check if request aligns with KISS, LEGO, Thompson #5
-   - Review `.meta/principles.md` for relevant guidance
+   - Review `.brain/principles.md` for relevant guidance
    - Consider impact on existing apps (breaking changes?)
 
-2. **Apply Evaluation Framework** (from `.meta/AGENTS.md` Phase 1.5):
+2. **Apply Evaluation Framework** (from `.brain/playbooks/build-from-intent.md` Phase 1.5):
    - Antipattern Detection: Would this create God Object, Golden Hammer, etc.?
    - LEGO Principles: Does it maintain single responsibility per phase?
    - KISS: Is this the simplest correct solution?
    - Quality Metrics: Will this improve or degrade quality?
 
 3. **Generate Plan**:
-   - List files to modify (.meta/AGENTS.md, wisdom/, patterns/, templates/)
+   - List files to modify (.brain/playbooks/build-from-intent.md, wisdom/, patterns/, templates/)
    - Explain rationale (cite wisdom principles)
    - Show alternatives considered and trade-offs
    - Estimate impact on existing apps (upgrade path needed?)
@@ -529,16 +530,16 @@ User is experienced with engine internals and wants direct control.
 
 ## REFERENCES
 
-- **Meta-Orchestrator Logic**: `.meta/AGENTS.md` ← How the engine builds apps (12 phases)
-- **Global Principles**: `.meta/principles.md` ← KISS, LEGO, Thompson #5, GEN+REVIEW
-- **Engine Philosophy**: `.meta/intent.md` ← Design goals and constraints
-- **Engineering Wisdom**: `.meta/wisdom/engineering_wisdom.md` ← Thompson, Knuth, Pike, Kernighan
-- **Strategic Wisdom**: `.meta/wisdom/strategic_wisdom.md` ← Team dynamics, product decisions
-- **Design Wisdom**: `.meta/wisdom/design_wisdom.md` ← UX principles, simplicity
-- **Risk Wisdom**: `.meta/wisdom/risk_wisdom.md` ← Security (Schneier, Saltzer & Schroeder)
-- **Antipatterns**: `.meta/patterns/antipatterns.md` ← What to avoid
-- **Success Patterns**: `.meta/patterns/success_patterns.md` ← Circuit Breaker, Config Validator, etc.
-- **Trade-off Matrix**: `.meta/patterns/trade_off_matrix.md` ← Decision frameworks
+- **Meta-Orchestrator Logic**: `.brain/playbooks/build-from-intent.md` ← How the engine builds apps (12 phases)
+- **Global Principles**: `.brain/principles.md` ← KISS, LEGO, Thompson #5, GEN+REVIEW
+- **Engine Philosophy**: `.brain/context/intent.md` ← Design goals and constraints
+- **Engineering Wisdom**: `.brain/wisdom/engineering_wisdom.md` ← Thompson, Knuth, Pike, Kernighan
+- **Strategic Wisdom**: `.brain/wisdom/strategic_wisdom.md` ← Team dynamics, product decisions
+- **Design Wisdom**: `.brain/wisdom/design_wisdom.md` ← UX principles, simplicity
+- **Risk Wisdom**: `.brain/wisdom/risk_wisdom.md` ← Security (Schneier, Saltzer & Schroeder)
+- **Antipatterns**: `patterns/antipatterns.md` ← What to avoid
+- **Success Patterns**: `patterns/success_patterns.md` ← Circuit Breaker, Config Validator, etc.
+- **Trade-off Matrix**: `patterns/trade_off_matrix.md` ← Decision frameworks
 - **Version History**: `CHANGELOG.md` ← Feature evolution and dates
 - **Upgrade Guide**: `UPGRADING.md` ← Migration paths between versions
 
@@ -547,7 +548,7 @@ User is experienced with engine internals and wants direct control.
 ## CRITICAL REMINDERS
 
 1. **You are autonomous**: Don't ask "how should I approach this?" - you know how (apply KISS + wisdom)
-2. **You have complete context**: AGENTS.md (this file) + `.meta/` + all documentation
+2. **You have complete context**: AGENTS.md (this file) + `.brain/` + all documentation
 3. **You dogfood the engine**: Apply meta-orchestrator's principles to itself (LEGO, KISS, wisdom)
 4. **You maintain quality**: Engine must follow its own standards (>80% coverage conceptually)
 5. **You document decisions**: Update CHANGELOG.md, UPGRADING.md with rationale
@@ -556,4 +557,4 @@ User is experienced with engine internals and wants direct control.
 
 ---
 
-**Remember**: This file applies the meta-orchestrator's philosophy to itself (dogfooding). When improving the engine, use `.meta/AGENTS.md` as the source of truth for how it should behave, and apply its wisdom to make it better.
+**Remember**: This file applies the meta-orchestrator's philosophy to itself (dogfooding). When improving the engine, use `.brain/playbooks/build-from-intent.md` as the source of truth for how it should behave, and apply its wisdom to make it better.

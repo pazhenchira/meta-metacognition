@@ -102,7 +102,7 @@
 
 **Threat Mitigation**:
 - ✅ No eval() or code execution from user input
-- ✅ Git-tracked .meta/ files (tamper-evident)
+- ✅ Git-tracked .brain/ files (tamper-evident)
 - ✅ Red-team review for sensitive apps
 - ⚠️ API keys in app_intent.md (user education needed)
 - ❌ No sandboxing for generated code (trusts LLM output)
@@ -210,7 +210,7 @@
    - Severity: Low (user shoots own foot, easily detected)
    - Mitigation: State validation on load (future)
 
-3. **Wisdom File Poisoning**: Altered .meta/wisdom/ files
+3. **Wisdom File Poisoning**: Altered .brain/wisdom/ files
    - Severity: High (affects all generated apps)
    - Mitigation: Git-tracked, checksums (future)
 
@@ -220,7 +220,7 @@
 
 **Recommendations**:
 - Conduct formal security audit in v1.7.0
-- Add checksums to .meta/ files
+- Add checksums to .brain/ files
 - Implement automated security scanning for generated code
 - Add fuzzing for state file validation
 
@@ -321,7 +321,7 @@
 
 5. **Security Enhancements**:
    - Automated vulnerability scanning
-   - .meta/ file checksums
+   - .brain/ file checksums
    - State file validation
    - Secret detection in app_intent.md
 

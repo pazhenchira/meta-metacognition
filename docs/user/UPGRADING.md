@@ -61,7 +61,7 @@ cp -r /path/to/meta-metacognition/.meta /path/to/your-app/
 
 # Verify new version
 cd /path/to/your-app
-cat .meta/VERSION
+cat .brain/meta/engine-version.txt
 # Should show: 3.1.1
 ```
 
@@ -240,7 +240,7 @@ Git history is preserved, workspace is restored.
      On every turn, you MUST:
      1. Run the Pre-Flight Checklist (below) - never skip this
      2. Act as autonomous decision-maker - never ask "should I proceed?"
-     3. Apply `.meta/wisdom/` to all decisions - cite principles
+     3. Apply `.brain/wisdom/` to all decisions - cite principles
      4. Maintain architectural alignment - validate against KISS, LEGO, essence
      5. Self-monitor for ratholing - if stuck 3+ iterations, STOP and reassess
      ```
@@ -250,21 +250,21 @@ Git history is preserved, workspace is restored.
 
 ### v1.7.7 → v1.7.8
 
-**Changes**: Agent reference fix - Corrects incorrect `.meta/AGENTS.md` references in generated agent files
+**Changes**: Agent reference fix - Corrects incorrect `.brain/playbooks/build-from-intent.md` references in generated agent files
 
 - **What changed**:
-  - Enhanced `.meta/templates/agent.template.md` with explicit warning about which file to read
-  - Added "DO NOT read `.meta/AGENTS.md`" warning in template
+  - Enhanced `templates/agent.template.md` with explicit warning about which file to read
+  - Added "DO NOT read `.brain/playbooks/build-from-intent.md`" warning in template
   - Added validation steps in Phase 11.2 to verify correct references
   - Added validation steps in UPGRADE mode (Phase 0) to prevent incorrect generation
 
 - **Action required**:
   - **For existing apps**: Check `.github/agents/app-orchestrator.agent.md`
   - **Line 16 should say**: "You read `AGENTS.md` (root) for app-specific logic"
-  - **If says `.meta/AGENTS.md`**: This is the bug - agent will read engine logic instead of app logic
+  - **If says `.brain/playbooks/build-from-intent.md`**: This is the bug - agent will read engine logic instead of app logic
   - **To fix manually**: 
     1. Open `.github/agents/app-orchestrator.agent.md`
-    2. Find line that says "You read `.meta/AGENTS.md`" or references engine file
+    2. Find line that says "You read `.brain/playbooks/build-from-intent.md`" or references engine file
     3. Change to "You read `AGENTS.md` (root) for app-specific logic"
   - **To fix automatically**: Run meta-orchestrator in UPGRADE mode - it will regenerate correctly
 
@@ -341,7 +341,7 @@ Git history is preserved, workspace is restored.
 **Changes**: Web documentation guidance - Agents search online for current API/package information
 
 - **What changed**:
-  - New `[P-WEB]` principle in `.meta/principles.md` guides agents to search online documentation
+  - New `[P-WEB]` principle in `.brain/principles.md` guides agents to search online documentation
   - Phase 4 (REQUIREMENTS): Search for external API documentation, rate limits, pricing
   - Phase 8 (CODING): Verify current package versions, API endpoints, security advisories
   - Phase 9 (REVIEW): Check for outdated patterns, deprecated APIs
@@ -387,7 +387,7 @@ Git history is preserved, workspace is restored.
   - UPGRADE mode generates TWO agent configuration files:
     - `.github/agents/app-orchestrator.agent.md` → GitHub Copilot Chat agent picker
     - `AGENTS.md` (root) → OpenAI Codex CLI memory system
-  - New template: `.meta/templates/AGENTS.codex.template.md` for Codex configuration
+  - New template: `templates/AGENTS.codex.template.md` for Codex configuration
   - Validation checks BOTH files exist
 
 - **Action required**:
@@ -409,7 +409,7 @@ Git history is preserved, workspace is restored.
 - **Runtime-Specific Discovery**:
   - **GitHub Copilot Chat**: Reads `.github/agents/*.agent.md` → Agent picker dropdown
   - **OpenAI Codex CLI**: Reads `AGENTS.md` in directories → Memory/instructions
-  - Both reference same `.meta/AGENTS.md` for engine logic
+  - Both reference same `.brain/playbooks/build-from-intent.md` for engine logic
 
 ---
 
@@ -489,7 +489,7 @@ Git history is preserved, workspace is restored.
 - **What changed**: 
   - Removed `tools` field from `.github/agents/*.agent.md` files
   - Custom agents now have full capabilities (terminal, file editing, all tools)
-  - `.meta/templates/agent.template.md` updated (no tools restriction)
+  - `templates/agent.template.md` updated (no tools restriction)
   
 - **Action required**: 
   - **Automatic for new apps**: Generated agents have full capabilities
@@ -531,7 +531,7 @@ Git history is preserved, workspace is restored.
     ```bash
     @workspace Act as meta-orchestrator. Upgrade this app to v1.7.1 (ENGINE UPGRADE MODE)
     ```
-  - **Manual alternative**: Create `.github/agents/{your-app}.agent.md` using `.meta/templates/agent.template.md`
+  - **Manual alternative**: Create `.github/agents/{your-app}.agent.md` using `templates/agent.template.md`
   
 - **Breaking changes**: None
 
@@ -812,7 +812,7 @@ mv runtime_adapters/ .meta/
 - Can update `.meta/` without touching app code
 - Can version control `.meta/` separately (git submodule or subtree)
 
-#### 2. `.meta/VERSION` File
+#### 2. `.brain/meta/engine-version.txt` File
 
 ```
 1.0.0
@@ -1054,7 +1054,7 @@ If you can’t decide, it will default to **single-session role switching**.
 
 ---
 
-## Implementation in .meta/AGENTS.md
+## Implementation in .brain/playbooks/build-from-intent.md
 
 Add new section **"0. VERSION CHECK & UPGRADE MODE"**:
 
@@ -1074,7 +1074,7 @@ Before starting the pipeline, check if this is a new app or an upgrade:
 3. **UPGRADE MODE**:
    - Read `.meta-version` to see app's current meta-orchestrator version
    - Read `.meta-manifest.json` to see user-modified files
-   - Compare with current meta-orchestrator `.meta/VERSION`
+   - Compare with current meta-orchestrator `.brain/meta/engine-version.txt`
    - If versions match: MAINTENANCE MODE (fix bugs, add features to existing app)
    - If versions differ: UPGRADE MODE (apply new meta-orchestrator features)
 
@@ -1140,7 +1140,7 @@ codex exec "Read .meta/ for new meta-orchestrator engine. \
 ## Summary
 
 ✅ **Use `.meta/` directory** for clean separation  
-✅ **Track versions** with `.meta-version` and `.meta/VERSION`  
+✅ **Track versions** with `.meta-version` and `.brain/meta/engine-version.txt`  
 ✅ **Protect user changes** with `.meta-manifest.json`  
 ✅ **Upgrade safely** with approval workflow  
 ✅ **Test on branches** before merging  
@@ -1158,8 +1158,8 @@ This enables:
 ### Upgrading to v1.6.0 (Stateless Runtime Support)
 
 **New Features**:
-- Pre-flight Checklist in `.meta/AGENTS.md` (prevents agent amnesia)
-- App-specific AGENTS.md template (`.meta/templates/AGENTS.template.md`)
+- Pre-flight Checklist in `.brain/playbooks/build-from-intent.md` (prevents agent amnesia)
+- App-specific AGENTS.md template (`templates/AGENTS.template.md`)
 - Meta-orchestrator self-maintenance (`AGENTS.md` in root)
 
 **Breaking Changes**: None

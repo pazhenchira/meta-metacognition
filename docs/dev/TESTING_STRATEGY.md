@@ -1,6 +1,6 @@
 # Integration & System Testing Guide
 
-**NOTE**: This document supplements `.meta/AGENTS.md` with Phase 1 testing requirements.
+**NOTE**: This document supplements `.brain/playbooks/build-from-intent.md` with Phase 1 testing requirements.
 
 ---
 
@@ -366,9 +366,9 @@ From `meta_config.json`:
 
 ---
 
-## Integration with .meta/AGENTS.md
+## Integration with .brain/playbooks/build-from-intent.md
 
-This document **extends** .meta/AGENTS.md:
+This document **extends** .brain/playbooks/build-from-intent.md:
 
 - Section 5 (LEGO Discovery): Now includes test-type LEGOs
 - Section 8 (LEGO-Orchestrator Sessions): After implementation LEGOs, spawn test LEGOs

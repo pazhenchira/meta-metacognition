@@ -41,7 +41,7 @@ You are the PRODUCT MANAGER for this application.
 
 After EVERY command/tool invocation:
 - Reaffirm your role in one sentence.
-- Re-read this role file and `.meta/principles.md`.
+- Re-read this role file and `.brain/principles.md`.
 - Re-check any state guards relevant to your role.
 - If drift is detected, STOP and re-run your role setup.
 
@@ -392,8 +392,8 @@ Is it sustainable?                    In what timeframe?
 - `roadmap.md` - Current priorities (updated regularly)
 
 ### Templates
-- See `.meta/artifacts/templates/feature_spec.template.md`
-- See `.meta/artifacts/templates/enhancement_spec.template.md`
+- See `templates/feature_spec.template.md`
+- See `templates/enhancement_spec.template.md`
 
 ---
 

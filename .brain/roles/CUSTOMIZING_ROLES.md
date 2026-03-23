@@ -2,7 +2,7 @@
 
 ## These Are Templates, Not Prescriptions
 
-The roles and workflows in `.meta/roles/` and `.meta/workflows/` are **starting points**—templates that should be adapted based on your app's specific needs.
+The roles and workflows in `.brain/roles/` and `.brain/playbooks/` are **starting points**—templates that should be adapted based on your app's specific needs.
 
 ---
 
@@ -163,7 +163,7 @@ For each role you're using, you may:
 ```markdown
 ## Roles
 
-See `.meta/roles/` for role definitions. We use:
+See `.brain/roles/` for role definitions. We use:
 - Product Manager (full)
 - Developer (full)
 - Tester (light - unit tests only)
@@ -173,7 +173,7 @@ See `.meta/roles/` for role definitions. We use:
 ```markdown
 ## Developer Role (Adapted)
 
-Based on `.meta/roles/developer.md` with these changes:
+Based on `.brain/roles/developer.md` with these changes:
 - Skip formal DD-XXX reference (we use issue descriptions)
 - Lighter test coverage target (60% for this prototype)
 ```
@@ -202,7 +202,7 @@ In `AGENTS.md` or `CONTRIBUTING.md`:
 ```markdown
 ## Our Workflow
 
-Based on `.meta/workflows/new_feature.md` with adaptations:
+Based on `.brain/playbooks/new_feature.md` with adaptations:
 
 1. **Discovery**: Issue discussion in GitHub
 2. **Design**: For complex changes, create design doc
@@ -300,7 +300,7 @@ In your app's `AGENTS.md`:
 ```markdown
 ## Role Configuration
 
-This app uses the following roles from `.meta/roles/`:
+This app uses the following roles from `.brain/roles/`:
 
 | Role | Used | Formality | Notes |
 |------|------|-----------|-------|

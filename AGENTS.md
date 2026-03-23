@@ -38,4 +38,4 @@ This project uses the MetaAgent framework for orchestration. Atlas is the orches
 
 ## Previous Structure
 
-This project was previously self-orchestrated via `.meta/AGENTS.md` directly. As of v4.0.0, it uses MetaAgent conventions (`.brain/`, `.github/agents/`, `skills/`). The v5.0.0 convergence collapsed `.meta/` entirely into `.brain/`, `patterns/`, `templates/`, and `generators/` — one brain, zero duplication.
+This project was previously self-orchestrated via `.brain/playbooks/build-from-intent.md` directly. As of v4.0.0, it uses MetaAgent conventions (`.brain/`, `.github/agents/`, `skills/`). The v5.0.0 convergence collapsed `.meta/` entirely into `.brain/`, `patterns/`, `templates/`, and `generators/` — one brain, zero duplication.

@@ -13,7 +13,7 @@
 
 ## Architecture
 - Annotations saying "consider doing X" are technical debt if the engine still does the old thing. Apply learnings immediately or don't merge them (v0.9.5).
-- One source of truth, not four copies. The self-upgrade protocol lives in `.meta/AGENTS.md` Phase 0. Templates point there — they don't duplicate it (v0.9.5).
+- One source of truth, not four copies. The self-upgrade protocol lives in `.brain/playbooks/build-from-intent.md` Phase 0. Templates point there — they don't duplicate it (v0.9.5).
 - A 168-line shell script to avoid one sentence to the orchestrator is the opposite of KISS. Delete the script, trust the orchestrator (v0.9.5).
 - 175-line "quick reference" is not quick. If the upgrade is one sentence, the doc should be too (v0.9.5).
 

@@ -62,7 +62,7 @@ Notes:
 # - Say: "Build the app from app_intent.md"
 
 # Option C: Manual activation (any runtime)
-@workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
+@workspace Act as the meta-orchestrator in .brain/playbooks/build-from-intent.md and build this app
 ```
 
 ### 5) Review what you get
@@ -115,8 +115,8 @@ See `UPGRADING.md` for the supported upgrade workflow and guardrails.
 
 ## Helpful references
 
-- Engine intent: `.meta/intent.md`
-- Orchestration logic: `.meta/AGENTS.md`
+- Engine intent: `.brain/context/intent.md`
+- Orchestration logic: `.brain/playbooks/build-from-intent.md`
 - Testing philosophy: `TESTING_STRATEGY.md`
 - Config validation: `CONFIG_VALIDATION.md`
 - Upgrade guide: `UPGRADING.md`

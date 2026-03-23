@@ -20,8 +20,8 @@ We've successfully released Meta-Orchestrator v2.0.0, a major refactor that intr
 
 1. **Version Bump**: `1.10.0 → 2.0.0`
 2. **Documentation Updated**: 
-   - `.meta/VERSION`
-   - `.meta/AGENTS.md` (version compatibility section)
+   - `.brain/meta/engine-version.txt`
+   - `.brain/playbooks/build-from-intent.md` (version compatibility section)
    - `CHANGELOG.md` (comprehensive v2.0.0 entry)
    - `README.md` (version badge)
 
@@ -34,8 +34,8 @@ We've successfully released Meta-Orchestrator v2.0.0, a major refactor that intr
 
 ### **Files Modified** (4 files):
 ```
-.meta/AGENTS.md    - Added v2.0.0 feature documentation
-.meta/VERSION      - 1.10.0 → 2.0.0
+.brain/playbooks/build-from-intent.md    - Added v2.0.0 feature documentation
+.brain/meta/engine-version.txt      - 1.10.0 → 2.0.0
 CHANGELOG.md       - Comprehensive v2.0.0 entry
 README.md          - Version updated to 2.0.0
 ```
@@ -118,10 +118,10 @@ proposed_structure.txt    - Directory tree
 
 The v2.0.0 release documents the **architectural design** and **philosophy**. Future development will:
 
-1. **Implement orchestration logic** in `.meta/AGENTS.md` (workspace creation, role switching, approval gates)
-2. **Create generator templates** in `.meta/generators/` (for `.app/` folder generation)
-3. **Update role files** in `.meta/roles/` (with v2.0 responsibilities)
-4. **Update workflows** in `.meta/workflows/` (with workspace-centric execution)
+1. **Implement orchestration logic** in `.brain/playbooks/build-from-intent.md` (workspace creation, role switching, approval gates)
+2. **Create generator templates** in `generators/` (for `.app/` folder generation)
+3. **Update role files** in `.brain/roles/` (with v2.0 responsibilities)
+4. **Update workflows** in `.brain/playbooks/` (with workspace-centric execution)
 5. **Test with real app** (build OptionsTrader with v2.0 architecture)
 
 **Note**: The current release provides the **blueprint**. Actual implementation of workspace-centric logic is in the roadmap.
@@ -147,8 +147,8 @@ When building apps with v2.0.0:
 ### **Three Modes**:
 | Mode | Uses .meta/? | Uses .app/? | Orchestrator |
 |------|--------------|-------------|--------------|
-| **CREATE** | ✅ Yes | Creates it | `.meta/AGENTS.md` |
-| **UPGRADE** | ✅ Yes | Regenerates | `.meta/AGENTS.md` |
+| **CREATE** | ✅ Yes | Creates it | `.brain/playbooks/build-from-intent.md` |
+| **UPGRADE** | ✅ Yes | Regenerates | `.brain/playbooks/build-from-intent.md` |
 | **MAINTAIN** | ❌ No | ✅ Self-contained | `.app/AGENTS.md` |
 
 ---
@@ -169,7 +169,7 @@ When building apps with v2.0.0:
 - [x] Version bumped to 2.0.0
 - [x] CHANGELOG.md updated
 - [x] README.md updated
-- [x] `.meta/AGENTS.md` updated (version compatibility)
+- [x] `.brain/playbooks/build-from-intent.md` updated (version compatibility)
 - [x] Design documents created
 - [x] Git commit created
 - [x] Git tag v2.0.0 created
@@ -210,7 +210,7 @@ When building apps with v2.0.0:
 
 ### **Short-Term** (Next Week):
 
-1. **Implement workspace logic**: Update `.meta/AGENTS.md` with work item creation, tracker.json management
+1. **Implement workspace logic**: Update `.brain/playbooks/build-from-intent.md` with work item creation, tracker.json management
 2. **Create generator templates**: Templates for `.app/` folder, role files, workflows
 3. **Update role files**: Add v2.0 responsibilities (multi-role approval, review gates)
 

@@ -351,10 +351,10 @@ All tests passed.
 
 ## See Also
 
-- `.meta/patterns/success_patterns.md` — Proven architectural patterns
-- `.meta/patterns/antipatterns.md` — Common pitfalls to avoid
-- `.meta/principles.md` — KISS, LEGO, Thompson #5
-- `.meta/wisdom/engineering_wisdom.md` — Thompson, Knuth, Pike, Kernighan
+- `patterns/success_patterns.md` — Proven architectural patterns
+- `patterns/antipatterns.md` — Common pitfalls to avoid
+- `.brain/principles.md` — KISS, LEGO, Thompson #5
+- `.brain/wisdom/engineering_wisdom.md` — Thompson, Knuth, Pike, Kernighan
 
 ---
 

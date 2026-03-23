@@ -137,7 +137,7 @@ Build a CLI tool that analyzes stock market data and generates investment report
 
 ```powershell
 # If using .meta/ directory
-codex exec "Act as the meta-orchestrator described in .meta/AGENTS.md and execute the full pipeline."
+codex exec "Act as the meta-orchestrator described in .brain/playbooks/build-from-intent.md and execute the full pipeline."
 
 # If using root-level files
 # No change needed - already has .meta
@@ -322,7 +322,7 @@ mkdir .meta
 Copy-Item -Path C:\Dev\meta-metacognition\* -Destination .\.meta\ -Recurse -Exclude .git,README.md,DEPLOYMENT_GUIDE.md
 
 # 4. Run meta-orchestrator (NEW APP MODE)
-codex exec "Act as meta-orchestrator from .meta/AGENTS.md. Build app from app_intent.md."
+codex exec "Act as meta-orchestrator from .brain/playbooks/build-from-intent.md. Build app from app_intent.md."
 
 # 5. Manually port your custom logic from backup
 # Compare generated code with your backup
@@ -460,7 +460,7 @@ Copy-Item -Path C:\Dev\meta-metacognition\* -Destination .\.meta\ -Recurse -Excl
 New-Item -Path app_intent.md -ItemType File
 
 # Run meta-orchestrator
-codex exec "Act as meta-orchestrator from .meta/AGENTS.md. Build app from app_intent.md."
+codex exec "Act as meta-orchestrator from .brain/playbooks/build-from-intent.md. Build app from app_intent.md."
 ```
 
 ### Upgrade Existing App

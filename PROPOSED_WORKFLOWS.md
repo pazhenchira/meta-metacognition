@@ -306,7 +306,7 @@ You are the PRODUCT MANAGER for this app.
 - Customer value validation
 
 **Your Wisdom** (inlined, no .meta/ references):
-[PM-specific principles from .meta/wisdom/ - inlined here]
+[PM-specific principles from .brain/wisdom/ - inlined here]
 
 **Your Artifacts**:
 - Feature specs (FR-XXX) in .workspace/WI-XXX/pm/

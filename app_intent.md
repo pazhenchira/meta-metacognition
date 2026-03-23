@@ -23,7 +23,7 @@ handle complex multi-component systems, and don't validate that apps actually de
 - Supports intelligent maintenance (KEEP/REFACTOR/REGENERATE) and version upgrades
 - Prevents context collapse via session isolation (can build 50+ component apps)
 
-**Unique Architecture**: The "source code" is a set of AI agent prompts (Markdown files) in `.meta/`:
+**Unique Architecture**: The "source code" is a set of AI agent prompts (Markdown files) in `.brain/` and root directories:
 - `AGENTS.md`: Meta-orchestrator orchestration logic (12 phases: NEW APP, MAINTENANCE, UPGRADE)
 - `wisdom/`: 24,000+ lines of curated engineering principles (Thompson, Knuth, Pike, Kernighan)
 - `patterns/`: Antipattern detection (God Object, Golden Hammer) + success patterns (Circuit Breaker)
@@ -46,7 +46,7 @@ to build production apps without writing code manually.
 ## Constraints & Priorities
 
 **Architecture**:
-- Document-driven: Source = Markdown prompts (`.meta/` folder), not traditional code
+- Document-driven: Source = Markdown prompts (`.brain/` + root directories), not traditional code
 - Stateless agents: File-based coordination (orchestrator_state.json, lego_state_*.json)
 - Runtime-agnostic: Works with Codex CLI, GitHub Copilot Chat, OpenAI API
 - No execution at runtime: "Code" is agent prompts executed by AI systems
@@ -150,13 +150,13 @@ to build production apps without writing code manually.
 
 **Development Philosophy**:
 - Dogfooding: Engine applies own principles to itself (LEGO, KISS, wisdom)
-- Recursive application: AGENTS.md (root) maintains engine using .meta/AGENTS.md
+- Recursive application: AGENTS.md (root) maintains engine using .brain/playbooks/build-from-intent.md
 - Document-driven: All orchestration logic in Markdown (human-readable, AI-executable)
 - Wisdom-first: 50+ years of expert knowledge guides decisions (not rigid rules)
 
 **Unique Characteristics**:
 - Source = Prompts: "Code" is AI agent instructions (Markdown), not traditional code
-- Deployment = Copy: Users copy `.meta/` folder to their workspace
+- Deployment = Copy: Users copy engine files to their workspace
 - Testing = Build Apps: Validate engine by building sample apps and checking quality
 - Upgrades = File Updates: Version bumps mean updating Markdown files, not binaries
 
@@ -178,7 +178,7 @@ to build production apps without writing code manually.
 Once you've filled this out, run:
 
 ```bash
-@workspace Act as the meta-orchestrator in .meta/AGENTS.md and build this app
+@workspace Act as the meta-orchestrator in .brain/playbooks/build-from-intent.md and build this app
 ```
 
 The meta-orchestrator will:

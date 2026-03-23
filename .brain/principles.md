@@ -114,7 +114,7 @@ A system can have:
 - **When debugging**: Trace both flows to find root cause
 - **When adding features**: Ensure new code doesn't pollute existing flows
 
-See `.meta/wisdom/engineering_wisdom.md` #18 for detailed guidance.
+See `.brain/wisdom/engineering_wisdom.md` #18 for detailed guidance.
 
 ---
 

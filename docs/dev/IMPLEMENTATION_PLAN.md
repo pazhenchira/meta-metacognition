@@ -42,7 +42,7 @@
 
 ### **Phase 1: Core Engine Refactor** (Est: 3-5 days)
 
-**Goal**: Update `.meta/AGENTS.md` with v2.0 orchestration logic
+**Goal**: Update `.brain/playbooks/build-from-intent.md` with v2.0 orchestration logic
 
 #### 1.1: State Management System
 - [ ] Design `tracker.json` schema (work item states, transitions, timestamps)
@@ -81,7 +81,7 @@
 - [ ] Implement code regeneration (from README + interface + workflows)
 
 **Deliverables**:
-- Updated `.meta/AGENTS.md` (v2.0 orchestration logic)
+- Updated `.brain/playbooks/build-from-intent.md` (v2.0 orchestration logic)
 - State management utilities
 - Workspace management utilities
 - Role switching utilities
@@ -101,12 +101,12 @@
 **Goal**: Create templates for generating `.app/` folder
 
 #### 2.1: Templates
-- [ ] Create `.meta/generators/app_agents.template.md` (self-contained orchestrator)
-- [ ] Create `.meta/generators/role.template.md` (role-specific instructions)
-- [ ] Create `.meta/generators/workflow.template.md` (workflow definitions)
-- [ ] Create `.meta/generators/lego_readme.template.md` (LEGO documentation)
-- [ ] Create `.meta/generators/lego_interface.template.md` (interface contract)
-- [ ] Create `.meta/generators/lego_workflows.template.md` (inter-LEGO interactions)
+- [ ] Create `generators/app_agents.template.md` (self-contained orchestrator)
+- [ ] Create `generators/role.template.md` (role-specific instructions)
+- [ ] Create `generators/workflow.template.md` (workflow definitions)
+- [ ] Create `generators/lego_readme.template.md` (LEGO documentation)
+- [ ] Create `generators/lego_interface.template.md` (interface contract)
+- [ ] Create `generators/lego_workflows.template.md` (inter-LEGO interactions)
 
 #### 2.2: Generator Logic
 - [ ] Implement template variable replacement ({APP_NAME}, {ENGINE_VERSION}, etc.)
@@ -116,8 +116,8 @@
 - [ ] Implement validation (ensure no .meta/ references in generated files)
 
 **Deliverables**:
-- Complete template library in `.meta/generators/`
-- Generator utilities in `.meta/AGENTS.md`
+- Complete template library in `generators/`
+- Generator utilities in `.brain/playbooks/build-from-intent.md`
 - Validation logic
 
 **Success Criteria**:
@@ -130,7 +130,7 @@
 
 ### **Phase 3: Role Refactor** (Est: 2-3 days)
 
-**Goal**: Update `.meta/roles/` with v2.0 responsibilities
+**Goal**: Update `.brain/roles/` with v2.0 responsibilities
 
 #### 3.1: Role Definitions
 - [ ] Update `product_manager.md` (essence alignment, feature specs, review duties)
@@ -147,7 +147,7 @@
 - [ ] Define feedback format (actionable, specific, constructive)
 
 **Deliverables**:
-- Updated role files in `.meta/roles/`
+- Updated role files in `.brain/roles/`
 - Review gate definitions
 - Approval criteria
 
@@ -160,7 +160,7 @@
 
 ### **Phase 4: Workflow Refactor** (Est: 2-3 days)
 
-**Goal**: Update `.meta/workflows/` with workspace-centric execution
+**Goal**: Update `.brain/playbooks/` with workspace-centric execution
 
 #### 4.1: New Feature Workflow
 - [ ] Update `new_feature.md` (workspace creation, role switching, approval gates)
@@ -186,7 +186,7 @@
 - [ ] Add timing guidelines (reviews within X hours)
 
 **Deliverables**:
-- Updated workflow files in `.meta/workflows/`
+- Updated workflow files in `.brain/playbooks/`
 - Complete review gate documentation
 
 **Success Criteria**:
@@ -213,8 +213,8 @@
 - [ ] Update `FINAL_STRUCTURE.md` (if needed after implementation)
 
 #### 5.3: Internal Documentation
-- [ ] Update `.meta/intent.md` (v2.0 philosophy)
-- [ ] Update `.meta/principles.md` (if new principles added)
+- [ ] Update `.brain/context/intent.md` (v2.0 philosophy)
+- [ ] Update `.brain/principles.md` (if new principles added)
 - [ ] Update wisdom files (if new patterns discovered)
 
 **Deliverables**:
@@ -290,7 +290,7 @@
 **Goal**: Publish v2.0.0 release
 
 #### 7.1: Version Bump
-- [ ] Update `.meta/VERSION` (2.0.0)
+- [ ] Update `.brain/meta/engine-version.txt` (2.0.0)
 - [ ] Update `README.md` version badge
 - [ ] Update all templates with v2.0.0 version
 
