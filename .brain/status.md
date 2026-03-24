@@ -6,7 +6,7 @@
 - None
 
 ## Next
-- Update both MetaAgent and meta-metacognition projects to reflect converged structure
+- Upgrade nexus and ta projects to v4.0.0 (`.meta/` → `.brain/` convergence)
 - Test auto-upgrade by running `scripts/upgrade-app.sh` against a downstream app
 
 ## Blockers
@@ -14,4 +14,4 @@
 
 ## Last Session
 - Date: 2026-03-23
-- Outcome: Merged MetaAgent convergence branch (`feature/metaagent-convergence`). Complete restructure: `.meta/` collapsed into `.brain/` + root `patterns/`, `templates/`, `skills/`. Atlas is now the single orchestrator. MetaAgent v0.10.0 conventions applied. Pushed to origin/main.
+- Outcome: v4.0.0 complete — merged convergence, fixed 55 stale `.meta/` refs, version bump 3.2.0→4.0.0, full upgrade guide with 8-step migration + path migration map. Cloned nexus + ta to C:\Dev. All pushed to origin/main.
