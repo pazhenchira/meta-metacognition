@@ -9,19 +9,21 @@
 
 ### What Problem?
 
-**Most AI coding tools generate code snippets but fail at complete applications.**
+**AI tools generate one-off outputs but can't create persistent, self-improving agent systems.**
 
-Existing solutions (ChatGPT, GitHub Copilot, Claude) excel at:
-- Answering specific coding questions
-- Generating functions or small modules
-- Explaining existing code
+The gap isn't just "code snippets vs complete apps" — it's **disposable AI interactions vs agent systems that own domains long-term**. Every ChatGPT conversation, every Copilot suggestion, every Claude session starts from zero. Nothing persists. Nothing learns. Nothing compounds.
 
-But they struggle with:
-- Building complete, multi-component applications
-- Maintaining architectural consistency across components
-- Applying engineering best practices systematically
-- Validating that apps actually deliver promised value
-- Enabling ongoing maintenance and feature additions
+Existing solutions (ChatGPT, LangChain, CrewAI, AutoGen) can:
+- Answer questions and generate single outputs
+- Chain LLM calls into short-lived workflows
+- Spin up multi-agent demos
+
+But they can't:
+- Create agent systems with persistent identity and memory
+- Produce systems that improve across sessions (not just within one)
+- Apply engineering discipline to agent system design
+- Validate that a system delivers its unique essence (not just executes tasks)
+- Build a coherent system-of-systems across multiple domains
 
 ### Who Has This Problem?
 
@@ -30,14 +32,17 @@ But they struggle with:
 3. **Small teams**: Need to scale development without hiring 10 engineers
 4. **Prototypers**: Want production-ready POCs, not throwaway code
 5. **Technical debt fighters**: Want to rebuild legacy systems properly
+6. **Multi-domain owners**: People managing work, personal, financial, and creative domains who need consistent AI systems across all of them
+7. **Advisory professionals**: Need AI systems that learn, remember, and improve — not chatbots that forget everything each session
 
 ### Why Does It Matter?
 
-- **Economic**: $200-500K+ to build custom app with traditional dev team
+- **Economic**: $200-500K+ to build custom app with traditional dev team; $50K+/yr for a domain advisor who still forgets context
 - **Time**: 6-12 months from idea to MVP with traditional process
-- **Quality**: Most AI-generated code lacks tests, docs, maintainability
-- **Waste**: 70% of AI-generated code is throwaway (can't be maintained)
-- **Opportunity cost**: Ideas die waiting for engineering capacity
+- **Persistence**: Every AI interaction today is disposable — nothing compounds, nothing learns
+- **Quality**: Most AI-generated code and agent systems lack tests, docs, maintainability
+- **Fragmentation**: People use 10 different AI tools across domains, none of which talk to each other
+- **Opportunity cost**: Ideas die waiting for engineering capacity; domains stay unmanaged
 
 ---
 
@@ -45,47 +50,49 @@ But they struggle with:
 
 ### What Makes Us Different?
 
-**The meta-orchestrator is the ONLY AI system that:**
+**The meta-orchestrator is the ONLY system that takes intent for ANY domain and produces a fully-staffed agent system that owns that domain long-term.**
 
-1. **Applies 50+ years of engineering wisdom systematically**
+1. **Produces complete agent systems for ANY domain (not just code)**
+   - Engineering projects (code generation, app building)
+   - Advisory systems (ta: personal/technical advisor)
+   - Financial systems (mc-StocksTrader, mc-OptionsTrader)
+   - Future: health, spiritual, creative — any domain
+   - Each system gets its own soul (essence.md), agents, skills, and memory
+
+2. **Each system gets persistent identity and cross-session memory**
+   - Essence discovery: what makes THIS system uniquely valuable (Phase 1.8)
+   - Lessons accumulate across sessions — corrections in session 1 recalled in session 100
+   - The system improves over time, not just within a single conversation
+
+3. **Applies 50+ years of engineering wisdom to SYSTEM CREATION**
    - Thompson, Knuth, Pike, Kernighan, Schneier (24,000+ lines of curated wisdom)
-   - Detects antipatterns (God Object, Golden Hammer, etc.) during generation
-   - Guides optimal architecture decisions with trade-off matrices
+   - Applied to the PROCESS of creating agent systems, not just to generated code
+   - Detects antipatterns during generation; guides architecture with trade-off matrices
 
-2. **Validates apps deliver their essence**
-   - Discovers what makes each app valuable (Phase 1.8: Essence Discovery)
-   - Tests end-to-end user journey before declaring "done"
-   - Measures success against domain-specific metrics (Sharpe ratio, p99 latency, etc.)
+4. **Validates that each system delivers its unique essence**
+   - Tests end-to-end value delivery before declaring "done"
+   - Measures success against domain-specific metrics (Sharpe ratio, advice quality, response consistency)
+   - GEN+REVIEW pattern: every artifact gets independent review
 
-3. **Generates self-documenting, maintainable apps**
-   - Every app gets AGENTS.md for future AI-assisted development
-   - APP_ORCHESTRATION.md records all architectural decisions
-   - Comprehensive tests (>80% coverage), clear documentation
-
-4. **Supports intelligent maintenance and upgrades**
-   - MAINTENANCE mode: Add/remove features intelligently (KEEP/REFACTOR/REGENERATE)
-   - UPGRADE mode: Adopt new meta-orchestrator features safely
-   - Protects user-modified code (never overwrites your changes)
-
-5. **Prevents context collapse via session isolation**
-   - Spawns independent agents for each component (like a real team)
-   - Can build 50+ component apps without breaking
-   - Each agent has focused responsibility (no context overload)
+5. **Supports a system-of-systems where individual agent systems form a coherent whole**
+   - ta (advisor), mc-StocksTrader (equities), mc-OptionsTrader (options) — each independent, all composable
+   - Session isolation: each system built without context collapse
+   - Shared principles, independent identities
 
 ### How We're Different From Competitors
 
-| Feature | ChatGPT/Claude | GitHub Copilot | Cursor | Bolt.new | **Meta-Orchestrator** |
-|---------|---------------|----------------|--------|----------|----------------------|
-| Complete apps | ❌ Snippets only | ❌ Autocomplete | ⚠️ Single file | ⚠️ Web apps | ✅ Any app type |
-| Architecture | ❌ None | ❌ None | ❌ None | ⚠️ Basic | ✅ LEGO decomposition |
-| Wisdom applied | ❌ None | ❌ None | ❌ None | ❌ None | ✅ Thompson, Knuth, etc. |
-| Tests | ❌ Manual | ❌ Manual | ❌ Manual | ⚠️ Basic | ✅ >80% coverage |
-| Essence validation | ❌ None | ❌ None | ❌ None | ❌ None | ✅ End-to-end testing |
-| Maintainability | ❌ Throwaway | ❌ Throwaway | ⚠️ Limited | ⚠️ Limited | ✅ Self-documenting |
-| Upgradeable | ❌ No | ❌ No | ❌ No | ❌ No | ✅ Version management |
-| Context limits | ❌ Breaks at 20K tokens | ❌ Single file | ⚠️ Single project | ⚠️ Web only | ✅ Session isolation |
+| Feature | ChatGPT/Claude | LangChain/AutoGen | CrewAI | OpenAI Agents SDK | **Meta-Orchestrator** |
+|---------|---------------|-------------------|--------|-------------------|----------------------|
+| Persistent identity | ❌ None | ❌ None | ❌ None | ❌ None | ✅ essence.md per system |
+| Cross-session memory | ❌ Resets | ❌ Manual | ❌ None | ❌ None | ✅ Lessons, corrections |
+| Domain-agnostic | ⚠️ Chat only | ⚠️ Code-focused | ⚠️ Task-focused | ⚠️ API-focused | ✅ Any domain |
+| System-of-systems | ❌ No | ❌ No | ⚠️ Limited | ❌ No | ✅ Composable systems |
+| Quality enforcement | ❌ None | ❌ Manual | ❌ Manual | ❌ Manual | ✅ GEN+REVIEW, protocols |
+| Essence validation | ❌ None | ❌ None | ❌ None | ❌ None | ✅ Value delivery tested |
+| Engineering wisdom | ❌ None | ❌ None | ❌ None | ❌ None | ✅ Thompson, Knuth, etc. |
+| Self-improving | ❌ No | ❌ No | ❌ No | ❌ No | ✅ Learns across sessions |
 
-**Core Differentiation**: We're the only system that treats app generation as an **engineering discipline**, not just code generation.
+**Core Differentiation**: We don't build agents — we build **agent systems**. Each system has identity, memory, skills, and quality enforcement. The factory applies engineering discipline to system creation, not just code generation.
 
 ---
 
@@ -118,6 +125,8 @@ But they struggle with:
 | User success rate | >80% | (Not measured yet) |
 
 **Note**: Metrics implementation pending. Need telemetry and usage tracking.
+
+> **Domain Note**: The metrics above are engineering-specific. Each generated system defines its own success metrics during essence discovery — Sharpe ratio for trading systems, advice retention for advisors, user satisfaction for personal assistants, etc.
 
 ---
 
@@ -242,48 +251,68 @@ But they struggle with:
 ### Existing Solutions
 
 **ChatGPT / Claude / GPT-4**:
-- Strengths: Excellent at Q&A, explaining code, generating snippets
-- Weaknesses: No architecture, no tests, no maintainability, context collapse
-- Position: Code assistant, not app builder
+- Strengths: Excellent at Q&A, generating single outputs, broad knowledge
+- Weaknesses: No persistence, no memory across sessions, no system creation
+- Position: Disposable AI interactions, not agent system factory
 
-**GitHub Copilot**:
-- Strengths: Fast autocomplete, IDE integration
-- Weaknesses: Line-by-line, no holistic architecture, no tests
-- Position: Coding speed boost, not app builder
+**LangChain / AutoGen**:
+- Strengths: Flexible agent frameworks, good developer tooling
+- Weaknesses: Developer must design the system; no essence, no memory, no quality enforcement
+- Position: Agent plumbing, not agent system factory
 
-**Cursor / Windsurf**:
-- Strengths: Multi-file editing, codebase awareness
-- Weaknesses: Still manual architecture, limited testing, no wisdom
-- Position: Better code editor, not app builder
+**CrewAI**:
+- Strengths: Multi-agent orchestration, role-based agents
+- Weaknesses: Task-focused (not domain-focused), no persistent identity, no cross-session learning
+- Position: Task automation framework, not domain-owning systems
 
-**Bolt.new / v0.dev**:
-- Strengths: Fast web UI generation, good for prototypes
-- Weaknesses: Web-only, rigid architecture, limited customization
-- Position: Web prototype builder, not general app builder
+**OpenAI Agents SDK / Assistants API**:
+- Strengths: API-first, tool integration, thread management
+- Weaknesses: Platform-locked, no essence discovery, no system-of-systems, no engineering wisdom
+- Position: Agent building blocks, not complete systems
 
-**Replit Agent / Vercel AI SDK**:
-- Strengths: Integrated deployment, quick iteration
-- Weaknesses: Platform-locked, no wisdom, limited architecture
-- Position: Platform-specific builders, not general solution
+**Cursor / GitHub Copilot / Bolt.new**:
+- Strengths: Fast code generation, IDE integration, quick prototypes
+- Weaknesses: Code-only, no agent systems, no persistent identity, no domain ownership
+- Position: Code assistants, not system creators
 
 ### Our Positioning
 
-**We are the only "Engineering CTO as a Service":**
-- Apply 50+ years of wisdom (Thompson, Knuth, Pike, Kernighan)
-- Validate essence delivery (not just code correctness)
-- Generate maintainable, upgradeable apps
-- Work across domains (web, CLI, data, trading, anything)
+**We are the only Agent System Factory:**
+- Take intent for ANY domain → produce a fully-staffed agent system that owns that domain long-term
+- Each system gets persistent identity (essence.md), memory (lessons), skills, and quality enforcement
+- Apply 50+ years of engineering wisdom to system creation (Thompson, Knuth, Pike, Kernighan)
+- Validate that each system delivers its unique essence (not just passes tests)
 - Multi-runtime support (Codex CLI, GitHub Copilot, OpenAI API)
 
+**Systems the factory produces**:
+- **ta**: A personal advisor system — learns your context, remembers corrections, improves over time (not just a chatbot)
+- **mc-StocksTrader**: A systematic equity investment system — persistent strategy, risk management, learning from trades (not just a trading bot)
+- **Engineering apps**: Complete, tested, maintainable applications with AGENTS.md for future development
+- **Future**: Financial advisor, health advisor, creative assistant, spiritual guide — any domain
+
 **We don't compete with**:
-- Code assistants (Copilot, ChatGPT) - complementary tools
-- IDEs (Cursor, Windsurf) - we generate apps, not edit existing code
-- Prototypers (Bolt, v0) - we build production-ready apps, not prototypes
+- Chat interfaces (ChatGPT, Claude) — they're disposable interactions; we create persistent systems
+- Agent frameworks (LangChain, CrewAI) — they're plumbing; we deliver complete systems
+- Code assistants (Copilot, Cursor) — they edit code; we create domain-owning agent systems
 
 **We replace**:
-- Expensive dev teams for simple apps ($200K → $0)
-- Long development cycles (6-12 months → 15-45 minutes)
-- Throwaway POC code (unmaintainable → self-documenting)
+- Expensive dev teams for building agent systems ($200K → $0)
+- Long development cycles (6-12 months → hours)
+- Disposable AI interactions that forget everything (throwaway → compounding)
+
+---
+
+## Runtime Integration: Nexus
+
+The factory produces agent systems. **Nexus** hosts them with code-enforced quality:
+
+- **Content-Aware Gateway**: Nexus reads each project's essence.md and principles.md, composing project-specific context for every interaction
+- **Cross-Session Memory**: LessonStore per project — corrections learned in session 1 are recalled in session 100
+- **Goal Tracking**: GoalStore per session — conversation goals tracked and verified
+- **Quality Enforcement**: Protocol compliance enforced in code (RuntimeBroker.submitTurn), not just prompts
+- **Multi-Channel**: Same agent system accessible via CLI, Slack, API
+
+**Factory + Runtime separation**: The factory knows HOW to create systems. Nexus knows HOW to run them well. Each project (ta, mc-StocksTrader, etc.) IS the system — it has its own identity, agents, skills, and memory. The factory creates them. Nexus hosts them. Both serve the project.
 
 ---
 
@@ -337,22 +366,26 @@ But they struggle with:
 ## REVIEW NOTES
 
 **What's Strong**:
-- Clear problem statement (AI tools fail at complete apps)
-- Unique differentiators (wisdom, essence validation, maintainability)
+- Clear problem statement (disposable AI vs persistent agent systems)
+- Unique differentiators (domain-agnostic factory, essence validation, system-of-systems)
 - Comprehensive user journey (discovery → ongoing value)
-- Concrete success metrics (KISS, zero antipatterns, >80% coverage)
+- Concrete success metrics with domain-extensibility note
+- Nexus integration gives clear factory/runtime separation
+- Specific examples (ta, mc-StocksTrader) ground the vision
 
 **What Needs Work**:
 - Metrics not yet measured (need telemetry implementation)
-- No real-world case studies yet (need user deployments)
-- Competitive analysis based on current state (will evolve)
+- No real-world case studies yet (need deployed agent systems)
+- Competitive analysis based on current state (will evolve rapidly)
 - Continuous improvement framework needs operationalizing
+- User Journey section still app-focused (will broaden as non-code systems ship)
 
 **Assumptions**:
-- Users care about maintainability (vs throwaway prototypes)
-- Engineering wisdom translates to better apps
-- Essence validation is measurable and valuable
-- Users want to maintain apps over time (not rebuild)
+- The value of persistence compounds (systems that learn beat systems that don't)
+- Engineering wisdom applies to system creation broadly, not just code
+- Essence validation is measurable and valuable across domains
+- Users want agent systems that own domains long-term (not just one-off outputs)
+- System-of-systems creates more value than isolated agents
 
 **Next Steps**:
 1. Implement telemetry for success metrics

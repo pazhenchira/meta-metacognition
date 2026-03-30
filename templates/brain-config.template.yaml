@@ -1,0 +1,18 @@
+version: "{FRAMEWORK_VERSION}"
+
+framework:
+  source: "github:mathewj_microsoft/metaagent"
+  version: "{FRAMEWORK_VERSION}"
+
+orchestrator:
+  name: "{ORCHESTRATOR_NAME}"
+  mode: "{ORCHESTRATOR_MODE}"
+
+project:
+  name: "{PROJECT_NAME}"
+  version: "1.0.0"
+
+settings:
+  defaultDecisionTier: 2
+  requireIntentForChanges: true
+  requirePerspectiveReview: false

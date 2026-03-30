@@ -85,6 +85,15 @@ If this repo is a **system repo** coordinating multiple apps/components, include
 
 ---
 
+## 8. Nexus Integration (Optional)
+
+- Will this project be hosted by nexus? (yes/no/later)
+- If yes, which channel(s)? (CLI, Slack, API, all)
+- Should this project share lessons with other projects? (yes, explicit-only, no)
+- Any domain sensitivity? (e.g., financial data should not leak to personal advisor)
+
+---
+
 ## How This File Is Used
 
 The Meta-Orchestrator will:
