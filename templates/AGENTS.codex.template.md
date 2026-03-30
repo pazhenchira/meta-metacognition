@@ -22,7 +22,7 @@ This file provides instructions for OpenAI Codex CLI when working on this applic
 2. Internally affirm: "I am the App Orchestrator and app owner."
 3. Ensure `orchestrator_state.json` has `primary_role: "app_orchestrator"` and `role_lock: true` (create if missing).
 4. If missing or mismatched, STOP and re-run Role Lock Protocol.
-5. If you detect drift, stop and re-read `.app/AGENTS.md` before continuing.
+5. If you detect drift, stop and re-read `.github/agents/{orchestrator}.agent.md` before continuing.
 
 ## SESSION START PROTOCOL
 
@@ -81,7 +81,7 @@ If `coordination/repo_graph.json` exists:
    - Tests: `tests/` (maintain >80% coverage)
    - Documentation: `README.md`, `internal-notes.md`
    - Configuration: Check `meta_config.json` if present
-   - Orchestration: `.app/AGENTS.md`, `.app/roles/`, `.app/wisdom/`
+   - Orchestration: `.github/agents/{orchestrator}.agent.md`, `.brain/roles/`, `.brain/wisdom/`
 4. **Triage before delegating**:
    - **Incident** → Ops + Dev first (containment/recovery)
    - **Bug** → Dev/Test first
@@ -90,9 +90,9 @@ If `coordination/repo_graph.json` exists:
 
 ## Operational Context
 
-Read `.app/agent_context.json` for repo/cloud/permission context before making changes that require access.
+Read `.brain/context/agent_context.json` for repo/cloud/permission context before making changes that require access.
 If `permissions.git_push` or `permissions.git_create_pr` is true, you may push or open PRs without asking.
-If permissions are missing or false, ask the Sponsor and record the update in `.app/agent_context.json`.
+If permissions are missing or false, ask the Sponsor and record the update in `.brain/context/agent_context.json`.
 
 If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable_subagents: true`:
 - Delegate per-role work to MCP sub-agents (essence, PM, architect, developer, tester, writer, ops)
@@ -105,7 +105,7 @@ If `meta_config.json` specifies `preferred_runtime: "codex-cli-mcp"` and `enable
 - MCP servers must be `enabled = false` by default; use the generated wrapper script `scripts/codex-{app_slug}.sh` (or `-c mcp_servers.<role>.enabled=true` flags) to enable only this app’s MCP servers
 - Ensure each `[mcp_servers.{app_slug}__<role>]` in `~/.codex/config.toml` sets `tool_timeout_sec` to `mcp_tool_timeout_seconds`
 - Ensure each MCP server entry sets `cwd` to the role workspace: `.app/runtime/mcp/<role>`
-- Create role workspaces and `AGENTS.md` from `.meta/templates/mcp_role_agent.template.md`
+- Create role workspaces and `AGENTS.md` from `templates/mcp_role_agent.template.md`
 - Use the Codex MCP tools (one per role server) with role briefs in the prompt (no OpenAI Agents SDK)
 - Include active work item context in each MCP prompt (tracker.json + WI README/todos + relevant specs)
 - If the session was already running before MCP registration, restart Codex to attach tools
@@ -151,13 +151,13 @@ For app modifications (new features, bug fixes):
 
 ## Engine Self-Upgrade
 
-When the user asks to upgrade the engine, follow the Self-Upgrade Protocol in `.meta/AGENTS.md` Phase 0.
+When the user asks to upgrade the engine, follow the Self-Upgrade Protocol in `.github/agents/atlas.agent.md` Phase 0.
 
 ---
 
 ## Key Principles
 
-- **Wisdom-Driven**: Apply engineering wisdom from `.app/wisdom/` (Thompson, Knuth, Pike, Kernighan)
+- **Wisdom-Driven**: Apply engineering wisdom from `.brain/wisdom/` (Thompson, Knuth, Pike, Kernighan)
 - **Antipattern Detection**: Avoid God Objects, Golden Hammers, Magic Numbers
 - **Quality Metrics**: >80% test coverage, clear documentation, single-responsibility design
 - **User Value**: Always validate app delivers its essence (what makes it valuable)
@@ -187,9 +187,9 @@ When the user asks to upgrade the engine, follow the Self-Upgrade Protocol in `.
 ## References
 
 - **App Intent**: `app_intent.md` ← What the app should do
-- **Principles**: `.app/wisdom/core_principles.md` ← KISS, LEGO, GEN+REVIEW
-- **Wisdom**: `.app/wisdom/` ← Engineering best practices
-- **Patterns**: `.app/patterns/` ← Antipatterns and success patterns
+- **Principles**: `.brain/wisdom/core_principles.md` ← KISS, LEGO, GEN+REVIEW
+- **Wisdom**: `.brain/wisdom/` ← Engineering best practices
+- **Patterns**: `patterns/` ← Antipatterns and success patterns
 
 ---
 

@@ -1,8 +1,8 @@
-# .app/ Folder Generation
+# Project Structure Generation
 
 ## Overview
 
-This document describes how the meta-orchestrator ENGINE generates the `.app/` folder for an application. The `.app/` folder is SELF-CONTAINED—once generated, the app can be maintained without any reference to `.meta/`.
+This document describes how the meta-orchestrator ENGINE generates the project structure for an application. The generated structure is SELF-CONTAINED—once generated, the app can be maintained without any reference to the engine's source files.
 
 ---
 
@@ -10,32 +10,28 @@ This document describes how the meta-orchestrator ENGINE generates the `.app/` f
 
 | Trigger | Action |
 |---------|--------|
-| `.app/` doesn't exist | CREATE: Generate full `.app/` folder |
-| `.app/.engine-version` < `.meta/VERSION` | UPGRADE: Regenerate with new engine features |
-| User requests regeneration | REGENERATE: Rebuild `.app/` preserving customizations |
+| `.github/agents/` doesn't exist | CREATE: Generate full project structure |
+| `.brain/config.yaml` version < engine version | UPGRADE: Regenerate with new engine features |
+| User requests regeneration | REGENERATE: Rebuild structure preserving customizations |
 
 ---
 
 ## Generated Structure
 
 ```
-.app/
-├── AGENTS.md                    # SELF-CONTAINED app orchestrator
-├── essence.md                   # App's value proposition (from discovery)
-├── roles/                       # App-specific role definitions
-│   ├── _manifest.md             # Which roles this app uses
-│   ├── product_manager.md       # If applicable (adapted from template)
-│   ├── architect.md             # If applicable
-│   ├── developer.md             # Always included
-│   └── ...                      # Other roles as needed
-├── workflows/                   # App-specific workflows
-│   ├── _manifest.md             # Which workflows this app uses
-│   └── ...                      # Adapted workflows
-├── wisdom/                      # INLINED subset of wisdom
-│   └── core_principles.md       # Key principles for this app
-├── patterns/                    # INLINED relevant patterns
-│   └── relevant_patterns.md     # Antipatterns + success patterns for this app
-└── .engine-version              # Which .meta/VERSION generated this
+project-root/
+├── .github/agents/{orchestrator}.agent.md  # Project orchestrator
+├── .brain/
+│   ├── config.yaml          # Project metadata (nexus-compatible)
+│   ├── roles/               # App-specific role definitions
+│   ├── playbooks/           # App-specific workflows  
+│   ├── wisdom/              # Inlined wisdom subset
+│   ├── principles.md        # Core principles for this app
+│   ├── lessons.md           # Accumulated corrections
+│   └── status.md            # Session state
+├── patterns/                # Relevant antipatterns
+├── essence.md               # App's value proposition
+└── skills/                  # Quality protocols (optional)
 ```
 
 ---
@@ -87,7 +83,7 @@ Based on characteristics:
 ### Step 3: Adapt Role Templates
 
 For each selected role:
-1. Copy from `.meta/roles/{role}.md`
+1. Copy from `.brain/roles/{role}.md`
 2. Remove sections not applicable to this app
 3. Inline any referenced principles
 4. Customize examples for this app's domain
@@ -127,19 +123,19 @@ Extract and inline ONLY the wisdom relevant to this app:
 [Only include principles that apply to this specific app]
 ```
 
-### Step 6: Generate Self-Contained AGENTS.md
+### Step 6: Generate Self-Contained Orchestrator Agent
 
-The generated `.app/AGENTS.md` must:
-- ❌ NOT reference `.meta/` anywhere
+The generated `.github/agents/{orchestrator}.agent.md` must:
+- ❌ NOT reference engine source paths anywhere
 - ❌ NOT use `../` paths to engine files
 - ✅ Include all context inline
-- ✅ Be fully functional if `.meta/` is deleted
+- ✅ Be fully functional independently
 
-If `repo_role = system`, generate `.app/AGENTS.md` from `.meta/generators/system_agents.template.md`.
+If `repo_role = system`, generate from `generators/system_agents.template.md`.
 
 ### Step 6.2: Generate Agent Context
 
-Create `.app/agent_context.json` from `.meta/templates/agent_context.template.json` and fill:
+Create `.brain/context/agent_context.json` from `templates/agent_context.template.json` and fill:
 - repo host/provider
 - repo type (system/app/component/monorepo/multi-repo)
 - cloud provider (if any)
@@ -147,13 +143,10 @@ Create `.app/agent_context.json` from `.meta/templates/agent_context.template.js
 
 This file is the canonical operational context for all agents.
 
-### Step 6.5: Sync Essence Mirror
+### Step 6.5: Sync Essence
 
-`essence.md` (root) is the canonical value proposition. `.app/essence.md` is a generated mirror
-used for self-contained orchestration. Keep them in sync:
-
-- If `essence.md` exists and differs from `.app/essence.md`, overwrite `.app/essence.md` from `essence.md`.
-- Add a short header in `.app/essence.md` stating it is a generated mirror and should not be edited directly.
+`essence.md` (root) is the canonical value proposition. Generated projects use `essence.md` at root
+directly for self-contained orchestration.
 
 ### Step 6.6: Generate MCP Role Workspaces (Codex MCP)
 
@@ -164,7 +157,7 @@ contains its own `AGENTS.md`.
 - `.app/runtime/mcp/<role>/AGENTS.md`
 
 **Template**:
-- `.meta/templates/mcp_role_agent.template.md`
+- `templates/mcp_role_agent.template.md`
 
 **Notes**:
 - Each role workspace must be inside the app root (so all files remain accessible).
@@ -179,7 +172,7 @@ without overwriting unrelated settings.
 - `scripts/merge_codex_mcp_config.py` (create `scripts/` if missing)
 
 **Template**:
-- `.meta/templates/merge_codex_mcp_config.template.py`
+- `templates/merge_codex_mcp_config.template.py`
 
 ### Step 7: Generate MCP Profile Wrapper Script (App Root)
 
@@ -192,7 +185,7 @@ generate a small wrapper script in the app root.
 - `scripts/codex-{APP_SLUG}.sh` (create `scripts/` if missing)
 
 **Template**:
-- `.meta/templates/codex_mcp_profile_wrapper.template.sh`
+- `templates/codex_mcp_profile_wrapper.template.sh`
 
 **How to populate placeholders**:
 - `{APP_SLUG}`: `meta_config.json.app_slug`
@@ -210,33 +203,36 @@ Example injected lines:
 - The wrapper must pass through all additional CLI args via `"$@"`.
 - Mark script executable (`chmod +x`).
 
-### Step 7: Write .engine-version
+### Step 7: Write config.yaml version
 
-```
-1.9.0
-Generated: 2024-12-04T22:53:00Z
-Source: meta-metacognition v1.9.0
+The project version is recorded in `.brain/config.yaml` under the `project.version` field.
+
+```yaml
+project:
+  version: "1.9.0"
+  generated: "2024-12-04T22:53:00Z"
+  source: "meta-metacognition v1.9.0"
 ```
 
 ---
 
 ## Self-Containment Rules
 
-### What Gets INLINED (copied into .app/)
+### What Gets INLINED (copied into project)
 
 | Source | Destination | Why |
 |--------|-------------|-----|
-| Relevant role definitions | `.app/roles/` | App needs these at runtime |
-| Relevant workflows | `.app/workflows/` | App needs these at runtime |
-| Core principles | `.app/wisdom/` | Referenced by AGENTS.md |
-| Relevant patterns | `.app/patterns/` | Referenced by AGENTS.md |
-| Essence | `.app/essence.md` | Core to app identity |
+| Relevant role definitions | `.brain/roles/` | App needs these at runtime |
+| Relevant workflows | `.brain/playbooks/` | App needs these at runtime |
+| Core principles | `.brain/wisdom/` | Referenced by orchestrator agent |
+| Relevant patterns | `patterns/` | Referenced by orchestrator agent |
+| Essence | `essence.md` (root) | Core to app identity |
 
 ### What Gets REFERENCED (pointer only)
 
-Nothing. The `.app/` folder must be fully self-contained.
+Nothing. The generated project must be fully self-contained.
 
-### What Stays in .meta/ Only
+### What Stays in Engine Only
 
 | Content | Why Not Copied |
 |---------|----------------|
@@ -249,13 +245,13 @@ Nothing. The `.app/` folder must be fully self-contained.
 
 ## Upgrade Process
 
-When `.app/.engine-version` < `.meta/VERSION`:
+When `.brain/config.yaml` version < engine version:
 
 ### Step 1: Detect Upgrade
 
 ```
-Current .app/.engine-version: 1.8.0
-Current .meta/VERSION: 1.9.0
+Current .brain/config.yaml version: 1.8.0
+Current engine version: 1.9.0
 → UPGRADE NEEDED
 ```
 
@@ -276,7 +272,7 @@ Mark files that user has modified:
 
 ### Step 4: Regenerate
 
-For each file in `.app/`:
+For each generated file:
 - If user-modified: SKIP (preserve)
 - If generated: REGENERATE with new template
 
@@ -290,17 +286,17 @@ Add new capabilities:
 
 ### Step 6: Update Version
 
-Write new `.engine-version` with upgrade timestamp.
+Write new version to `.brain/config.yaml` with upgrade timestamp.
 
 ---
 
-## Template: .app/AGENTS.md (Self-Contained)
+## Template: Orchestrator Agent (Self-Contained)
 
 See `app_agents.template.md` for the full template.
 
 Key requirements:
 1. PERSONA section with identity enforcement
-2. Pre-flight checklist (NO .meta/ references)
+2. Pre-flight checklist (NO stale `.meta/` or `.app/` references)
 3. Full app context inline
 4. Wisdom principles inline (not referenced)
 5. Role summaries inline (not referenced)
@@ -312,13 +308,13 @@ Key requirements:
 
 After generation, validate:
 
-- [ ] `.app/AGENTS.md` contains no `.meta/` references
-- [ ] `.app/AGENTS.md` contains no `../` paths
+- [ ] `.github/agents/{orchestrator}.agent.md` contains no stale `.meta/` or `.app/` references
+- [ ] `.github/agents/{orchestrator}.agent.md` contains no `../` paths
 - [ ] All wisdom references are inline text
-- [ ] All role references point to `.app/roles/`
-- [ ] All workflow references point to `.app/workflows/`
-- [ ] `.app/.engine-version` matches `.meta/VERSION`
-- [ ] App would function if `.meta/` were deleted
+- [ ] All role references point to `.brain/roles/`
+- [ ] All workflow references point to `.brain/playbooks/`
+- [ ] `.brain/config.yaml` version matches engine version
+- [ ] App would function independently of engine source
 
 ---
 

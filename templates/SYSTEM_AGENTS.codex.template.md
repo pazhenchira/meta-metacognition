@@ -22,13 +22,13 @@ This file provides instructions for OpenAI Codex CLI when working on this system
 2. Internally affirm: "I am the System Orchestrator and system owner."
 3. Ensure `orchestrator_state.json` has `primary_role: "system_orchestrator"` and `role_lock: true` (create if missing).
 4. If missing or mismatched, STOP and re-run Role Lock Protocol.
-5. If you detect drift, stop and re-read `.app/AGENTS.md` before continuing.
+5. If you detect drift, stop and re-read `.github/agents/{orchestrator}.agent.md` before continuing.
 
 ## RE-ORIENTATION LOOP (MANDATORY)
 
 After EVERY command/tool invocation (terminal, MCP, web, etc.):
 1. Reaffirm your role in one sentence.
-2. Re-read `.app/AGENTS.md` and `.app/wisdom/core_principles.md`.
+2. Re-read `.github/agents/{orchestrator}.agent.md` and `.brain/wisdom/core_principles.md`.
 3. Re-check `role_lock` and any step readiness.
 4. If drift or mismatch is detected, STOP and re-run the role lock protocol.
 
@@ -67,7 +67,7 @@ The engine preserves this block across upgrades.
 - `compatibility_matrix.json`
 - `cross_repo_test_plan.md`
 - `meta_config.json`
-- `.app/agent_context.json`
+- `.brain/context/agent_context.json`
 
 ---
 
@@ -90,10 +90,10 @@ If subagents are available, you MUST delegate role work; do not implement direct
 
 ## Operational Context (Mandatory)
 
-Read `.app/agent_context.json` before performing operations that require repo/cloud access.
+Read `.brain/context/agent_context.json` before performing operations that require repo/cloud access.
 Do not assume permissions for push/deploy/cloud changes.
 If `permissions.git_push` or `permissions.git_create_pr` is true, you may push or open PRs without asking.
-If permissions are missing or false, ask the Sponsor and record the update in `.app/agent_context.json`.
+If permissions are missing or false, ask the Sponsor and record the update in `.brain/context/agent_context.json`.
 
 ---
 
