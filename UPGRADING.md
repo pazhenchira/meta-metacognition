@@ -7,7 +7,7 @@
 
 ## Current Version (v4.x)
 
-**Current Engine Version**: 4.0.0  
+**Current Engine Version**: 4.1.0  
 
 ### v3.2.0 Notes (MetaAgent v0.9.9 Patterns + Skills)
 
@@ -74,6 +74,50 @@
 - `skills/problem-reframing.skill.md` — Break out of stuck patterns
 - `skills/stakeholder-lens.skill.md` — Match stakeholder quality bar
 - `skills/strategic-synthesis.skill.md` — Validate strategic recommendations
+
+### v4.1.0 Notes (Nexus-Ready Factory + Path Migration)
+
+**Changes** (non-breaking):
+
+- **Essence broadened**: Factory identity updated from "Engineering CTO as a Service" to "Agent System Factory" — produces any type of agent system (engineering, advisory, financial, trading, personal), not just code
+- **Nexus-readiness**: Templates and generators updated so all factory-produced projects are compatible with the nexus runtime gateway
+- **Path migration complete**: All stale `.meta/` and `.app/` references in templates, generators, and pipeline migrated to v4.0.0 `.brain/` and `.github/` layout (~120 references fixed)
+- **Nexus runtime option**: `build-from-intent.md` pipeline now supports `preferred_runtime: "nexus"` — factory can run through nexus RuntimeBroker with lesson recall, goal tracking, and quality enforcement
+- **Post-generation nexus registration**: Pipeline now includes a step to generate `docs/nexus-registration.md` for new projects
+
+**New Files**:
+- `templates/nexus-registration.template.md` — Registration guide template for nexus-compatible projects
+- `templates/brain-config.template.yaml` — `.brain/config.yaml` template with nexus-required fields
+- `templates/principles.template.md` — `.brain/principles.md` template for nexus preamble composition
+
+**New Template Fields**:
+- `app_intent.md` section 8: Nexus Integration (optional) — captures nexus hosting intent during app design
+
+**For Existing Apps (v4.0.0 → v4.1.0)**:
+
+No migration needed. Changes are to the factory's templates and generators — they affect newly created projects, not existing ones. However, existing projects that want nexus integration should:
+
+1. Verify `essence.md` exists at project root (nexus reads this for content-aware preamble)
+2. Verify `.brain/config.yaml` has `project.name`, `project.version`, and `orchestrator.name` fields
+3. Verify `.github/` directory exists with at least one agent.md file
+4. See `templates/nexus-registration.template.md` for full nexus registration checklist
+
+**Nexus Integration (NEW — applies to all projects)**:
+
+Projects hosted by nexus get:
+- **Content-aware preamble**: Nexus reads `essence.md` + `.brain/principles.md` and composes project-specific context
+- **Cross-session memory**: LessonStore per project — corrections learned in session 1 recalled in session 100
+- **Goal tracking**: GoalStore per session — conversation goals tracked and verified per turn
+- **Quality enforcement**: Protocol compliance enforced in code (not just prompts) with auto-retry
+- **Multi-channel access**: Same project accessible via CLI, Slack, API
+
+To register a project with nexus, add to `nexus.config.yaml`:
+```yaml
+- name: "your-project"
+  path: "C:\\Dev\\your-project"
+  protocolEnforcement:
+    enabled: true
+```
 
 ---
 
