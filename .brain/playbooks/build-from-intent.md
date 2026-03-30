@@ -1,6 +1,6 @@
 # Build From Intent — 12-Phase Pipeline
 
-> Migrated from `.meta/AGENTS.md` during MetaAgent convergence.
+> Migrated from `AGENTS.md` (formerly `.meta/AGENTS.md`) during MetaAgent convergence.
 > This is meta-metacognition's core product: a complete pipeline for building applications from intent to deployed code.
 
 ---
@@ -61,7 +61,7 @@ At the START of each new session, before any other work:
    - Does `orchestrator_state.json` exist?
      - YES → Read it, identify `current_phase`, RESUME from where you left off
      - NO → This is a NEW APP, start from Phase 0
-   - Does `.meta-version` exist?
+   - Does `.brain/config.yaml` have a `version` field?
      - YES → This is MAINTENANCE or UPGRADE mode
      - NO → This is NEW APP mode
    - **ACTION**: Update `orchestrator_state.json` with `preflight_run: true`, `primary_role: "meta_orchestrator"`, `role_lock: true`
@@ -73,23 +73,22 @@ At the START of each new session, before any other work:
 
 **3. Reaffirm Your Authority**:
    - Make ALL technical and architectural decisions autonomously
-   - Use `.meta/principles.md` for KISS, LEGO, Thompson #5
-   - Use `.meta/wisdom/` for engineering guidance (Thompson, Knuth, Pike, Kernighan)
-   - Use `.meta/patterns/` for antipatterns and success patterns
+   - Use `.brain/principles.md` for KISS, LEGO, Thompson #5
+   - Use `.brain/wisdom/` for engineering guidance (Thompson, Knuth, Pike, Kernighan)
+   - Use `patterns/` for antipatterns and success patterns
    - ONLY ask users about APPLICATION requirements (what to build, not how)
 
 **4. Reaffirm Your Knowledge Sources**:
-   - `.meta/intent.md` ← HOW the meta-orchestrator behaves
-   - `.meta/principles.md` ← Global engineering principles
-   - `.meta/wisdom/` ← Expert engineering wisdom
-   - `.meta/patterns/` ← Antipatterns and success patterns
+   - `.brain/principles.md` ← Global engineering principles
+   - `.brain/wisdom/` ← Expert engineering wisdom
+   - `patterns/` ← Antipatterns and success patterns
    - `app_intent.md` ← WHAT application to build
    - `meta_config.json` ← Configuration flags
    - `runtime_adapters/adapter_interface.md` ← Runtime capabilities & sub-agent contract
 
 **4.5 Runtime Selection (MANDATORY)**:
    - Read `meta_config.json` for:
-  - `preferred_runtime` (e.g., `codex-cli-parallel`, `codex-cli-mcp`, `codex-cli`, `github-copilot`)
+  - `preferred_runtime` (e.g., `nexus`, `codex-cli-parallel`, `codex-cli-mcp`, `codex-cli`, `github-copilot`)
   - `enable_subagents` (true/false)
   - `subagent_strategy` (`auto`, `mcp`, or `single-session`)
   - `subagent_fallback` (`single-session` recommended)
@@ -108,9 +107,14 @@ At the START of each new session, before any other work:
     - Use `app_slug` from `meta_config.json` (or slugify app name) and name servers `{app_slug}__{role}`.
     - This prevents collisions when multiple apps use MCP concurrently.
   - **Role isolation (MCP)**: Each MCP server must start in a **role-specific workspace**
-    under `.app/runtime/mcp/<role>` with a role-specific `AGENTS.md`.
-    - Generate role workspaces from `.meta/templates/mcp_role_agent.template.md`.
+    under `runtime/mcp/<role>` with a role-specific `AGENTS.md`.
+    - Generate role workspaces from `templates/mcp_role_agent.template.md`.
     - This prevents App Orchestrator instructions from leaking into role servers.
+- If `preferred_runtime` is `nexus`:
+    - The factory runs through the **nexus RuntimeBroker** instead of spawning Codex CLI directly.
+    - Nexus provides lesson recall, goal tracking, and quality enforcement during build.
+    - No MCP config required — nexus manages runtime delegation internally.
+    - Ensure `meta_config.json` has `preferred_runtime: "nexus"` and `enable_subagents: true`.
 - If `preferred_runtime` missing or invalid:
     - Default to **codex-cli-mcp**.
     - If MCP setup is incomplete, **request the user to apply the required setup** (restart Codex).
@@ -133,7 +137,7 @@ At the START of each new session, before any other work:
 
 **4.7 Load Playbook into TODO**:
    - Identify task type (new feature, bug fix, enhancement)
-   - Read appropriate playbook from `.meta/playbooks/`
+   - Read appropriate playbook from `.brain/playbooks/`
    - Load checklist into `update_todo()` tool
    - Track progress by checking off items
    - **Never report done until all TODO items are checked**
@@ -150,7 +154,7 @@ At the START of each new session, before any other work:
    - If new app: Start Phase 0 (Version Check & Upgrade Mode)
 
 **7. Critical Files Reminder** (for end-of-pipeline):
-   - ⚠️ **REMEMBER**: At Phase 11.2, you MUST update `.meta-manifest.json`
+   - ⚠️ **REMEMBER**: At Phase 11.2, you MUST update the project manifest
    - ⚠️ **REMEMBER**: Set `manifest_updated: true` in `orchestrator_state.json`
    - ⚠️ **VALIDATION**: Before marking COMPLETE, verify manifest exists
 
@@ -167,15 +171,13 @@ At the START of each new session, before any other work:
 
 You MUST treat these files as having distinct roles:
 
-- `.meta/intent.md` → **Meta-Orchestrator Intent**  
-  Describes how the meta-cognitive pipeline itself should behave: hierarchy, LEGO orchestrators,
-  GEN+REVIEW, session hygiene, safety valves, etc. This file is about the ENGINE, not any one app.
+- `.meta/intent.md` → *(Removed in v4 — meta-orchestrator behavior is now encoded in this playbook and `.brain/config.yaml`)*
 
 - `app_intent.md` → **Application Intent**  
   Describes the specific application the user wants you to build: features, domain, constraints,
   data sensitivity, external APIs, etc. This is the ONLY file that describes the app.
 
-- `.meta/principles.md` → **Global Principles**  
+- `.brain/principles.md` → **Global Principles**  
   KISS, LEGO architecture, privacy, testing, documentation, red-team, R&D modes, etc.
 
 - `meta_config.json` → **Configuration**  
@@ -185,12 +187,12 @@ You MUST treat these files as having distinct roles:
 
 Rules:
 
-- Use `.meta/intent.md`, `.meta/principles.md`, and `meta_config.json` to understand **HOW** to orchestrate.
+- Use `.brain/principles.md` and `meta_config.json` to understand **HOW** to orchestrate.
 - Use `app_intent.md` to understand **WHAT** to build.
 - If `app_intent.md` is missing or empty:
   - Ask the user to fill it.
   - Stop without building anything.
-- If you detect app-specific content in `.meta/intent.md`, warn the user and suggest moving it to `app_intent.md`, then stop.
+- If you detect app-specific content in this playbook, warn the user and suggest moving it to `app_intent.md`, then stop.
 
 ---
 
@@ -236,12 +238,12 @@ Rules:
 ### Runtime File Generation (When Selected)
 
 - `codex-cli-parallel`: ensure `agent_runtime.json` exists (copy from template); use `codex exec` per role session.
-- `codex-cli-mcp`: ensure `agent_runtime.json` exists (copy from template) and generate `codex_mcp_server.py` + `.app/runtime/codex_mcp_servers.toml` from templates.
-  - Merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` **before** starting the main Codex session.
+- `codex-cli-mcp`: ensure `agent_runtime.json` exists (copy from template) and generate `codex_mcp_server.py` + `runtime/codex_mcp_servers.toml` from templates.
+  - Merge `runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` **before** starting the main Codex session.
   - MCP servers remain disabled by default; start Codex with `-p <app_slug>` to enable only this app's servers.
   - Main session uses the MCP tools for each role server (tool calls include role brief).
-- `claude-code-subagents`: generate `.claude/agents/{role}.md` files from `.meta/templates/claude_subagent.template.md`.
-- `github-copilot`: generate `.github/agents/{role}.agent.md` using `.meta/templates/agent.template.md` (role-specific profiles).
+- `claude-code-subagents`: generate `.claude/agents/{role}.md` files from `templates/claude_subagent.template.md`.
+- `github-copilot`: generate `.github/agents/{role}.agent.md` using `templates/agent.template.md` (role-specific profiles).
 
 ### Role Pool (Core + Lifecycle)
 
@@ -305,7 +307,7 @@ If any of these are skipped, STOP and correct before proceeding.
 After EVERY command or tool invocation (terminal, MCP, web, etc.):
 
 1. Reaffirm your role in one sentence.
-2. Re-read the role instructions (AGENTS.md or role file) and `.meta/principles.md`.
+2. Re-read the role instructions (AGENTS.md or role file) and `.brain/principles.md`.
 3. Re-check any state guards (e.g., `role_lock`, `primary_role`, step readiness).
 4. If drift or mismatch is detected, STOP and re-run Pre-Flight before continuing.
 
@@ -313,89 +315,93 @@ This applies to the Meta-Orchestrator and ALL sub-agents/MCP role sessions.
 
 ---
 
-## APP ARCHITECTURE: .meta/ vs .app/
+## APP ARCHITECTURE: .brain/ and Root Layout (v4.0.0+)
 
-### The Two-Folder Model
+### The v4 Layout
+
+> **v4.0.0 Migration**: The old `.meta/` (engine) and `.app/` (generated app) two-folder model has been consolidated.
+> Engine resources live in `.brain/`, `templates/`, `generators/`, and `patterns/` (root-level).
+> Generated app orchestration uses `.github/agents/` and root-level `AGENTS.md`.
 
 ```
 my-app/
-├── .meta/                       ← ENGINE (copied from meta-metacognition)
-│   ├── AGENTS.md                ← This file - handles CREATE/UPGRADE
-│   ├── generators/              ← Templates for generating .app/
-│   ├── roles/                   ← Role TEMPLATES (source for .app/roles/)
-│   ├── workflows/               ← Workflow TEMPLATES (source for .app/workflows/)
-│   ├── wisdom/                  ← Full wisdom library
-│   └── VERSION                  ← Engine version
+├── .brain/                      ← PROJECT BRAIN (config, lessons, status, playbooks)
+│   ├── config.yaml              ← Framework config (includes version)
+│   ├── lessons.md               ← Accumulated knowledge
+│   ├── status.md                ← Current state
+│   ├── playbooks/               ← Including this file (build-from-intent.md)
+│   ├── roles/                   ← Role definitions
+│   └── wisdom/                  ← Full wisdom library
 │
-├── .app/                        ← APP-SPECIFIC (generated by engine)
-│   ├── AGENTS.md                ← App orchestrator (SELF-CONTAINED, no .meta/ refs)
-│   ├── essence.md               ← This app's value proposition
-│   ├── roles/                   ← This app's roles (adapted from templates)
-│   ├── workflows/               ← This app's workflows (adapted)
-│   ├── wisdom/                  ← Inlined principles relevant to this app
-│   └── .engine-version          ← Which .meta/ version generated this
+├── .github/agents/              ← AGENT DEFINITIONS
+│   └── {orchestrator}.agent.md  ← App/system orchestrator for VS Code Copilot
 │
+├── patterns/                    ← Antipatterns, success patterns, trade-off matrix
+├── templates/                   ← Code generation templates
+├── generators/                  ← Generator logic
+├── essence.md                   ← This app's value proposition
+├── AGENTS.md                    ← Router (points to correct orchestrator)
 ├── specs/                       ← Immutable specifications
 ├── src/                         ← Implementation
-├── AGENTS.md                    ← Router (points to correct orchestrator)
 └── app_intent.md                ← Original intent
 ```
 
 ### Key Principle
 
-> **After CREATE or UPGRADE, you could DELETE `.meta/` and the app would still be fully maintainable.**
-> The `.app/` folder is COMPLETELY SELF-CONTAINED.
+> **The app is self-contained.** After CREATE or UPGRADE, the generated orchestration files
+> (`.github/agents/`, `AGENTS.md`, `essence.md`) contain everything needed for maintenance.
+> Engine playbooks (`.brain/playbooks/`) are only needed for CREATE/UPGRADE.
 
 ### Three Modes of Operation
 
-| Mode | Uses .meta/? | Uses .app/? | Orchestrator |
-|------|--------------|-------------|--------------|
-| **CREATE** | ✅ Reads templates | Creates it | `.meta/AGENTS.md` (this file) |
-| **UPGRADE** | ✅ Reads templates | Regenerates | `.meta/AGENTS.md` (this file) |
-| **MAINTAIN** | ❌ Not needed | ✅ Self-contained | `.app/AGENTS.md` |
+| Mode | Uses .brain/playbooks? | Uses .github/agents/? | Orchestrator |
+|------|------------------------|-----------------------|--------------|
+| **CREATE** | ✅ Reads templates | Creates it | `.brain/playbooks/build-from-intent.md` (this file) |
+| **UPGRADE** | ✅ Reads templates | Regenerates | `.brain/playbooks/build-from-intent.md` (this file) |
+| **MAINTAIN** | ❌ Not needed | ✅ Self-contained | `.github/agents/{orchestrator}.agent.md` |
 
 ### Mode Detection Logic
 
 ```
-if .app/ doesn't exist:
+if .github/agents/{orchestrator}.agent.md doesn't exist:
     MODE = CREATE
-    Use .meta/AGENTS.md to generate .app/
+    Use .brain/playbooks/build-from-intent.md to generate app orchestration
     
-elif .app/.engine-version < .meta/VERSION:
+elif .brain/config.yaml version > generated orchestrator version:
     MODE = UPGRADE
-    Use .meta/AGENTS.md to regenerate .app/
-    
+    Use .brain/playbooks/build-from-intent.md to regenerate
+
 else:
     MODE = MAINTAIN
-    Use .app/AGENTS.md (self-contained, no .meta/ needed)
+    Use .github/agents/{orchestrator}.agent.md (self-contained)
 ```
 
 ### What CREATE Does
 
 1. Run discovery phases (intent, essence, requirements)
 2. Determine which roles apply to this app
-3. Generate `.app/` folder with:
-   - Self-contained `AGENTS.md` (no `.meta/` references)
+3. Generate app orchestration with:
+   - Self-contained `.github/agents/{orchestrator}.agent.md` (no engine references)
    - Adapted roles for this app
    - Adapted workflows for this app
    - Inlined wisdom principles
-4. Write `.app/.engine-version`
+4. Write version to `.brain/config.yaml`
 5. Build the actual app (src/, tests/, etc.)
 
 ### What UPGRADE Does
 
-1. Compare `.app/.engine-version` to `.meta/VERSION`
+1. Compare `.brain/config.yaml` version to generated orchestrator version
 2. Identify new features in engine
-3. Preserve user customizations in `.app/`
-4. Regenerate `.app/` with new engine features
-5. Update `.app/.engine-version`
+3. Preserve user customizations
+4. Regenerate orchestration with new engine features
+5. Update `.brain/config.yaml` version
 
 ### What MAINTAIN Does
 
-1. Read `.app/AGENTS.md` (self-contained)
+1. Read `.github/agents/{orchestrator}.agent.md` (self-contained)
 2. Apply app-specific roles and workflows
-3. Build/modify features using `.app/` context
-4. **Never reference `.meta/`** - not needed at runtime
+3. Build/modify features using project context
+4. **Never reference engine playbooks** - not needed at runtime
 
 ---
 
@@ -409,32 +415,31 @@ else:
 
 Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINTENANCE run:
 
-### Check for `.meta-version`
+### Check for Engine Version
 
-1. **If `.meta-version` does NOT exist**: **NEW APP MODE**
+1. **If `.brain/config.yaml` has no version or does NOT exist**: **NEW APP MODE**
    - This is a fresh build.
    - Proceed with normal pipeline (Sections 1-12).
-   - **Generate `.app/` folder** (see "Generating .app/ Folder" below)
-   - At completion, write `.meta-version` (using `.meta/templates/.meta-version.template` as a guide) and `.meta-manifest.json` (using `.meta/templates/.meta-manifest.template.json` as a guide).
+   - **Generate app orchestration files** (see "Generating App Orchestration" below)
+   - At completion, write version to `.brain/config.yaml`.
 
-2. **If `.meta-version` exists**: **UPGRADE OR MAINTENANCE MODE**
-   - Read `.meta-version` to see which meta-orchestrator version built this app.
-   - Read `.meta/VERSION` to see current local engine version.
-   - **Self-Upgrade Protocol**: If `.meta-version` contains `engine_source`:
-     1. Clone the engine repo (shallow): `git clone --depth 1 <engine_source> /tmp/meta-engine-upgrade`
-     2. Compare versions: `cat /tmp/meta-engine-upgrade/.meta/VERSION` vs local `.meta/VERSION`
+2. **If `.brain/config.yaml` has a version**: **UPGRADE OR MAINTENANCE MODE**
+   - Read `.brain/config.yaml` version to see which meta-orchestrator version built this app.
+   - **Self-Upgrade Protocol**: If `.brain/config.yaml` contains `engine_source`:
+     1. Clone the engine repo (shallow): `git clone --depth 1 <engine_source> upgrade-staging`
+     2. Compare versions: `upgrade-staging/.brain/config.yaml` version vs local `.brain/config.yaml` version
      3. If remote is newer:
-        - Back up `.meta/` → `.meta.bak/`
-        - Copy `/tmp/meta-engine-upgrade/.meta/` → `.meta/`
-        - Update `.meta-version` with new version + today's date
+        - Back up `.brain/` → `.brain.bak/`
+        - Copy `upgrade-staging/.brain/` → `.brain/`
+        - Update `.brain/config.yaml` with new version + today's date
         - Create `lessons.md` from template if missing
         - Create `status.md` from template if missing
-        - Clean up temp clone
+        - Clean up staging clone
         - Report: "Engine upgraded from v{old} to v{new}. Proceeding with upgrade evaluation."
         - Continue to **UPGRADE MODE** (different version path below)
      4. If same version: skip, proceed to version comparison below
      5. If clone fails (network, permissions): log warning, continue with current engine
-   - Read `.meta-manifest.json` to identify user-modified files.
+   - *(`.meta-manifest.json` is deprecated in v4 — use `.brain/config.yaml` and `orchestrator_state.json` for tracking.)*
    - Read `app_intent.md` to see if application requirements have changed.
    - Compare versions:
      - **Same version, app_intent.md UNCHANGED**: NO-OP MODE
@@ -546,7 +551,7 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
        - Show plan to user with recommendations, get approval.
        - Execute approved plan: keep, refactor, or regenerate files as decided.
        - Update `lego_plan.json` with new/modified/removed LEGOs.
-       - Update `.meta-manifest.json` with new generated files.
+       - Update manifest with new generated files.
      - **Different version, app_intent.md UNCHANGED**: ENGINE UPGRADE MODE
        - User wants to adopt new meta-orchestrator features.
        - App's purpose stays the same, but gains new engine capabilities.
@@ -572,61 +577,61 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
        - Show plan to user with recommendations, get approval.
        - Apply upgrade: add new LEGOs, enhance or regenerate files as decided.
       - **Preserve App/Sponsor Overrides**:
-        - Before regenerating `.app/roles/*.md`, extract the `APP_OVERRIDES` block from each role.
+        - Before regenerating `.brain/roles/*.md`, extract the `APP_OVERRIDES` block from each role.
         - After regeneration, reinsert the preserved block into the corresponding role file.
-        - If a role is removed, archive its overrides in `.app/roles/_overrides_archive.md`.
-        - Before regenerating `.app/AGENTS.md`, extract the `APP_OVERRIDES` block from `.app/AGENTS.md`.
-        - After regeneration, reinsert the preserved block into `.app/AGENTS.md` at the same location.
+        - If a role is removed, archive its overrides in `.brain/roles/_overrides_archive.md`.
+        - Before regenerating `.github/agents/{orchestrator}.agent.md`, extract the `APP_OVERRIDES` block.
+        - After regeneration, reinsert the preserved block at the same location.
       - **Preserve System/Sponsor Overrides** (system repos):
-        - If `.app/AGENTS.md` contains `SYSTEM_OVERRIDES`, extract and reinsert it on regeneration.
-      - Update `.meta-version` and `.meta-manifest.json`.
+        - If `.github/agents/{orchestrator}.agent.md` contains `SYSTEM_OVERRIDES`, extract and reinsert it on regeneration.
+      - Update `.brain/config.yaml` version.
        - **MANDATORY: Generate agent configuration for BOTH runtimes**:
          
         **A. GitHub Copilot Chat (VS Code)** - Uses `.github/agents/` files:
          - If `repo_role = system`:
            - Generate `.github/agents/system-orchestrator.agent.md`
-           - Template: `.meta/templates/system_agent.template.md`
+           - Template: `templates/system_agent.template.md`
            - Replace `{SYSTEM_NAME}` with system name from `app_intent.md`
            - Agent name: "System Orchestrator"
          - Otherwise:
            - Generate `.github/agents/app-orchestrator.agent.md`
-           - Template: `.meta/templates/agent.template.md`
+           - Template: `templates/agent.template.md`
            - Replace `{APP_NAME}` with actual app name from `app_intent.md`
            - Agent name: "App Orchestrator"
          - Create `.github/agents/` directory if missing
          - If file exists and outdated: Update with latest template
-        - **CRITICAL**: File must say "You read `.app/AGENTS.md`" and must not reference engine files
+        - **CRITICAL**: File must say "You read `.github/agents/{orchestrator}.agent.md`" and must not reference engine files
         - **VALIDATION**: Verify file exists and contains correct orchestrator role
-        - **VALIDATION**: Verify file says "You read `.app/AGENTS.md`"
-        - **VALIDATION**: Grep file to ensure no `.meta/` references for primary instructions
+        - **VALIDATION**: Verify file says "You read `.github/agents/{orchestrator}.agent.md`"
+        - **VALIDATION**: Grep file to ensure no engine playbook references for primary instructions
          
          **B. OpenAI Codex CLI** - Uses `AGENTS.md` in repo root:
          - **ALWAYS generate `AGENTS.md` in repository root** (if not exists)
          - Codex reads AGENTS.md files for memory/instructions (not `.github/agents/`)
-        - Root `AGENTS.md` acts as a router that points to `.app/AGENTS.md` for maintenance
+        - Root `AGENTS.md` acts as a router that points to `.github/agents/{orchestrator}.agent.md` for maintenance
         - Do not embed engine guidance in root `AGENTS.md` beyond routing
         - Format: Plain markdown (no YAML frontmatter needed)
-        - **VALIDATION**: Verify `AGENTS.md` exists in root and routes to `.app/AGENTS.md`
+        - **VALIDATION**: Verify `AGENTS.md` exists in root and routes to `.github/agents/{orchestrator}.agent.md`
          
          **If either validation fails**: STOP and report error (agent won't be discoverable in that runtime)
 
        - **MANDATORY: Runtime Session Setup (Codex CLI)**
          - Read `meta_config.json`:
            - If `preferred_runtime` is `codex-cli-mcp` and `enable_subagents: true`:
-              - Generate `.app/runtime/codex_mcp_servers.toml` from template if missing.
-              - Generate role MCP workspaces: `.app/runtime/mcp/<role>/AGENTS.md` from `.meta/templates/mcp_role_agent.template.md`.
-              - Generate MCP config merge helper: `scripts/merge_codex_mcp_config.py` from `.meta/templates/merge_codex_mcp_config.template.py`.
+              - Generate `runtime/codex_mcp_servers.toml` from template if missing.
+              - Generate role MCP workspaces: `runtime/mcp/<role>/AGENTS.md` from `templates/mcp_role_agent.template.md`.
+              - Generate MCP config merge helper: `scripts/merge_codex_mcp_config.py` from `templates/merge_codex_mcp_config.template.py`.
               - Auto-register MCP servers (one per active role):
                 - `codex mcp add <app_slug>__<role> -- codex mcp-server`
                 - If already present, skip and continue.
               - Validate with `codex mcp list` that role servers are registered.
               - **IMPORTANT**: If the Codex session is already running, instruct the user to restart it so MCP servers are attached.
-              - **IMPORTANT**: Merge `.app/runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` without overwriting unrelated settings.
+              - **IMPORTANT**: Merge `runtime/codex_mcp_servers.toml` into `~/.codex/config.toml` without overwriting unrelated settings.
                 - Only add/update `[mcp_servers.{app_slug}__*]` and `[profiles.{app_slug}]` blocks.
                 - Use `scripts/merge_codex_mcp_config.py` when shell access is available; otherwise provide manual merge steps.
-                - Manual merge: copy those blocks from `.app/runtime/codex_mcp_servers.toml`, replace same-named blocks in `~/.codex/config.toml`, and leave all other sections untouched.
+                - Manual merge: copy those blocks from `runtime/codex_mcp_servers.toml`, replace same-named blocks in `~/.codex/config.toml`, and leave all other sections untouched.
               - **IMPORTANT**: Ensure `tool_timeout_sec` is set in `~/.codex/config.toml` for each role server to match `mcp_tool_timeout_seconds`.
-              - **IMPORTANT**: Ensure each MCP server `cwd` points to its role workspace: `.app/runtime/mcp/<role>` (not app root).
+              - **IMPORTANT**: Ensure each MCP server `cwd` points to its role workspace: `runtime/mcp/<role>` (not app root).
               - **Sanity check**: Call each role MCP tool once and record a one-sentence role confirmation in `APP_ORCHESTRATION.md`.
              - If any sanity-check tool call exceeds `mcp_tool_timeout_seconds`, **switch to fallback** for this work item.
              - Log MCP warm-up failures/timeouts in `APP_ORCHESTRATION.md` with fallback decision.
@@ -640,8 +645,8 @@ Before starting the pipeline, determine if this is a NEW APP or an UPGRADE/MAINT
        - Apply in two phases:
          - Phase A: Add new meta-orchestrator features.
          - Phase B: Apply app requirement changes.
-       - Update `.meta-version` and `.meta-manifest.json`.
-       - **Regenerate `.app/` folder** with new engine features
+       - Update `.brain/config.yaml` version.
+       - **Regenerate app orchestration** with new engine features
 
 ### System-of-Systems Detection (MANDATORY)
 
@@ -676,7 +681,7 @@ Before proceeding to Phase 1, determine whether this repo is part of a system-of
      - `coordination/repo_graph.json` (local slice: self + direct dependencies)
      - `inbox/` and `outbox/` (if `tracked` or `governed`)
 
-   Use templates from `.meta/templates/`:
+   Use templates from `templates/`:
    - `repo_graph.template.json`
    - `coordination_index.template.json`
    - `compatibility_matrix.template.json`
@@ -700,17 +705,17 @@ Ask the Sponsor:
 - Cloud provider (AWS/GCP/Azure/None)
 - Permissions: git push, PR creation, deployments, cloud changes
 
-Write the answers to `.app/agent_context.json` using:
-- `.meta/templates/agent_context.template.json`
+Write the answers to `.brain/context/agent_context.json` using:
+- `templates/agent_context.template.json`
 
 Include a summary in `APP_ORCHESTRATION.md`.
-If `.app/agent_context.json` already exists and is complete, do not re-ask; update only when Sponsor changes permissions.
+If `.brain/context/agent_context.json` already exists and is complete, do not re-ask; update only when Sponsor changes permissions.
 
-### Generating .app/ Folder
+### Generating App Orchestration
 
 **When**: After discovery phases complete, before building src/
 
-**Purpose**: Create self-contained app orchestration that doesn't need `.meta/` at runtime
+**Purpose**: Create self-contained app orchestration that doesn't need engine playbooks at runtime
 
 **Process**:
 
@@ -735,7 +740,7 @@ If `.app/agent_context.json` already exists and is complete, do not re-ask; upda
    ```
    - Set `gtm_agents_available = true` if GTM MCP tools are registered and respond to sanity checks.
 
-2. **Select Roles** (from `.meta/roles/`):
+2. **Select Roles** (from `.brain/roles/`):
    - Always (NEW APP): Essence Analyst, Product Manager (adapted), Developer
    - If decision_critical: Strategy Owner
    - If 3+ components: Architect
@@ -748,36 +753,36 @@ If `.app/agent_context.json` already exists and is complete, do not re-ask; upda
    - If needs_growth: Growth Marketer
    - If needs_evangelism: Evangelist
    
-   Record selections in `.app/roles/_manifest.md`
+   Record selections in `.brain/roles/_manifest.md`
 
-3. **Select Workflows** (from `.meta/workflows/`):
+3. **Select Workflows** (from `.brain/playbooks/`):
    - minimal/light: Simplified new_feature only
    - standard: new_feature, enhancement, bug_fix
    - full: All workflows with formal specs
    - If `repo_role = system` and `coordination_mode` is `tracked` or `governed`: include `system_coordination`
 
-4. **Generate `.app/AGENTS.md`**:
-   - If `repo_role = system`: use `.meta/generators/system_agents.template.md`
-   - Otherwise: use `.meta/generators/app_agents.template.md`
+4. **Generate `.github/agents/{orchestrator}.agent.md`**:
+   - If `repo_role = system`: use `generators/system_agents.template.md`
+   - Otherwise: use `generators/app_agents.template.md`
    - Fill in all placeholders:
      - {APP_NAME} or {SYSTEM_NAME}: From app_intent.md
-     - {ENGINE_VERSION}: From `.meta/VERSION`
+     - {ENGINE_VERSION}: From `.brain/config.yaml`
      - {GENERATION_DATE}: Current timestamp
      - {APP_OVERVIEW}: From discovery
      - {ESSENCE_TRIANGLE}: From essence discovery
      - {VALUE_PROPOSITION}: From essence.md
      - {ACTIVE_ROLES}: From role selection
-   - **CRITICAL**: Result must have ZERO references to `.meta/`
+   - **CRITICAL**: Result must have ZERO references to engine playbooks
    - All wisdom must be INLINED, not referenced
 
 5. **Generate Supporting Files**:
-   - `.app/essence.md`: Mirror of `essence.md` (sync from root; add header that it is generated)
-   - `.app/agent_context.json`: Operational context (repo/cloud/permissions)
-   - `.app/roles/`: Adapted role files (only selected roles)
-   - `.app/workflows/`: Adapted workflow files
-   - `.app/wisdom/core_principles.md`: Inlined relevant principles
-   - `.app/.engine-version`: Current `.meta/VERSION` + timestamp
-   - `APP_VERSION`: Initialize from `.meta/templates/.app-version.template` (root)
+   - `essence.md`: Root-level (app's value proposition)
+   - `.brain/context/agent_context.json`: Operational context (repo/cloud/permissions)
+   - `.brain/roles/`: Adapted role files (only selected roles)
+   - `.brain/playbooks/`: Adapted workflow files
+   - `.brain/wisdom/core_principles.md`: Inlined relevant principles
+   - `.brain/config.yaml`: Update version + timestamp
+   - `APP_VERSION`: Initialize from `templates/.app-version.template` (root)
 
 6. **Generate Root `AGENTS.md`** (Router):
    ```markdown
@@ -785,25 +790,25 @@ If `.app/agent_context.json` already exists and is complete, do not re-ask; upda
    
    ## Mode Detection
    
-   **Check `.app/.engine-version` vs `.meta/VERSION`**:
-   - If `.app/` doesn't exist → Need CREATE (run `.meta/AGENTS.md`)
-   - If `.app/.engine-version` < `.meta/VERSION` → Need UPGRADE (run `.meta/AGENTS.md`)
-   - Otherwise → Use `.app/AGENTS.md` for maintenance
+   **Check `.brain/config.yaml` version**:
+   - If `.github/agents/{orchestrator}.agent.md` doesn't exist → Need CREATE (run `.brain/playbooks/build-from-intent.md`)
+   - If engine version > generated version → Need UPGRADE (run `.brain/playbooks/build-from-intent.md`)
+   - Otherwise → Use `.github/agents/{orchestrator}.agent.md` for maintenance
    
    ## For Maintenance (Normal Operation)
    
-   Read and follow `.app/AGENTS.md` - it is self-contained.
+   Read and follow `.github/agents/{orchestrator}.agent.md` - it is self-contained.
    
    ## For Create/Upgrade
    
-   Read and follow `.meta/AGENTS.md` - it will generate/update `.app/`.
+   Read and follow `.brain/playbooks/build-from-intent.md` - it will generate/update app orchestration.
    ```
 
 7. **Validation**:
-   - [ ] `.app/AGENTS.md` contains NO `.meta/` references
-   - [ ] `.app/AGENTS.md` contains NO `../` paths
+   - [ ] `.github/agents/{orchestrator}.agent.md` contains NO engine playbook references
+   - [ ] `.github/agents/{orchestrator}.agent.md` contains NO `../` paths
    - [ ] All wisdom is inline text, not file references
-   - [ ] App would function if `.meta/` were deleted
+   - [ ] App would function without engine playbooks
 
 ### Version Compatibility
 
@@ -823,15 +828,15 @@ Current meta-orchestrator version: **3.1.1** (see `VERSION` file)
 - **Role context isolation**: Orchestrator reads one role file at a time (prevents role confusion)
 - **Docs separation**: `docs/user/` (external) + `docs/dev/` (internal) - industry standard pattern
 - **Git integration**: Workspace committed during work, deleted after completion (git is source of truth)
-- **Tamper-proof brain**: `.app/` frozen except during engine upgrades (prevents runtime modification)
+- **Tamper-proof brain**: `.brain/` structure frozen except during engine upgrades (prevents runtime modification)
 - **Breaking changes**: Directory structure, workflow model, state management (requires migration from v1.x)
 
 **Features in v1.10.0** (Self-Contained App Architecture):
-- Two-folder model: `.meta/` (engine) vs `.app/` (app-specific)
-- `.app/` is SELF-CONTAINED - no `.meta/` references at runtime
-- Generator system for creating `.app/` folder
-- Apps can function with `.meta/` deleted (after create/upgrade)
-- Clear separation: CREATE/UPGRADE use `.meta/`, MAINTAIN uses `.app/`
+- Two-folder model consolidated in v4: `.brain/` (engine brain) + root-level `patterns/`, `templates/`, `generators/`
+- Generated app orchestration is SELF-CONTAINED - no engine playbook references at runtime
+- Generator system for creating app orchestration files
+- Apps can function without engine playbooks (after create/upgrade)
+- Clear separation: CREATE/UPGRADE use `.brain/playbooks/`, MAINTAIN uses `.github/agents/`
 
 **Features in v1.9.0** (Role-Based Architecture):
 - Six distinct roles: Product Manager, Architect, Developer, Tester, Technical Writer, Operations
@@ -862,11 +867,11 @@ Current meta-orchestrator version: **3.1.1** (see `VERSION` file)
 - No artificial restrictions on agent functionality
 
 **Features in v1.7.1** (VS Code Custom Agents):
-- `.github/agents/meta-orchestrator.agent.md` for engine (reads `.meta/AGENTS.md`)
+- `.github/agents/meta-orchestrator.agent.md` for engine (reads `.brain/playbooks/build-from-intent.md`)
 - `.github/agents/app-orchestrator.agent.md` for apps (reads `AGENTS.md`)
 - Custom agents appear in VS Code Copilot agent picker dropdown
 - No activation phrases needed - select from dropdown
-- Template for generated apps (`.meta/templates/agent.template.md`)
+- Template for generated apps (`templates/agent.template.md`)
 - Discoverable agents without memorizing activation commands
 
 **Features in v1.7.0** (Conversational Maintenance):
@@ -879,7 +884,7 @@ Current meta-orchestrator version: **3.1.1** (see `VERSION` file)
 
 **Features in v1.6.0** (Stateless Runtime Support):
 - Pre-flight Checklist (prevents agent amnesia in GitHub Copilot Chat)
-- App-specific AGENTS.md template (.meta/templates/AGENTS.template.md)
+- App-specific AGENTS.md template (templates/AGENTS.template.md)
 - Meta-orchestrator self-maintenance (AGENTS.md in root for dogfooding)
 - Role persistence across multi-turn conversations (stateless runtime support)
 - Autonomous decision-making reinforcement (reduces "how should I proceed?" questions)
@@ -910,9 +915,9 @@ Current meta-orchestrator version: **3.1.1** (see `VERSION` file)
 **Features in v1.2.0** (Phase 1.5):
 - Intuition & Wisdom System (~24,000 lines)
 - Engineering wisdom (Thompson, Knuth, Pike, Kernighan)
-- Antipattern detection (.meta/patterns/antipatterns.md)
-- Success patterns library (.meta/patterns/success_patterns.md)
-- Trade-off decision matrix (.meta/patterns/trade_off_matrix.md)
+- Antipattern detection (patterns/antipatterns.md)
+- Success patterns library (patterns/success_patterns.md)
+- Trade-off decision matrix (patterns/trade_off_matrix.md)
 
 **Features in v1.1.0** (Phase 1):
 - LEGO architecture
@@ -936,14 +941,14 @@ When evaluating existing files in MAINTENANCE or ENGINE UPGRADE modes, apply thi
 
 For each file with `user_modified: false` (or no manifest entry):
 
-1. **Antipattern Detection** (from `.meta/patterns/antipatterns.md`):
+1. **Antipattern Detection** (from `patterns/antipatterns.md`):
    - God Object: Does this file have too many responsibilities?
    - Golden Hammer: Is the solution appropriate, or force-fit?
    - Magic Numbers: Unexplained constants without named variables?
    - Premature Optimization: Complex code without proven need?
    - Copy-Paste Programming: Duplicated logic instead of reusable functions?
 
-2. **LEGO Principles** (from `.meta/principles.md` and `.meta/wisdom/engineering_wisdom.md`):
+2. **LEGO Principles** (from `.brain/principles.md` and `.brain/wisdom/engineering_wisdom.md`):
    - Thompson #5: Does it "do one thing well"?
    - Single Responsibility: Could this be split into smaller LEGOs?
    - KISS: Is it as simple as possible, or unnecessarily complex?
@@ -959,7 +964,7 @@ For each file with `user_modified: false` (or no manifest entry):
    - Domain Knowledge: How well does code match domain best practices?
    - Requirements Clarity: Does it address a clear need from `app_intent.md`?
    - Risk Level: Critical (data/security) vs Low (UI formatting)?
-   - Precedent Match: Similar to successful patterns in `.meta/patterns/success_patterns.md`?
+   - Precedent Match: Similar to successful patterns in `patterns/success_patterns.md`?
 
 #### Decision Matrix
 
@@ -1006,7 +1011,7 @@ For each evaluated file, document:
 3. **Why This Decision**:
    - Which wisdom principles support this decision
    - Which antipatterns were avoided or need fixing
-   - Which trade-offs were considered (from `.meta/patterns/trade_off_matrix.md`)
+   - Which trade-offs were considered (from `patterns/trade_off_matrix.md`)
    - How this aligns with KISS and LEGO principles
 
 This evaluation framework ensures transparent, wisdom-driven decisions that the user can understand and approve before execution.
@@ -1067,7 +1072,7 @@ Use:
 
 Read:
 
-- `.meta/principles.md` – global design & R&D principles.
+- `.brain/principles.md` – global design & R&D principles.
 - `intent.md` – meta-level orchestration intent (how the pipeline should behave).
 
 You may synthesize these into a `system_prompt_global.txt` file that you reuse in nested Codex calls.
@@ -1180,7 +1185,7 @@ After `requirements.md` is created/updated according to this template and REVIEW
 
 **Goal**: Document all external dependencies (APIs, databases, services, packages) in dedicated files to support LEGO planning.
 
-**IMPORTANT: Web Research Required** (from `[P-WEB]` in `.meta/principles.md`):
+**IMPORTANT: Web Research Required** (from `[P-WEB]` in `.brain/principles.md`):
 
 Before documenting external dependencies, **ALWAYS search online for current information**:
 
@@ -1416,7 +1421,7 @@ These LEGOs **must not implement app features**. They only coordinate.
      - Responsibility: Validate all required configuration and guide setup
      - See `CONFIG_VALIDATION.md` for complete requirements
 
-- **ALWAYS generate a `config_validator` LEGO first** (see [P-CONFIG] in `.meta/principles.md`):
+- **ALWAYS generate a `config_validator` LEGO first** (see [P-CONFIG] in `.brain/principles.md`):
   - Type: `config_validation`
   - Responsibility: Validate all required configuration and guide setup
   - Inputs: `.env`, config files, external service endpoints (from `external_services.md`)
@@ -1500,7 +1505,7 @@ Create or update:
 - `plan.md` – a human-readable overview of steps and dependencies.
 - `orchestrator_state.json` – global pipeline state, including:
   - `preflight_run`: `true` (MUST be set after pre-flight checklist completes) | `false` (agent forgot pre-flight)
-  - `manifest_updated`: `true` (set at Phase 11.2 after .meta-manifest.json updated) | `false` (not yet complete)
+  - `manifest_updated`: `true` (set at Phase 11.2 after project manifest updated) | `false` (not yet complete)
   - `primary_role`: `meta_orchestrator` | `app_orchestrator` (set based on mode)
   - `role_lock`: `true` | `false` (must be `true` while session is active)
   - `current_phase`: "Phase_0" | "Phase_1" | ... | "Phase_12" (tracks pipeline progress)
@@ -1531,17 +1536,17 @@ Each LEGO-Orchestrator MUST:
 
 1. Read:
    - its LEGO entry in `lego_plan.json`,
-   - `.meta/principles.md` (including [P-INTUITION]),
+   - `.brain/principles.md` (including [P-INTUITION]),
    - `meta_config.json`,
    - `lego_state_<name>.json` (create if missing),
    - Wisdom files (Phase 1.5):
-     - `.meta/wisdom/engineering_wisdom.md`,
-     - `.meta/wisdom/strategic_wisdom.md`,
-     - `.meta/wisdom/design_wisdom.md`,
-     - `.meta/wisdom/risk_wisdom.md`,
-     - `.meta/patterns/antipatterns.md`,
-     - `.meta/patterns/success_patterns.md`,
-     - `.meta/patterns/trade_off_matrix.md`,
+     - `.brain/wisdom/engineering_wisdom.md`,
+     - `.brain/wisdom/strategic_wisdom.md`,
+     - `.brain/wisdom/design_wisdom.md`,
+     - `.brain/wisdom/risk_wisdom.md`,
+     - `patterns/antipatterns.md`,
+     - `patterns/success_patterns.md`,
+     - `patterns/trade_off_matrix.md`,
    - any existing files under `src/`, `tests/`, or docs relevant to that LEGO.
 
 2. Execute substeps for that LEGO (with GEN+REVIEW where appropriate):
@@ -1552,13 +1557,13 @@ Each LEGO-Orchestrator MUST:
        - List constraints, acceptance criteria, assumptions, and unknowns.
        - Decide if a second-opinion review is required; if yes, get it BEFORE continuing.
      - Consult wisdom files ([P-INTUITION]):
-       - Check `.meta/patterns/success_patterns.md` for applicable patterns.
-       - Use `.meta/patterns/trade_off_matrix.md` for design decisions.
-       - Apply triggers from `.meta/wisdom/engineering_wisdom.md` and `.meta/wisdom/design_wisdom.md`.
-       - Check `.meta/patterns/antipatterns.md` for potential issues.
+       - Check `patterns/success_patterns.md` for applicable patterns.
+       - Use `patterns/trade_off_matrix.md` for design decisions.
+       - Apply triggers from `.brain/wisdom/engineering_wisdom.md` and `.brain/wisdom/design_wisdom.md`.
+       - Check `patterns/antipatterns.md` for potential issues.
      - Define the LEGO's interface, behavior, and data flow.  
      - Calculate confidence score (domain knowledge, requirements clarity, risk level, precedent match).
-     - Run a REVIEW pass to simplify and align with KISS and `.meta/principles.md`.
+     - Run a REVIEW pass to simplify and align with KISS and `.brain/principles.md`.
 
    - **TEST AUTHORING**:  
      - Write tests for the LEGO’s behavior, edge cases, and errors.  
@@ -1574,7 +1579,7 @@ Each LEGO-Orchestrator MUST:
      - REVIEW for accuracy and usability.
 
    - **CODING (Implementation)**:  
-     - **Web Research for External Dependencies** (from `[P-WEB]` in `.meta/principles.md`):
+     - **Web Research for External Dependencies** (from `[P-WEB]` in `.brain/principles.md`):
        - If LEGO uses external APIs: Search official documentation for current endpoints, authentication, parameters
        - If LEGO installs packages: Search package registries for latest versions and security advisories
        - If LEGO uses framework-specific patterns: Verify current best practices from official docs
@@ -1588,7 +1593,7 @@ Each LEGO-Orchestrator MUST:
    - **VALIDATION**:  
      - Run tests and any relevant commands (e.g., `pytest`, `npm test`, lint).  
      - If LEGO is `sensitive` or risk level is CRITICAL/HIGH:
-       - Apply `.meta/wisdom/risk_wisdom.md` security principles.
+       - Apply `.brain/wisdom/risk_wisdom.md` security principles.
      - If `r_and_d_mode` is `"thorough"`:
        - Build/run an evaluation harness for this LEGO.
        - If `sensitive = true`, run a REDTEAM REVIEW focused on privacy/security issues and record findings.
@@ -1638,7 +1643,7 @@ For each artifact (requirements, design, tests, docs, implementation):
 
 - **GEN**:
   - Create the initial artifact.
-  - **For artifacts involving external dependencies**: Apply `[P-WEB]` principle from `.meta/principles.md`:
+  - **For artifacts involving external dependencies**: Apply `[P-WEB]` principle from `.brain/principles.md`:
     - Search online documentation for current API patterns, package versions, security advisories
     - Document sources and research date in artifact's REVIEW NOTES
 - **REVIEW**:
@@ -1699,7 +1704,7 @@ If a step or substep hits `failure_count >= 3` or the pipeline stalls (no progre
 - Write `meta_error.md` describing:
   - which step/lego failed,
   - what was attempted,
-  - what the user should adjust (e.g., `app_intent.md`, `.meta/principles.md`, dependencies).
+  - what the user should adjust (e.g., `app_intent.md`, `.brain/principles.md`, dependencies).
 - Avoid further retries for that part until the user modifies the setup.
 
 ---
@@ -1708,7 +1713,7 @@ If a step or substep hits `failure_count >= 3` or the pipeline stalls (no progre
 
 **╔═══════════════════════════════════════════════════════════════╗**
 **║ 🚨 CRITICAL CHECKPOINT: Did you run PRE-FLIGHT CHECKLIST? 🚨 ║**
-**║ 📝 REMINDER: Update .meta-manifest.json at Phase 11.2! 📝     ║**
+**║ 📝 REMINDER: Update project manifest at Phase 11.2! 📝     ║**
 **╚═══════════════════════════════════════════════════════════════╝**
 
 Before declaring the app complete, validate that it delivers its essence and provides excellent user experience.
@@ -1808,35 +1813,35 @@ When all LEGOs are `done` AND experience validation passes:
 
 - Generate/update:
   - **`AGENTS.md`** (root) – **App-specific agent instructions** for future AI-assisted development:
-    - **Use `.meta/templates/AGENTS.template.md` as the base template**
+    - **Use `templates/AGENTS.template.md` as the base template**
     - **Fill in app-specific sections**:
       - **Application Context**: Purpose, domain, key features (from `app_intent.md` and `requirements.md`)
       - **Essence & Value Proposition**: Problem statement, UVP, success metrics (from `essence.md`)
       - **User Journey**: Complete experience map from discovery to ongoing value (from `essence.md`)
       - **LEGO Architecture**: Breakdown with rationale (why this decomposition? cite Thompson #5, KISS)
       - **Core Value LEGOs**: Which LEGOs deliver the essence, why they're prioritized
-      - **Wisdom Applied**: Which principles guided design decisions (from `.meta/wisdom/engineering_wisdom.md`)
-      - **Antipatterns Avoided**: What mistakes were prevented (from `.meta/patterns/antipatterns.md`)
-      - **Success Patterns Used**: Circuit Breaker, Config Validator, etc. (from `.meta/patterns/success_patterns.md`)
-      - **Trade-offs Resolved**: Key decisions and alternatives considered (from `.meta/patterns/trade_off_matrix.md`)
+      - **Wisdom Applied**: Which principles guided design decisions (from `.brain/wisdom/engineering_wisdom.md`)
+      - **Antipatterns Avoided**: What mistakes were prevented (from `patterns/antipatterns.md`)
+      - **Success Patterns Used**: Circuit Breaker, Config Validator, etc. (from `patterns/success_patterns.md`)
+      - **Trade-offs Resolved**: Key decisions and alternatives considered (from `patterns/trade_off_matrix.md`)
       - **Development Guidelines**: Domain-specific constraints, coding standards, testing requirements
       - **Common Tasks**: "To add feature X, modify LEGO Y because..." (guide for future changes)
       - **Project Structure**: Where things live and why (src/, tests/, config/)
-      - **Principles Reference**: "For core principles, see `.app/wisdom/core_principles.md`"
-      - **Wisdom Resources**: "For engineering wisdom, see `.app/wisdom/` directory"
-      - **Patterns Resources**: "For patterns and antipatterns, see `.app/patterns/` directory"
+      - **Principles Reference**: "For core principles, see `.brain/wisdom/core_principles.md`"
+      - **Wisdom Resources**: "For engineering wisdom, see `.brain/wisdom/` directory"
+      - **Patterns Resources**: "For patterns and antipatterns, see `patterns/` directory"
     - This file should be **comprehensive and self-contained** - include all architectural decisions, wisdom applied, and development guidelines
-    - Future developers (human or AI) should understand the app's design philosophy from this file alone, with `.meta/` as reference for deeper orchestration details
+    - Future developers (human or AI) should understand the app's design philosophy from this file alone, with `.brain/` as reference for deeper orchestration details
     - **The template ensures the app orchestrator has the same Pre-flight Checklist** to avoid amnesia during maintenance
   - **`.github/agents/app-orchestrator.agent.md`** (for VS Code Copilot agent dropdown):
-    - **Use `.meta/templates/agent.template.md` as the base template**
+    - **Use `templates/agent.template.md` as the base template**
     - Replace `{APP_NAME}` with actual app name (from `app_intent.md`)
     - Agent name: "App Orchestrator" (consistent across all apps)
     - Agent description: "Build and maintain {APP_NAME}"
     - This enables custom agent mode in VS Code Copilot dropdown
-    - **CRITICAL**: Agent references `.app/AGENTS.md` for complete instructions (NOT engine files)
-    - **VALIDATION**: Verify generated file contains "You read `.app/AGENTS.md`" early in the file
-    - **VALIDATION**: Verify file does NOT reference `.meta/` anywhere
+    - **CRITICAL**: Agent references `.github/agents/{orchestrator}.agent.md` for complete instructions (NOT engine files)
+    - **VALIDATION**: Verify generated file contains "You read `.github/agents/{orchestrator}.agent.md`" early in the file
+    - **VALIDATION**: Verify file does NOT reference engine playbooks anywhere
     - Provides quick activation: select "App Orchestrator" from dropdown in Copilot Chat
     - Makes app orchestrator discoverable without remembering activation phrases
   - `README.md` – user-focused documentation of the app.
@@ -1865,9 +1870,8 @@ When all LEGOs are `done` AND experience validation passes:
   - If the audit fails: fix issues, rerun, and document remediation in `APP_ORCHESTRATION.md`.
   - Do not proceed to completion gate until the audit passes.
 
-- **If NEW APP MODE** (`.meta-version` did not exist at start):
-  - Write `.meta-version` file (copy from `templates/.meta-version.template`, update dates to current date).
-  - Write `.meta-manifest.json` file (copy from `templates/.meta-manifest.template.json`, populate with actual generated files and timestamps using current date).
+- **If NEW APP MODE** (`.brain/config.yaml` had no version at start):
+  - Update `.brain/config.yaml` with engine version and current date.
   - Mark all generated files with `user_modified: false` initially.
   - Include `APP_ORCHESTRATION.md` in manifest as a generated file.
 
@@ -1883,8 +1887,8 @@ Before marking COMPLETE:
 **║ 🚨 MANIFEST VALIDATION GATE: Before marking COMPLETE                         ║**
 **║                                                                               ║**
 **║ REQUIRED CHECKS (HALT if any fail):                                          ║**
-**║ 1. Does `.meta-manifest.json` exist?                                         ║**
-**║ 2. Does it contain all generated files (AGENTS.md, README.md, etc.)?         ║**
+**║ 1. Is `.brain/config.yaml` version updated?                                  ║**
+**║ 2. Does root AGENTS.md contain all generated file references?                ║**
 **║ 3. Are timestamps recent (within last hour)?                                 ║**
 **║ 4. Set orchestrator_state.json: manifest_updated = true                      ║**
 **║                                                                               ║**
@@ -1910,13 +1914,23 @@ On each new meta run or `codex exec resume --last`:
 
 ---
 
+## Post-Generation: Nexus Registration
+
+After project generation is complete:
+
+1. Generate `docs/nexus-registration.md` from `templates/nexus-registration.template.md`
+2. Output the `nexus.config.yaml` snippet for the sponsor
+3. Note: The factory does NOT auto-register — the sponsor or nexus handles config updates
+
+---
+
 ## GOAL SUMMARY
 
 You must:
 
 - Use `intent.md` to understand **how** the meta pipeline should operate.
 - Use `app_intent.md` to understand **what** application to build.
-- Use `.meta/principles.md` and `meta_config.json` to constrain and tune behavior.
+- Use `.brain/principles.md` and `meta_config.json` to constrain and tune behavior.
 - Decompose the app into KISS LEGO blocks.
 - Run per-LEGO orchestrators with GEN+REVIEW substeps.
 - Maintain session hygiene, checkpoints, and restartable state.
@@ -2065,7 +2079,7 @@ Add these questions when invoking Pragmatist:
 
 ### Pattern Library Reference
 
-See `.meta/patterns/bs-detection.md` for the full pattern library with 8 codified BS patterns.
+See `patterns/bs-detection.md` for the full pattern library with 8 codified BS patterns.
 
 ---
 
