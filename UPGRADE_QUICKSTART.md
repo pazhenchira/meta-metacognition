@@ -1,25 +1,36 @@
 # Upgrade Quick Reference
 
-Tell your app orchestrator:
+## For project orchestrators: "Upgrade to v4.1.0 (nexus-ready)"
+
+Tell your project's orchestrator:
 
 ```
-Upgrade the meta-orchestrator engine to the latest version
+Upgrade this project to meta-metacognition engine v4.1.0. Follow the upgrade steps in 
+C:\Dev\meta-metacognition\UPGRADING.md under "v4.0.0 → v4.1.0 Nexus-Ready". 
+Key actions: create essence.md at project root if missing, verify .brain/config.yaml 
+has orchestrator.name + project.name + project.version, create .brain/principles.md 
+if missing, then register with nexus in nexus.config.yaml.
 ```
 
-**First time?** If `engine_source` isn't set yet:
+## Manual fallback (v4.x)
+
+1. Create `essence.md` at project root (what this project is, who it serves, what makes it valuable)
+2. Verify `.brain/config.yaml` has `orchestrator.name`, `project.name`, `project.version`
+3. Create `.brain/principles.md` with core engineering principles
+4. Copy latest `skills/` from engine repo if outdated
+5. Register in `nexus.config.yaml` (see `templates/nexus-registration.template.md`)
+
+## First-time engine connection
+
+If `engine_source` isn't set in `.brain/config.yaml`:
 ```
 Upgrade the engine from https://github.com/pazhenchira/meta-metacognition.git
 ```
 
-**Manual fallback** (v4.x):
-1. Copy `.brain/`, `patterns/`, `templates/`, `skills/`, `generators/` from engine repo
-2. Copy `.github/agents/atlas.agent.md` and `.github/copilot-instructions.md`
-3. Update `.brain/config.yaml` with your project details
+## Rollback
 
-**Nexus integration** (optional):
-1. Ensure `essence.md`, `.brain/config.yaml`, and `.github/` exist in your project
-2. Register in `nexus.config.yaml` (see `templates/nexus-registration.template.md`)
+```bash
+git reset --hard pre-upgrade-backup
+```
 
-**Rollback**: `git reset --hard pre-upgrade-backup`
-
-See **UPGRADING.md** for full details.
+See **UPGRADING.md** for full step-by-step details.

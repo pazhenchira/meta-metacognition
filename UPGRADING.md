@@ -95,29 +95,79 @@
 
 **For Existing Apps (v4.0.0 → v4.1.0)**:
 
-No migration needed. Changes are to the factory's templates and generators — they affect newly created projects, not existing ones. However, existing projects that want nexus integration should:
+Factory template/generator changes don't require migration — they affect newly created projects. However, all projects SHOULD become nexus-ready by following the steps below. This is the path to nexus hosting (cross-session memory, goal tracking, quality enforcement).
 
-1. Verify `essence.md` exists at project root (nexus reads this for content-aware preamble)
-2. Verify `.brain/config.yaml` has `project.name`, `project.version`, and `orchestrator.name` fields
-3. Verify `.github/` directory exists with at least one agent.md file
-4. See `templates/nexus-registration.template.md` for full nexus registration checklist
+### Upgrade Steps (v4.0.0 → v4.1.0 Nexus-Ready)
 
-**Nexus Integration (NEW — applies to all projects)**:
+**Step 1: Create `essence.md` at project root** (REQUIRED — nexus uses this for content-aware preamble)
 
-Projects hosted by nexus get:
-- **Content-aware preamble**: Nexus reads `essence.md` + `.brain/principles.md` and composes project-specific context
-- **Cross-session memory**: LessonStore per project — corrections learned in session 1 recalled in session 100
-- **Goal tracking**: GoalStore per session — conversation goals tracked and verified per turn
-- **Quality enforcement**: Protocol compliance enforced in code (not just prompts) with auto-retry
-- **Multi-channel access**: Same project accessible via CLI, Slack, API
+If `essence.md` does not exist, create it. This is your project's identity — what makes it valuable, who it serves, what it does differently. Minimum content:
 
-To register a project with nexus, add to `nexus.config.yaml`:
+```markdown
+# {Project Name} — Essence
+
+## What This Is
+One paragraph: what the project does and why it exists.
+
+## Who It Serves
+The primary user/stakeholder and their core need.
+
+## What Makes It Valuable
+The 2-3 capabilities that make this project worth building.
+No project can be everything — name what THIS project does better than alternatives.
+
+## What It Is NOT
+Boundaries. What this project deliberately does not do.
+```
+
+**Step 2: Verify `.brain/config.yaml` has required fields**
+
+Open `.brain/config.yaml` and ensure these fields exist:
+```yaml
+orchestrator:
+  name: "YourOrchestratorName"    # Required — nexus uses this to find your agent.md
+project:
+  name: "your-project-slug"       # Required — nexus project identifier
+  version: "X.Y.Z"                # Required — tracked in nexus dashboard
+```
+
+If any are missing, add them. See `templates/brain-config.template.yaml` in the engine repo for the full template.
+
+**Step 3: Verify `.brain/principles.md` exists** (recommended — nexus includes in preamble)
+
+If `.brain/principles.md` does not exist, create it with your project's core engineering principles. See `templates/principles.template.md` in the engine repo. Even 3-5 bullet points is enough — nexus injects these into every turn.
+
+**Step 4: Verify `.github/agents/` has your orchestrator agent.md**
+
+Nexus looks for `.github/agents/{orchestrator_name}.agent.md`. Confirm it exists and the filename matches `.brain/config.yaml` → `orchestrator.name` (lowercased, kebab-case).
+
+**Step 5: Register with nexus**
+
+Add your project to `nexus.config.yaml`:
 ```yaml
 - name: "your-project"
   path: "C:\\Dev\\your-project"
   protocolEnforcement:
     enabled: true
 ```
+
+Then verify: `nexus health` and `nexus chat --project your-project`.
+
+See `templates/nexus-registration.template.md` in the engine repo for the full registration checklist.
+
+**Step 6: Commit**
+```bash
+git add essence.md .brain/config.yaml .brain/principles.md
+git commit -m "chore: nexus-ready — add essence.md, verify brain config and principles"
+```
+
+### What Nexus Provides (after registration)
+
+- **Content-aware preamble**: Nexus reads `essence.md` + `.brain/principles.md` and composes project-specific context for every turn
+- **Cross-session memory**: LessonStore per project — corrections learned in session 1 recalled in session 100
+- **Goal tracking**: GoalStore per session — conversation goals tracked and verified per turn
+- **Quality enforcement**: Protocol compliance enforced in code (not just prompts) with auto-retry
+- **Multi-channel access**: Same project accessible via CLI, Slack, API
 
 ---
 
