@@ -1,9 +1,9 @@
 # Staff Migration Brief
 
 > **Repository:** `pazhenchira/meta-metacognition`  
-> **Prepared:** 2026-07-30  
+> **Prepared:** 2026-07-31
 > **Purpose:** Give this repository enough current-state context to analyze its own migration from the legacy MetaAgent model to the Staff model.  
-> **Status:** Analysis input. This document does not authorize deleting, moving, or rewriting existing assets.
+> **Status:** Migration analysis input. This is sufficient to begin alignment analysis, but not to claim completed alignment without the cross-repository evidence and behavioral validation defined below. It does not authorize deleting, moving, or rewriting existing assets.
 
 ## Executive direction
 
@@ -22,17 +22,74 @@ The default hypothesis is that `meta-metacognition` is a **retirement or researc
 
 ## Important identity distinction
 
-The MetaAgent project currently configured in the owner's private runtime is a separate repository hosted outside this account. Its identity is deliberately not recorded in this public repository; the owner supplies it out of band.
+The MetaAgent project currently configured in the owner's runtime is a separate repository. The owner may supply its checkout, remote, or other access when comparison is required.
 
 It is not this repository.
 
 The owner reports that the private runtime still registers a MetaAgent factory project, and that bounded log evidence of recent factory activity is inconclusive. This is owner-supplied and does **not** prove the factory is unused. This repository must not assume it is the current factory, and neither repository should be retired until consumers and successor behavior are mapped.
 
-## Your access boundary
+Repository visibility does not determine whether two repositories should converge. The owner's personal and local repositories are owner-controlled. Some are intentionally separate, while others are converging. Classify their intended relationship and canonical responsibilities instead of inferring migration policy from whether a repository is public, private, local, or remote.
 
-You run inside this repository only. You cannot read the upstream MetaAgent repository, the Staff tree, the `me` store, or the owner's runtime logs. Every claim in this brief about those systems is **owner-supplied input**. Treat it as given; do not attempt to verify it or represent it as something you checked.
+## Evidence and repository access
 
-Where an output below requires evidence from outside this repository, do not infer it and do not fill the gap from file-name similarity. Emit `UNKNOWN - requires owner-supplied input`, and state the specific artifact needed. Never present a comparison you could not run as a comparison you performed.
+Begin with this repository. If owner-controlled sibling checkouts or remotes are available to the agent, use them read-only as evidence when relevant. Candidate sources include the current Staff tree, the active Nexus tree, and the upstream MetaAgent repository supplied by the owner.
+
+Source locations are supplied at analysis time through the owner's invocation prompt or environment, not committed into this repository. Consume a source-location manifest with this shape:
+
+```text
+source label:
+local path or remote:
+expected role:
+access mode: read-only | editable
+```
+
+If a required source has no supplied locator, report it as a prerequisite rather than searching arbitrary parent directories or fabricating a location. The `me` store is a destination classification, not a general evidence source. Do not quote, summarize, or copy its contents into this repository.
+
+For every external source used, record:
+
+- repository or store;
+- branch and commit, where applicable;
+- paths inspected;
+- purpose of the comparison;
+- whether the source is authoritative, historical, or a candidate successor.
+
+Do not assume a source is inaccessible merely because it is outside this repository. Conversely, do not claim to have inspected a source that was not actually available. Where required evidence is unavailable, emit `UNKNOWN - requires owner-supplied input` and name the specific source needed.
+
+Owner-controlled access does not authorize copying credentials, secrets, or employer-restricted source into another repository. Extract capability descriptions, owner-authored insights, decisions, and reusable behavior according to their actual classification and the intended repository topology.
+
+## What this brief provides
+
+This brief provides:
+
+- the target Staff architectural model;
+- the known legacy surfaces requiring classification;
+- the migration decision paths and sequencing;
+- the capability-manifest format;
+- the validation and retirement gates.
+
+This brief does **not** embed the contents of the current Staff, Nexus, `me`, or upstream MetaAgent sources. Therefore:
+
+- it is sufficient to start a complete repository analysis;
+- it is not, by itself, evidence that every internal capability or insight has already been replicated;
+- completed alignment requires direct comparison with every available authoritative source, an explicit repository-topology map, and representative behavioral replay.
+
+## Repository topology rule
+
+For each related repository or store, classify:
+
+```text
+source:
+owner / trust boundary:
+intended relationship: converge | remain separate | mirror | retire
+canonical responsibilities:
+content or capabilities that should move:
+content or capabilities that should remain:
+synchronization or compatibility contract:
+evidence:
+confidence:
+```
+
+Repository separation and capability convergence are compatible. A code or research repository may remain independent while its generic AI control behavior converges into Staff. Likewise, owner-authored knowledge may be replicated into the repository that becomes canonical without merging the repositories themselves.
 
 ## What changed in the Staff model
 
@@ -69,6 +126,15 @@ code-or-research-repository/
 ```
 
 A code-owning Staff role records its repository relationship in `staff/roles/<role>/.brain/code-project.md`. The role operates on the code repository through tools while its identity and durable AI state remain in Staff.
+
+Use the current `code-project.md` section schema:
+
+```text
+Location
+Relationship
+What "owning" looks like
+Boundary
+```
 
 ### 2. Shared process behavior became a kernel
 
@@ -123,16 +189,18 @@ This repository contains multiple generations of control-plane material. Do not 
 
 The following generic skills already have current Staff equivalents and should normally be mapped rather than duplicated:
 
-- investigation framing;
-- pre-ship review;
-- structured challenge;
-- problem reframing;
-- strategic synthesis;
-- stakeholder review;
-- generic claim verification;
-- generic planning and work-execution loops.
+| Legacy capability | Current Staff successor | Availability |
+|---|---|---|
+| Investigation framing | `investigate-and-answer` | Kernel |
+| Pre-ship review | `ta-review`, composed with `proof-pack` | TA role-private + kernel |
+| Structured challenge | `ta-challenge` | TA role-private |
+| Problem reframing | `ta-reframe` | TA role-private |
+| Strategic synthesis | `ta-strategize` | TA role-private |
+| Stakeholder and audience review | `audience-aware-voice`, composed with `ta-review` | Kernel + TA role-private |
+| Generic claim verification | `evidence-citation` and `proof-pack` | Kernel |
+| Planning and work-execution loops | `turn-router`, `protocol-discipline`, and `ta-plan` | Kernel + TA role-private |
 
-Before removing a legacy skill, record its Staff successor and replay at least one representative task that exercised the old behavior.
+Before removing a legacy skill, record its Staff successor and replay at least one representative task that exercised the old behavior. A role-private successor is not automatically available to a new factory role. Either promote genuinely cross-role behavior to the kernel, create a factory-role-specific equivalent, or preserve the legacy capability until an accessible successor passes replay.
 
 ## Capabilities that require explicit preservation analysis
 
@@ -207,16 +275,16 @@ Removing runtime registration, disabling repository integrations, creating an ex
 3. Inventory Actions, webhooks, deploy keys, packages, releases, and external references.
 4. Create an encrypted rollback bundle outside the GitHub account and test restoration.
 
-Repository settings in item 2, and all of items 3-4, require repository-admin or local-filesystem access outside this agent's boundary. They are **owner actions**. Record them as prerequisites and their completion status; do not report them as performed. Recording the current commit and branch state in item 2 is within the agent's boundary and must be performed.
+Repository settings in item 2, and the repository-administration or backup operations in items 3-4, may require access not granted to the agent. Treat only the unavailable operations as **owner actions**. Record them as prerequisites and their completion status; do not report them as performed. Recording the current commit and branch state in item 2 is within the agent's boundary and must be performed.
 
 5. Do not mix migration work with unrelated changes.
-6. Audit what is **already public**. Scan HEAD and full Git history for operator paths, usernames, hostnames, tokens, work-internal organization/repository/service names, and personal content, including `internal-notes.md`, `.brain/lessons.md`, `.brain/status.md`, `.brain/config.yaml`, and `templates/`. Also scan public GitHub surfaces that Git history does not cover: issues, pull request titles/bodies/comments, wiki, releases and release notes, and Actions run logs. Classify each finding as `safe`, `redact-at-HEAD`, `requires-history-rewrite`, or `rotate-credential`. If any finding is classified `rotate-credential`, **stop work and notify the owner immediately**; do not defer it to the phase report. Removing a file at HEAD does not remove it from public history. A published secret must be rotated, not merely deleted. History rewrite does not reach forks, cached orphaned commits, or third-party mirrors. For already-public non-credential exposure, rewrite reduces future discovery but does not undo disclosure; escalate to the owner for a disclosure decision. Report the scan boundary with every negative result: which surfaces, refs, and commit range were scanned, and by what method. A pattern scan that returns no matches is not proof of no exposure. GitHub secret-scanning alerts are **not** available for this repository because secret scanning is disabled; their absence must never be reported as zero alerts.
+6. Audit what is **already public**. Scan HEAD and full Git history for operator paths, usernames, hostnames, tokens, work-internal organization/repository/service names, and personal content, including `internal-notes.md`, `.brain/lessons.md`, `.brain/status.md`, `.brain/config.yaml`, and `templates/`. Also scan public GitHub surfaces that Git history does not cover: issues, pull request titles/bodies/comments, wiki, releases and release notes, and Actions run logs. Classify each finding as `safe`, `redact-at-HEAD`, `requires-history-rewrite`, or `rotate-credential`. If any finding is classified `rotate-credential`, **stop work and notify the owner immediately**; do not defer it to the phase report. Removing a file at HEAD does not remove it from public history. A published secret must be rotated, not merely deleted. History rewrite does not reach forks, cached orphaned commits, or third-party mirrors. For already-public non-credential exposure, rewrite reduces future discovery but does not undo disclosure; escalate to the owner for a disclosure decision. Report the scan boundary with every negative result: which surfaces, refs, and commit range were scanned, and by what method. A pattern scan that returns no matches is not proof of no exposure. Secret-scanning alerts were not retrievable at the access level used to prepare this brief. Do not infer whether the feature is enabled or disabled from that result, and never report unavailable alerts as zero alerts.
 
 ### Phase 1: map execution and consumers
 
 1. Trace every script, workflow, agent, and external system that invokes factory behavior.
-2. Consumer evidence from outside this repository requires owner-supplied input. Do not attempt to search outside; record what would need to be searched and report `UNKNOWN - requires owner-supplied input` with the specific artifact needed.
-3. Compare capabilities with the upstream MetaAgent repository when the owner supplies access. Otherwise report `UNKNOWN - requires owner-supplied input`.
+2. Inspect available owner-controlled sibling repositories and runtime configuration read-only. Record the exact search boundary. If a required source is unavailable, report `UNKNOWN - requires owner-supplied input` with the specific artifact needed.
+3. Compare capabilities with the upstream MetaAgent repository when access is available. Otherwise report `UNKNOWN - requires owner-supplied input`.
 4. Identify which paths are executable product and which are prompt/control state.
 5. State the search boundary whenever reporting that no consumer was found.
 
@@ -278,14 +346,15 @@ Run the old and proposed successor paths against the same scenarios. File-level 
 Before making migration changes, produce a report containing:
 
 1. **Recommended future identity:** Path A, B, or C, with evidence.
-2. **Capability manifest:** complete disposition of the artifact categories above.
-3. **Comparison with the upstream MetaAgent repository:** unique, duplicate, and missing capabilities, or `UNKNOWN - requires owner-supplied input` if access was not provided.
-4. **Staff mapping:** proposed role, sub-agents, role-private skills, code-project pointer, and permissions.
-5. **Consumer map:** internal and external callers, including the search boundary.
-6. **Behavioral replay plan:** scenarios, success criteria, and rollback.
-7. **Privacy review:** existing-exposure findings reported only as `file path + line/commit reference + finding category + disposition`. Never reproduce a found secret, token, credential, operator path, username, hostname, or work-internal organization/repository/service name verbatim in a file written to this repository. Verbatim values go to the owner out of band. Also confirm that no new operator-private or work-internal data enters this public repository.
-8. **Migration sequence:** reversible steps before irreversible steps.
-9. **Retirement gates:** explicit conditions that must pass before deleting or archiving anything.
+2. **Repository-topology map:** intended relationship and canonical responsibility for every related repository or store.
+3. **Capability manifest:** complete disposition of the artifact categories above.
+4. **Comparison with the upstream MetaAgent repository:** unique, duplicate, and missing capabilities, or `UNKNOWN - requires owner-supplied input` if access was not provided.
+5. **Staff mapping:** proposed role, sub-agents, role-private skills, code-project pointer, and permissions.
+6. **Consumer map:** internal and external callers, including the search boundary.
+7. **Behavioral replay plan:** scenarios, success criteria, and rollback.
+8. **Privacy review:** existing-exposure findings reported only as `file path + line/commit reference + finding category + disposition`. Never reproduce a found secret, token, credential, operator path, username, hostname, or work-internal organization/repository/service name verbatim in a file written to this repository. Verbatim values go to the owner out of band. Also confirm that no new operator-private or work-internal data enters this public repository.
+9. **Migration sequence:** reversible steps before irreversible steps.
+10. **Retirement gates:** explicit conditions that must pass before deleting or archiving anything.
 
 ## Non-negotiable guardrails
 
